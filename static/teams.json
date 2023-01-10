@@ -1,0 +1,226 @@
+[
+    {
+        "city": "Arizona",
+        "name": "Cardinals",
+        "id": 1,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Atlanta",
+        "name": "Falcons",
+        "id": 2,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Baltimore",
+        "name": "Ravens",
+        "id": 3,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Buffalo",
+        "name": "Bills",
+        "id": 4,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Carolina",
+        "name": "Panthers",
+        "id": 5,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Chicago",
+        "name": "Bears",
+        "id": 6,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Cincinnati",
+        "name": "Bengals",
+        "id": 7,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Cleveland",
+        "name": "Browns",
+        "id": 8,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Dallas",
+        "name": "Cowboys",
+        "id": 9,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Denver",
+        "name": "Broncos",
+        "id": 10,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Detroit",
+        "name": "Lions",
+        "id": 11,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Green Bay",
+        "name": "Packers",
+        "id": 12,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Houston",
+        "name": "Texans",
+        "id": 13,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Indianapolis",
+        "name": "Colts",
+        "id": 14,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Jacksonville",
+        "name": "Jaguars",
+        "id": 15,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Kansas City",
+        "name": "Chiefs",
+        "id": 16,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Las Vegas",
+        "name": "Raiders",
+        "id": 17,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Los Angeles",
+        "name": "Chargers",
+        "id": 18,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Los Angeles",
+        "name": "Rams",
+        "id": 19,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Miami",
+        "name": "Dolphins",
+        "id": 20,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Minnesota",
+        "name": "Vikings",
+        "id": 21,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "New England",
+        "name": "Patriots",
+        "id": 22,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "New Orleans",
+        "name": "Saints",
+        "id": 23,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "New York",
+        "name": "Giants",
+        "id": 24,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "New York",
+        "name": "Jets",
+        "id": 25,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Philadelphia",
+        "name": "Eagles",
+        "id": 26,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Pittsburgh",
+        "name": "Steelers",
+        "id": 27,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "San Francisco",
+        "name": "49ers",
+        "id": 28,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Seattle",
+        "name": "Seahawks",
+        "id": 29,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Tampa Bay",
+        "name": "Buccaneers",
+        "id": 30,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Tennessee",
+        "name": "Titans",
+        "id": 31,
+        "primary-color": "",
+        "secondary-color": ""
+    },
+    {
+        "city": "Washington",
+        "name": "Commanders",
+        "id": 32,
+        "primary-color": "",
+        "secondary-color": ""
+    }
+]
