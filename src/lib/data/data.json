@@ -1,0 +1,541 @@
+{
+    "teamsData": [
+        {
+            "city": "Arizona",
+            "cityKey": "ARI",
+            "name": "Cardinals",
+            "id": 1,
+            "primaryColor": "#97233F",
+            "secondaryColor": "#000000"
+        },
+        {
+            "city": "Atlanta",
+            "cityKey": "ATL",
+            "name": "Falcons",
+            "id": 2,
+            "primaryColor": "#A71930",
+            "secondaryColor": "#000000"
+        },
+        {
+            "city": "Baltimore",
+            "cityKey": "BAL",
+            "name": "Ravens",
+            "id": 3,
+            "primaryColor": "#241773",
+            "secondaryColor": "#9E7C0C"
+        },
+        {
+            "city": "Buffalo",
+            "cityKey": "BUF",
+            "name": "Bills",
+            "id": 4,
+            "primaryColor": "#00338D",
+            "secondaryColor": "#C60C30"
+        },
+        {
+            "city": "Carolina",
+            "cityKey": "CAR",
+            "name": "Panthers",
+            "id": 5,
+            "primaryColor": "#0085CA",
+            "secondaryColor": "#101820"
+        },
+        {
+            "city": "Chicago",
+            "cityKey": "CHI",
+            "name": "Bears",
+            "id": 6,
+            "primaryColor": "#0B162A",
+            "secondaryColor": "#C83803"
+        },
+        {
+            "city": "Cincinnati",
+            "cityKey": "CIN",
+            "name": "Bengals",
+            "id": 7,
+            "primaryColor": "#FB4F14",
+            "secondaryColor": "#000000"
+        },
+        {
+            "city": "Cleveland",
+            "cityKey": "CLE",
+            "name": "Browns",
+            "id": 8,
+            "primaryColor": "#311D00",
+            "secondaryColor": "#FF3C00"
+        },
+        {
+            "city": "Dallas",
+            "cityKey": "DAL",
+            "name": "Cowboys",
+            "id": 9,
+            "primaryColor": "#041E42",
+            "secondaryColor": "#869397"
+        },
+        {
+            "city": "Denver",
+            "cityKey": "DEN",
+            "name": "Broncos",
+            "id": 10,
+            "primaryColor": "#FB4F14",
+            "secondaryColor": "#002244"
+        },
+        {
+            "city": "Detroit",
+            "cityKey": "DET",
+            "name": "Lions",
+            "id": 11,
+            "primaryColor": "#0076B6",
+            "secondaryColor": "#B0B7BC"
+        },
+        {
+            "city": "Green Bay",
+            "cityKey": "GB",
+            "name": "Packers",
+            "id": 12,
+            "primaryColor": "#004000",
+            "secondaryColor": "#FFF200"
+        },
+        {
+            "city": "Houston",
+            "cityKey": "HOU",
+            "name": "Texans",
+            "id": 13,
+            "primaryColor": "#03202F",
+            "secondaryColor": "#A71930"
+        },
+        {
+            "city": "Indianapolis",
+            "cityKey": "IND",
+            "name": "Colts",
+            "id": 14,
+            "primaryColor": "#002C5F",
+            "secondaryColor": "#A2AAAD"
+        },
+        {
+            "city": "Jacksonville",
+            "cityKey": "JAX",
+            "name": "Jaguars",
+            "id": 15,
+            "primaryColor": "#006778",
+            "secondaryColor": "#101820"
+        },
+        {
+            "city": "Kansas City",
+            "cityKey": "KC",
+            "name": "Chiefs",
+            "id": 16,
+            "primaryColor": "#E31837",
+            "secondaryColor": "#FFB81C"
+        },
+        {
+            "city": "Las Vegas",
+            "cityKey": "LV",
+            "name": "Raiders",
+            "id": 17,
+            "primaryColor": "#000000",
+            "secondaryColor": "#A5ACAF"
+        },
+        {
+            "city": "Los Angeles",
+            "cityKey": "LAC",
+            "name": "Chargers",
+            "id": 18,
+            "primaryColor": "#0080C6",
+            "secondaryColor": "#FFC20E"
+        },
+        {
+            "city": "Los Angeles",
+            "cityKey": "LAR",
+            "name": "Rams",
+            "id": 19,
+            "primaryColor": "#003594",
+            "secondaryColor": "#e0cb69"
+        },
+        {
+            "city": "Miami",
+            "cityKey": "MIA",
+            "name": "Dolphins",
+            "id": 20,
+            "primaryColor": "#008E97",
+            "secondaryColor": "#FC4C02"
+        },
+        {
+            "city": "Minnesota",
+            "cityKey": "MIN",
+            "name": "Vikings",
+            "id": 21,
+            "primaryColor": "#4F2683",
+            "secondaryColor": "#FFC62F"
+        },
+        {
+            "city": "New England",
+            "cityKey": "NE",
+            "name": "Patriots",
+            "id": 22,
+            "primaryColor": "#002244",
+            "secondaryColor": "#B0B7BC"
+        },
+        {
+            "city": "New Orleans",
+            "cityKey": "NO",
+            "name": "Saints",
+            "id": 23,
+            "primaryColor": "#D3BC8D",
+            "secondaryColor": "#101820"
+        },
+        {
+            "city": "New York",
+            "cityKey": "NYG",
+            "name": "Giants",
+            "id": 24,
+            "primaryColor": "#0B2265",
+            "secondaryColor": "#A71930"
+        },
+        {
+            "city": "New York",
+            "cityKey": "NYJ",
+            "name": "Jets",
+            "id": 25,
+            "primaryColor": "#125740",
+            "secondaryColor": "#FFFFFF"
+        },
+        {
+            "city": "Philadelphia",
+            "cityKey": "PHI",
+            "name": "Eagles",
+            "id": 26,
+            "primaryColor": "#004C54",
+            "secondaryColor": "#ACC0C6"
+        },
+        {
+            "city": "Pittsburgh",
+            "cityKey": "PIT",
+            "name": "Steelers",
+            "id": 27,
+            "primaryColor": "#FFB612",
+            "secondaryColor": "#101820"
+        },
+        {
+            "city": "San Francisco",
+            "cityKey": "SF",
+            "name": "49ers",
+            "id": 28,
+            "primaryColor": "#AA0000",
+            "secondaryColor": "#B3995D"
+        },
+        {
+            "city": "Seattle",
+            "cityKey": "SEA",
+            "name": "Seahawks",
+            "id": 29,
+            "primaryColor": "#002244",
+            "secondaryColor": "#69BE28"
+        },
+        {
+            "city": "Tampa Bay",
+            "cityKey": "TB",
+            "name": "Buccaneers",
+            "id": 30,
+            "primaryColor": "#D50A0A",
+            "secondaryColor": "#FF7900"
+        },
+        {
+            "city": "Tennessee",
+            "cityKey": "TEN",
+            "name": "Titans",
+            "id": 31,
+            "primaryColor": "#0C2340",
+            "secondaryColor": "#4B92DB"
+        },
+        {
+            "city": "Washington",
+            "cityKey": "WSH",
+            "name": "Commanders",
+            "id": 32,
+            "primaryColor": "#5A1414",
+            "secondaryColor": "#FFB612"
+        }
+    ],
+    "diceData": [
+        {
+            "id": 11,
+            "yards": 100,
+            "description": [
+                "Touchdown Pass to RB",
+                "Touchdown Pass to TE",
+                "Touchdown Pass to WR"
+            ]
+        },
+        {
+            "id": 12,
+            "isTurnover": true,
+            "yards": -10,
+            "description": ["Interception"]
+        },
+        {
+            "id": 13,
+            "yards": 20,
+            "description": [
+                "Deep Out",
+                "Reverse Play",
+                "Run Up the Middle"
+            ]
+        },
+        {
+            "id": 14,
+            "yards": -5,
+            "description": [
+                "Fumble (Recovered)",
+                "Quarterback Sack",
+                "Tackle in Backfield"
+            ]
+        },
+        {
+            "id": 15,
+            "yards": 5,
+            "description": [
+                "Check Down Pass",
+                "Option Right",
+                "Quarterback Draw"
+            ]
+        },
+        {
+            "id": 16,
+            "yards": 0,
+            "description": [
+                "Incomplete Pass",
+                "Pass Dropped"
+            ]
+        },
+        {
+            "id": 22,
+            "isPenalty": true,
+            "yards": 5,
+            "description": [
+                "Too Many Men On Field",
+                "Offside Defense"
+            ]
+        },
+        {
+            "id": 23,
+            "isTurnover": true,
+            "yards": 0,
+            "description": [
+                "Fumble"
+            ]
+        },
+        {
+            "id": 24,
+            "yards": 20,
+            "description": [
+                "Pass Down the Sideline",
+                "Reverse Play",
+                "Run to the Right"
+            ]
+        },
+        {
+            "id": 25,
+            "yards": -5,
+            "description": [
+                "Tackle in backfield"
+            ]
+        },
+        {
+            "id": 26,
+            "yards": 5,
+            "description": [
+                "Screen Pass",
+                "Shovel Pass"
+            ]
+        },
+        {
+            "id": 33,
+            "autoFirstDown": true,
+            "isPenalty": true,
+            "yards": 15,
+            "description": [
+                "Pass Interference", 
+                "Roughing the Passer", 
+                "Taunting", 
+                "Unnecessary Roughness"
+            ]
+        },
+        {
+            "id": 34,
+            "yards": 0,
+            "description": [
+                "Incomplete Pass"
+            ]
+        },
+        {
+            "id": 35,
+            "yards": 5,
+            "description": [
+                "Halfback Run"
+            ]
+        },
+        {
+            "id": 36,
+            "isPenalty": true,
+            "yards": -5,
+            "description": [
+                "Delay of Game",
+                "False Start",
+                "Illegal Formation",
+                "Illegal Shift"
+            ]
+        },
+        {
+            "id": 44,
+            "yards": 40,
+            "description": [
+                "Fake Reverse Pass",
+                "Flea Flicker",
+                "Halfback Pass",
+                "Hook and Lateral"
+            ]
+        },
+        {
+            "id": 45,
+            "isTurnover": true,
+            "yards": -40,
+            "description": [
+                "Interception"
+            ]
+        },
+        {
+            "id": 46,
+            "yards": 10,
+            "description": [
+                "Fumblerooski"
+            ]
+        },
+        {
+            "id": 55,
+            "yards": 10,
+            "description": [
+                "Pass Complete"
+            ]
+        },
+        {
+            "id": 56,
+            "isPenalty": true,
+            "yards": -10,
+            "description": [
+                "Illegal Use of Hands",
+                "Offensive Holding",
+                "Offensive Pass Interference"
+            ]
+        },
+        {
+            "id": 66,
+            "yards": 100,
+            "description": [
+                "Touchdown Run"
+            ]
+        }
+    ],
+    "fieldData": [
+        {
+            "id": 0,
+            "upperNumber": "",
+            "lowerNumber": ""
+        },
+        {
+            "id": 1,
+            "upperNumber": "0",
+            "lowerNumber": "1"
+        },
+        {
+            "id": 2,
+            "upperNumber": "1",
+            "lowerNumber": "0"
+        },
+        {
+            "id": 3,
+            "upperNumber": "0",
+            "lowerNumber": "2"
+        },
+        {
+            "id": 4,
+            "upperNumber": "2",
+            "lowerNumber": "0"
+        },
+        {
+            "id": 5,
+            "upperNumber": "0",
+            "lowerNumber": "3"
+        },
+        {
+            "id": 6,
+            "upperNumber": "3",
+            "lowerNumber": "0"
+        },
+        {
+            "id": 7,
+            "upperNumber": "0",
+            "lowerNumber": "4"
+        },
+        {
+            "id": 8,
+            "upperNumber": "4",
+            "lowerNumber": "0"
+        },
+        {
+            "id": 9,
+            "upperNumber": "0",
+            "lowerNumber": "5"
+        },
+        {
+            "id": 10,
+            "upperNumber": "5",
+            "lowerNumber": "0"
+        },
+        {
+            "id": 11,
+            "upperNumber": "0",
+            "lowerNumber": "4"
+        },
+        {
+            "id": 12,
+            "upperNumber": "4",
+            "lowerNumber": "0"
+        },
+        {
+            "id": 13,
+            "upperNumber": "0",
+            "lowerNumber": "3"
+        },
+        {
+            "id": 14,
+            "upperNumber": "3",
+            "lowerNumber": "0"
+        },
+        {
+            "id": 15,
+            "upperNumber": "0",
+            "lowerNumber": "2"
+        },
+        {
+            "id": 16,
+            "upperNumber": "2",
+            "lowerNumber": "0"
+        },
+        {
+            "id": 17,
+            "upperNumber": "0",
+            "lowerNumber": "1"
+        },
+        {
+            "id": 18,
+            "upperNumber": "1",
+            "lowerNumber": "0"
+        },
+        {
+            "id": 19,
+            "upperNumber": "",
+            "lowerNumber": ""
+        }
+    ]
+}

@@ -1,28 +1,48 @@
 <script>
-    //import Title from '$lib/title.svelte'
     import '../styles/global.css'
+
+    let currentYear = new Date().getFullYear();
   </script>
   
-  <header>
-    <h1>HELLO</h1>
-  </header>
+  <div class="header">
+    <header class="header">
+      <div></div>
+    </header>
+  </div>
+
   <main>
     <slot></slot>
   </main>
-  <footer>
-    <p>Copyright 2022 Ninja Gaming Guides</p>
-  </footer>
+
+  <div class="footer">
+    <footer>
+      <div></div>
+    </footer>
+  </div>
   
   <style>
     header {
       display: flex;
-      justify-content: center;
+      flex-flow: column wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    .header {
+      background-color: var(--smoke);
     }
     main {
-      max-width: 960px;
+      max-width: 1200px;
       margin: 20px auto;
     }
     footer {
-      text-align: center;
+      display: flex;
+      flex-flow: column wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    .footer {
+      background-color: var(--smoke);
     }
   </style>

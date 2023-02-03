@@ -1,0 +1,132 @@
+<script lang="ts">
+    import { createEventDispatcher } from "svelte";
+    import { EMPTY_TEAM, NOOP, POSITION } from "$lib/constants/constants";
+    import * as R from 'ramda';
+    
+    export let team = EMPTY_TEAM;
+    export let hasBall = false;
+    export let position = POSITION.LEFT;
+    export let inFieldGoalRange = false;
+    let dispatch = createEventDispatcher();
+
+    $: allowFieldGoal = hasBall && inFieldGoalRange;
+
+    function handleGoalPostClick(){
+        allowFieldGoal ? dispatch('toggleFieldGoal') : NOOP
+    }
+</script>
+
+<div class="endZone" style={`background-color: ${team.primaryColor};`}>        
+    <img 
+        alt={`${team.city} ${team.name} Helmet`} 
+        class={`helmetLogo helmetTop rotate${position}`}
+        class:flipLeft={R.equals(position, POSITION.LEFT)}
+        src={`/helmets/${team.name}.png`}/>
+    
+    <div 
+        class={`name rotate${position}`}
+        style={`color: ${team.secondaryColor};`}>
+        {team.name}
+    </div>
+
+    <img 
+        alt={`${team.city} ${team.name} Helmet`} 
+        class={`helmetLogo helmetBottom rotate${position}`}
+        class:flipRight={R.equals(position, POSITION.RIGHT)}
+        src={`/helmets/${team.name}.png`}/>
+
+    <div 
+        class="goalPost"
+        class:right={R.equals(position, POSITION.RIGHT)}
+        class:clickable={allowFieldGoal}
+        on:click={handleGoalPostClick}
+        on:keydown={handleGoalPostClick}
+    >
+        <div class="post" class:pulse={allowFieldGoal}></div>
+        <div class="bar" class:pulse={allowFieldGoal}></div>
+        <div class="post" class:pulse={allowFieldGoal}></div>
+    </div>
+</div>
+
+<style>
+    .clickable {
+        cursor: pointer;
+    }
+    .endZone {
+        width: 10%;
+        border: 2px solid var(--white);
+        background-color: var(--yellow);
+    }
+    .goalPost {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        align-items: center;
+        height: 25%;
+        width: 10px;
+        top: 50%;
+        left: 0;
+        transform: translate(-50%, -50%);
+    }
+    .goalPost.right {
+        left: unset;
+        right: -11px;
+    }
+    .post {
+        width: 9px;
+        height: 9px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        background-color: var(--yellow);
+    }
+    .bar{
+        width: 4px;
+        height: 100%;
+        background-color: var(--yellow);
+    }
+    .helmetLogo {
+        position: absolute;
+        height: 50px;
+        width: 50px;        
+        left: 50%;
+    }
+    .helmetTop {
+        top: 10%;
+    }
+    .helmetBottom {
+        top: 90%;
+    }
+    .name {
+        font-weight: bold;
+        text-transform: uppercase;
+        font-family: var(--mono);
+        font-size: 40px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    }
+    .rotateLeft {
+        transform:  translateX(-50%) translateY(-50%) rotate(-90deg); 
+    }
+    .rotateRight {
+        transform:  translateX(-50%) translateY(-50%) rotate(90deg);
+    }
+    .flipLeft {
+        transform:  translateX(-50%) translateY(-50%) rotate(-90deg) scale(-1, 1);
+    }
+    .flipRight {
+        transform:  translateX(-50%) translateY(-50%) rotate(90deg) scale(-1, 1);
+    }
+    .pulse {
+        animation: pulse-animation 2s infinite;
+    }
+    @keyframes pulse-animation {
+        0% {
+            box-shadow: 0 0 0 0px rgba(255, 215, 0, 0.2);
+        }
+        100% {
+            box-shadow: 0 0 0 20px rgba(255, 215, 0, 0);
+        }
+    }
+</style>

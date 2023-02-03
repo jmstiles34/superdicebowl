@@ -46,17 +46,8 @@
 </script>
 
 <main>
-    {#if R.equals(display, DISPLAY.PLAYING)}
-        <Game {gameSettings} on:reset={() => setDisplay(DISPLAY.SETTINGS)} />
-    {:else}
-        <Settings 
-            {gameSettings}
-            on:begin={() => setDisplay(DISPLAY.PLAYING)}
-            on:setMode={setGameMode}
-            on:setTeam={setTeam}
-            on:setWinScore={setWinScore}
-        />
-    {/if}
+    HEY DUDE!!!
+    <!-- <Game {gameSettings} on:reset={() => setDisplay(DISPLAY.SETTINGS)} /> -->
 </main>
 
 <style>
