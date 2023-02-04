@@ -1,3 +1,5 @@
+import type { sStore } from "./stores/Settings";
+
 export interface DiceRoll {
     id: number;
     autoFirstDown?: boolean | false,

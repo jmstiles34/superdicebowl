@@ -1,35 +1,28 @@
 <script lang="ts">
-    import { DICE_COLORS, GAME_MODE, TEAM } from '$lib/constants/constants';
+    import { DICE_COLORS } from '$lib/constants/constants';
     import { teamsData } from '$lib/data/data.json'
     import type { SaveTeam, Team } from '$lib/types';
-	import { pickRandom, nonZeroRandomNumber } from '$lib/utils/common';
-	import { teamById } from '$lib/utils/game';
+	import { pickRandom } from '$lib/utils/common';
+	import { setRandomTeam, teamById } from '$lib/utils/game';
     import { cubicInOut } from 'svelte/easing';
     import fadeScale from '$lib/transitions/fadeScale';
     import * as R from 'ramda';
     
-    export let mode:string;
     export let opponentId:number;
     export let saveTeam:SaveTeam;
     export let team:Team;
     export let teamType:string;
+    export let useRandomizer: boolean = false;
     
     let selected:number;
-    $: if(R.gt(selected, 0)){
-        saveTeam(teamById(teamsData)(selected))
-    }
+    $: saveTeam(teamById(teamsData)(selected))
 
     const fadeArgs = {
 		delay: 0,
 		duration: 250,
 		easing: cubicInOut,
 		baseScale: 0.5
-	}
-
-    function setRandomTeam(){
-        let id = nonZeroRandomNumber(32)
-        R.equals(id, opponentId) ? setRandomTeam() : saveTeam(teamById(teamsData)(id));  
-    }
+	} 
 </script>
 
 <div class="team-card">
@@ -52,8 +45,10 @@
         {/if}
     </div>
 
-    {#if R.equals(mode, GAME_MODE.SOLO) && R.equals(teamType, TEAM.AWAY) }
-        <button on:click={setRandomTeam}>Team Randomizer</button>
+    {#if useRandomizer }
+        <button on:click={() => setRandomTeam(teamsData, opponentId, saveTeam)}>
+            Team Randomizer
+        </button>
     {:else}
         <select bind:value={selected} class="team-select">
             <option value="">Choose Your Team</option>

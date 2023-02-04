@@ -1,44 +1,41 @@
 <script lang="ts">
-	import * as R from 'ramda';
+	import { game } from '$lib/stores/Game'
+    import { settings } from '$lib/stores/Settings'
+    import * as R from 'ramda';
     import { hexToRGB } from '$lib/utils/common'
-    import { EMPTY_TEAM, TEAM } from "$lib/constants/constants";
-    export let awayScore = 0;
-    export let awayTeam = EMPTY_TEAM;
-    export let homeScore = 0;
-    export let homeTeam = EMPTY_TEAM;
-    export let possession = TEAM.HOME;
+    import { TEAM } from "$lib/constants/constants";
 
-    let awayToRgb = hexToRGB(awayTeam.primaryColor);
-    let homeToRgb = hexToRGB(homeTeam.primaryColor);
+    let awayToRgb = hexToRGB($settings.awayTeam.primaryColor);
+    let homeToRgb = hexToRGB($settings.homeTeam.primaryColor);
 </script>
 
 <div class="team-scores">
     <div class="team" style={`
-        background-color: ${homeTeam.primaryColor};
-        background-image: linear-gradient(to right, rgba(${homeToRgb.r},${homeToRgb.g},${homeToRgb.b}, 0.5) 0 100%), url(/logos/${homeTeam.name}.png);
+        background-color: ${$settings.homeTeam.primaryColor};
+        background-image: linear-gradient(to right, rgba(${homeToRgb.r},${homeToRgb.g},${homeToRgb.b}, 0.5) 0 100%), url(/logos/${$settings.homeTeam.name}.png);
     `}> 
         <div class="city-wrapper">
-            {#if R.equals(possession, TEAM.HOME)}
+            {#if R.equals($game.possession, TEAM.HOME)}
                 <div class="possession"></div>
             {/if}
-            <div class="cityName">{homeTeam.city}</div>
-            <div class="cityKey">{homeTeam.cityKey}</div>
+            <div class="cityName">{$settings.homeTeam.city}</div>
+            <div class="cityKey">{$settings.homeTeam.cityKey}</div>
         </div>
     </div>
-    <div class="score">{homeScore}</div>
+    <div class="score">{$game.homeScore}</div>
     <div class="team" style={`
-        background-color: ${awayTeam.primaryColor};
-        background-image: linear-gradient(to right, rgba(${awayToRgb.r},${awayToRgb.g},${awayToRgb.b}, 0.5) 0 100%), url(/logos/${awayTeam.name}.png);
+        background-color: ${$settings.awayTeam.primaryColor};
+        background-image: linear-gradient(to right, rgba(${awayToRgb.r},${awayToRgb.g},${awayToRgb.b}, 0.5) 0 100%), url(/logos/${$settings.awayTeam.name}.png);
     `}> 
         <div class="city-wrapper">
-            {#if R.equals(possession, TEAM.AWAY)}
+            {#if R.equals($game.possession, TEAM.AWAY)}
                 <div class="possession"></div>
             {/if}
-            <div class="cityName">{awayTeam.city}</div>
-            <div class="cityKey">{awayTeam.cityKey}</div>
+            <div class="cityName">{$settings.awayTeam.city}</div>
+            <div class="cityKey">{$settings.awayTeam.cityKey}</div>
         </div>
     </div>
-    <div class="score">{awayScore}</div>
+    <div class="score">{$game.awayScore}</div>
 </div>
 
 <style>

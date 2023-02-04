@@ -1,72 +1,114 @@
 <script lang="ts">
-    import { DEFAULT_SETTINGS, DISPLAY, EMPTY_TEAM, TEAM } from '$lib/constants/constants';
-    import type { GameSettings } from '$lib/types';
-    //import { settings } from '../stores/Settings'
-    import Settings from '$lib/screens/Settings.svelte';
-    import Game from '$lib/screens/Game.svelte';
+    import { onMount } from 'svelte';
+    import { settings } from '$lib/stores/Settings'
+    import { goto } from '$app/navigation';
+    import { GAME_MODE, TEAM } from '$lib/constants/constants';
     import * as R from 'ramda';
+    import TeamSelect from '$lib/components/TeamSelect.svelte';
+	import { beginDisabled } from '$lib/utils/game';
 
-    let display:string = DISPLAY.SETTINGS;
-    let gameSettings:GameSettings = DEFAULT_SETTINGS;
-
-    function setDisplay(dis:string) {
-        display = dis;
-        
-        if(dis === DISPLAY.SETTINGS){
-            gameSettings = {
-                ...gameSettings,
-                homeTeam: EMPTY_TEAM,
-                awayTeam: EMPTY_TEAM,
-        }
-        }
-    }
-
-    function setGameMode(e:CustomEvent) {
-        gameSettings = {
-            ...gameSettings,
-            mode: e.detail
-        }
-    }
-
-    function setTeam(e:CustomEvent) {
-        const {detail} = e;
-        gameSettings = {
-            ...gameSettings,
-            awayTeam: detail.type === TEAM.AWAY ? detail.team : gameSettings.awayTeam,
-            homeTeam: detail.type === TEAM.HOME ? detail.team : gameSettings.homeTeam,
-        }
-    }
-
-    function setWinScore (e:CustomEvent) {
-        gameSettings = {
-            ...gameSettings,
-            winScore: e.detail,
-        }
-    }
+    onMount(() => {
+        settings.reset();
+    })
+    let winScore = $settings.winScore;
+    $: settings.updateScore(winScore);
 </script>
 
 <main>
-    {#if R.equals(display, DISPLAY.PLAYING)}
-        <Game {gameSettings} on:reset={() => setDisplay(DISPLAY.SETTINGS)} />
-    {:else}
-        <Settings 
-            {gameSettings}
-            on:begin={() => setDisplay(DISPLAY.PLAYING)}
-            on:setMode={setGameMode}
-            on:setTeam={setTeam}
-            on:setWinScore={setWinScore}
+    <div>
+        <button 
+            class="mode-button"
+            class:mode-selected={R.equals($settings.mode, GAME_MODE.SOLO)}
+            on:click={() => settings.updateMode(GAME_MODE.SOLO)}
+        >
+            Solo Play
+        </button>
+        <button 
+            class="mode-button"    
+            class:mode-selected={R.equals($settings.mode, GAME_MODE.HEAD_TO_HEAD)}
+            on:click={() => settings.updateMode(GAME_MODE.HEAD_TO_HEAD)}
+        >   
+            Head-to-Head
+        </button>
+    </div>
+
+    <div class="team-select">      
+        <TeamSelect 
+            opponentId={$settings.awayTeam.id}
+            saveTeam={(team) => settings.updateHomeTeam(team)}
+            team={$settings.homeTeam}  
+            teamType={TEAM.HOME}
         />
-    {/if}
+        <div class="vs">VS.</div>
+        <TeamSelect 
+            opponentId={$settings.homeTeam.id}
+            saveTeam={(team) => settings.updateAwayTeam(team)}
+            team={$settings.awayTeam}  
+            teamType={TEAM.AWAY}
+            useRandomizer={R.equals($settings.mode, GAME_MODE.SOLO)}
+        />
+    </div>
+
+    <div class="score-select">
+        <label class="scoreLabel" for="winScore">Score to win:</label>
+        <select id="winScore" class="winScore" bind:value={winScore}>
+            {#each Array(100) as _, i}
+                <option value={i+1}>{i+1}</option>
+            {/each}
+        </select>
+        <button 
+            disabled={beginDisabled([$settings.awayTeam.id, $settings.homeTeam.id])}
+            on:click={() => goto('/game')}
+        >
+            Let's Roll!
+        </button>
+    </div>
 </main>
 
 <style>
-    main {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-        text-align: center;
-		padding: 1rem;
-		max-width: 1400px;
-		margin: 0 auto;
+    .mode-button {
+        margin: 0 15px;
+        min-width: 150px;
+        cursor: pointer;
+        font-family: var(--mono);
+    }
+    .mode-selected, .mode-selected:hover {
+        background-color: var(--steelblue);
+        color: var(--white);
+        cursor: default;
+    }
+    .scoreLabel {
+        margin: auto 0;
+    }
+    .score-select {
+        display: flex;
+        justify-content: center;
+        vertical-align: middle;
+        gap: 1%;
+    }
+    .team-select {
+        display: flex;
+        margin: 20px 0;
+        justify-content: center;
+        gap: 2%;
+    }
+    .vs {
+        font-size: 28px;
+        margin: auto 0;
+    }
+    .winScore {
+        font-family: var(--mono);
+        font-size: inherit;
+        background-color: var(--ltblue);
+        border: none;
+        border-radius: var(--border-radius);
+        margin: 0 0.5em 0.5em 0;
+        padding: 0.2em 0.5em;
+    }
+    @media (max-width: 640px) {
+		.team-select {
+			max-width: 100%;
+			flex-direction: column;
+		}
 	}
 </style>

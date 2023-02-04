@@ -1,17 +1,17 @@
 <script lang="ts">
+    import { game } from '$lib/stores/Game'
+    import { settings } from '$lib/stores/Settings'
     import { randomNumber, sleep } from '$lib/utils/common'
-	import { EMPTY_TEAM, NOOP, TEAM } from "$lib/constants/constants";
-    type SetPos = (value: string) => void;
-    export let homeTeam = EMPTY_TEAM;
-    export let awayTeam = EMPTY_TEAM;
-    export let setPossession:SetPos;
+	import { NOOP, TEAM } from "$lib/constants/constants";
 
+    let homeTeam = $settings.homeTeam;
+    let awayTeam = $settings.awayTeam;
     let winStyle:string;
 
     async function handleCoinToss(num:number) {
         winStyle = num === 0 ? TEAM.HOME : TEAM.AWAY;
         await sleep(4000);
-        setPossession(winStyle)
+        game.saveCoinToss(winStyle);
     }
 </script>
 

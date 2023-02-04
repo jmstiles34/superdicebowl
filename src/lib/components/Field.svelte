@@ -1,40 +1,36 @@
 <script lang="ts">
+    import { game } from '$lib/stores/Game'
+    import { settings } from '$lib/stores/Settings'
     import * as R from 'ramda';
     import { fieldData } from '$lib/data/data.json'
-	import { EMPTY_TEAM, POSITION, TEAM } from "$lib/constants/constants";
+	import { POSITION, TEAM } from "$lib/constants/constants";
     import EndZone from '$lib/components/Endzone.svelte'
 	import { randomNumber } from '$lib/utils/common';
-    export let homeTeam = EMPTY_TEAM;
-    export let awayTeam = EMPTY_TEAM;
-    export let ballIndex = 5;
-    export let firstDownIndex = 4;
-    export let inFieldGoalRange = false;
-    export let missedKick = false;
-    export let possession = TEAM.HOME;
+	import { inFieldGoalRange } from '$lib/utils/game';
 
     let missDirection:string|undefined;
-    $: if(missedKick){
+    $: if($game.missedKick){
         missDirection = ['left', 'right'][randomNumber()];
     }
 </script>
 
 <div class="field-wrapper">
     <EndZone 
-        hasBall={R.equals(possession, TEAM.AWAY)}
-        {inFieldGoalRange}
+        hasBall={R.equals($game.possession, TEAM.AWAY)}
+        inFieldGoalRange={inFieldGoalRange($game.action, $game.possession, $game.ballIndex)}
         position={POSITION.LEFT} 
-        team={homeTeam}
+        team={$settings.homeTeam}
         on:toggleFieldGoal 
     />
 
     <div class="field">
         <div class="fieldLogo">
             <img 
-                alt={`${homeTeam.city} ${homeTeam.name} Logo`} 
-                src={`/logos/${homeTeam.name}.png`}/>
+                alt={`${$settings.homeTeam.city} ${$settings.homeTeam.name} Logo`} 
+                src={`/logos/${$settings.homeTeam.name}.png`}/>
         </div>
         {#each fieldData as block, i}
-            <div class="fiveYards" class:firstDown={R.equals(i, firstDownIndex)}>
+            <div class="fiveYards" class:firstDown={R.equals(i, $game.firstDownIndex)}>
                 <div class="hashes"></div>
                 <div class={`upper fieldNumber flipV ${i % 2 ? 'number' : 'zero' }`}>
                     {block.upperNumber}
@@ -50,10 +46,10 @@
 
         <div 
             class={`football`}
-            class:center={!missedKick}
-            class:missLeft={missedKick && missDirection === 'left'} 
-            class:missRight={missedKick && missDirection === 'right'} 
-            style={`left: ${ballIndex*5}%`}
+            class:center={!$game.missedKick}
+            class:missLeft={$game.missedKick && missDirection === 'left'} 
+            class:missRight={$game.missedKick && missDirection === 'right'} 
+            style={`left: ${$game.ballIndex*5}%`}
         >
             <img 
                 alt="Football" 
@@ -62,10 +58,10 @@
     </div>
 
     <EndZone 
-        hasBall={R.equals(possession, TEAM.HOME)}
-        {inFieldGoalRange}
+        hasBall={R.equals($game.possession, TEAM.HOME)}
+        inFieldGoalRange={inFieldGoalRange($game.action, $game.possession, $game.ballIndex)}
         position={POSITION.RIGHT} 
-        team={awayTeam}
+        team={$settings.awayTeam}
         on:toggleFieldGoal 
     />
 </div>

@@ -1,5 +1,5 @@
 <script>
-    import '../styles/global.css'
+    import '$lib/styles/global.css'
 
     let currentYear = new Date().getFullYear();
   </script>
@@ -32,8 +32,13 @@
       background-color: var(--smoke);
     }
     main {
-      max-width: 1200px;
-      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+          text-align: center;
+      padding: 1rem;
+      max-width: 1400px;
+      margin: 0 auto;
     }
     footer {
       display: flex;

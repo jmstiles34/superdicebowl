@@ -3,6 +3,11 @@ export const TEAM = {
   HOME: "Home",
 }
 
+export const OPPOSITE_TEAM = {
+  [TEAM.AWAY]: "Home",
+  [TEAM.HOME]: "Away",
+}
+
 export const BALL_TWO_POINT = {
   [TEAM.HOME]: 19.5,
   [TEAM.AWAY]: .5
@@ -53,6 +58,45 @@ export const CONVERSION = {
   TWO_POINT_ATTEMPT: "Two-point Attempt (8+)"
 }
 
+export const GAME_ACTION = {
+  EXTRA_POINT: "Extra Point",
+  FIELD_GOAL: "Field Goal",
+  FIELD_GOAL_MISS: "Field Goal Missed",
+  FIELD_GOAL_MADE: "Field Goal Made",
+  GAME_OVER: "Game Over",
+  KICKOFF: "Receive Kickoff",
+  OFFENSE: "Offense",
+  PLACE_EXTRA_POINT: "Prepare Extra Point",
+  PLACE_KICKOFF: "Prepare Kickoff",
+  PLACE_TWO_POINT: "Prepare Two Point",
+  PUNT: "Punt",
+  TOUCHDOWN: "Touchdown",
+  TWO_POINT: "Two Point Attempt",
+}
+
+export const MODAL_CONTENT = {
+  COIN_TOSS: "Coin Toss",
+  FOURTH_DOWN: "Fourth Down",
+  POINT_OPTION: "Point Option",
+};
+
+export const DEFAULT_GAME = {
+    action: GAME_ACTION.KICKOFF,
+    awayScore: 0,
+    ballIndex: 10,
+    currentDown: 1,
+    diceRollData: [],
+    firstDownIndex: -1,
+    homeScore: 0,
+    lastPlay: "",
+    missedKick: false,
+    modalContent: MODAL_CONTENT.COIN_TOSS,
+    possession: TEAM.HOME,
+    restrictDice: false,
+    showModal: false,
+    yardsToGo: 10,
+}
+
 export const DICE_COLORS = ["blue", "red", "orange", "purple", "green"];
 
 export const DISPLAY = {
@@ -96,20 +140,9 @@ export const FOURTH_DOWN = {
   PUNT: "Punt"
 }
 
-export const GAME_ACTION = {
-  EXTRA_POINT: "Extra Point",
-  FIELD_GOAL: "Field Goal",
-  FIELD_GOAL_MISS: "Field Goal Missed",
-  FIELD_GOAL_MADE: "Field Goal Made",
-  GAME_OVER: "Game Over",
-  KICKOFF: "Receive Kickoff",
-  OFFENSE: "Offense",
-  PLACE_EXTRA_POINT: "Prepare Extra Point",
-  PLACE_KICKOFF: "Prepare Kickoff",
-  PLACE_TWO_POINT: "Prepare Two Point",
-  PUNT: "Punt",
-  TOUCHDOWN: "Touchdown",
-  TWO_POINT: "Two Point Attempt",
+export const GAME_MODE = {
+  SOLO: "Solo",
+  HEAD_TO_HEAD: "Head-to-Head",
 }
 
 export const NEXT_ACTION = {
@@ -122,38 +155,6 @@ export const NEXT_ACTION = {
   [GAME_ACTION.PLACE_TWO_POINT]: GAME_ACTION.TWO_POINT,
   [GAME_ACTION.PUNT]: GAME_ACTION.OFFENSE,
   [GAME_ACTION.TWO_POINT]: GAME_ACTION.PLACE_KICKOFF,
-}
-
-export const GAME_MODE = {
-  SOLO: "Solo",
-  HEAD_TO_HEAD: "Head-to-Head",
-}
-
-export const MODAL_CONTENT = {
-  COIN_TOSS: "Coin Toss",
-  FOURTH_DOWN: "Fourth Down",
-  POINT_OPTION: "Point Option",
-};
-
-export const NEW_GAME = {
-    action: GAME_ACTION.KICKOFF,
-    awayScore: 0,
-    awayTeam: EMPTY_TEAM,
-    ballIndex: 10,
-    currentDown: 1,
-    diceRollData: [],
-    firstDownIndex: -1,
-    homeScore: 0,
-    homeTeam: EMPTY_TEAM,
-    lastPlay: "",
-    missedKick: false,
-    modalContent: MODAL_CONTENT.COIN_TOSS,
-    mode: GAME_MODE.HEAD_TO_HEAD,
-    possession: TEAM.HOME,
-    restrictDice: false,
-    showModal: false,
-    winScore: 50,
-    yardsToGo: 10,
 }
 
 export const NOOP = () => {
@@ -174,7 +175,11 @@ export const POSITION = {
   BOTTOM: "Bottom",
 }
 
+export const INTERCEPTION_YARDS = [20, 25, 30, 35, 40];
+
 export const TRICK_PLAY_YARDS = [30, 35, 40, 45, 50, 55, 60, 65, 70];
+
+export const YARD_INTERVAL = 5;
 
 export const DEFAULT_SETTINGS = {
   homeTeam: EMPTY_TEAM,

@@ -37,7 +37,7 @@
         dice = [Array(die1).fill(0), Array(die2).fill(0)];
         await sleep(rollDelay);
         canRoll = true;
-        dispatch('diceRoll', {diceId});
+        dispatch('diceRoll', diceId);
     };
 </script>
 

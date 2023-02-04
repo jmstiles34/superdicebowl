@@ -1,23 +1,26 @@
 import type { DiceRoll, Team } from '$lib/types';
-import { BALL_FIELD_GOAL, EMPTY_TEAM, FIELD_GOAL_YARDS, GAME_ACTION, NEW_GAME, TEAM } from '$lib/constants/constants';
-import { buildTextString, randomNumber } from '$lib/utils/common'
+import { BALL_FIELD_GOAL, EMPTY_TEAM, FIELD_GOAL_YARDS, GAME_ACTION, TEAM, YARD_INTERVAL } from '$lib/constants/constants';
+import { buildTextString, nonZeroRandomNumber, randomNumber } from '$lib/utils/common'
 import * as R from 'ramda';
+import type { sStore } from '$lib/stores/Settings';
 
-export function initialState() {
-    return {...NEW_GAME}
-};
+export const backFns = {
+    [TEAM.AWAY]: R.add,
+    [TEAM.HOME]: R.subtract,
+}
 
-export function ballPosition(ballIndex:number, possession:string, yards:number, isPenalty: boolean) {
-    if(yards === 0) return ballIndex;
+export const compareFns = {
+    [TEAM.AWAY]: R.lte,
+    [TEAM.HOME]: R.gte,
+}
 
-    const newBallPosition = isHomeBall(possession) ? 
-        R.add(ballIndex, Math.min(yards/5, 21)) : 
-        R.subtract(ballIndex, yards/5);
+export const forwardFns = {
+    [TEAM.AWAY]: R.subtract,
+    [TEAM.HOME]: R.add,
+}
 
-    if(isPenalty && newBallPosition < 1) return 1;
-    if(isPenalty && newBallPosition > 19) return 19;
-
-    return newBallPosition;         
+export function beginDisabled(ids:number[]) {
+    return R.includes(0, ids);
 }
 
 export function descExtraPoint(total:number) {
@@ -61,8 +64,8 @@ export function descTurnover(isTurnover:boolean){
     return isTurnover ? 'TURNOVER:' : '';
 }
 
-export function descTwoPoint(total:number) {
-    return total >= 8 ? 'Two Point Conversion Successful!' : 'Two Point Conversion Failed';
+export function descTwoPoint(success:boolean) {
+    return `Two Point Conversion ${success ? 'Successful!' : 'Failed'}`;
 }
 
 export function descYardage(yards:number, isTouchback:boolean) {
@@ -70,32 +73,40 @@ export function descYardage(yards:number, isTouchback:boolean) {
     return yards > 0  ? `- ${yards} Yard Gain ` : `- ${yards*-1} Yard Loss`;
 }
 
-export function distance(index:number) {
-    return index*5;
+export function yardDistance(index:number) {
+    return index*YARD_INTERVAL;
 }
 
 export function showDownDistance(action:string){
     return [GAME_ACTION.OFFENSE, GAME_ACTION.PUNT].includes(action);
 }
 
-export function getFieldGoalRange(pos:string, ballIndex:number) {
-    return isHomeBall(pos) ? ballIndex >= BALL_FIELD_GOAL[pos] : ballIndex <= BALL_FIELD_GOAL[pos]
+function showFieldGoalPulse(action:string){
+    return [GAME_ACTION.FIELD_GOAL, GAME_ACTION.OFFENSE].includes(action);
 }
 
 export function inFieldGoalRange(action:string, possession:string, ballIndex:number){
-    return [GAME_ACTION.FIELD_GOAL, GAME_ACTION.OFFENSE].includes(action) && getFieldGoalRange(possession, ballIndex)
+    return showFieldGoalPulse(action) && compareFns[possession](ballIndex, BALL_FIELD_GOAL[possession]);
 }
 
 export function isFourthDown(down:number) {
     return down === 4 
 }
 
-export function isHomeBall(pos:string) {
-    return pos === TEAM.HOME 
-}
-
 export function isTouchback(index:number):boolean {
     return index < 1 || index > 19;
+}
+
+export function ballPosition(ballIndex:number, possession:string, yards:number, isPenalty: boolean) {
+    if(yards === 0) return ballIndex;
+
+    const newBallPosition = isHomeBall(possession) ? 
+        R.add(ballIndex, Math.min(yards/5, 21)) : 
+        R.subtract(ballIndex, yards/5);
+
+    if(isPenalty && newBallPosition < 1) return 1;
+    if(isPenalty && newBallPosition > 19) return 19;
+    return newBallPosition;         
 }
 
 export function isTouchdown(possession: string, ballIndex:number, yards:number, isPenalty:boolean) {
@@ -103,7 +114,7 @@ export function isTouchdown(possession: string, ballIndex:number, yards:number, 
 
     const yardsIndex = yards / 5;
     return (isHomeBall(possession) && ballIndex + yardsIndex > 19) ||
-    (possession === TEAM.AWAY && ballIndex - yardsIndex < 1)
+    (isAwayBall(possession) && ballIndex - yardsIndex < 1)
 }
 
 export function lastPlay(possession: string, ballIndex: number, diceRoll:DiceRoll, isTouchback = false) {
@@ -122,30 +133,35 @@ export function lastPlay(possession: string, ballIndex: number, diceRoll:DiceRol
 }
 
 export function setFirstDownMarker(ballIndex:number, pos:string) {
-    if(isHomeBall(pos) && ballIndex >=18) return -1;
-    if(!isHomeBall(pos) && ballIndex <=2) return -1;
+    const yardIndex = isHomeBall(pos) ? 18 : 2;
+    if(compareFns[pos](ballIndex, yardIndex)) return -1;
     
-    return isHomeBall(pos) ? ballIndex + 1 : ballIndex - 3;
+    const modifier = isHomeBall(pos) ? 1 : -3;
+    return R.add(ballIndex, modifier);
 }
 
-export function isFirstDown(possession: string, ballIndex:number, firstDownIndex:number, autoFirstDown:boolean) {
-    if(autoFirstDown) return true;
-    if(isHomeBall(possession)){
-        if(firstDownIndex !== -1 && ballIndex-1 >= firstDownIndex){
-            return true;
-        }
-        return false;
-    } 
-
-    if(firstDownIndex !== -1 && ballIndex-1 <= firstDownIndex){
-        return true;
-    }
-    
-    return false;
+export function isFirstDown(pos: string, ballIndex:number, firstDownIndex:number, autoFirstDown:boolean) {
+    return autoFirstDown 
+        || (!R.equals(firstDownIndex, -1) && compareFns[pos](ballIndex-1, firstDownIndex))
 }
 
 export function madeExtraPoint(total:number) {
     return total >= 4
+}
+
+export function primaryColor(settings:sStore, team = 'home'){
+    const teamTyped = `${team.toLowerCase()}Team` as keyof typeof settings;
+    return (settings[teamTyped] as Team).primaryColor
+}
+
+export function secondaryColor(settings:sStore, team = 'home'){
+    const teamTyped = `${team.toLowerCase()}Team` as keyof typeof settings;
+    return (settings[teamTyped] as Team).secondaryColor
+}
+
+export function setRandomTeam(teams:Team[], opponentId:number, saveFn:(a:Team)=>void){
+    const id = nonZeroRandomNumber(32)
+    R.equals(id, opponentId) ? setRandomTeam(teams, opponentId, saveFn) : saveFn(teamById(teams)(id));  
 }
 
 export function teamById(teams:Team[]) {
@@ -158,14 +174,27 @@ export function togglePossession(pos:string) {
     return isHomeBall(pos) ? TEAM.AWAY : TEAM.HOME
 }
 
-export function yardsToGo(ballIndex:number, pos:string, firstDownIndex:number) {
+export function isAwayBall(pos:string) {
+    return !isHomeBall(pos);
+}
+
+export function isHomeBall(pos:string) {
+    return pos === TEAM.HOME;
+}
+
+export function twoPointSuccess(total:number){
+    return total >= 8;
+}
+
+function addOne(index:number){
+    return index+1
+}
+
+function forcePositive(index:number){
+    return index >= 0 ? index : index*-1;
+}
+
+export function yardsToGo(firstDownIndex:number, diffIndex:number){
     if(firstDownIndex === -1) return 'Goal'
-    
-    let distance
-    if(isHomeBall(pos)){
-        distance = (firstDownIndex+1) - ballIndex
-    } else {
-        distance = ballIndex - (firstDownIndex+1)
-    }
-    return distance * 5
+    return yardDistance(forcePositive(addOne(diffIndex)));
 }
