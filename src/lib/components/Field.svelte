@@ -1,36 +1,44 @@
 <script lang="ts">
-    import { game } from '$lib/stores/Game'
-    import { settings } from '$lib/stores/Settings'
-    import * as R from 'ramda';
     import { fieldData } from '$lib/data/data.json'
-	import { POSITION, TEAM } from "$lib/constants/constants";
+	import { BALL_KICK_GOOD, POSITION, TEAM, YARD_INTERVAL } from "$lib/constants/constants";
     import EndZone from '$lib/components/Endzone.svelte'
 	import { randomNumber } from '$lib/utils/common';
-	import { inFieldGoalRange } from '$lib/utils/game';
+	import type { Team, Void } from '$lib/types';
 
+    export let awayTeam:Team;
+    export let ballIndex:number;
+    export let firstDownIndex:number;
+    export let homeTeam:Team;
+    export let inFieldGoalRange:boolean;
+    export let missedKick:boolean;
+    export let onsideKick:boolean;
+    export let possession:string;
+    export let toggleFieldGoal:Void;
+
+    $: ballPosition = (missedKick ? BALL_KICK_GOOD[possession] : ballIndex)*YARD_INTERVAL;
     let missDirection:string|undefined;
-    $: if($game.missedKick){
+    $: if(missedKick){
         missDirection = ['left', 'right'][randomNumber()];
     }
 </script>
 
 <div class="field-wrapper">
     <EndZone 
-        hasBall={R.equals($game.possession, TEAM.AWAY)}
-        inFieldGoalRange={inFieldGoalRange($game.action, $game.possession, $game.ballIndex)}
+        hasBall={possession === TEAM.AWAY}
+        {inFieldGoalRange}
         position={POSITION.LEFT} 
-        team={$settings.homeTeam}
-        on:toggleFieldGoal 
+        team={homeTeam}
+        {toggleFieldGoal}
     />
 
     <div class="field">
         <div class="fieldLogo">
             <img 
-                alt={`${$settings.homeTeam.city} ${$settings.homeTeam.name} Logo`} 
-                src={`/logos/${$settings.homeTeam.name}.png`}/>
+                alt={`${homeTeam.city} ${homeTeam.name} Logo`} 
+                src={`/logos/${homeTeam.name}.png`}/>
         </div>
         {#each fieldData as block, i}
-            <div class="fiveYards" class:firstDown={R.equals(i, $game.firstDownIndex)}>
+            <div class="fiveYards" class:firstDown={i === firstDownIndex}>
                 <div class="hashes"></div>
                 <div class={`upper fieldNumber flipV ${i % 2 ? 'number' : 'zero' }`}>
                     {block.upperNumber}
@@ -45,24 +53,27 @@
         {/each}   
 
         <div 
-            class={`football`}
-            class:center={!$game.missedKick}
-            class:missLeft={$game.missedKick && missDirection === 'left'} 
-            class:missRight={$game.missedKick && missDirection === 'right'} 
-            style={`left: ${$game.ballIndex*5}%`}
+            class="football"
+            class:center={!missedKick}
+            class:missLeft={missedKick && missDirection === 'left'} 
+            class:missRight={missedKick && missDirection === 'right'}
+            style:left={`${ballPosition}%`}
+            style:rotate={onsideKick ? '3turn' : 'initial'}
+            style:transition={onsideKick ? 
+                'left 0.5s ease-in-out, top 0.5s ease-in-out, rotate 0.5s ease-in-out' 
+                : 'left 0.5s ease-in-out, top 0.5s ease-in-out, rotate 0s ease-in-out'
+            }
         >
-            <img 
-                alt="Football" 
-                src={`/images/football.png`}/>
+            <img alt="Football" src={`/images/football.png`}/>
         </div>
     </div>
 
     <EndZone 
-        hasBall={R.equals($game.possession, TEAM.HOME)}
-        inFieldGoalRange={inFieldGoalRange($game.action, $game.possession, $game.ballIndex)}
+        hasBall={possession === TEAM.HOME}
+        {inFieldGoalRange}
         position={POSITION.RIGHT} 
-        team={$settings.awayTeam}
-        on:toggleFieldGoal 
+        team={awayTeam}
+        {toggleFieldGoal}
     />
 </div>
 
@@ -131,10 +142,10 @@
         transform: translate(-50%, -50%);
         z-index: 10;
         width: 4.5%;
-        transition: all 0.3s ease-out;
     }
     .football img {
         width: 100%;
+        transition: all 0.5s ease-in-out;
     }
     .fiveYards {
         width: 5%;

@@ -6,7 +6,6 @@
 	import { setRandomTeam, teamById } from '$lib/utils/game';
     import { cubicInOut } from 'svelte/easing';
     import fadeScale from '$lib/transitions/fadeScale';
-    import * as R from 'ramda';
     
     export let opponentId:number;
     export let saveTeam:SaveTeam;
@@ -15,7 +14,7 @@
     export let useRandomizer: boolean = false;
     
     let selected:number;
-    $: saveTeam(teamById(teamsData)(selected))
+    $: if(selected) {saveTeam(teamById(teamsData)(selected))}
 
     const fadeArgs = {
 		delay: 0,
@@ -28,7 +27,7 @@
 <div class="team-card">
     <div class="title">{teamType} Team</div>
     <div class="logo-image">
-        {#if R.gt(team.id, 0)}
+        {#if team.id > 0}
             {#each [team.id] as c (c)}
                 <img 
                     in:fadeScale={fadeArgs} 
@@ -53,7 +52,7 @@
         <select bind:value={selected} class="team-select">
             <option value="">Choose Your Team</option>
             {#each teamsData as team}
-                {#if !R.equals(team.id, opponentId)}
+                {#if team.id !== opponentId}
                     <option value={team.id}>{team.city} {team.name}</option>
                 {/if}
             {/each}

@@ -3,30 +3,35 @@
     import { settings } from '$lib/stores/Settings'
     import { goto } from '$app/navigation';
     import { GAME_MODE, TEAM } from '$lib/constants/constants';
-    import * as R from 'ramda';
     import TeamSelect from '$lib/components/TeamSelect.svelte';
 	import { beginDisabled } from '$lib/utils/game';
+	import { sfx, sleep } from '$lib/utils/common';
 
     onMount(() => {
         settings.reset();
     })
     let winScore = $settings.winScore;
     $: settings.updateScore(winScore);
+
+    function beginGame () {
+        sfx('tackle');  
+        sleep(1000).then(() => goto('/game'));
+    }
 </script>
 
 <main>
     <div>
         <button 
             class="mode-button"
-            class:mode-selected={R.equals($settings.mode, GAME_MODE.SOLO)}
-            on:click={() => settings.updateMode(GAME_MODE.SOLO)}
+            class:mode-selected={$settings.mode === GAME_MODE.SOLO}
+            on:click={() => {sfx('bass'); settings.updateMode(GAME_MODE.SOLO)}}
         >
             Solo Play
         </button>
         <button 
             class="mode-button"    
-            class:mode-selected={R.equals($settings.mode, GAME_MODE.HEAD_TO_HEAD)}
-            on:click={() => settings.updateMode(GAME_MODE.HEAD_TO_HEAD)}
+            class:mode-selected={$settings.mode === GAME_MODE.HEAD_TO_HEAD}
+            on:click={() => {sfx('bass'); settings.updateMode(GAME_MODE.HEAD_TO_HEAD)}}
         >   
             Head-to-Head
         </button>
@@ -35,17 +40,17 @@
     <div class="team-select">      
         <TeamSelect 
             opponentId={$settings.awayTeam.id}
-            saveTeam={(team) => settings.updateHomeTeam(team)}
+            saveTeam={(team) => {sfx('team'); settings.updateHomeTeam(team)}}
             team={$settings.homeTeam}  
             teamType={TEAM.HOME}
         />
         <div class="vs">VS.</div>
         <TeamSelect 
             opponentId={$settings.homeTeam.id}
-            saveTeam={(team) => settings.updateAwayTeam(team)}
+            saveTeam={(team) => {sfx('team'); settings.updateAwayTeam(team)}}
             team={$settings.awayTeam}  
             teamType={TEAM.AWAY}
-            useRandomizer={R.equals($settings.mode, GAME_MODE.SOLO)}
+            useRandomizer={$settings.mode === GAME_MODE.SOLO}
         />
     </div>
 
@@ -58,7 +63,7 @@
         </select>
         <button 
             disabled={beginDisabled([$settings.awayTeam.id, $settings.homeTeam.id])}
-            on:click={() => goto('/game')}
+            on:click={beginGame}
         >
             Let's Roll!
         </button>

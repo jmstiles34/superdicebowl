@@ -1,17 +1,18 @@
 <script lang="ts">
-    import { game } from '$lib/stores/Game'
-    import { settings } from '$lib/stores/Settings'
-    import { randomNumber, sleep } from '$lib/utils/common'
+    import { randomNumber, sfx, sleep } from '$lib/utils/common'
 	import { NOOP, TEAM } from "$lib/constants/constants";
+	import type { Team } from '$lib/types';
 
-    let homeTeam = $settings.homeTeam;
-    let awayTeam = $settings.awayTeam;
+    export let homeTeam:Team;
+    export let awayTeam:Team;
+    export let saveCoinToss:(a: string) => void;
     let winStyle:string;
 
     async function handleCoinToss(num:number) {
         winStyle = num === 0 ? TEAM.HOME : TEAM.AWAY;
+        sfx('coin-spin');
         await sleep(4000);
-        game.saveCoinToss(winStyle);
+        saveCoinToss(winStyle);
     }
 </script>
 
@@ -98,16 +99,16 @@
     }
 
     #coin.Home {
-        -webkit-animation: flipHeads 3s ease-out forwards;
-        -moz-animation: flipHeads 3s ease-out forwards;
-        -o-animation: flipHeads 3s ease-out forwards;
-        animation: flipHeads 3s ease-out forwards;
+        -webkit-animation: flipHeads 3.3s ease-out forwards;
+        -moz-animation: flipHeads 3.3s ease-out forwards;
+        -o-animation: flipHeads 3.3s ease-out forwards;
+        animation: flipHeads 3.3s ease-out forwards;
     }
     #coin.Away {
-        -webkit-animation: flipTails 3s ease-out forwards;
-        -moz-animation: flipTails 3s ease-out forwards;
-        -o-animation: flipTails 3s ease-out forwards;
-        animation: flipTails 3s ease-out forwards;
+        -webkit-animation: flipTails 3.3s ease-out forwards;
+        -moz-animation: flipTails 3.3s ease-out forwards;
+        -o-animation: flipTails 3.3s ease-out forwards;
+        animation: flipTails 3.3s ease-out forwards;
     }
 
     @keyframes flipHeads {

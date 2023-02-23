@@ -270,7 +270,7 @@
         {
             "id": 12,
             "isTurnover": true,
-            "yards": -10,
+            "yards": 10,
             "description": ["Interception"]
         },
         {
@@ -388,7 +388,7 @@
         },
         {
             "id": 44,
-            "yards": 40,
+            "yards": [30, 35, 40, 45, 50, 55, 60, 65, 70],
             "description": [
                 "Fake Reverse Pass",
                 "Flea Flicker",
@@ -399,7 +399,7 @@
         {
             "id": 45,
             "isTurnover": true,
-            "yards": -40,
+            "yards": [20, 25, 30, 35, 40],
             "description": [
                 "Interception"
             ]

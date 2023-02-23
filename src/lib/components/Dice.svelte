@@ -1,14 +1,13 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
+    import { game } from '$lib/stores/Game'
     import { elasticInOut } from "svelte/easing";
-    import { nonZeroRandomNumber, sleep } from '$lib/utils/common'
+    import { nonZeroRandomNumber, sfx, sleep } from '$lib/utils/common'
     
     export let dieColor:string;
     export let pipColor:string;
     export let pipCount:number = 6;
     export let rollDelay:number = 1000;
     
-    const dispatch = createEventDispatcher();
     let dice:number[][] = [Array(1).fill(0), Array(1).fill(0)];
     let canRoll:boolean = true;
 
@@ -24,9 +23,17 @@
         };
     };
 
+    function handleKeyPress(e:KeyboardEvent){
+        if(e.code === "Space"){
+            handleRollDice();
+        }
+    }
+
     async function handleRollDice() {
         if(!canRoll) return;
 
+        game.restrictDice(true);
+        sfx('flick');
         canRoll = false;
         let die1:number = nonZeroRandomNumber(pipCount);
         let die2:number = nonZeroRandomNumber(pipCount);
@@ -37,11 +44,11 @@
         dice = [Array(die1).fill(0), Array(die2).fill(0)];
         await sleep(rollDelay);
         canRoll = true;
-        dispatch('diceRoll', diceId);
+        game.handleDiceRoll($game.action, diceId);
     };
 </script>
 
-<button class="dice-button" on:click={handleRollDice}>
+<button class="dice-button" on:click={handleRollDice} on:keypress={handleKeyPress}>
     {#each dice as die}   
         <div 
             class="face" 

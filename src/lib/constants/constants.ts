@@ -8,9 +8,9 @@ export const OPPOSITE_TEAM = {
   [TEAM.HOME]: "Away",
 }
 
-export const BALL_TWO_POINT = {
-  [TEAM.HOME]: 19.5,
-  [TEAM.AWAY]: .5
+export const BALL_ENDZONE = {
+  [TEAM.HOME]: 21,
+  [TEAM.AWAY]: -1
 }
 
 export const BALL_EXTRA_POINT = {
@@ -33,6 +33,11 @@ export const BALL_KICKOFF = {
   [TEAM.AWAY]: 7
 }
 
+export const BALL_ONSIDE_KICK = {
+  [TEAM.HOME]: 11,
+  [TEAM.AWAY]: 9
+}
+
 export const BALL_PUNT = {
   [TEAM.HOME]: 4,
   [TEAM.AWAY]: 16
@@ -48,9 +53,9 @@ export const BALL_TOUCHBACK = {
   [TEAM.AWAY]: 15
 }
 
-export const BALL_TOUCHDOWN = {
-  [TEAM.HOME]: 21,
-  [TEAM.AWAY]: -1
+export const BALL_TWO_POINT = {
+  [TEAM.HOME]: 19.5,
+  [TEAM.AWAY]: .5
 }
 
 export const CONVERSION = {
@@ -59,50 +64,62 @@ export const CONVERSION = {
 }
 
 export const GAME_ACTION = {
+  COIN_TOSS: "Coin Toss",
   EXTRA_POINT: "Extra Point",
+  EXTRA_POINT_MADE: "Extra Point Made",
+  EXTRA_POINT_MISS: "Extra Point Missed",
   FIELD_GOAL: "Field Goal",
-  FIELD_GOAL_MISS: "Field Goal Missed",
   FIELD_GOAL_MADE: "Field Goal Made",
+  FIELD_GOAL_MISS: "Field Goal Missed",
+  FOURTH_DOWN: "Fourth Down",
+  FOURTH_DOWN_OPTIONS: "Fourth Down Options",
+  FUMBLE: "Fumble",
   GAME_OVER: "Game Over",
+  INTERCEPTION: "Interception",
   KICKOFF: "Receive Kickoff",
+  KICKOFF_ONSIDE: "Kickoff - Onside",
+  KICKOFF_RETURN: "Kickoff - Return",
+  KICKOFF_TOUCHDOWN: "Kickoff - Touchdown",
   OFFENSE: "Offense",
   PLACE_EXTRA_POINT: "Prepare Extra Point",
   PLACE_KICKOFF: "Prepare Kickoff",
   PLACE_TWO_POINT: "Prepare Two Point",
+  POINT_OPTION: "Point(s) Option",
   PUNT: "Punt",
+  TOUCHBACK: "Touchback",
   TOUCHDOWN: "Touchdown",
+  TURNOVER: "Turnover",
   TWO_POINT: "Two Point Attempt",
+  TWO_POINT_MADE: "Two Point Attempt Success",
+  TWO_POINT_MISS: "Two Point Attempt Fail",
 }
 
-export const MODAL_CONTENT = {
-  COIN_TOSS: "Coin Toss",
-  FOURTH_DOWN: "Fourth Down",
-  POINT_OPTION: "Point Option",
-};
-
 export const DEFAULT_GAME = {
-    action: GAME_ACTION.KICKOFF,
-    awayScore: 0,
+    action: GAME_ACTION.COIN_TOSS,
     ballIndex: 10,
     currentDown: 1,
-    diceRollData: [],
+    diceId: null,
     firstDownIndex: -1,
-    homeScore: 0,
     lastPlay: "",
     missedKick: false,
-    modalContent: MODAL_CONTENT.COIN_TOSS,
+    modalContent: null,
+    onsideKick: false,
     possession: TEAM.HOME,
     restrictDice: false,
-    showModal: false,
+    score: [0,0],
     yardsToGo: 10,
+  }
+  
+export const DEFAULT_TEAM = {
+  id: 0,
+  city: "",
+  cityKey: "",
+  name: "",
+  primaryColor: "",
+  secondaryColor: "",
 }
 
 export const DICE_COLORS = ["blue", "red", "orange", "purple", "green"];
-
-export const DISPLAY = {
-  SETTINGS: "settings",
-  PLAYING: "playing",
-}
 
 export const DOWN: {[key: number]: string} = {
   1: "1st",
@@ -111,14 +128,7 @@ export const DOWN: {[key: number]: string} = {
   4: "4th",
 }
 
-export const EMPTY_TEAM = {
-  id: 0,
-  city: "",
-  cityKey: "",
-  name: "",
-  primaryColor: "",
-  secondaryColor: "",
-}
+export const EXTRA_POINT_SUCCESS = 4;
 
 export const FIELD_GOAL_ROLL: {[key: number]: number} = {
   5: 4,
@@ -145,27 +155,44 @@ export const GAME_MODE = {
   HEAD_TO_HEAD: "Head-to-Head",
 }
 
-export const NEXT_ACTION = {
-  [GAME_ACTION.EXTRA_POINT]: GAME_ACTION.PLACE_KICKOFF,
-  [GAME_ACTION.FIELD_GOAL_MISS]: GAME_ACTION.OFFENSE,
-  [GAME_ACTION.FIELD_GOAL_MADE]: GAME_ACTION.KICKOFF,
-  [GAME_ACTION.KICKOFF]: GAME_ACTION.OFFENSE,
-  [GAME_ACTION.PLACE_EXTRA_POINT]: GAME_ACTION.EXTRA_POINT,
-  [GAME_ACTION.PLACE_KICKOFF]: GAME_ACTION.KICKOFF,
-  [GAME_ACTION.PLACE_TWO_POINT]: GAME_ACTION.TWO_POINT,
-  [GAME_ACTION.PUNT]: GAME_ACTION.OFFENSE,
-  [GAME_ACTION.TWO_POINT]: GAME_ACTION.PLACE_KICKOFF,
+export const DEFAULT_SETTINGS = {
+  homeTeam: DEFAULT_TEAM,
+  awayTeam: DEFAULT_TEAM,
+  mode: GAME_MODE.SOLO,
+  winScore: 50,
 }
+
+export const INTERCEPTION_ROLLS = [12,45];
+
+export const KICKOFF_RETURN_ACTION = {
+  11: GAME_ACTION.KICKOFF_ONSIDE,
+  66: GAME_ACTION.KICKOFF_TOUCHDOWN
+}
+
+export const KICKOFF_RETURN_YARDS = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
 
 export const NOOP = () => {
   // do nothing
 }
 
-export const POINTS = {
-  TWO_POINT: 2,
-  EXTRA_POINT: 1,
-  FIELD_GOAL: 3,
-  TOUCHDOWN: 6,
+export const POINTS_EXTRA_POINT = {
+  [TEAM.AWAY]: [0,1],
+  [TEAM.HOME]: [1,0],
+}
+
+export const POINTS_FIELD_GOAL = {
+  [TEAM.AWAY]: [0,3],
+  [TEAM.HOME]: [3,0],
+}
+
+export const POINTS_TOUCHDOWN = {
+  [TEAM.AWAY]: [0,6],
+  [TEAM.HOME]: [6,0],
+}
+
+export const POINTS_TWO_POINT = {
+  [TEAM.AWAY]: [0,2],
+  [TEAM.HOME]: [2,0],
 }
 
 export const POSITION = {
@@ -175,15 +202,6 @@ export const POSITION = {
   BOTTOM: "Bottom",
 }
 
-export const INTERCEPTION_YARDS = [20, 25, 30, 35, 40];
-
-export const TRICK_PLAY_YARDS = [30, 35, 40, 45, 50, 55, 60, 65, 70];
+export const TURNOVER_ONSIDE_KICK = "TURNOVER - Onside Kick";
 
 export const YARD_INTERVAL = 5;
-
-export const DEFAULT_SETTINGS = {
-  homeTeam: EMPTY_TEAM,
-  awayTeam: EMPTY_TEAM,
-  mode: GAME_MODE.SOLO,
-  winScore: 50,
-}

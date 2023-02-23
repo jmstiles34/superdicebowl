@@ -1,26 +1,21 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
-    import { EMPTY_TEAM, NOOP, POSITION } from "$lib/constants/constants";
-    import * as R from 'ramda';
+    import { DEFAULT_TEAM, NOOP, POSITION } from "$lib/constants/constants";
+	import type { Void } from "$lib/types";
     
-    export let team = EMPTY_TEAM;
     export let hasBall = false;
-    export let position = POSITION.LEFT;
     export let inFieldGoalRange = false;
-    let dispatch = createEventDispatcher();
+    export let position = POSITION.LEFT;
+    export let team = DEFAULT_TEAM;
+    export let toggleFieldGoal:Void;
 
     $: allowFieldGoal = hasBall && inFieldGoalRange;
-
-    function handleGoalPostClick(){
-        allowFieldGoal ? dispatch('toggleFieldGoal') : NOOP
-    }
 </script>
 
 <div class="endZone" style={`background-color: ${team.primaryColor};`}>        
     <img 
         alt={`${team.city} ${team.name} Helmet`} 
         class={`helmetLogo helmetTop rotate${position}`}
-        class:flipLeft={R.equals(position, POSITION.LEFT)}
+        class:flipLeft={position === POSITION.LEFT}
         src={`/helmets/${team.name}.png`}/>
     
     <div 
@@ -32,15 +27,15 @@
     <img 
         alt={`${team.city} ${team.name} Helmet`} 
         class={`helmetLogo helmetBottom rotate${position}`}
-        class:flipRight={R.equals(position, POSITION.RIGHT)}
+        class:flipRight={position === POSITION.RIGHT}
         src={`/helmets/${team.name}.png`}/>
 
     <div 
         class="goalPost"
-        class:right={R.equals(position, POSITION.RIGHT)}
+        class:right={position === POSITION.RIGHT}
         class:clickable={allowFieldGoal}
-        on:click={handleGoalPostClick}
-        on:keydown={handleGoalPostClick}
+        on:click={allowFieldGoal ? () => toggleFieldGoal() : NOOP}
+        on:keydown={allowFieldGoal ? () => toggleFieldGoal() : NOOP}
     >
         <div class="post" class:pulse={allowFieldGoal}></div>
         <div class="bar" class:pulse={allowFieldGoal}></div>

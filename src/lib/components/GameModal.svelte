@@ -1,5 +1,8 @@
 <script lang="ts">
-    export let showModal = false;
+	import { GAME_ACTION } from "$lib/constants/constants";
+
+
+    export let action:string;
 
     /* let keydown = (e: KeyboardEvent) => {
         e.stopPropagation()
@@ -9,10 +12,10 @@
     } */
   </script>
   
-  {#if showModal}
+  {#if [GAME_ACTION.COIN_TOSS, GAME_ACTION.FOURTH_DOWN_OPTIONS, GAME_ACTION.POINT_OPTION].includes(action)}
     <div class="backdrop">
         <div class="modal">
-            <slot></slot>
+            <slot/>
         </div>
     </div>
 {/if}

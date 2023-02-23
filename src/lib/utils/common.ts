@@ -1,9 +1,23 @@
-import * as R from 'ramda';
+export function add(a:number, b:number) {
+	return a + b;
+}
 
 export function buildTextString(fns:{ (): string; }[]) {
 	return fns.reduce((acc, fn) => {
 		return joinText(acc, fn())
 	}, '');
+}
+
+export function equals(a:unknown, b:unknown) {
+	return a === b;
+}
+
+export function gt(a:number, b:number) {
+	return a > b;
+}
+
+export function gte(a:number, b:number) {
+	return a >= b;
 }
 
 export function hexToRGB(hex:string) {
@@ -15,8 +29,22 @@ export function hexToRGB(hex:string) {
     };
 }
 
+export const isArray = (x:unknown[]) => Array.isArray(x)
+
 export function joinText(a:string, b:string) {
 	return `${a}${a.length ? ' ':''}${b}`;
+}
+
+export function lt(a:number, b:number) {
+	return a < b;
+}
+
+export function lte(a:number, b:number) {
+	return a <= b;
+}
+
+export function nonZeroRandomNumber(max = 2) {
+	return Math.floor(Math.random()*max)+1;
 }
 
 export function pickRandom(array:unknown[]):unknown {
@@ -32,10 +60,6 @@ export function removeSpaces(text:string) {
 	return text.replaceAll(" ", "");
 }
 
-export function nonZeroRandomNumber(max = 2) {
-	return Math.floor(Math.random()*max)+1;
-}
-
 export function shuffle(array: []) {
 	return array.sort(() => Math.random() - 0.5);
 }
@@ -46,8 +70,26 @@ export function sleep(ms:number) {
 	});
 }
 
+export function sfx(name:string, ext = 'opus') {
+	const audioFile = new Audio(`/sfx/${name}.${ext}`);
+    audioFile.play();
+}
+
+export function subtract(a:number, b:number) {
+	return a - b;
+}
+
+export function sumArrays(array: number[][]) {
+	return array.reduce((acc, a) => {
+        a.forEach((b, i) => {
+            acc[i] = (acc[i] || 0) + b;
+        });
+        return acc;
+    }, []);
+};
+
 export function sumDigits(num:number) {
-	return R.toString(num).split("").reduce((acc, n) => {
+	return num.toString().split("").reduce((acc, n) => {
 		return acc + parseInt(n)
 	}, 0);
 };
