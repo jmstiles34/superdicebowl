@@ -232,7 +232,6 @@ export const game = {
     },
     kickExtraPoint: (diceId:number) => {
         const success = gte(sumDigits(diceId), EXTRA_POINT_SUCCESS);
-        sfx('kick');
         _game.update((self: gStore) => {
             self.type = 'kickExtraPoint';
             self.action = GAME_ACTION.PLACE_KICKOFF;
@@ -240,12 +239,11 @@ export const game = {
             self.missedKick = !success;
             self.lastPlay = descExtraPoint(success);
             self.score = success ? sumArrays([self.score, POINTS_EXTRA_POINT[self.possession]]) : self.score;
-
+            success ? sfx('kick') : sfx('miss');
             return self;
         })
     },
     kickFieldGoal: (diceId:number) => {
-        sfx('kick');
         _game.update((self: gStore) => {
             const distanceRequired = fieldGoalYardsFns[self.possession](self.ballIndex);
             const success = gte(sumDigits(diceId), FIELD_GOAL_ROLL[distanceRequired]);
@@ -255,6 +253,7 @@ export const game = {
             self.missedKick = !success;
             self.lastPlay = descFieldGoal(success, distanceRequired);
             self.score = success ? sumArrays([self.score, POINTS_FIELD_GOAL[self.possession]]) : self.score;
+            success ? sfx('kick') : sfx('miss');
             return self;
         })
     },

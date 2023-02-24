@@ -277,9 +277,14 @@
             "id": 13,
             "yards": 20,
             "description": [
+                "Counter Dive",
                 "Deep Out",
+                "Hitch and Go",
+                "Option Right",
+                "Quarterback Scramble",
                 "Reverse Play",
-                "Run Up the Middle"
+                "Run Up the Middle",
+                "Seam Pass"
             ]
         },
         {
@@ -296,16 +301,21 @@
             "yards": 5,
             "description": [
                 "Check Down Pass",
+                "Draw Play",
                 "Option Right",
-                "Quarterback Draw"
+                "Quarterback Sneak",
+                "Wheel Route"
             ]
         },
         {
             "id": 16,
             "yards": 0,
             "description": [
+                "Bad Throw",
                 "Incomplete Pass",
-                "Pass Dropped"
+                "Pass Batted Down",
+                "Pass Dropped",
+                "Throw Away"
             ]
         },
         {
@@ -329,15 +339,22 @@
             "id": 24,
             "yards": 20,
             "description": [
+                "Deep Cross",
+                "Deep Post",
+                "Left Power Left",
+                "Left Power Sweep",
                 "Pass Down the Sideline",
                 "Reverse Play",
-                "Run to the Right"
+                "Right Power Right",
+                "Right Power Sweep"
             ]
         },
         {
             "id": 25,
             "yards": -5,
             "description": [
+                "Busted Play",
+                "Quarterback Sack",
                 "Tackle in backfield"
             ]
         },
@@ -345,7 +362,10 @@
             "id": 26,
             "yards": 5,
             "description": [
+                "Button Hook",
+                "Quick Hitch",
                 "Screen Pass",
+                "Shallow Cross",
                 "Shovel Pass"
             ]
         },
@@ -372,7 +392,11 @@
             "id": 35,
             "yards": 5,
             "description": [
-                "Halfback Run"
+                "Counter Left",
+                "Fullback Dive",
+                "Halfback Run",
+                "Off Tackle Run",
+                "Pass to Flat"
             ]
         },
         {
@@ -392,8 +416,11 @@
             "description": [
                 "Fake Reverse Pass",
                 "Flea Flicker",
+                "Hail Mary",
                 "Halfback Pass",
-                "Hook and Lateral"
+                "Hook and Lateral",
+                "Stiles Special",
+                "Wide Receiver Screen"
             ]
         },
         {
@@ -415,7 +442,11 @@
             "id": 55,
             "yards": 10,
             "description": [
-                "Pass Complete"
+                "Curl Route",
+                "Drag Route",
+                "Pass Complete",
+                "Play Action Pass",
+                "Wide Receiver Slant"
             ]
         },
         {
