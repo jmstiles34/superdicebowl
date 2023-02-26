@@ -8,10 +8,10 @@
     <h3>Choose a Conversion Option</h3>
 </div>
 <div class="wrapper">
-    <button class="point-button" on:click={() => {sfx('slide-click'); savePointOption(GAME_ACTION.EXTRA_POINT)}}>
+    <button class="point-button" on:click={() => {sfx('button'); savePointOption(GAME_ACTION.EXTRA_POINT)}}>
         {CONVERSION.EXTRA_POINT_ATTEMPT}
     </button>
-    <button class="point-button" on:click={() => {sfx('slide-click'); savePointOption(GAME_ACTION.TWO_POINT)}}>   
+    <button class="point-button" on:click={() => {sfx('button'); savePointOption(GAME_ACTION.TWO_POINT)}}>   
         {CONVERSION.TWO_POINT_ATTEMPT}
     </button>
 </div>

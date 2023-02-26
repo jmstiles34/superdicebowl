@@ -78,7 +78,7 @@
         
     }
     
-    $: game.handleNextAction(action, ballIndex);
+    $: game.handleNextAction(action, ballIndex, score, winScore);
     $: if(action === GAME_ACTION.GAME_OVER){
         sleep(100).then(() => {
             const fireworks = fw.fireworksInstance()
@@ -90,14 +90,14 @@
     $: if(isModalChoice(mode, possession, action)){
             if(action === GAME_ACTION.POINT_OPTION){
                 sleep(1000).then(() => {
-                    sfx('sticks');
+                    sfx('button');
                     game.preparePointOption(makePointChoice(score, winScore));
                 }
             );
         } else {
             sleep(1000).then(() => {
                 const choiceAction = makeFourthDownChoice(score, ballIndex);
-                sfx('sticks');               
+                sfx('button');               
                 if(choiceAction === GAME_ACTION.FIELD_GOAL){
                     game.toggleFieldGoal();
                 } else {

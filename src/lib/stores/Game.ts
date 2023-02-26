@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 import { BALL_ENDZONE, BALL_EXTRA_POINT, BALL_KICKOFF, BALL_KICK_GOOD, BALL_ONSIDE_KICK, BALL_PUNT, BALL_SAFETY, BALL_TOUCHBACK, BALL_TWO_POINT, DEFAULT_GAME, EXTRA_POINT_SUCCESS, FIELD_GOAL_ROLL, FIELD_GOAL_YARDS, GAME_ACTION, INTERCEPTION_ROLLS, KICKOFF_RETURN_ACTION, KICKOFF_RETURN_YARDS, OPPOSITE_TEAM, POINTS_EXTRA_POINT, POINTS_FIELD_GOAL, POINTS_TOUCHDOWN, POINTS_TWO_POINT, TURNOVER_ONSIDE_KICK } from '$lib/constants/constants';
-import { ballPosition, calcYardsToGo, descExtraPoint, descFieldGoal, descKickoff, descPunt, descSafety, descTwoPoint, fieldGoalYardsFns, forwardFns, indexToYards, isFourthDown, isOnsideKick, isTouchback, isTouchdown, kickOffIndexFns, lastPlayDesc, madeFirstDown, setFirstDownMarker, turnoverOnDowns, twoPointSuccess } from "$lib/utils/game";
+import { ballPosition, calcYardsToGo, descExtraPoint, descFieldGoal, descKickoff, descPunt, descSafety, descTwoPoint, fieldGoalYardsFns, forwardFns, indexToYards, isFourthDown, isGameComplete, isOnsideKick, isTouchback, isTouchdown, kickOffIndexFns, lastPlayDesc, madeFirstDown, setFirstDownMarker, turnoverOnDowns, twoPointSuccess } from "$lib/utils/game";
 import { equals, gt, gte, isArray, lt, pickRandom, sfx, sleep, sumArrays, sumDigits } from "$lib/utils/common";
 import { diceData } from '$lib/data/data.json'
 
@@ -177,7 +177,7 @@ export const game = {
             self.ballIndex = success ? BALL_ENDZONE[self.possession] : self.ballIndex;
             self.lastPlay = descTwoPoint(success);
             self.score = success ? sumArrays([self.score, POINTS_TWO_POINT[self.possession]]) : self.score;
-            success ? sfx('horns') : sfx('pop');
+            success ? sfx('horns') : sfx('miss1');
             return self;
         })
     },
@@ -201,34 +201,36 @@ export const game = {
         }
         executeFns[action](diceId);
     },
-    handleNextAction: (action:string, ballIndex:number) => {
-        switch (action) {
-            case GAME_ACTION.FIELD_GOAL_MADE:
-                sleep(1500).then(() => game.setAction(GAME_ACTION.PLACE_KICKOFF));
-                break;
-            case GAME_ACTION.FIELD_GOAL_MISS:
-                sleep(1500).then(() => game.turnover(ballIndex));
-                break;
-            case GAME_ACTION.FOURTH_DOWN:
-                sleep(1500).then(() => game.setAction(GAME_ACTION.FOURTH_DOWN_OPTIONS));
-                break;
-            case GAME_ACTION.KICKOFF_ONSIDE:
-                sleep(100).then(() => game.saveKickoffOnside()); 
-                break;
-            case GAME_ACTION.KICKOFF_RETURN:
-                sleep(1000).then(() => game.saveKickoff());    
-                break;
-            case GAME_ACTION.KICKOFF_TOUCHDOWN:
-                sleep(1000).then(() => game.saveTouchdown());    
-                break;
-            case GAME_ACTION.PLACE_KICKOFF:
-                sleep(1500).then(() => game.prepareKickoff());
-                break;
-            case GAME_ACTION.TOUCHDOWN:
-                sleep(2000).then(() => game.setAction(GAME_ACTION.POINT_OPTION));
-                break;
-            default:
-                break;
+    handleNextAction: (action:string, ballIndex:number, score:number[], winScore:number) => {
+        if(!isGameComplete(score, winScore)){
+            switch (action) {
+                case GAME_ACTION.FIELD_GOAL_MADE:
+                    sleep(1500).then(() => game.setAction(GAME_ACTION.PLACE_KICKOFF));
+                    break;
+                case GAME_ACTION.FIELD_GOAL_MISS:
+                    sleep(1500).then(() => game.turnover(ballIndex));
+                    break;
+                case GAME_ACTION.FOURTH_DOWN:
+                    sleep(1500).then(() => game.setAction(GAME_ACTION.FOURTH_DOWN_OPTIONS));
+                    break;
+                case GAME_ACTION.KICKOFF_ONSIDE:
+                    sleep(100).then(() => game.saveKickoffOnside()); 
+                    break;
+                case GAME_ACTION.KICKOFF_RETURN:
+                    sleep(1000).then(() => game.saveKickoff());    
+                    break;
+                case GAME_ACTION.KICKOFF_TOUCHDOWN:
+                    sleep(1000).then(() => game.saveTouchdown());    
+                    break;
+                case GAME_ACTION.PLACE_KICKOFF:
+                    sleep(1500).then(() => game.prepareKickoff());
+                    break;
+                case GAME_ACTION.TOUCHDOWN:
+                    sleep(2000).then(() => game.setAction(GAME_ACTION.POINT_OPTION));
+                    break;
+                default:
+                    break;
+            }
         }
     },
     kickExtraPoint: (diceId:number) => {
