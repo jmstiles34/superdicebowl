@@ -1,20 +1,23 @@
 <script lang="ts">
-    import { onDestroy, onMount, tick } from 'svelte';
+    import { onDestroy, onMount } from 'svelte';
     import { Fireworks } from '@fireworks-js/svelte'
     import type { FireworksOptions } from '@fireworks-js/svelte'
     import { game } from '$lib/stores/Game'
     import { settings } from '$lib/stores/Settings'
     import { goto } from '$app/navigation';
-    import { equals, gt, sleep } from '$lib/utils/common'
+    import { equals, gt, sfx, sleep } from '$lib/utils/common'
     import { 
         compareFns,
         inFieldGoalRange, 
         isGameComplete,
+        isModalChoice,
+        makeFourthDownChoice,
+        makePointChoice,
         primaryColor,
         secondaryColor,
         showDownDistance, 
     } from '$lib/utils/game'
-    import { BALL_FIELD_GOAL, DOWN, GAME_ACTION } from '$lib/constants/constants';
+    import { BALL_FIELD_GOAL, DOWN, GAME_ACTION, GAME_MODE, TEAM } from '$lib/constants/constants';
     import Dice from '$lib/components/Dice.svelte';
     import CoinToss from '$lib/components/modal/CoinToss.svelte';
     import Field from '$lib/components/Field.svelte';
@@ -23,7 +26,7 @@
     import PointOption from '$lib/components/modal/PointOption.svelte';
     import Scores from '$lib/components/Scores.svelte';
 
-    const {awayTeam, homeTeam, winScore} = $settings;
+    const {awayTeam, homeTeam, mode, winScore} = $settings;
     $: ({
         action, 
         ballIndex, 
@@ -82,6 +85,28 @@
             fireworks.start()}
         );
     }
+
+    //
+    $: if(isModalChoice(mode, possession, action)){
+            if(action === GAME_ACTION.POINT_OPTION){
+                sleep(1000).then(() => {
+                    sfx('sticks');
+                    game.preparePointOption(makePointChoice(score, winScore));
+                }
+            );
+        } else {
+            sleep(1000).then(() => {
+                const choiceAction = makeFourthDownChoice(score, ballIndex);
+                sfx('sticks');               
+                if(choiceAction === GAME_ACTION.FIELD_GOAL){
+                    game.toggleFieldGoal();
+                } else {
+                    game.saveFourthDown(choiceAction)
+                }
+            }
+        );
+        }
+    }
 </script>
 
 <main>
@@ -93,7 +118,7 @@
                     dieColor={primaryColor($settings, possession)} 
                     pipColor={secondaryColor($settings, possession)} 
                 />
-                {#if restrictDice}
+                {#if restrictDice || (mode === GAME_MODE.SOLO && possession === TEAM.AWAY)}
                     <div class="dice-block" />
                 {/if}
             </div>

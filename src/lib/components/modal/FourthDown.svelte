@@ -11,15 +11,15 @@
     <h3>4th Down...Choose an Option</h3>
 </div>
 <div class="wrapper">
-    <button class="point-button" on:click={() => {sfx('slide-click'); saveFourthDown(GAME_ACTION.OFFENSE)}}>
+    <button class="point-button" on:click={() => {sfx('sticks'); saveFourthDown(GAME_ACTION.OFFENSE)}}>
         {FOURTH_DOWN.GO_FOR_IT}
     </button>
     {#if inFieldGoalRange}
-        <button class="point-button" on:click={() => {sfx('slide-click'); toggleFieldGoal()}}>   
+        <button class="point-button" on:click={() => {sfx('sticks'); toggleFieldGoal()}}>   
             {FOURTH_DOWN.FIELD_GOAL}
         </button>
     {/if}
-    <button class="point-button" on:click={() => {sfx('slide-click'); saveFourthDown(GAME_ACTION.PUNT)}}>   
+    <button class="point-button" on:click={() => {sfx('sticks'); saveFourthDown(GAME_ACTION.PUNT)}}>   
         {FOURTH_DOWN.PUNT}
     </button>
 </div>

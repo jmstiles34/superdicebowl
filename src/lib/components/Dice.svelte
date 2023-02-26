@@ -1,7 +1,11 @@
 <script lang="ts">
     import { game } from '$lib/stores/Game'
+    import { settings } from '$lib/stores/Settings'
     import { elasticInOut } from "svelte/easing";
     import { nonZeroRandomNumber, sfx, sleep } from '$lib/utils/common'
+	import { isRollAction } from '$lib/utils/game';
+	import { GAME_MODE, TEAM } from '$lib/constants/constants';
+	import { tick } from 'svelte';
     
     export let dieColor:string;
     export let pipColor:string;
@@ -27,6 +31,16 @@
         if(e.code === "Space"){
             handleRollDice();
         }
+    }
+
+    $: if($settings.mode === GAME_MODE.SOLO && $game.possession === TEAM.AWAY && isRollAction($game.action)){
+        if($game.ballIndex > 0 || $game.currentDown > 0){
+            tick();
+            sleep(1000).then(() => {
+                handleRollDice();
+            }
+        );
+        } 
     }
 
     async function handleRollDice() {

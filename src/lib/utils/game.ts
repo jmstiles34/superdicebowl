@@ -1,5 +1,5 @@
 import type { DiceRoll, Team } from '$lib/types';
-import { BALL_FIELD_GOAL, DEFAULT_TEAM, FIELD_GOAL_YARDS, GAME_ACTION, TEAM, YARD_INTERVAL } from '$lib/constants/constants';
+import { BALL_FIELD_GOAL, DEFAULT_TEAM, FIELD_GOAL_YARDS, GAME_ACTION, GAME_MODE, TEAM, YARD_INTERVAL } from '$lib/constants/constants';
 import { 
     add, 
     buildTextString, 
@@ -138,6 +138,24 @@ export function isOnsideKick(index:number) {
     return index === 11 
 }
 
+export function isModalChoice(mode:string, possession:string, action:string) {
+    return mode === GAME_MODE.SOLO && possession === TEAM.AWAY && [
+        GAME_ACTION.FOURTH_DOWN_OPTIONS,
+        GAME_ACTION.POINT_OPTION
+    ].includes(action) 
+}
+
+export function isRollAction(action:string) {
+    return [
+        GAME_ACTION.EXTRA_POINT, 
+        GAME_ACTION.FIELD_GOAL, 
+        GAME_ACTION.KICKOFF,
+        GAME_ACTION.OFFENSE, 
+        GAME_ACTION.PUNT, 
+        GAME_ACTION.TWO_POINT
+    ].includes(action);
+}
+
 export function isTouchback(index:number):boolean {
     return index < 1 || index > 19;
 }
@@ -168,6 +186,20 @@ export function madeExtraPoint(total:number) {
 export function madeFirstDown(pos: string, ballIndex:number, firstDownIndex:number, autoFirstDown = false) {
     return autoFirstDown 
         || (!equals(firstDownIndex, -1) && compareFns[pos](ballIndex-1, firstDownIndex))
+}
+
+//TODO: Use winScore and factor in how close opponent is to winning
+export function makeFourthDownChoice(score:number[], ballIndex:number) {
+    if(ballIndex >= 10 && score[0] - score[1] <= 16) return GAME_ACTION.PUNT;
+    if(ballIndex <= 9 && score[0] - score[1] <= 16) return GAME_ACTION.FIELD_GOAL;
+
+    return GAME_ACTION.OFFENSE;
+}
+
+export function makePointChoice(score:number[], winScore:number) {
+    if(winScore - score[1] <= 2) return GAME_ACTION.TWO_POINT
+    if(score[0] - score[1] >= 10) return GAME_ACTION.TWO_POINT
+    return GAME_ACTION.EXTRA_POINT
 }
 
 export function setFirstDownMarker(ballIndex:number, pos:string) {

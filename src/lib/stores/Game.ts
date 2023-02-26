@@ -177,6 +177,7 @@ export const game = {
             self.ballIndex = success ? BALL_ENDZONE[self.possession] : self.ballIndex;
             self.lastPlay = descTwoPoint(success);
             self.score = success ? sumArrays([self.score, POINTS_TWO_POINT[self.possession]]) : self.score;
+            success ? sfx('horns') : sfx('pop');
             return self;
         })
     },

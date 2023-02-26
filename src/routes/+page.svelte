@@ -24,14 +24,14 @@
         <button 
             class="mode-button"
             class:mode-selected={$settings.mode === GAME_MODE.SOLO}
-            on:click={() => {sfx('bass'); settings.updateMode(GAME_MODE.SOLO)}}
+            on:click={() => {sfx('bass2'); settings.updateMode(GAME_MODE.SOLO)}}
         >
             Solo Play
         </button>
         <button 
             class="mode-button"    
             class:mode-selected={$settings.mode === GAME_MODE.HEAD_TO_HEAD}
-            on:click={() => {sfx('bass'); settings.updateMode(GAME_MODE.HEAD_TO_HEAD)}}
+            on:click={() => {sfx('bass2'); settings.updateMode(GAME_MODE.HEAD_TO_HEAD)}}
         >   
             Head-to-Head
         </button>
