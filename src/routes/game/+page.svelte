@@ -176,7 +176,7 @@
 <style>
     main {
         position: relative;
-        padding: 20px;
+        padding: 1rem;
 	}
     .game{
         max-width: 850px;

@@ -3,9 +3,13 @@
     import { settings } from '$lib/stores/Settings'
     import { goto } from '$app/navigation';
     import { GAME_MODE, TEAM } from '$lib/constants/constants';
+    import Modal from '$lib/components/Modal.svelte';
     import TeamSelect from '$lib/components/TeamSelect.svelte';
 	import { beginDisabled } from '$lib/utils/game';
 	import { sfx, sleep } from '$lib/utils/common';
+	import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
+
+    let showCustomTeam:boolean;
 
     onMount(() => {
         settings.reset();
@@ -55,6 +59,7 @@
     </div>
 
     <div class="score-select">
+        <button on:click={() => showCustomTeam = true}>Customize</button>
         <label class="scoreLabel" for="winScore">Score to win:</label>
         <select id="winScore" class="winScore" bind:value={winScore}>
             {#each Array(100) as _, i}
@@ -68,9 +73,17 @@
             Let's Roll!
         </button>
     </div>
+    <Modal showModal={showCustomTeam} close={() => showCustomTeam = false}>
+        <div class="model-content">
+            <CustomTeam close={()=>showCustomTeam = false}/>
+        </div>
+    </Modal>
 </main>
 
 <style>
+    main {
+        padding: 1rem;
+    }
     .mode-button {
         margin: 0 15px;
         min-width: 150px;

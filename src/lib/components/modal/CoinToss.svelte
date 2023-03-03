@@ -34,7 +34,8 @@
             <img 
                 alt={`${homeTeam.city} ${homeTeam.name} Helmet`} 
                 class={`helmetLogo`}
-                src={`/logos/${homeTeam.name}.png`}/>
+                src={`/logos/${homeTeam.hasOwnProperty('logo') ? `custom/${homeTeam.logo}` : homeTeam.name}.png`}
+            />
         </div>
         <div 
             class="side-away" 
@@ -46,7 +47,8 @@
             <img 
                 alt={`${awayTeam.city} ${awayTeam.name} Helmet`} 
                 class={`helmetLogo`}
-                src={`/logos/${awayTeam.name}.png`}/>
+                src={`/logos/${awayTeam.hasOwnProperty('logo') ? `custom/${awayTeam.logo}` : awayTeam.name}.png`}
+            />
         </div>
     </div>
 </div>

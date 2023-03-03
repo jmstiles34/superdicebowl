@@ -15,7 +15,7 @@
 <div class="team-scores">
     <div class="team" style={`
         background-color: ${homeTeam.primaryColor};
-        background-image: linear-gradient(to right, rgba(${homeToRgb.r},${homeToRgb.g},${homeToRgb.b}, 0.5) 0 100%), url(/logos/${homeTeam.name}.png);
+        background-image: linear-gradient(to right, rgba(${homeToRgb.r},${homeToRgb.g},${homeToRgb.b}, 0.5) 0 100%), url(/logos/${homeTeam.hasOwnProperty('logo') ? `custom/${homeTeam.logo}` : homeTeam.name}.png);
     `}> 
         <div class="city-wrapper">
             {#if possession === TEAM.HOME}
@@ -28,7 +28,7 @@
     <div class="score">{score[0]}</div>
     <div class="team" style={`
         background-color: ${awayTeam.primaryColor};
-        background-image: linear-gradient(to right, rgba(${awayToRgb.r},${awayToRgb.g},${awayToRgb.b}, 0.5) 0 100%), url(/logos/${awayTeam.name}.png);
+        background-image: linear-gradient(to right, rgba(${awayToRgb.r},${awayToRgb.g},${awayToRgb.b}, 0.5) 0 100%), url(/logos/${awayTeam.hasOwnProperty('logo') ? `custom/${awayTeam.logo}` : awayTeam.name}.png);
     `}> 
         <div class="city-wrapper">
             {#if possession === TEAM.AWAY}

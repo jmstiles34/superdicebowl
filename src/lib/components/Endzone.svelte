@@ -1,22 +1,41 @@
 <script lang="ts">
     import { DEFAULT_TEAM, NOOP, POSITION } from "$lib/constants/constants";
-	import type { Void } from "$lib/types";
+    import CustomHelmet from "$lib/components/CustomHelmet.svelte";
+	import type { Team, Void } from "$lib/types";
     
     export let hasBall = false;
     export let inFieldGoalRange = false;
     export let position = POSITION.LEFT;
-    export let team = DEFAULT_TEAM;
+    export let team:Team = DEFAULT_TEAM;
     export let toggleFieldGoal:Void;
 
     $: allowFieldGoal = hasBall && inFieldGoalRange;
 </script>
 
 <div class="endZone" style={`background-color: ${team.primaryColor};`}>        
-    <img 
-        alt={`${team.city} ${team.name} Helmet`} 
-        class={`helmetLogo helmetTop rotate${position}`}
-        class:flipLeft={position === POSITION.LEFT}
-        src={`/helmets/${team.name}.png`}/>
+    {#if team.hasOwnProperty('logo')}
+        <div 
+            class={`helmetLogo helmetTop rotate${position}`}
+            class:flipLeft={position === POSITION.LEFT}>
+            <CustomHelmet 
+                bg={team.primaryColor}
+                faceMask={team.faceMask} 
+                helmet={team.helmet}
+                stripe={team.stripe}
+                trim={team.trim}
+                logo={team.logo}
+                height={55}
+                width={55} 
+            />
+        </div>
+    {:else}
+        <img 
+            alt={`${team.city} ${team.name} Helmet`} 
+            class={`helmetLogo helmetTop rotate${position}`}
+            class:flipLeft={position === POSITION.LEFT}
+            src={`/helmets/${team.name}.png`}
+        />
+    {/if}
     
     <div 
         class={`name rotate${position}`}
@@ -24,11 +43,29 @@
         {team.name}
     </div>
 
-    <img 
-        alt={`${team.city} ${team.name} Helmet`} 
-        class={`helmetLogo helmetBottom rotate${position}`}
-        class:flipRight={position === POSITION.RIGHT}
-        src={`/helmets/${team.name}.png`}/>
+    {#if team.hasOwnProperty('logo')}
+        <div 
+            class={`helmetLogo helmetBottom rotate${position}`}
+            class:flipRight={position === POSITION.RIGHT}>
+            <CustomHelmet 
+                bg={team.primaryColor}
+                faceMask={team.faceMask} 
+                helmet={team.helmet}
+                stripe={team.stripe}
+                trim={team.trim}
+                logo={team.logo}
+                height={55}
+                width={55} 
+            />
+        </div>
+    {:else}
+        <img 
+            alt={`${team.city} ${team.name} Helmet`} 
+            class={`helmetLogo helmetBottom rotate${position}`}
+            class:flipRight={position === POSITION.RIGHT}
+            src={`/helmets/${team.name}.png`}
+        />
+    {/if}
 
     <div 
         class="goalPost"

@@ -1,0 +1,352 @@
+{
+    "logos": [
+        {
+            "name": "Airplane",
+            "file": "airplane"
+        },
+        {
+            "name": "Baymax",
+            "file": "baymax"
+        },
+        {
+            "name": "Bird (Ball)",
+            "file": "bird-ball"
+        },
+        {
+            "name": "Bird (Flower)",
+            "file": "bird-flower"
+        },
+        {
+            "name": "Bird (Rainbow)",
+            "file": "bird-rainbow"
+        },
+        {
+            "name": "Bird (Worm)",
+            "file": "bird-worm"
+        },
+        {
+            "name": "Black Widow",
+            "file": "black-widow"
+        },
+        {
+            "name": "Bowling",
+            "file": "bowling"
+        },
+        {
+            "name": "Bowling (stars)",
+            "file": "bowling-stars"
+        },
+        {
+            "name": "Budgerigar",
+            "file": "budgerigar"
+        },
+        {
+            "name": "Butterfly",
+            "file": "butterfly"
+        },
+        {
+            "name": "Cute Animal",
+            "file": "cute-animal"
+        },
+        {
+            "name": "Dancer",
+            "file": "dancer"
+        },
+        {
+            "name": "Demon",
+            "file": "demon"
+        },
+        {
+            "name": "Demon (face)",
+            "file": "demon-black"
+        },
+        {
+            "name": "Donkey",
+            "file": "donkey"
+        },
+        {
+            "name": "Eagle",
+            "file": "eagle"
+        },
+        {
+            "name": "Feathers",
+            "file": "feathers"
+        },
+        {
+            "name": "Fish (Bones)",
+            "file": "fishbones"
+        },
+        {
+            "name": "Fish (Light)",
+            "file": "fish-light"
+        },
+        {
+            "name": "Fish (Pair)",
+            "file": "fish-pair"
+        },
+        {
+            "name": "Flower",
+            "file": "flower-redblue"
+        },
+        {
+            "name": "French Fries",
+            "file": "fries"
+        },
+        {
+            "name": "Geographic (1)",
+            "file": "geographic-1"
+        },
+        {
+            "name": "Geographic (2)",
+            "file": "geographic-2"
+        },
+        {
+            "name": "Geographic (3)",
+            "file": "geographic-3"
+        },
+        {
+            "name": "Geographic (4)",
+            "file": "geographic-4"
+        },
+        {
+            "name": "Geometric Face",
+            "file": "face"
+        },
+        {
+            "name": "Goat",
+            "file": "goat"
+        },
+        {
+            "name": "Goat (Mountain)",
+            "file": "goat-mnt"
+        },
+        {
+            "name": "Heart (Purple)",
+            "file": "heart-purple"
+        },
+        {
+            "name": "Heart (Ruby)",
+            "file": "heart-ruby"
+        },
+        {
+            "name": "Helmet",
+            "file": "helmet"
+        },
+        {
+            "name": "Hula",
+            "file": "hula"
+        },
+        {
+            "name": "Hummingbird",
+            "file": "hummingbird"
+        },
+        {
+            "name": "Kangaroo",
+            "file": "kangaroo"
+        },
+        {
+            "name": "Knight",
+            "file": "knight"
+        },
+        {
+            "name": "Knight (Blue)",
+            "file": "knight-blue"
+        },
+        {
+            "name": "Knight (Emblem)",
+            "file": "knight-emblem"
+        },
+        {
+            "name": "Knight (Flying)",
+            "file": "knight-flying"
+        },
+        {
+            "name": "Knight (Gold)",
+            "file": "knight-gold"
+        },
+        {
+            "name": "Knight (Red)",
+            "file": "knight-red"
+        },
+        {
+            "name": "Knight (Shield)",
+            "file": "knight-shield"
+        },
+        {
+            "name": "Knight (Silver)",
+            "file": "knight-silver"
+        },
+        {
+            "name": "Knight (Stand)",
+            "file": "knight-stand"
+        },
+        {
+            "name": "Lady Justice",
+            "file": "lady-justice"
+        },
+        {
+            "name": "Lion (Rasta)",
+            "file": "lion-rasta"
+        },
+        {
+            "name": "Man",
+            "file": "man"
+        },
+        {
+            "name": "Mask",
+            "file": "mask"
+        },
+        {
+            "name": "Mermaid",
+            "file": "mermaid"
+        },
+        {
+            "name": "Monkey",
+            "file": "monkey"
+        },
+        {
+            "name": "Monster",
+            "file": "monster"
+        },
+        {
+            "name": "Mosquito",
+            "file": "mosquito"
+        },
+        {
+            "name": "Mustache",
+            "file": "mustache"
+        },
+        {
+            "name": "Octopus",
+            "file": "octopus"
+        },
+        {
+            "name": "Owlet",
+            "file": "owllet"
+        },
+        {
+            "name": "Parrot",
+            "file": "parrot"
+        },
+        {
+            "name": "Paw Print",
+            "file": "paw-print"
+        },
+        {
+            "name": "Peacocks",
+            "file": "peacocks"
+        },
+        {
+            "name": "Pegasus",
+            "file": "pegasus"
+        },
+        {
+            "name": "Penguin",
+            "file": "penguin"
+        },
+        {
+            "name": "Pikachu",
+            "file": "pikachu"
+        },
+        {
+            "name": "Pinata",
+            "file": "pinata"
+        },
+        {
+            "name": "Rainbow",
+            "file": "rainbow"
+        },
+        {
+            "name": "Rat Fink",
+            "file": "rat-fink"
+        },
+        {
+            "name": "Reaper",
+            "file": "reaper"
+        },
+        {
+            "name": "Robot",
+            "file": "robot"
+        },
+        {
+            "name": "Robot (face)",
+            "file": "robot-face"
+        },
+        {
+            "name": "Rooster",
+            "file": "rooster"
+        },
+        {
+            "name": "Shell",
+            "file": "shell"
+        },
+        {
+            "name": "Shield",
+            "file": "shield"
+        },
+        {
+            "name": "Skull",
+            "file": "skull"
+        },
+        {
+            "name": "Skull (Wings)",
+            "file": "skull-wings"
+        },
+        {
+            "name": "Sloth",
+            "file": "sloth"
+        },
+        {
+            "name": "Star (Blue)",
+            "file": "star-blue"
+        },
+        {
+            "name": "Starfish",
+            "file": "starfish"
+        },
+        {
+            "name": "Swordfish (1)",
+            "file": "swordfish-1"
+        },
+        {
+            "name": "Swordfish (2)",
+            "file": "swordfish-2"
+        },
+        {
+            "name": "Swordfish (3)",
+            "file": "swordfish-3"
+        },
+        {
+            "name": "Tiger",
+            "file": "tiger"
+        },
+        {
+            "name": "Tiger (Water)",
+            "file": "tiger-water"
+        },
+        {
+            "name": "Tree (Rainbow)",
+            "file": "tree-rainbow"
+        },
+        {
+            "name": "Turkey",
+            "file": "turkey"
+        },
+        {
+            "name": "Unicorn",
+            "file": "unicorn"
+        },
+        {
+            "name": "Unicorn (Gold)",
+            "file": "unicorn-gold"
+        },
+        {
+            "name": "Unicorn (Rainbow)",
+            "file": "unicorn-rainbow"
+        },
+        {
+            "name": "Witch",
+            "file": "witch"
+        }
+    ]
+}

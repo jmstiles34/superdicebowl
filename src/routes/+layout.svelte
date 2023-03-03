@@ -35,8 +35,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-          text-align: center;
-      padding: 1rem;
+      text-align: center;
       max-width: 1400px;
       margin: 0 auto;
     }

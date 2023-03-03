@@ -14,7 +14,22 @@ export interface Team {
     name: string,
     primaryColor: string,
     secondaryColor: string,
+    isCustom?: boolean;
+    faceMask?: string;
+    helmet?: string;
+    logo?: string;
+    stripe?: string;
+    trim?: string;
 }
+
+/* export interface CustomTeam extends Team {
+    isCustom: boolean;
+    faceMask: string;
+    helmet: string;
+    logo: string;
+    stripe: string;
+    trim: string;
+} */
 
 export type Modal = (value: string) => void;
 
