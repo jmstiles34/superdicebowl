@@ -2,6 +2,7 @@
     import { browser } from "$app/environment";
 	import CustomHelmet from "$lib/components/CustomHelmet.svelte";
     import { logos } from '$lib/data/logos.json'
+	import type { Team } from "$lib/types";
     export let close: ()=>void;
 
     let bg = "#ffffff";
@@ -9,12 +10,29 @@
     let helmet = "#869397";
     let stripe = "#ffffff";
     let trim = "#002244";
-    let primaryColor = "#002244";
-    let secondaryColor = "#869397";
+    let primary = "#002244";
+    let secondary = "#869397";
     let logo = ""
     let city = "";
     let name = "";
     let errors:string[] = [];
+    let lsTeams = loadTeams();
+    const sortedLogos = logos.sort((a,b) => (a.name > b.name) ? 1 : -1);
+
+    function loadTeams():Team[] {
+        const teamJson = localStorage.getItem('customTeams')
+        if(teamJson == null) return []
+        return JSON.parse(teamJson)
+    }
+
+    function saveTeams(teams:Team[]) {
+        localStorage.setItem('customTeams', JSON.stringify(teams))
+    }
+
+    function deleteTeam(deleteId:string){
+        let teamsToKeep = lsTeams.filter(({id}) => id !== deleteId);
+        saveTeams(teamsToKeep);
+    }
 
     function saveTeam(){
         errors = [];
@@ -23,30 +41,23 @@
         !logo.length && errors.push("logo")
         
         if(!errors.length){
-            let lsTeams = localStorage.getItem('customTeams') || "";
-            if(lsTeams){
-                lsTeams = JSON.parse(lsTeams);
-            }
-            
-            const customTeams = [
-                ...lsTeams,
-                {
-                    id: crypto.randomUUID(),
-                    isCustom: true,
-                    city,
-                    name,
-                    key: city.substring(0,3).toUpperCase(),
-                    primaryColor,
-                    secondaryColor,
-                    logo,
+            const newTeam:Team = {
+                id: crypto.randomUUID(),
+                city,
+                isCustom: true,
+                cityKey: city.substring(0,3).toUpperCase(),
+                logo,
+                name,
+                colors: {
+                    primary,
+                    secondary,
                     helmet,
                     faceMask,
                     stripe,
                     trim
                 }
-            ]
-            
-            browser && localStorage.setItem('customTeams', JSON.stringify(customTeams));
+            };
+            saveTeams([...lsTeams, newTeam]);
             close();
         }
     }
@@ -61,13 +72,13 @@
             <div class="form-label">Location:</div>
             <input type="text" maxlength="15" id="city" bind:value={city} class:error={errors.includes('city')}>
             <div class="form-label">Endzone:</div>
-            <input type="color" id="primaryColor" bind:value={primaryColor}>
+            <input type="color" id="primary" bind:value={primary}>
         </div>
         <div class="form-row">
             <div class="form-label">Name:</div>
             <input type="text" maxlength="10" id="name" bind:value={name} class:error={errors.includes('name')}>
             <div class="form-label">Text:</div>
-            <input type="color" id="secondaryColor" bind:value={secondaryColor}>
+            <input type="color" id="secondary" bind:value={secondary}>
         </div>
         <div class="form-row">
             <div>
@@ -75,7 +86,7 @@
                     <label class="form-label" for="logo">Logo:</label>
                     <select id="logo" bind:value={logo} class:error={errors.includes('logo')}>
                         <option value="">Choose...</option>
-                        {#each logos as logo}
+                        {#each sortedLogos as logo}
                             <option value={logo.file}>{logo.name}</option>
                         {/each}
                     </select>

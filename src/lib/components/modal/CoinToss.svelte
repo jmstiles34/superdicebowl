@@ -27,8 +27,8 @@
         <div 
             class="side-home" 
             style={`
-                background-color: ${homeTeam.primaryColor};
-                border: 1px solid ${homeTeam.secondaryColor};
+                background-color: ${homeTeam.colors.primary};
+                border: 1px solid ${homeTeam.colors.secondary};
             `}
         >
             <img 
@@ -40,8 +40,8 @@
         <div 
             class="side-away" 
             style={`
-                background-color: ${awayTeam.primaryColor};
-                border: 1px solid ${awayTeam.secondaryColor};
+                background-color: ${awayTeam.colors.primary};
+                border: 1px solid ${awayTeam.colors.secondary};
             `}
         >
             <img 

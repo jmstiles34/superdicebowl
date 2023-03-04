@@ -85,10 +85,6 @@
             "file": "fish-pair"
         },
         {
-            "name": "Flower",
-            "file": "flower-redblue"
-        },
-        {
             "name": "French Fries",
             "file": "fries"
         },
@@ -319,10 +315,6 @@
         {
             "name": "Tiger",
             "file": "tiger"
-        },
-        {
-            "name": "Tiger (Water)",
-            "file": "tiger-water"
         },
         {
             "name": "Tree (Rainbow)",

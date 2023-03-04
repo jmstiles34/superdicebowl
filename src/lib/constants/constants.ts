@@ -111,12 +111,14 @@ export const DEFAULT_GAME = {
   }
   
 export const DEFAULT_TEAM = {
-  id: 0,
+  id: "99aa6b74-6ba6-4154-8ae5-9f5139ca187b",
   city: "",
   cityKey: "",
   name: "",
-  primaryColor: "",
-  secondaryColor: "",
+  colors: {
+    primary: "",
+    secondary: "",
+  }
 }
 
 export const DICE_COLORS = ["blue", "red", "orange", "purple", "green"];

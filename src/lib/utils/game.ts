@@ -212,17 +212,17 @@ export function setFirstDownMarker(ballIndex:number, pos:string) {
 
 export function primaryColor(settings:sStore, team = 'home'){
     const teamTyped = `${team.toLowerCase()}Team` as keyof typeof settings;
-    return (settings[teamTyped] as Team).primaryColor
+    return (settings[teamTyped] as Team).colors.primary
 }
 
 export function secondaryColor(settings:sStore, team = 'home'){
     const teamTyped = `${team.toLowerCase()}Team` as keyof typeof settings;
-    return (settings[teamTyped] as Team).secondaryColor
+    return (settings[teamTyped] as Team).colors.secondary
 }
 
-export function setRandomTeam(teams:Team[], opponentId:number, saveFn:(a:Team)=>void){
+export function setRandomTeam(teams:Team[], opponentId:string, saveFn:(a:Team)=>void){
     const id = nonZeroRandomNumber(32)
-    equals(id, opponentId) ? setRandomTeam(teams, opponentId, saveFn) : saveFn(teamById(teams)(id));  
+    equals(id, opponentId) ? setRandomTeam(teams, opponentId, saveFn) : saveFn(teamById(teams)(id.toString()));  
 }
 
 export function showDownDistance(action:string){
@@ -234,8 +234,8 @@ function showFieldGoalPulse(action:string){
 }
 
 export function teamById(teams:Team[]) {
-    return function getTeam(id:number) {
-        return teams.find((team) => team.id == id) || DEFAULT_TEAM;
+    return function getTeam(id:string) {
+        return teams[parseInt(id)] || DEFAULT_TEAM;
     }
 }
 

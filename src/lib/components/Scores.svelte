@@ -8,13 +8,13 @@
     export let possession:string;
     export let score:number[];
 
-    let awayToRgb = hexToRGB(awayTeam.primaryColor);
-    let homeToRgb = hexToRGB(homeTeam.primaryColor);
+    let awayToRgb = hexToRGB(awayTeam.colors.primary);
+    let homeToRgb = hexToRGB(homeTeam.colors.primary);
 </script>
 
 <div class="team-scores">
     <div class="team" style={`
-        background-color: ${homeTeam.primaryColor};
+        background-color: ${homeTeam.colors.primary};
         background-image: linear-gradient(to right, rgba(${homeToRgb.r},${homeToRgb.g},${homeToRgb.b}, 0.5) 0 100%), url(/logos/${homeTeam.hasOwnProperty('logo') ? `custom/${homeTeam.logo}` : homeTeam.name}.png);
     `}> 
         <div class="city-wrapper">
@@ -27,7 +27,7 @@
     </div>
     <div class="score">{score[0]}</div>
     <div class="team" style={`
-        background-color: ${awayTeam.primaryColor};
+        background-color: ${awayTeam.colors.primary};
         background-image: linear-gradient(to right, rgba(${awayToRgb.r},${awayToRgb.g},${awayToRgb.b}, 0.5) 0 100%), url(/logos/${awayTeam.hasOwnProperty('logo') ? `custom/${awayTeam.logo}` : awayTeam.name}.png);
     `}> 
         <div class="city-wrapper">

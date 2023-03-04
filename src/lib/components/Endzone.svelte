@@ -8,21 +8,22 @@
     export let position = POSITION.LEFT;
     export let team:Team = DEFAULT_TEAM;
     export let toggleFieldGoal:Void;
+    const {primary, secondary, faceMask, helmet, stripe, trim} = team.colors;
 
     $: allowFieldGoal = hasBall && inFieldGoalRange;
 </script>
 
-<div class="endZone" style={`background-color: ${team.primaryColor};`}>        
+<div class="endZone" style={`background-color: ${primary};`}>        
     {#if team.hasOwnProperty('logo')}
         <div 
             class={`helmetLogo helmetTop rotate${position}`}
             class:flipLeft={position === POSITION.LEFT}>
             <CustomHelmet 
-                bg={team.primaryColor}
-                faceMask={team.faceMask} 
-                helmet={team.helmet}
-                stripe={team.stripe}
-                trim={team.trim}
+                bg={primary}
+                faceMask={faceMask} 
+                helmet={helmet}
+                stripe={stripe}
+                trim={trim}
                 logo={team.logo}
                 height={55}
                 width={55} 
@@ -39,7 +40,7 @@
     
     <div 
         class={`name rotate${position}`}
-        style={`color: ${team.secondaryColor};`}>
+        style={`color: ${secondary};`}>
         {team.name}
     </div>
 
@@ -48,11 +49,11 @@
             class={`helmetLogo helmetBottom rotate${position}`}
             class:flipRight={position === POSITION.RIGHT}>
             <CustomHelmet 
-                bg={team.primaryColor}
-                faceMask={team.faceMask} 
-                helmet={team.helmet}
-                stripe={team.stripe}
-                trim={team.trim}
+                bg={primary}
+                faceMask={faceMask} 
+                helmet={helmet}
+                stripe={stripe}
+                trim={trim}
                 logo={team.logo}
                 height={55}
                 width={55} 

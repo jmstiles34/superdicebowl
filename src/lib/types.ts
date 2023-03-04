@@ -7,19 +7,23 @@ export interface DiceRoll {
     yards: number | number[],
 };
 
-export interface Team {
-    id: number,
-    city: string,
-    cityKey: string,
-    name: string,
-    primaryColor: string,
-    secondaryColor: string,
-    isCustom?: boolean;
+interface Colors {
+    primary: string,
+    secondary: string,
     faceMask?: string;
     helmet?: string;
-    logo?: string;
     stripe?: string;
     trim?: string;
+}
+
+export interface Team {
+    id: string,
+    city: string,
+    cityKey: string,
+    colors: Colors;
+    isCustom?: boolean;
+    logo?: string;
+    name: string,
 }
 
 /* export interface CustomTeam extends Team {
@@ -30,6 +34,11 @@ export interface Team {
     stripe: string;
     trim: string;
 } */
+
+export interface Logo {
+    name: string,
+    file: string,
+}
 
 export type Modal = (value: string) => void;
 

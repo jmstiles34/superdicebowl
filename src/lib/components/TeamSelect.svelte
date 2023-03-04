@@ -10,7 +10,7 @@
     import fadeScale from '$lib/transitions/fadeScale';
     import CustomHelmet from "$lib/components/CustomHelmet.svelte";
     
-    export let opponentId:number;
+    export let opponentId:string;
     export let saveTeam:SaveTeam;
     export let team:Team;
     export let teamType:string;
@@ -24,7 +24,7 @@
     });
 
     let selected:number;
-    $: if(selected) {saveTeam(teamById(allTeamsData)(selected))}
+    $: if(selected) {saveTeam(teamById(allTeamsData)(selected.toString()))}
 
     const fadeArgs = {
 		delay: 0,
@@ -42,10 +42,10 @@
                 {#if team.hasOwnProperty('logo')}
                     <CustomHelmet 
                         bg="#2e2e2e"
-                        faceMask={team.faceMask} 
-                        helmet={team.helmet}
-                        stripe={team.stripe}
-                        trim={team.trim}
+                        faceMask={team.colors.faceMask} 
+                        helmet={team.colors.helmet}
+                        stripe={team.colors.stripe}
+                        trim={team.colors.trim}
                         logo={team.logo}
                         height={250}
                         width={250} 
