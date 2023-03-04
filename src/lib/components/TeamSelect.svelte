@@ -5,7 +5,7 @@
     import { teamsData } from '$lib/data/data.json'
     import type { SaveTeam, Team } from '$lib/types';
 	import { pickRandom } from '$lib/utils/common';
-	import { setRandomTeam, teamById } from '$lib/utils/game';
+	import { setRandomTeam, teamById, teamByUUId } from '$lib/utils/game';
     import { cubicInOut } from 'svelte/easing';
     import fadeScale from '$lib/transitions/fadeScale';
     import CustomHelmet from "$lib/components/CustomHelmet.svelte";
@@ -23,8 +23,8 @@
         allTeamsData = [...customTeamData, ...teamsData];
     });
 
-    let selected:number;
-    $: if(selected) {saveTeam(teamById(allTeamsData)(selected.toString()))}
+    let selected:string = "";
+    $: if(selected.length) {saveTeam(teamByUUId(allTeamsData)(selected))}
 
     const fadeArgs = {
 		delay: 0,
@@ -37,19 +37,21 @@
 <div class="team-card">
     <div class="title">{teamType} Team</div>
     <div class="logo-image">
-        {#if team.id}
+        {#if team.id.length}
             {#each [team.id] as c (c)}
                 {#if team.hasOwnProperty('logo')}
-                    <CustomHelmet 
-                        bg="#2e2e2e"
-                        faceMask={team.colors.faceMask} 
-                        helmet={team.colors.helmet}
-                        stripe={team.colors.stripe}
-                        trim={team.colors.trim}
-                        logo={team.logo}
-                        height={250}
-                        width={250} 
-                    />
+                    <div in:fadeScale={fadeArgs}>
+                        <CustomHelmet 
+                            bg="#2e2e2e"
+                            faceMask={team.colors.faceMask} 
+                            helmet={team.colors.helmet}
+                            stripe={team.colors.stripe}
+                            trim={team.colors.trim}
+                            logo={team.logo}
+                            height={250}
+                            width={250} 
+                        />
+                    </div>
                 {:else}
                 <img 
                     in:fadeScale={fadeArgs} 

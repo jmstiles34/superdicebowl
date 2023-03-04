@@ -111,7 +111,7 @@ export const DEFAULT_GAME = {
   }
   
 export const DEFAULT_TEAM = {
-  id: "99aa6b74-6ba6-4154-8ae5-9f5139ca187b",
+  id: "",
   city: "",
   cityKey: "",
   name: "",

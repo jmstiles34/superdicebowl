@@ -54,8 +54,8 @@ export function ballPosition(ballIndex:number, possession:string, yards:number, 
     return newBallPosition;         
 }
 
-export function beginDisabled(ids:number[]) {
-    return ids.includes(0);
+export function beginDisabled(ids:string[]) {
+    return ids.filter(id => id !== "").length < 2;
 }
 
 export function calcYardsToGo(firstDownIndex:number, diffIndex:number){
@@ -221,7 +221,7 @@ export function secondaryColor(settings:sStore, team = 'home'){
 }
 
 export function setRandomTeam(teams:Team[], opponentId:string, saveFn:(a:Team)=>void){
-    const id = nonZeroRandomNumber(32)
+    const id = randomNumber(teams.length-1)
     equals(id, opponentId) ? setRandomTeam(teams, opponentId, saveFn) : saveFn(teamById(teams)(id.toString()));  
 }
 
@@ -236,6 +236,12 @@ function showFieldGoalPulse(action:string){
 export function teamById(teams:Team[]) {
     return function getTeam(id:string) {
         return teams[parseInt(id)] || DEFAULT_TEAM;
+    }
+}
+
+export function teamByUUId(teams:Team[]) {
+    return function getTeam(id:string) {
+        return teams.find(t => t.id === id) || DEFAULT_TEAM;
     }
 }
 
