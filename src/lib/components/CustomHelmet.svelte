@@ -7,11 +7,12 @@
     export let logo:string | null = null;
     export let height:number = 320;
     export let width:number = 320;
+	export let title:string = "Custom Football Helmet";
 </script>
 
-<div class="container" style={`height: ${height} width: ${width}`}>
+<div {title} class="container" style={`height: ${height} width: ${width}`}>
 <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width={width} height={height}>
-	<title>Custom Football Helmet</title>
+	<title>{title}</title>
 	<style>
 		.s0 { fill: #000000;stroke: #000000;stroke-linecap: round;stroke-linejoin: round;stroke-width: 0 } 
 		.s1 { fill: #f15f2b;stroke: #000000;stroke-linecap: round;stroke-linejoin: round;stroke-width: 0 } 

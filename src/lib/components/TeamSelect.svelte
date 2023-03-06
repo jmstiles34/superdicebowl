@@ -1,14 +1,16 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+    import { onMount, tick } from 'svelte';
     import { browser } from "$app/environment";
-    import { DICE_COLORS } from '$lib/constants/constants';
+    import { DEFAULT_TEAM, DICE_COLORS, NOOP } from '$lib/constants/constants';
     import { teamsData } from '$lib/data/data.json'
     import type { SaveTeam, Team } from '$lib/types';
 	import { pickRandom } from '$lib/utils/common';
-	import { setRandomTeam, teamById, teamByUUId } from '$lib/utils/game';
+	import { setRandomTeam, teamByUUId } from '$lib/utils/game';
     import { cubicInOut } from 'svelte/easing';
     import fadeScale from '$lib/transitions/fadeScale';
+    import Modal from '$lib/components/Modal.svelte';
     import CustomHelmet from "$lib/components/CustomHelmet.svelte";
+    import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
     
     export let opponentId:string;
     export let saveTeam:SaveTeam;
@@ -16,12 +18,10 @@
     export let teamType:string;
     export let useRandomizer: boolean = false;
     
+    let showCustomTeam:boolean;
+
     let allTeamsData:(Team)[] = [];
-    onMount(() => {
-        let lsTeamData = browser && localStorage.getItem('customTeams');
-        let customTeamData:Team[] = lsTeamData ? JSON.parse(lsTeamData) : [];
-        allTeamsData = [...customTeamData, ...teamsData];
-    });
+    onMount(() => setTeamData());
 
     let selected:string = "";
     $: if(selected.length) {saveTeam(teamByUUId(allTeamsData)(selected))}
@@ -31,7 +31,21 @@
 		duration: 250,
 		easing: cubicInOut,
 		baseScale: 0.5
-	} 
+	}
+
+    async function closeCustomTeamModal(id:string) {
+        setTeamData();
+        tick();
+        showCustomTeam = false;
+        selected = id;
+        if(!id) saveTeam(DEFAULT_TEAM);
+    }
+    
+    function setTeamData() {
+        let lsTeamData = browser && localStorage.getItem('customTeams');
+        let customTeamData:Team[] = lsTeamData ? JSON.parse(lsTeamData) : [];
+        allTeamsData = [...customTeamData, ...teamsData];
+    }
 </script>
 
 <div class="team-card">
@@ -40,7 +54,12 @@
         {#if team.id.length}
             {#each [team.id] as c (c)}
                 {#if team.hasOwnProperty('logo')}
-                    <div in:fadeScale={fadeArgs}>
+                    <div 
+                        in:fadeScale={fadeArgs} 
+                        class:hover={team.isCustom}
+                        on:click={team.isCustom ? () => showCustomTeam = true : NOOP}
+                        on:keydown
+                    >
                         <CustomHelmet 
                             bg="#2e2e2e"
                             faceMask={team.colors.faceMask} 
@@ -49,7 +68,8 @@
                             trim={team.colors.trim}
                             logo={team.logo}
                             height={250}
-                            width={250} 
+                            width={250}
+                            title={team.isCustom ? `EDIT: ${team.city} ${team.name}` : `${team.city} ${team.name}`} 
                         />
                     </div>
                 {:else}
@@ -63,9 +83,11 @@
             {/each}
         {:else}
             <img 
-                class="dice" 
+                class="dice hover" 
                 alt={`Team Placeholder`} 
                 src={`/images/${pickRandom(DICE_COLORS)}_dice.png`}
+                on:click={() => showCustomTeam = true}
+                on:keydown
             />
         {/if}
     </div>
@@ -86,6 +108,12 @@
     {/if}
 </div>
 
+<Modal showModal={showCustomTeam} close={() => showCustomTeam = false}>
+    <div class="model-content">
+        <CustomTeam customTeamId={selected} close={closeCustomTeamModal}/>
+    </div>
+</Modal>
+
 <style>
     .team-card {
         display: flex;
@@ -103,6 +131,9 @@
     }
     .title {
         font-size: 28px;
+    }
+    .hover {
+        cursor: pointer;
     }
     .logo-image {
         display: flex;

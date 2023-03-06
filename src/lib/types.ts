@@ -26,15 +26,6 @@ export interface Team {
     name: string,
 }
 
-/* export interface CustomTeam extends Team {
-    isCustom: boolean;
-    faceMask: string;
-    helmet: string;
-    logo: string;
-    stripe: string;
-    trim: string;
-} */
-
 export interface Logo {
     name: string,
     file: string,

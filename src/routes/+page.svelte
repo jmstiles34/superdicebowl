@@ -3,13 +3,9 @@
     import { settings } from '$lib/stores/Settings'
     import { goto } from '$app/navigation';
     import { GAME_MODE, TEAM } from '$lib/constants/constants';
-    import Modal from '$lib/components/Modal.svelte';
     import TeamSelect from '$lib/components/TeamSelect.svelte';
 	import { beginDisabled } from '$lib/utils/game';
 	import { sfx, sleep } from '$lib/utils/common';
-	import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
-
-    let showCustomTeam:boolean;
 
     onMount(() => {
         settings.reset();
@@ -59,7 +55,6 @@
     </div>
 
     <div class="score-select">
-        <button on:click={() => showCustomTeam = true}>Customize</button>
         <label class="scoreLabel" for="winScore">Score to win:</label>
         <select id="winScore" class="winScore" bind:value={winScore}>
             {#each Array(100) as _, i}
@@ -67,17 +62,13 @@
             {/each}
         </select>
         <button 
+            class="beginButton"    
             disabled={beginDisabled([$settings.awayTeam.id, $settings.homeTeam.id])}
             on:click={beginGame}
         >
             Let's Roll!
         </button>
     </div>
-    <Modal showModal={showCustomTeam} close={() => showCustomTeam = false}>
-        <div class="model-content">
-            <CustomTeam close={()=>showCustomTeam = false}/>
-        </div>
-    </Modal>
 </main>
 
 <style>
@@ -97,12 +88,14 @@
     }
     .scoreLabel {
         margin: auto 0;
+        white-space: nowrap;
     }
     .score-select {
         display: flex;
         justify-content: center;
         vertical-align: middle;
         gap: 1%;
+        margin: 0 auto;
     }
     .team-select {
         display: flex;
@@ -128,5 +121,8 @@
 			max-width: 100%;
 			flex-direction: column;
 		}
+        .score-select {
+            gap: 15%;
+        }
 	}
 </style>

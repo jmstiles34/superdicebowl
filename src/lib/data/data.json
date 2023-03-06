@@ -54,10 +54,15 @@
             "city": "Chicago",
             "cityKey": "CHI",
             "name": "Bears",
+            "logo": "nfl-bears",
             "id": "f2cbeb55-19fd-4a72-a772-fe72e6e2469a",
             "colors": {
                 "primary": "#0B162A",
-                "secondary": "#C83803"
+                "secondary": "#C83803",
+                "faceMask": "#0B162A",
+                "helmet": "#0B162A",
+                "stripe": "#0B162A",
+                "trim": "#0B162A"
             }
         },
         {
@@ -83,7 +88,7 @@
         {
             "city": "Dallas",
             "cityKey": "DAL",
-            "logo": "star-blue",
+            "logo": "nfl-cowboys",
             "name": "Cowboys",
             "id": "f81b352b-ac32-479c-91d2-c27e6853f0a9",
             "colors": {

@@ -1,9 +1,11 @@
 <script lang="ts">
-    import { browser } from "$app/environment";
+    import { onMount } from 'svelte';
 	import CustomHelmet from "$lib/components/CustomHelmet.svelte";
     import { logos } from '$lib/data/logos.json'
 	import type { Team } from "$lib/types";
-    export let close: ()=>void;
+	import { DEFAULT_TEAM } from '$lib/constants/constants';
+    export let close: (id:string)=>void;
+    export let customTeamId:string;
 
     let bg = "#ffffff";
     let faceMask = "#79868B";
@@ -12,12 +14,31 @@
     let trim = "#002244";
     let primary = "#002244";
     let secondary = "#869397";
-    let logo = ""
+    let logo = "";
     let city = "";
     let name = "";
     let errors:string[] = [];
     let lsTeams = loadTeams();
     const sortedLogos = logos.sort((a,b) => (a.name > b.name) ? 1 : -1);
+
+    onMount(() => {
+        if(customTeamId){
+            const team:Team = getTeam();
+            faceMask = team.colors.faceMask || faceMask;
+            helmet = team.colors.helmet || helmet;
+            stripe = team.colors.stripe || stripe;
+            trim = team.colors.trim || trim;
+            primary = team.colors.primary;
+            secondary = team.colors.secondary;
+            logo = team.logo || logo;
+            city = team.city;
+            name = team.name;
+        }
+    })
+
+    function getTeam(){
+        return lsTeams.find(({id}) => id === customTeamId) || DEFAULT_TEAM;
+    }
 
     function loadTeams():Team[] {
         const teamJson = localStorage.getItem('customTeams')
@@ -29,9 +50,10 @@
         localStorage.setItem('customTeams', JSON.stringify(teams))
     }
 
-    function deleteTeam(deleteId:string){
-        let teamsToKeep = lsTeams.filter(({id}) => id !== deleteId);
+    function deleteTeam(){
+        let teamsToKeep = lsTeams.filter(({id}) => id !== customTeamId);
         saveTeams(teamsToKeep);
+        close('');
     }
 
     function saveTeam(){
@@ -41,8 +63,9 @@
         !logo.length && errors.push("logo")
         
         if(!errors.length){
+            const newTeamId = customTeamId || crypto.randomUUID();
             const newTeam:Team = {
-                id: crypto.randomUUID(),
+                id: newTeamId,
                 city,
                 isCustom: true,
                 cityKey: city.substring(0,3).toUpperCase(),
@@ -57,15 +80,16 @@
                     trim
                 }
             };
-            saveTeams([...lsTeams, newTeam]);
-            close();
+            let teamsToKeep = lsTeams.filter(({id}) => id !== customTeamId);
+            saveTeams([...teamsToKeep, newTeam]);
+            close(newTeamId);
         }
     }
 </script>
 
 <div on:click|stopPropagation on:keydown|stopPropagation>
     <div>
-        <h3>Add a Custom Team</h3>
+        <h3>{customTeamId ? 'Edit' : 'Add'} Custom Team</h3>
     </div>
     <div class="container">
         <div class="form-row">
@@ -122,6 +146,11 @@
         </div>
     </div>
     <div class="button-row">
+        {#if customTeamId}
+            <button class="delete-button" on:click={deleteTeam}>
+                Delete
+            </button>
+        {/if}
         <button class="save-button" on:click={saveTeam}>
             Save Custom Team
         </button>
@@ -135,7 +164,7 @@
     .button-row{
         display: flex;
         padding: 5px;
-        justify-content: center;
+        justify-content: space-between;
     }
     .container {
         display: flex;
@@ -160,5 +189,18 @@
         min-width: 150px;
         cursor: pointer;
         font-family: var(--mono);
+    }
+    .delete-button {
+        margin: 0 15px;
+        min-width: 75px;
+        cursor: pointer;
+        font-family: var(--mono);
+        background-color: transparent;
+        color: var(--error);
+    }
+    .delete-button:hover {
+        font-weight: bold;
+        text-decoration: underline;
+        background-color: #FAD2DC;
     }
 </style>
