@@ -25,6 +25,8 @@
                 stripe={stripe}
                 trim={trim}
                 logo={team.logo}
+                logoWidth={team.logoWidth || 2.5}
+                logoPosition={team.logoPosition || [13, 20]}
                 height={55}
                 width={55} 
             />
@@ -55,6 +57,8 @@
                 stripe={stripe}
                 trim={trim}
                 logo={team.logo}
+                logoWidth={team.logoWidth || 2.5}
+                logoPosition={team.logoPosition || [13, 20]}
                 height={55}
                 width={55} 
             />

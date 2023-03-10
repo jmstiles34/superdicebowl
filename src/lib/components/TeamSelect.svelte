@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount, tick } from 'svelte';
     import { browser } from "$app/environment";
-    import { DEFAULT_TEAM, DICE_COLORS, NOOP } from '$lib/constants/constants';
+    import { DEFAULT_TEAM, DICE_COLORS, NOOP, TEAM } from '$lib/constants/constants';
     import { teamsData } from '$lib/data/data.json'
     import type { SaveTeam, Team } from '$lib/types';
 	import { pickRandom } from '$lib/utils/common';
@@ -50,36 +50,30 @@
 
 <div class="team-card">
     <div class="title">{teamType} Team</div>
-    <div class="logo-image">
+    <div class="logo-image" class:flipLeft={teamType === TEAM.AWAY}>
         {#if team.id.length}
             {#each [team.id] as c (c)}
-                {#if team.hasOwnProperty('logo')}
-                    <div 
-                        in:fadeScale={fadeArgs} 
-                        class:hover={team.isCustom}
-                        on:click={team.isCustom ? () => showCustomTeam = true : NOOP}
-                        on:keydown
-                    >
-                        <CustomHelmet 
-                            bg="#2e2e2e"
-                            faceMask={team.colors.faceMask} 
-                            helmet={team.colors.helmet}
-                            stripe={team.colors.stripe}
-                            trim={team.colors.trim}
-                            logo={team.logo}
-                            height={250}
-                            width={250}
-                            title={team.isCustom ? `EDIT: ${team.city} ${team.name}` : `${team.city} ${team.name}`} 
-                        />
-                    </div>
-                {:else}
-                <img 
+                <div 
                     in:fadeScale={fadeArgs} 
-                    alt={`${team.city} ${team.name} Logo`} 
-                    src={`/logos/${team.name}.png`}
-                />
-                {/if}
-                
+                    class:hover={team.isCustom}
+                    on:click={team.isCustom ? () => showCustomTeam = true : NOOP}
+                    on:keydown
+                >
+                    <CustomHelmet 
+                        bg="#2e2e2e"
+                        faceMask={team.colors.faceMask} 
+                        helmet={team.colors.helmet}
+                        stripe={team.colors.stripe}
+                        trim={team.colors.trim}
+                        logo={team.logo}
+                        logoFlip={teamType === TEAM.AWAY && team.logoFixed}
+                        logoWidth={team.logoWidth || 2.5}
+                        logoPosition={team.logoPosition || [13, 20]}
+                        height={250}
+                        width={250}
+                        title={team.isCustom ? `EDIT: ${team.city} ${team.name}` : `${team.city} ${team.name}`} 
+                    />
+                </div>
             {/each}
         {:else}
             <img 
@@ -146,11 +140,11 @@
     .logo-image img {
         width: 100%;
     }
+    .flipLeft {
+        transform:  scale(-1, 1);
+    }
     .dice {
         max-width: 55%;
-    }
-    .custom {
-        background-color: skyblue;
     }
     .team-select {
         font-family: var(--mono);

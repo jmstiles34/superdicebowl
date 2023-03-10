@@ -115,6 +115,9 @@ export const DEFAULT_TEAM = {
   city: "",
   cityKey: "",
   name: "",
+  logoFlip: false,
+  logoWidth: 2.5,
+  logoPosition: [13, 20],
   colors: {
     primary: "",
     secondary: "",

@@ -281,8 +281,8 @@
             "file": "shield"
         },
         {
-            "name": "Skull",
-            "file": "skull"
+            "name": "Skull (Red Eyes)",
+            "file": "skull-eyes"
         },
         {
             "name": "Skull (Wings)",
@@ -339,6 +339,122 @@
         {
             "name": "Witch",
             "file": "witch"
+        },
+        {
+            "name": "Bear",
+            "file": "bear"
+        },
+        {
+            "name": "Black Panther",
+            "file": "black-panther"
+        },
+        {
+            "name": "Boar",
+            "file": "boar-head"
+        },
+        {
+            "name": "Bronco",
+            "file": "bronco"
+        },
+        {
+            "name": "Bull",
+            "file": "bull"
+        },
+        {
+            "name": "Dragon",
+            "file": "dragon"
+        },
+        {
+            "name": "Elephant",
+            "file": "elephant"
+        },
+        {
+            "name": "Panther Eyes",
+            "file": "eyes-panther"
+        },
+        {
+            "name": "Tiget Eyes",
+            "file": "eyes-tiger"
+        },
+        {
+            "name": "Football (Dive)",
+            "file": "football-dive"
+        },
+        {
+            "name": "Football (Flames)",
+            "file": "football-flames"
+        },
+        {
+            "name": "Football (Flex)",
+            "file": "football-flex"
+        },
+        {
+            "name": "Football (Player)",
+            "file": "football-player"
+        },
+        {
+            "name": "Goat (Head)",
+            "file": "goat-head"
+        },
+        {
+            "name": "Greek Trojan",
+            "file": "greek-trojan"
+        },
+        {
+            "name": "Horse (Football)",
+            "file": "horse-football"
+        },
+        {
+            "name": "Killer Bee",
+            "file": "killer-bee"
+        },
+        {
+            "name": "Panther (Head)",
+            "file": "panther-head"
+        },
+        {
+            "name": "Raptor",
+            "file": "raptor"
+        },
+        {
+            "name": "Reaper (Flames)",
+            "file": "reaper-flames"
+        },
+        {
+            "name": "Reaper (Purple)",
+            "file": "reaper-purple"
+        },
+        {
+            "name": "Skull",
+            "file": "skull"
+        },
+        {
+            "name": "Spartan",
+            "file": "spartan"
+        },
+        {
+            "name": "Stallion",
+            "file": "stallion"
+        },
+        {
+            "name": "Bandit",
+            "file": "thief"
+        },
+        {
+            "name": "Tiger Paw",
+            "file": "tiger-paw"
+        },
+        {
+            "name": "Unicorn (Angry)",
+            "file": "unicorn-angry"
+        },
+        {
+            "name": "Viking",
+            "file": "viking"
+        },
+        {
+            "name": "Wildcat",
+            "file": "wildcat"
         }
     ]
 }

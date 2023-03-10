@@ -23,6 +23,9 @@ export interface Team {
     colors: Colors;
     isCustom?: boolean;
     logo?: string;
+    logoFixed?: boolean;
+    logoWidth?: number;
+    logoPosition?: number[];
     name: string,
 }
 

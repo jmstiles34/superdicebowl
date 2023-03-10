@@ -35,7 +35,7 @@
         <div class="fieldLogo">
             <img 
                 alt={`${homeTeam.city} ${homeTeam.name} Logo`} 
-                src={`/logos/${homeTeam.hasOwnProperty('logo') ? `custom/${homeTeam.logo}` : homeTeam.name}.png`}
+                src={`/logos/${homeTeam.hasOwnProperty('isCustom') ? `custom/${homeTeam.logo}` : homeTeam.name}.png`}
             />
         </div>
         {#each fieldData as block, i}
