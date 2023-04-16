@@ -37,10 +37,6 @@
             "file": "bowling-stars"
         },
         {
-            "name": "Budgerigar",
-            "file": "budgerigar"
-        },
-        {
             "name": "Butterfly",
             "file": "butterfly"
         },
@@ -125,10 +121,6 @@
             "file": "heart-ruby"
         },
         {
-            "name": "Helmet",
-            "file": "helmet"
-        },
-        {
             "name": "Hula",
             "file": "hula"
         },
@@ -177,20 +169,12 @@
             "file": "knight-stand"
         },
         {
-            "name": "Lady Justice",
-            "file": "lady-justice"
-        },
-        {
             "name": "Lion (Rasta)",
             "file": "lion-rasta"
         },
         {
             "name": "Man",
             "file": "man"
-        },
-        {
-            "name": "Mask",
-            "file": "mask"
         },
         {
             "name": "Mermaid",
@@ -251,10 +235,6 @@
         {
             "name": "Rainbow",
             "file": "rainbow"
-        },
-        {
-            "name": "Rat Fink",
-            "file": "rat-fink"
         },
         {
             "name": "Reaper",
@@ -455,6 +435,134 @@
         {
             "name": "Wildcat",
             "file": "wildcat"
+        },
+        {
+            "name": "Alligator",
+            "file": "alligator"
+        },
+        {
+            "name": "Bear (Head)",
+            "file": "bear-head"
+        },
+        {
+            "name": "Beaver (Head)",
+            "file": "beaver-head"
+        },
+        {
+            "name": "Beaver",
+            "file": "beaver"
+        },
+        {
+            "name": "Blue Jay",
+            "file": "bluejay"
+        },
+        {
+            "name": "Bobcat",
+            "file": "bobcat"
+        },
+        {
+            "name": "Buffalo",
+            "file": "buffalo"
+        },
+        {
+            "name": "Bull (Flying)",
+            "file": "bull-charge"
+        },
+        {
+            "name": "Bull (Red)",
+            "file": "bull-red"
+        },
+        {
+            "name": "Bulldog",
+            "file": "bulldog"
+        },
+        {
+            "name": "Claws",
+            "file": "claws"
+        },
+        {
+            "name": "Cobra (Fangs)",
+            "file": "cobra-fangs"
+        },
+        {
+            "name": "Cobra",
+            "file": "cobra"
+        },
+        {
+            "name": "Devil (Blue)",
+            "file": "devil-blue"
+        },
+        {
+            "name": "Dino (Head)",
+            "file": "dino-head"
+        },
+        {
+            "name": "Eagle (Crown)",
+            "file": "eagle-crown"
+        },
+        {
+            "name": "Fox",
+            "file": "fox"
+        },
+        {
+            "name": "Horse (Face)",
+            "file": "horse-face"
+        },
+        {
+            "name": "Horse (Shoe)",
+            "file": "horse-shoe"
+        },
+        {
+            "name": "Knight (Joust)",
+            "file": "knight-joust"
+        },
+        {
+            "name": "Knight (Sword)",
+            "file": "knight-sword"
+        },
+        {
+            "name": "Lion (Head)",
+            "file": "lion-head"
+        },
+        {
+            "name": "Lion",
+            "file": "lion"
+        },
+        {
+            "name": "Rabbit",
+            "file": "rabbit"
+        },
+        {
+            "name": "Ram",
+            "file": "ram"
+        },
+        {
+            "name": "Rooster (Head)",
+            "file": "rooster-head"
+        },
+        {
+            "name": "Shark",
+            "file": "shark"
+        },
+        {
+            "name": "Skull & Bones",
+            "file": "skull-bones"
+        },
+        {
+            "name": "Snake",
+            "file": "snake"
+        },
+        {
+            "name": "Tiger (Head)",
+            "file": "tiger-head"
+        },
+        {
+            "name": "Unicorn (Red)",
+            "file": "unicorn-red"
+        },
+        {
+            "name": "Wolf (Howling)",
+            "file": "wolf-howl"
         }
     ]
 }

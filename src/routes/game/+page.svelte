@@ -92,20 +92,18 @@
                 sleep(1000).then(() => {
                     sfx('button');
                     game.preparePointOption(makePointChoice(score, winScore));
-                }
-            );
-        } else {
-            sleep(1000).then(() => {
-                const choiceAction = makeFourthDownChoice(score, ballIndex);
-                sfx('button');               
-                if(choiceAction === GAME_ACTION.FIELD_GOAL){
-                    game.toggleFieldGoal();
-                } else {
-                    game.saveFourthDown(choiceAction)
-                }
+                });
+            } else {
+                sleep(1000).then(() => {
+                    const choiceAction = makeFourthDownChoice(score, ballIndex);
+                    sfx('button');               
+                    if(choiceAction === GAME_ACTION.FIELD_GOAL){
+                        game.toggleFieldGoal();
+                    } else {
+                        game.saveFourthDown(choiceAction)
+                    }
+                });
             }
-        );
-        }
     }
 </script>
 

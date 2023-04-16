@@ -5,8 +5,7 @@ import {
     buildTextString, 
     equals, 
     gte, 
-    lte, 
-    nonZeroRandomNumber, 
+    lte,
     randomNumber, 
     subtract 
 } from '$lib/utils/common'

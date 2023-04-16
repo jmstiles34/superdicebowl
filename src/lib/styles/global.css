@@ -14,7 +14,7 @@
 	--mono: "Overpass Mono", monospace;
 	--font-size: 1.3rem;
 	--border-radius: 5px;
-	--do-something-lighter: rgb(166, 230, 255);
+	--button-hover: rgb(166, 230, 255);
 	--mask: rgba(0,0,0,0.8);
 }
 html, body {
@@ -62,10 +62,15 @@ button {
 	padding: 0.5em 1em;
 	line-height: 1;
 	cursor: pointer;
+	transition: all .2s ease-in-out;
+}
+
+button:not(:disabled):active {
+	transform: translateY(1px);
 }
 
 button:not(:disabled):hover {
-	background-color: var(--do-something-lighter);
+	background-color: var(--button-hover);
 }
 
 button:disabled {

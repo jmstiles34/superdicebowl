@@ -319,6 +319,8 @@
             "cityKey": "MIN",
             "name": "Vikings",
             "logo": "nfl-vikings",
+            "logoWidth": 1.75,
+            "logoPosition": [13, 15],
             "id": "6aa5aec9-3f2a-453b-825e-421745de1f39",
             "colors": {
                 "primary": "#4F2683",
@@ -386,7 +388,7 @@
             "id": "6b736d05-ce38-4a36-9e0d-7ea1b9eb25ac",
             "colors": {
                 "primary": "#125740",
-                "secondary": "#A71930",
+                "secondary": "#F5F5F5",
                 "faceMask": "#125740",
                 "helmet": "#F5F5F5",
                 "stripe": "#F5F5F5",

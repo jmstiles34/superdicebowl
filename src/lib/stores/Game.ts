@@ -202,6 +202,9 @@ export const game = {
         executeFns[action](diceId);
     },
     handleNextAction: (action:string, ballIndex:number, score:number[], winScore:number) => {
+        if(isGameComplete(score, winScore)){
+            sleep(1500).then(() => game.setAction(GAME_ACTION.GAME_OVER));
+        }
         if(!isGameComplete(score, winScore)){
             switch (action) {
                 case GAME_ACTION.FIELD_GOAL_MADE:

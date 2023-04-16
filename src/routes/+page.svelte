@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { settings } from '$lib/stores/Settings'
+    import { game } from '$lib/stores/Game'
     import { goto } from '$app/navigation';
     import { GAME_MODE, TEAM } from '$lib/constants/constants';
     import TeamSelect from '$lib/components/TeamSelect.svelte';
@@ -9,6 +10,7 @@
 
     onMount(() => {
         settings.reset();
+        game.reset();
     })
     let winScore = $settings.winScore;
     $: settings.updateScore(winScore);
