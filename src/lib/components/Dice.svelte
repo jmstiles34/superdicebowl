@@ -67,8 +67,8 @@
         <div 
             class="face" 
             style={`background-color: ${dieColor};`} 
-            in:diceTransition|local
-            out:diceTransition|local
+            in:diceTransition
+            out:diceTransition
         >
             {#each die as pip}
                 <span class="pip" style={`background-color: ${pipColor};`} />

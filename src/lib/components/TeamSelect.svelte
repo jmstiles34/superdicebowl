@@ -54,7 +54,7 @@
         {#if team.id.length}
             {#each [team.id] as c (c)}
                 <div 
-                    in:fadeScale={fadeArgs} 
+                    in:fadeScale|global={fadeArgs} 
                     class:hover={team.isCustom}
                     on:click={team.isCustom ? () => showCustomTeam = true : NOOP}
                     on:keydown
