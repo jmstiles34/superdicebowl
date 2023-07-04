@@ -10,9 +10,9 @@
         close()
         }
     } */
-  </script>
-  
-  {#if [GAME_ACTION.COIN_TOSS, GAME_ACTION.FOURTH_DOWN_OPTIONS, GAME_ACTION.POINT_OPTION].includes(action)}
+</script>
+
+{#if [GAME_ACTION.COIN_TOSS, GAME_ACTION.FOURTH_DOWN_OPTIONS, GAME_ACTION.POINT_OPTION].includes(action)}
     <div class="backdrop">
         <div class="modal">
             <slot/>

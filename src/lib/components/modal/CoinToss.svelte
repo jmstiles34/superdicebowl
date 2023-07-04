@@ -23,6 +23,8 @@
     <div id="coin" class={winStyle} 
         on:click={winStyle ? NOOP : () => handleCoinToss(randomNumber())} 
         on:keydown={winStyle ? NOOP : () => handleCoinToss(randomNumber())}
+        role="button"
+        tabindex=0
     >
         <div 
             class="side-home" 

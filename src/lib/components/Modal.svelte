@@ -15,7 +15,7 @@
   </script>
   
   {#if showModal}
-    <div class="backdrop" on:click={doClose} on:keydown={keydown}>
+    <div class="backdrop" on:click={doClose} on:keydown={keydown} role="button" tabindex="0">
         <div class="modal">
             <slot/>
         </div>

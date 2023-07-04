@@ -58,6 +58,8 @@
                     class:hover={team.isCustom}
                     on:click={team.isCustom ? () => showCustomTeam = true : NOOP}
                     on:keydown
+                    role="button"
+                    tabindex=0
                 >
                     <CustomHelmet 
                         bg="#2e2e2e"
@@ -76,13 +78,18 @@
                 </div>
             {/each}
         {:else}
-            <img 
-                class="dice hover" 
-                alt={`Team Placeholder`} 
-                src={`/images/${pickRandom(DICE_COLORS)}_dice.png`}
+            <div 
                 on:click={() => showCustomTeam = true}
                 on:keydown
-            />
+                role="button"
+                tabindex=0
+            >    
+                <img 
+                    class="dice hover" 
+                    alt={`Team Placeholder`} 
+                    src={`/images/${pickRandom(DICE_COLORS)}_dice.png`}
+                />
+            </div>
         {/if}
     </div>
 

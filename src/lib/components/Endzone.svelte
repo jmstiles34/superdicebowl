@@ -78,6 +78,8 @@
         class:clickable={allowFieldGoal}
         on:click={allowFieldGoal ? () => toggleFieldGoal() : NOOP}
         on:keydown={allowFieldGoal ? () => toggleFieldGoal() : NOOP}
+        role="button"
+        tabindex=0
     >
         <div class="post" class:pulse={allowFieldGoal}></div>
         <div class="bar" class:pulse={allowFieldGoal}></div>

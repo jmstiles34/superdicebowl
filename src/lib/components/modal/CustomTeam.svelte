@@ -87,7 +87,7 @@
     }
 </script>
 
-<div on:click|stopPropagation on:keydown|stopPropagation>
+<div on:click|stopPropagation on:keydown|stopPropagation role="button" tabindex=0>
     <div>
         <h3>{customTeamId ? 'Edit' : 'Add'} Custom Team</h3>
     </div>
