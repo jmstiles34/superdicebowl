@@ -22,7 +22,7 @@
 </script>
 
 <main>
-    <div>
+    <div class="mode-row">
         <button 
             class="mode-button"
             class:mode-selected={$settings.mode === GAME_MODE.SOLO}
@@ -56,15 +56,17 @@
         />
     </div>
 
-    <div class="score-select">
-        <label class="scoreLabel" for="winScore">Score to win:</label>
-        <select id="winScore" class="winScore" bind:value={winScore}>
-            {#each Array(100) as _, i}
-                <option value={i+1}>{i+1}</option>
-            {/each}
-        </select>
+    <div class="begin-row">
+        <div class="score-select">
+            <label class="score-label" for="winScore">Win Score:</label>
+            <select id="winScore" class="winScore" bind:value={winScore}>
+                {#each Array(99) as _, i}
+                    <option value={i+1}>{i+1}</option>
+                {/each}
+            </select>
+        </div>
         <button 
-            class="beginButton"    
+            class="begin-button"    
             disabled={beginDisabled([$settings.awayTeam.id, $settings.homeTeam.id])}
             on:click={beginGame}
         >
@@ -77,27 +79,42 @@
     main {
         padding: 1rem;
     }
+    .mode-row {
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+        gap: 5%;
+    }
     .mode-button {
-        margin: 0 15px;
-        min-width: 150px;
+        min-width: 140px;
         cursor: pointer;
         font-family: var(--mono);
+        white-space: nowrap;
     }
     .mode-selected, .mode-selected:hover {
         background-color: var(--steelblue);
         color: var(--white);
         cursor: default;
     }
-    .scoreLabel {
+    .score-label {
         margin: auto 0;
         white-space: nowrap;
     }
-    .score-select {
+    .begin-button {
+        white-space: nowrap;
+    }
+    .begin-row {
         display: flex;
         justify-content: center;
         vertical-align: middle;
-        gap: 1%;
         margin: 0 auto;
+        gap: 2%;
+    }
+
+    .score-select {
+        display: flex;
+        vertical-align: middle;
+
     }
     .team-select {
         display: flex;
@@ -123,8 +140,5 @@
 			max-width: 100%;
 			flex-direction: column;
 		}
-        .score-select {
-            gap: 15%;
-        }
 	}
 </style>
