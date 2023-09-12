@@ -1,27 +1,29 @@
 <script>
-    import '$lib/styles/global.css'
+	import '../app.postcss';
+	import '$lib/styles/global.css';
 
-    let currentYear = new Date().getFullYear();
-  </script>
-  
+	let currentYear = new Date().getFullYear();
+
+	/*
   <div class="header">
     <header class="header">
       <div></div>
     </header>
   </div>
-
-  <main>
-    <slot></slot>
-  </main>
-
   <div class="footer">
     <footer>
       <div></div>
     </footer>
   </div>
-  
-  <style>
-    header {
+  */
+</script>
+
+<main>
+	<slot />
+</main>
+
+<style>
+	/*header {
       display: flex;
       flex-flow: column wrap;
       max-width: 1200px;
@@ -30,16 +32,16 @@
     }
     .header {
       background-color: var(--smoke);
-    }
-    main {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-    footer {
+    }*/
+	main {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+		max-width: 1400px;
+		margin: 0 auto;
+	}
+	/*footer {
       display: flex;
       flex-flow: column wrap;
       max-width: 1200px;
@@ -48,5 +50,5 @@
     }
     .footer {
       background-color: var(--smoke);
-    }
-  </style>
+    }*/
+</style>

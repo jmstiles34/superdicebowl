@@ -98,6 +98,7 @@
     }
     .score-label {
         margin: auto 0;
+        padding-right: 5px;
         white-space: nowrap;
     }
     .begin-button {
@@ -132,6 +133,7 @@
         background-color: var(--ltblue);
         border: none;
         border-radius: var(--border-radius);
+        color: var(--black);
         margin: 0 0.5em 0.5em 0;
         padding: 0.2em 0.5em;
     }

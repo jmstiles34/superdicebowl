@@ -180,9 +180,10 @@
     .form-label {
         color: var(--black);
         font-family: var(--mono);
-        width: 110px;
+        width: 100px;
         text-align: right;
         padding-right: 5px;
+        white-space: nowrap;
     }
     .text-label {
         color: var(--black);
@@ -196,7 +197,7 @@
     }
     .helmet {
         margin-top: -15px;
-        padding-left: 20px; 
+        padding-left: 15px; 
     }
     .save-button {
         margin: 0 15px;

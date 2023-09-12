@@ -152,6 +152,7 @@
     }
     .dice {
         max-width: 55%;
+        margin: 0 auto;
     }
     .team-select {
         font-family: var(--mono);
@@ -159,6 +160,7 @@
         background-color: var(--ltblue);
         border: none;
         border-radius: var(--border-radius);
+        color: var(--black);
         margin: 0 0 0.5em 0;
         padding: 0.5em 1em;
         line-height: 1;
