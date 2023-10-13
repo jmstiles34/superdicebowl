@@ -17,6 +17,7 @@
 	--button-hover: rgb(166, 230, 255);
 	--mask: rgba(0,0,0,0.8);
 }
+
 html, body {
 	position: relative;
 	width: 100%;
@@ -36,7 +37,7 @@ html * {
 body {
 	font-family: var(--mono);
 	background: var(--smokeDk);
-	color: var(--white);
+	color: var(--black);
 	margin: 0;
 	padding: 0;
 	font-size: 16px;
@@ -75,6 +76,10 @@ button:not(:disabled):hover {
 
 button:disabled {
 	background-color: var(--gray);
+}
+
+input {
+	padding: 3px;
 }
 
 @media (min-width: 480px) {

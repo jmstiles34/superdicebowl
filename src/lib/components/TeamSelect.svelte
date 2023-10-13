@@ -131,6 +131,7 @@
         min-width: 254px;
     }
     .title {
+        color: var(--white);
         font-size: 28px;
     }
     .hover {

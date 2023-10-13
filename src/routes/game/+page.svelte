@@ -49,11 +49,11 @@
         sound: {
             enabled: true,
             files: [
-                'sfx/firework1.opus',
-                'sfx/firework2.opus',
-                'sfx/firework3.opus',
-                'sfx/firework4.opus',
-                'sfx/firework5.opus',
+                '/sfx/firework1.opus',
+                '/sfx/firework2.opus',
+                '/sfx/firework3.opus',
+                '/sfx/firework4.opus',
+                '/sfx/firework5.opus',
             ],
             volume: {
                 min: 2,

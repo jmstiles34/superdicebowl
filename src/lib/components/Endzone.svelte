@@ -2,6 +2,7 @@
     import { DEFAULT_TEAM, NOOP, POSITION } from "$lib/constants/constants";
     import CustomHelmet from "$lib/components/CustomHelmet.svelte";
 	import type { Team, Void } from "$lib/types";
+    import '@fontsource/bebas-neue';
     
     export let hasBall = false;
     export let inFieldGoalRange = false;
@@ -16,7 +17,7 @@
 <div class="endZone" style={`background-color: ${primary};`}>        
     {#if team.hasOwnProperty('logo')}
         <div 
-            class={`helmetLogo helmetTop rotate${position}`}
+            class={`helmetLogo helmetTop helmet${position} rotate${position}`}
             class:flipLeft={position === POSITION.LEFT}>
             <CustomHelmet 
                 bg={primary}
@@ -41,14 +42,14 @@
     {/if}
     
     <div 
-        class={`name rotate${position}`}
+        class={`name name${position} rotate${position}`}
         style={`color: ${secondary};`}>
         {team.name}
     </div>
 
     {#if team.hasOwnProperty('logo')}
         <div 
-            class={`helmetLogo helmetBottom rotate${position}`}
+            class={`helmetLogo helmetBottom helmet${position} rotate${position}`}
             class:flipRight={position === POSITION.RIGHT}>
             <CustomHelmet 
                 bg={primary}
@@ -128,7 +129,12 @@
         position: absolute;
         height: 50px;
         width: 50px;        
-        left: 50%;
+    }
+    .helmetLeft {        
+        left: 45%;
+    }
+    .helmetRight {        
+        left: 55%;
     }
     .helmetTop {
         top: 10%;
@@ -139,11 +145,16 @@
     .name {
         font-weight: bold;
         text-transform: uppercase;
-        font-family: var(--mono);
-        font-size: 40px;
+        font-family: 'Bebas Neue';
+        font-size: 330%;
         position: absolute;
         top: 50%;
-        left: 50%;
+    }
+    .nameLeft {
+        left: 55%;
+    }
+    .nameRight {
+        left: 45%;
     }
     .rotateLeft {
         transform:  translateX(-50%) translateY(-50%) rotate(-90deg); 

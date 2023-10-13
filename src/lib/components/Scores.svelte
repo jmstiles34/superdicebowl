@@ -54,7 +54,7 @@
         display: flex;
         justify-content: flex-end;
         width: 40%;
-        padding: 0 12px;
+        padding: 4px 12px;
         background-position: left;
         background-position-x: -20px;
         background-size: 50%;
@@ -77,7 +77,7 @@
         padding: 9px 11px;
         border-radius: 50%;
         margin-right: 10px;
-        margin-top: 10px;
+        margin-top: 4px;
         box-shadow: inset 0 3px #111, inset 0 -3px #555;
         background-color: var(--white)
     }
@@ -85,7 +85,8 @@
         width: 10%;
         background-color: var(--white);
         color: var(--black);
-        padding: 0 8px;
+        padding: 4px 8px;
+        margin: auto 0;
     }
     @media (min-width: 835px) {
         .team {

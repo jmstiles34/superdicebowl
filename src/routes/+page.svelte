@@ -97,6 +97,7 @@
         cursor: default;
     }
     .score-label {
+        color: var(--white);
         margin: auto 0;
         padding-right: 5px;
         white-space: nowrap;
@@ -124,6 +125,7 @@
         gap: 2%;
     }
     .vs {
+        color: var(--white);
         font-size: 28px;
         margin: auto 0;
     }
