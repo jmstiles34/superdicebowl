@@ -1,18 +1,21 @@
 <script lang="ts">
+    import '@fontsource/abril-fatface';
     import { fieldData } from '$lib/data/data.json'
-	import { BALL_KICK_GOOD, POSITION, TEAM, YARD_INTERVAL } from "$lib/constants/constants";
+	import { BALL_KICK_GOOD, GAME_ACTION, POSITION, TEAM, YARD_INTERVAL } from "$lib/constants/constants";
     import EndZone from '$lib/components/Endzone.svelte'
 	import { randomNumber } from '$lib/utils/common';
 	import type { Team, Void } from '$lib/types';
 
     export let awayTeam:Team;
     export let ballIndex:number;
+    export let downToGo:string;
     export let firstDownIndex:number;
     export let homeTeam:Team;
     export let inFieldGoalRange:boolean;
     export let missedKick:boolean;
     export let onsideKick:boolean;
     export let possession:string;
+    export let showDownDistance:boolean;
     export let toggleFieldGoal:Void;
 
     $: ballPosition = (missedKick ? BALL_KICK_GOOD[possession] : ballIndex)*YARD_INTERVAL;
@@ -67,6 +70,13 @@
         >
             <img alt="Football" src={`/images/football.png`}/>
         </div>
+        <div 
+            class="downToGo"
+            class:showDownDistance={showDownDistance} 
+            style:left={`${ballPosition}%`}
+        >
+            {downToGo}
+        </div>
     </div>
 
     <EndZone 
@@ -82,13 +92,12 @@
     .field-wrapper {
         display: flex;
         width: 100%;
-        min-height: 372px;
+        min-height: 23rem;
         background-color: var(--field);
     }
     .field {
         display: flex;
-        width: 80%;
-        
+        width: 80%; 
     }
     .field div.fiveYards:first-child {
         border-left: 1px solid var(--white);
@@ -107,17 +116,18 @@
     .fieldNumber {
         position: absolute;
         color:  var(--white);
-        font-size: 28px;
-        font-family: var(--mono);
+        font-size: 1.5rem;
+        font-family: 'Abril Fatface', sans-serif;
+        opacity: .95;
     }
     .upper.fieldNumber {
-        top: 60px;
+        top: 3.5rem;
     }
     .lower.fieldNumber {
-        bottom: 60px;
+        bottom: 3.5rem;
     }
     .number {
-        right: 1px;
+        right: .25rem;
     }
     .center {
         top: 50%;
@@ -129,7 +139,7 @@
         top: 70%;
     }
     .zero {
-        left: 1px
+        left: .25rem;
     }
     .flipV {
         transform: scale(-1, -1);
@@ -147,6 +157,24 @@
     .football img {
         width: 100%;
         transition: all 0.5s ease-in-out;
+    }
+
+    .downToGo {
+        position: absolute;
+        opacity: 0;
+        transform: translate(-50%);
+        z-index: 10;
+        color: var(--yellow);
+        font-size: 1rem;
+        font-family: inherit;
+        top: 53%;
+        filter: drop-shadow(0 0 0.4rem #125618) drop-shadow(0 0 0.4rem #125618);
+    }
+    .showDownDistance {
+        opacity: 1;
+        transition-property: opacity;
+        transition-duration: 0.5s;
+        transition-delay: 0.75s;
     }
     .fiveYards {
         width: 5%;

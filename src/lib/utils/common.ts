@@ -75,6 +75,11 @@ export function sfx(name:string, ext = 'opus') {
     audioFile.play();
 }
 
+export function sfxByFile(name:string) {
+	const audioFile = new Audio(name);
+    audioFile.play();
+}
+
 export function subtract(a:number, b:number) {
 	return a - b;
 }

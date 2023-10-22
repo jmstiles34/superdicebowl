@@ -1,18 +1,14 @@
 <script lang="ts">
 	import { GAME_ACTION } from "$lib/constants/constants";
-
-
     export let action:string;
-
-    /* let keydown = (e: KeyboardEvent) => {
-        e.stopPropagation()
-        if (e.key === 'Escape') {
-        close()
-        }
-    } */
+    const modalActions = [
+        GAME_ACTION.COIN_TOSS, 
+        GAME_ACTION.FOURTH_DOWN_OPTIONS, 
+        GAME_ACTION.POINT_OPTION
+    ]
 </script>
 
-{#if [GAME_ACTION.COIN_TOSS, GAME_ACTION.FOURTH_DOWN_OPTIONS, GAME_ACTION.POINT_OPTION].includes(action)}
+{#if modalActions.includes(action)}
     <div class="backdrop">
         <div class="modal">
             <slot/>
@@ -24,18 +20,21 @@
     .backdrop {
         width: 100%;
         height: 100%;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         background: var(--mask);
         z-index: 999;
+        display: flex;
+        justify-content: center;
     }
+    
     .modal {
-        padding: 10px;
-        border-radius: 10px;
-        max-width: 400px;
-        margin: 10% auto;
-        text-align: center;
+        padding: .75rem;
+        border-radius: 0.5rem;
         background: var(--white);
+        height:fit-content;
+        margin: auto 0;
+        min-width: 20rem;
     }
 </style>

@@ -15,31 +15,22 @@
 </script>
 
 <div class="endZone" style={`background-color: ${primary};`}>        
-    {#if team.hasOwnProperty('logo')}
-        <div 
-            class={`helmetLogo helmetTop helmet${position} rotate${position}`}
-            class:flipLeft={position === POSITION.LEFT}>
-            <CustomHelmet 
-                bg={primary}
-                faceMask={faceMask} 
-                helmet={helmet}
-                stripe={stripe}
-                trim={trim}
-                logo={team.logo}
-                logoWidth={team.logoWidth || 2.5}
-                logoPosition={team.logoPosition || [13, 20]}
-                height={55}
-                width={55} 
-            />
-        </div>
-    {:else}
-        <img 
-            alt={`${team.city} ${team.name} Helmet`} 
-            class={`helmetLogo helmetTop rotate${position}`}
-            class:flipLeft={position === POSITION.LEFT}
-            src={`/helmets/${team.name}.png`}
+    <div 
+        class={`helmetLogo helmetTop helmet${position} rotate${position}`}
+        class:flipLeft={position === POSITION.LEFT}>
+        <CustomHelmet 
+            bg={primary}
+            faceMask={faceMask} 
+            helmet={helmet}
+            stripe={stripe}
+            trim={trim}
+            logo={team.logo}
+            logoWidth={team.logoWidth || 2.5}
+            logoPosition={team.logoPosition || [13, 20]}
+            height={55}
+            width={55} 
         />
-    {/if}
+    </div>
     
     <div 
         class={`name name${position} rotate${position}`}
@@ -47,31 +38,22 @@
         {team.name}
     </div>
 
-    {#if team.hasOwnProperty('logo')}
-        <div 
-            class={`helmetLogo helmetBottom helmet${position} rotate${position}`}
-            class:flipRight={position === POSITION.RIGHT}>
-            <CustomHelmet 
-                bg={primary}
-                faceMask={faceMask} 
-                helmet={helmet}
-                stripe={stripe}
-                trim={trim}
-                logo={team.logo}
-                logoWidth={team.logoWidth || 2.5}
-                logoPosition={team.logoPosition || [13, 20]}
-                height={55}
-                width={55} 
-            />
-        </div>
-    {:else}
-        <img 
-            alt={`${team.city} ${team.name} Helmet`} 
-            class={`helmetLogo helmetBottom rotate${position}`}
-            class:flipRight={position === POSITION.RIGHT}
-            src={`/helmets/${team.name}.png`}
+    <div 
+        class={`helmetLogo helmetBottom helmet${position} rotate${position}`}
+        class:flipRight={position === POSITION.RIGHT}>
+        <CustomHelmet 
+            bg={primary}
+            faceMask={faceMask} 
+            helmet={helmet}
+            stripe={stripe}
+            trim={trim}
+            logo={team.logo}
+            logoWidth={team.logoWidth || 2.5}
+            logoPosition={team.logoPosition || [13, 20]}
+            height={55}
+            width={55} 
         />
-    {/if}
+    </div>
 
     <div 
         class="goalPost"
@@ -94,7 +76,7 @@
     }
     .endZone {
         width: 10%;
-        border: 2px solid var(--white);
+        border: 0.125rem solid var(--white);
         background-color: var(--yellow);
     }
     .goalPost {
@@ -103,7 +85,7 @@
         position: absolute;
         align-items: center;
         height: 25%;
-        width: 10px;
+        width: 0.6rem;
         top: 50%;
         left: 0;
         transform: translate(-50%, -50%);
@@ -113,22 +95,22 @@
         right: -11px;
     }
     .post {
-        width: 9px;
-        height: 9px;
+        width: 0.5rem;
+        height: 0.5rem;
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         border-radius: 50%;
         background-color: var(--yellow);
     }
     .bar{
-        width: 4px;
+        width: .25rem;
         height: 100%;
         background-color: var(--yellow);
     }
     .helmetLogo {
         position: absolute;
-        height: 50px;
-        width: 50px;        
+        height: 3rem;
+        width: 3rem;        
     }
     .helmetLeft {        
         left: 45%;
@@ -143,8 +125,7 @@
         top: 90%;
     }
     .name {
-        font-weight: bold;
-        text-transform: uppercase;
+        font-weight:700;
         font-family: 'Bebas Neue';
         font-size: 330%;
         position: absolute;
@@ -176,7 +157,7 @@
             box-shadow: 0 0 0 0px rgba(255, 215, 0, 0.2);
         }
         100% {
-            box-shadow: 0 0 0 20px rgba(255, 215, 0, 0);
+            box-shadow: 0 0 0 1.25rem rgba(255, 215, 0, 0);
         }
     }
 </style>

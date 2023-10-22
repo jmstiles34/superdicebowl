@@ -16,8 +16,6 @@
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
 		"@rollup/plugin-json": "^6.0.0",
-		"@skeletonlabs/skeleton": "^2.0.0",
-		"@skeletonlabs/tw-plugin": "^0.1.0",
 		"@sveltejs/adapter-auto": "^2.1.0",
 		"@sveltejs/adapter-static": "^2.0.3",
 		"@sveltejs/kit": "^1.0.0",
@@ -33,7 +31,6 @@
 		"prettier-plugin-svelte": "^2.8.1",
 		"svelte": "^4.0.2",
 		"svelte-check": "^3.4.4",
-		"tailwindcss": "^3.3.2",
 		"tslib": "^2.4.1",
 		"typescript": "^5.1.6",
 		"vite": "^4.0.0",
@@ -42,6 +39,7 @@
 	"type": "module",
 	"dependencies": {
 		"@fireworks-js/svelte": "^2.10.2",
+		"@fontsource/abril-fatface": "^5.0.15",
 		"@fontsource/bebas-neue": "^5.0.12",
 		"eslint-plugin-svelte": "^2.32.2",
 		"parse-nested-form-data": "^1.0.0"

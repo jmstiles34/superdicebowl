@@ -6,7 +6,10 @@
     import { GAME_MODE, TEAM } from '$lib/constants/constants';
     import TeamSelect from '$lib/components/TeamSelect.svelte';
 	import { beginDisabled } from '$lib/utils/game';
-	import { sfx, sleep } from '$lib/utils/common';
+	import { sfxByFile, sleep } from '$lib/utils/common';
+    import tackle from '$lib/assets/sfx/tackle.opus'
+    import tap from '$lib/assets/sfx/tap.opus'
+    import gust from '$lib/assets/sfx/gust.opus'
 
     onMount(() => {
         settings.reset();
@@ -16,7 +19,7 @@
     $: settings.updateScore(winScore);
 
     function beginGame () {
-        sfx('tackle');  
+        sfxByFile(tackle);  
         sleep(1000).then(() => goto('/game'));
     }
 </script>
@@ -26,14 +29,14 @@
         <button 
             class="mode-button"
             class:mode-selected={$settings.mode === GAME_MODE.SOLO}
-            on:click={() => {sfx('bass2'); settings.updateMode(GAME_MODE.SOLO)}}
+            on:click={() => {sfxByFile(tap); settings.updateMode(GAME_MODE.SOLO)}}
         >
             Solo Play
         </button>
         <button 
             class="mode-button"    
             class:mode-selected={$settings.mode === GAME_MODE.HEAD_TO_HEAD}
-            on:click={() => {sfx('bass2'); settings.updateMode(GAME_MODE.HEAD_TO_HEAD)}}
+            on:click={() => {sfxByFile(tap); settings.updateMode(GAME_MODE.HEAD_TO_HEAD)}}
         >   
             Head-to-Head
         </button>
@@ -42,14 +45,14 @@
     <div class="team-select">      
         <TeamSelect 
             opponentId={$settings.awayTeam.id}
-            saveTeam={(team) => {sfx('team'); settings.updateHomeTeam(team)}}
+            saveTeam={(team) => {sfxByFile(gust); settings.updateHomeTeam(team)}}
             team={$settings.homeTeam}  
             teamType={TEAM.HOME}
         />
         <div class="vs">VS.</div>
         <TeamSelect 
             opponentId={$settings.homeTeam.id}
-            saveTeam={(team) => {sfx('team'); settings.updateAwayTeam(team)}}
+            saveTeam={(team) => {sfxByFile(gust); settings.updateAwayTeam(team)}}
             team={$settings.awayTeam}  
             teamType={TEAM.AWAY}
             useRandomizer={$settings.mode === GAME_MODE.SOLO}
@@ -77,60 +80,51 @@
 
 <style>
     main {
-        padding: 1rem;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        padding: 2rem;
     }
+
+    .begin-row {
+        display: flex;
+        gap: .5em;
+    }
+
     .mode-row {
         display: flex;
-        justify-content: center;
-        margin: 0 auto;
-        gap: 5%;
+        gap: 2em;
     }
     .mode-button {
-        min-width: 140px;
-        cursor: pointer;
-        font-family: var(--mono);
-        white-space: nowrap;
+        min-width: 8.75rem;
     }
     .mode-selected, .mode-selected:hover {
         background-color: var(--steelblue);
-        color: var(--white);
+        color: var(--ivory);
         cursor: default;
     }
     .score-label {
-        color: var(--white);
+        color: var(--ivory);
         margin: auto 0;
-        padding-right: 5px;
+        padding-right: 0.4rem;
         white-space: nowrap;
-    }
-    .begin-button {
-        white-space: nowrap;
-    }
-    .begin-row {
-        display: flex;
-        justify-content: center;
-        vertical-align: middle;
-        margin: 0 auto;
-        gap: 2%;
     }
 
     .score-select {
         display: flex;
-        vertical-align: middle;
-
     }
     .team-select {
         display: flex;
-        margin: 20px 0;
-        justify-content: center;
-        gap: 2%;
+        gap: 1em;
     }
     .vs {
-        color: var(--white);
-        font-size: 28px;
+        color: var(--ivory);
+        font-size: 1.75rem;
         margin: auto 0;
     }
     .winScore {
-        font-family: var(--mono);
+        font-family: inherit;
         font-size: inherit;
         background-color: var(--ltblue);
         border: none;
@@ -139,10 +133,10 @@
         margin: 0 0.5em 0.5em 0;
         padding: 0.2em 0.5em;
     }
-    @media (max-width: 640px) {
+    @media (max-width: 40rem) {
 		.team-select {
-			max-width: 100%;
 			flex-direction: column;
+            align-items: center;
 		}
 	}
 </style>

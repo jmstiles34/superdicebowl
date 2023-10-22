@@ -88,9 +88,7 @@
 </script>
 
 <div on:click|stopPropagation on:keydown|stopPropagation role="button" tabindex=0>
-    <div>
-        <h3>{customTeamId ? 'Edit' : 'Add'} Custom Team</h3>
-    </div>
+    <h3>{customTeamId ? 'Edit' : 'Add'} Custom Team</h3>
     <div class="container">
         <div class="form-row">
             <div class="form-label">Location:</div>
@@ -164,11 +162,12 @@
 <style>
     h3 {
         color: var(--black);
+        text-align: center;
     }
-    .button-row{
+    .button-row {
         display: flex;
         justify-content: center;
-        padding: 5px;
+        padding: 0.3rem;
     }
     .container {
         display: flex;
@@ -179,37 +178,36 @@
     }
     .form-label {
         color: var(--black);
-        font-family: var(--mono);
-        width: 100px;
+        font-family: inherit;
+        width: 6.25rem;
         text-align: right;
-        padding-right: 5px;
+        padding-right: 0.3rem;
         white-space: nowrap;
     }
     .text-label {
         color: var(--black);
-        font-family: var(--mono);
+        font-family: inherit;
         text-align: right;
-        padding: 0 10px;
+        padding: 0 0.4em;
     }
     .form-row {
         display: flex;
-        padding: 5px;
+        padding: 0.3rem;
     }
     .helmet {
-        margin-top: -15px;
-        padding-left: 15px; 
+        margin-top: -1em;
+        padding-left: 1em; 
     }
     .save-button {
-        margin: 0 15px;
-        min-width: 150px;
+        margin: 0 1em;
         cursor: pointer;
-        font-family: var(--mono);
+        font-family: inherit;
     }
     .delete-button {
-        margin: 0 15px;
-        min-width: 75px;
+        margin: 0 1em;
+        min-width: 4.5em;
         cursor: pointer;
-        font-family: var(--mono);
+        font-family: inherit;
         background-color: transparent;
         color: var(--error);
     }

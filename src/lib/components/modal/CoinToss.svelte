@@ -1,24 +1,32 @@
 <script lang="ts">
-    import { randomNumber, sfx, sleep } from '$lib/utils/common'
+    import { randomNumber, sfxByFile, sleep } from '$lib/utils/common'
 	import { NOOP, TEAM } from "$lib/constants/constants";
 	import type { Team } from '$lib/types';
+    import coinSpin from '$lib/assets/sfx/coin-spin.opus'
 
     export let homeTeam:Team;
     export let awayTeam:Team;
     export let saveCoinToss:(a: string) => void;
     let winStyle:string;
 
+    function getCoinImage(team:Team) {
+        if(team.hasOwnProperty('isCustom') || team.hasOwnProperty('logo')){
+            return `/logos/custom/${team.logo}.png`
+        }
+        return `/logos/${team.name}.png`
+    }
+
     async function handleCoinToss(num:number) {
         winStyle = num === 0 ? TEAM.HOME : TEAM.AWAY;
-        sfx('coin-spin');
+        sfxByFile(coinSpin);
         await sleep(4000);
         saveCoinToss(winStyle);
     }
 </script>
 
-<div>
-    <h3>Coin Toss for Possession</h3>
-</div>
+
+<h3>Coin Toss for Possession</h3>
+
 <div class="game-mode">
     <div id="coin" class={winStyle} 
         on:click={winStyle ? NOOP : () => handleCoinToss(randomNumber())} 
@@ -36,7 +44,7 @@
             <img 
                 alt={`${homeTeam.city} ${homeTeam.name} Helmet`} 
                 class={`helmetLogo`}
-                src={`/logos/${homeTeam.hasOwnProperty('logo') ? `custom/${homeTeam.logo}` : homeTeam.name}.png`}
+                src={getCoinImage(homeTeam)}
             />
         </div>
         <div 
@@ -49,7 +57,7 @@
             <img 
                 alt={`${awayTeam.city} ${awayTeam.name} Helmet`} 
                 class={`helmetLogo`}
-                src={`/logos/${awayTeam.hasOwnProperty('logo') ? `custom/${awayTeam.logo}` : awayTeam.name}.png`}
+                src={getCoinImage(awayTeam)}
             />
         </div>
     </div>
@@ -59,8 +67,8 @@
     #coin {
         position: relative;
         margin: 0 auto;
-        width: 100px;
-        height: 100px;
+        width: 7rem;
+        height: 7rem;
         cursor: pointer;
     }
     #coin div {
@@ -77,10 +85,11 @@
     }
     h3 {
         color: var(--black);
+        text-align: center;
     }
     .helmetLogo {
-        height: 85px;
-        width: 85px;
+        height: 6rem;
+        width: 6rem;
         margin: auto 0;
     }
     #coin {

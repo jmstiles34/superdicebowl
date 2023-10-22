@@ -45,18 +45,18 @@
     .team-scores {
         display: flex;
         color: var(--white);
-        font-size: 24px;
+        font-size: 1.5rem;
         font-weight: bold;
         white-space: nowrap;
-        margin: 0 0 12px 12px;
+        margin: 0 0 0.75rem 0.75rem;
     }
     .team {
         display: flex;
         justify-content: flex-end;
         width: 40%;
-        padding: 4px 12px;
+        padding: 0.25rem 0.75rem;
         background-position: left;
-        background-position-x: -20px;
+        background-position-x: -1.25rem;
         background-size: 50%;
         background-repeat: no-repeat;
         transition: all 0.3s ease-out;
@@ -72,12 +72,12 @@
         display: none;
     }
     .possession {
-        width: 10px;
-        height: 10px;
-        padding: 9px 11px;
+        width: 0.625rem;
+        height: 0.625rem;
+        padding: 0.563rem 0.688rem;
         border-radius: 50%;
-        margin-right: 10px;
-        margin-top: 4px;
+        margin-right: 0.625rem;
+        margin-top: 0.25rem;
         box-shadow: inset 0 3px #111, inset 0 -3px #555;
         background-color: var(--white)
     }
@@ -85,10 +85,10 @@
         width: 10%;
         background-color: var(--white);
         color: var(--black);
-        padding: 4px 8px;
+        padding: 0.25rem 0.5rem;
         margin: auto 0;
     }
-    @media (min-width: 835px) {
+    @media (min-width: 52rem) {
         .team {
             background-position-x: -30px;
             background-size: 40%;

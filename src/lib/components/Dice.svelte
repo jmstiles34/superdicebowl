@@ -82,9 +82,9 @@
         display: flex;
         background: transparent;
         cursor: pointer;
-        border-radius: 10px;
-        padding: 8px;
-        gap: 8px;
+        border-radius: .625rem;
+        padding: .25rem;
+        gap: .5rem;
     }
     .dice-button:hover {
         background-color: var(--gray);
@@ -95,9 +95,9 @@
             "a . c"
             "e g f"
             "d . b";
-        padding: 10px;
-        min-height: 76px;
-        min-width: 76px;
+        padding: .625rem;
+        min-height: 4rem;
+        min-width: 4rem;
         background-color: var(--ivory);
         box-shadow: inset 0 5px var(--white), inset 0 -5px #bbb, inset 5px 0 #d7d7d7,
             inset -5px 0 #d7d7d7;
@@ -109,8 +109,8 @@
         display: block;
         align-self: center;
         justify-self: center;
-        min-width: 16px;
-        min-height: 16px;
+        min-width: 0.75rem;
+        min-height: 0.75rem;
         border-radius: 50%;
         background-color: var(--pip);
         box-shadow: inset 0 3px #111, inset 0 -3px #555;

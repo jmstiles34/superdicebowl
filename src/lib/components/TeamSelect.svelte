@@ -49,7 +49,7 @@
 </script>
 
 <div class="team-card">
-    <div class="title">{teamType} Team</div>
+    <h1>{teamType} Team</h1>
     <div class="logo-image" class:flipLeft={teamType === TEAM.AWAY}>
         {#if team.id.length}
             {#each [team.id] as c (c)}
@@ -83,9 +83,10 @@
                 on:keydown
                 role="button"
                 tabindex=0
+                class="dice"
             >    
                 <img 
-                    class="dice hover" 
+                    class="hover" 
                     alt={`Team Placeholder`} 
                     src={`/images/${pickRandom(DICE_COLORS)}_dice.png`}
                 />
@@ -117,22 +118,17 @@
 
 <style>
     .team-card {
+        align-items: center;
+        background-color: var(--smoke);
+        border-radius: 0.5rem;
         display: flex;
 		flex-direction: column;
-        align-items: center;
-		justify-content: flex-start;
-        background-color: var(--smoke);
-        border-radius: 10px;
-        padding: 12px;
-        flex-basis: 25%;
+        justify-content: space-between;
+        padding: 0.8rem;
     }
     .team-card button {
-        height: 36px;
-        min-width: 254px;
-    }
-    .title {
-        color: var(--white);
-        font-size: 28px;
+        height: 2.25rem;
+        min-width: 15rem;
     }
     .hover {
         cursor: pointer;
@@ -142,21 +138,25 @@
 		flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-width: 300px;
-        min-height: 300px;
+        min-width: 18.75rem;
+        margin: 0 0 1rem 0;
     }
-    .logo-image img {
-        width: 100%;
-    }
+
     .flipLeft {
         transform:  scale(-1, 1);
     }
-    .dice {
+
+    .dice{
+        display: flex;
+        justify-content: center;
+        min-width: 18.75rem;
+        margin: 2.75rem 0;
+    }
+    .dice img {
         max-width: 55%;
-        margin: 0 auto;
     }
     .team-select {
-        font-family: var(--mono);
+        font-family: inherit;
         font-size: inherit;
         background-color: var(--ltblue);
         border: none;
@@ -165,6 +165,6 @@
         margin: 0 0 0.5em 0;
         padding: 0.5em 1em;
         line-height: 1;
-        min-width: 254px;
+        min-width: 15rem;
     }
 </style>

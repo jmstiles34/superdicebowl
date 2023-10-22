@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { onDestroy, onMount } from 'svelte';
+    import { onDestroy } from 'svelte';
     import { Fireworks } from '@fireworks-js/svelte'
     import type { FireworksOptions } from '@fireworks-js/svelte'
     import { game } from '$lib/stores/Game'
     import { settings } from '$lib/stores/Settings'
-    import { goto } from '$app/navigation';
     import { equals, gt, sfx, sleep } from '$lib/utils/common'
     import { 
         compareFns,
@@ -61,12 +60,7 @@
             }
         }
     }
-
-    onMount(() => {
-        if(equals(awayTeam.id, 0) || equals(homeTeam.id, 0)){
-            goto('/')
-        }
-    });
+    const isGameReady = awayTeam.id.length && homeTeam.id.length;
 
     onDestroy(() => {
         game.reset();
@@ -86,7 +80,6 @@
         );
     }
 
-    //
     $: if(isModalChoice(mode, possession, action)){
             if(action === GAME_ACTION.POINT_OPTION){
                 sleep(1000).then(() => {
@@ -107,99 +100,94 @@
     }
 </script>
 
-<main>
-    <div class="game">
-        <div class="controls">
-            <div class="dice-container">
-                <div class="action">{action}</div>
-                <Dice
-                    dieColor={primaryColor($settings, possession)} 
-                    pipColor={secondaryColor($settings, possession)} 
-                />
-                {#if restrictDice || (mode === GAME_MODE.SOLO && possession === TEAM.AWAY)}
-                    <div class="dice-block" />
-                {/if}
-            </div>
-            <div class="scoreboard">
-                <Scores {awayTeam} {homeTeam} {possession} {score} />
-                {#if showDownDistance(action)}
-                    <div class="down-to-go">
-                        {DOWN[currentDown]} & {yardsToGo}
+{#if isGameReady}
+    <main>
+        <div class="game">
+            <div class="controls">
+                <div class="dice-container">
+                    <div class="action">{action}</div>
+                    <Dice
+                        dieColor={primaryColor($settings, possession)} 
+                        pipColor={secondaryColor($settings, possession)} 
+                    />
+                    {#if restrictDice || (mode === GAME_MODE.SOLO && possession === TEAM.AWAY)}
+                        <div class="dice-block" />
+                    {/if}
+                </div>
+                <div class="scoreboard">
+                    <Scores {awayTeam} {homeTeam} {possession} {score} />
+                    <div class="last-play">
+                        {lastPlay}
                     </div>
-                {/if}
-                <div class="last-play">
-                    {lastPlay}
                 </div>
             </div>
-        </div>
 
-        <Field 
-            {awayTeam}
-            {ballIndex}
-            {firstDownIndex}
-            {homeTeam}
-            inFieldGoalRange={inFieldGoalRange(action, possession, ballIndex)}
-            {missedKick}
-            {onsideKick}
-            {possession}
-            toggleFieldGoal={game.toggleFieldGoal} 
-        />
-        {#if action === GAME_ACTION.GAME_OVER}
-            <Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
-        {/if}
-    </div>
-
-    <GameModal {action} on:click={game.clearModal}>
-        <div class="model-content">
-            {#if equals(action, GAME_ACTION.COIN_TOSS)}
-                <CoinToss {awayTeam} {homeTeam} saveCoinToss={game.saveCoinToss} />
-            {/if}
-            {#if equals(action, GAME_ACTION.POINT_OPTION) && !equals(action, GAME_ACTION.GAME_OVER)}
-                <PointOption savePointOption={game.preparePointOption} />
-            {/if}
-            {#if equals(action, GAME_ACTION.FOURTH_DOWN_OPTIONS)}
-                <FourthDown 
-                    inFieldGoalRange={compareFns[possession](ballIndex, BALL_FIELD_GOAL[possession])} 
-                    saveFourthDown={game.saveFourthDown}
-                    toggleFieldGoal={game.toggleFieldGoal}
-                />
+            <Field 
+                {awayTeam}
+                {ballIndex}
+                downToGo={`${DOWN[currentDown]} & ${yardsToGo}`}
+                {firstDownIndex}
+                {homeTeam}
+                inFieldGoalRange={inFieldGoalRange(action, possession, ballIndex)}
+                {missedKick}
+                {onsideKick}
+                {possession}
+                showDownDistance={showDownDistance(action) && !restrictDice}
+                toggleFieldGoal={game.toggleFieldGoal} 
+            />
+            {#if action === GAME_ACTION.GAME_OVER}
+                <Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
             {/if}
         </div>
-    </GameModal>
-</main>
-<div class="exit-button">
-    <button on:click={() => goto('/')}>RETURN TO SETTINGS</button>
-</div>
 
+        <GameModal {action} on:click={game.clearModal}>
+            <div class="model-content">
+                {#if equals(action, GAME_ACTION.COIN_TOSS)}
+                    <CoinToss {awayTeam} {homeTeam} saveCoinToss={game.saveCoinToss} />
+                {/if}
+                {#if equals(action, GAME_ACTION.POINT_OPTION) && !equals(action, GAME_ACTION.GAME_OVER)}
+                    <PointOption savePointOption={game.preparePointOption} />
+                {/if}
+                {#if equals(action, GAME_ACTION.FOURTH_DOWN_OPTIONS)}
+                    <FourthDown 
+                        inFieldGoalRange={compareFns[possession](ballIndex, BALL_FIELD_GOAL[possession])} 
+                        saveFourthDown={game.saveFourthDown}
+                        toggleFieldGoal={game.toggleFieldGoal}
+                    />
+                {/if}
+            </div>
+        </GameModal>
+    </main>
+{/if}
 <style>
     main {
         position: relative;
         padding: 1rem;
 	}
     .game{
-        max-width: 850px;
-        min-width: 600px;
+        max-width: 53.125rem;
+        min-width: 37.5rem;
         margin: 0 auto;
     }
     .controls {
         display: flex;
         background-color: var(--smoke);
-        padding: 1%;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
     }
     .dice-container {
         display: flex;
         flex-direction: column;
-        width: 176px;
-        height: 116px;
+        justify-content: center;
+        padding: 0.25rem
     }
     .action {
         color: var(--white);
-        font-family: var(--mono);
+        font-family: inherit;
         line-height: 1.5rem;
-        font-size: 18px;
+        font-size: 1rem;
         white-space: nowrap;
+        margin: 0 auto;
     }
     .dice-block {
         position: absolute;
@@ -213,28 +201,16 @@
         display: flex;
         flex-direction: column;
         width: 100%;
+        padding: 0.25rem
     }
-    .down-to-go {
-        text-align: center;
-        font-size: 24px;
-        font-family: var(--mono);
-        color: var(--white);
-    }
+
     .last-play {
         text-align: center;
-        font-size: 20px;
+        font-size: 1.25rem;
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         color: gold;
     }
-    .exit-button {
-        margin-top: 10px;
-    }
 
-    @media (min-width: 850px) {
-        .controls {
-            min-height: 132px;
-        }
-    }
     :global(.fireworks) {
         top: 0;
         left: 0;
