@@ -65,8 +65,8 @@ export function shuffle(array: []) {
 }
 
 export function sleep(ms:number) {
-	return new Promise(fulfil => {
-		setTimeout(fulfil, ms)
+	return new Promise(fulfill => {
+		setTimeout(fulfill, ms)
 	});
 }
 

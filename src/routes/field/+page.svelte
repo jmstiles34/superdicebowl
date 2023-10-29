@@ -78,10 +78,6 @@
         border: 0.125rem solid var(--white);
         background-color: var(--yellow);
     }
-    .endZoneElements{
-        display: flex;
-        height: 100%;
-    }
     .field {
         display: flex;
         width: 80%;
@@ -138,19 +134,12 @@
     .lower.hashes {
         bottom: 0;
     }
-    .endZoneElements_OLD {
-        position: absolute;
-        display: flex;
-        height: 100%;
-        align-items: center;
-        transform:  translateX(-50%) translateY(-50%) rotate(-90deg);
-        background-color: aquamarine;
-    }
     .endZoneElements{
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 0.25em 3em auto 3em 0.25em;
         gap: 0.25em;
+        height: 100%;
     }
     .helmetLogo {
         display: flex;

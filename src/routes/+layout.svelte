@@ -1,10 +1,10 @@
 <script>
-  import { enhance } from '$app/forms';
-  import { page } from '$app/stores';
+  	import { enhance } from '$app/forms';
+  	import { page } from '$app/stores';
 	import '../styles.css';
-  import '@fontsource/bebas-neue';
-  import logo from '$lib/images/sdb-logo.png';
-  export let data;
+  	import '@fontsource/bebas-neue';
+  	import logo from '$lib/images/sdb-logo.png';
+  	export let data;
 
 	const currentYear = new Date().getFullYear();
 </script>

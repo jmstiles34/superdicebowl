@@ -42,7 +42,10 @@
             />
         </div>
         {#each fieldData as block, i}
-            <div class="fiveYards" class:firstDown={i === firstDownIndex}>
+            <div class="fiveYards" 
+                class:fiveYardsLeft={i===0}
+                class:firstDown={i === firstDownIndex}
+            >
                 <div class="hashes"></div>
                 <div class={`upper fieldNumber flipV ${i % 2 ? 'number' : 'zero' }`}>
                     {block.upperNumber}
@@ -54,8 +57,7 @@
                 </div>
                 <div class="lower hashes"></div>
             </div>
-        {/each}   
-
+        {/each}
         <div 
             class="football"
             class:center={!missedKick}
@@ -91,8 +93,10 @@
 <style>
     .field-wrapper {
         display: flex;
-        width: 100%;
-        min-height: 23rem;
+        max-width: 53.125rem;
+        min-height: 23.61rem;
+        min-width: 37.5rem;
+        margin: 0 auto;
         background-color: var(--field);
     }
     .field {
@@ -116,7 +120,7 @@
     .fieldNumber {
         position: absolute;
         color:  var(--white);
-        font-size: 1.5rem;
+        font-size: clamp(0.5rem, 0.2250rem + 2.4000vw, 1.5rem);
         font-family: 'Abril Fatface', sans-serif;
         opacity: .95;
     }
@@ -176,11 +180,19 @@
         transition-duration: 0.5s;
         transition-delay: 0.75s;
     }
+    .yardBlocks {
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
     .fiveYards {
         width: 5%;
         border-top: 2px solid var(--white);
         border-bottom: 2px solid var(--white);
         border-right: 1px solid var(--white);
+    }
+    .fiveYardsLeft {
+        border-left: 1px solid var(--white);
     }
     .firstDown {
         border-right: 2px solid var(--yellow);

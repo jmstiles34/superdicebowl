@@ -14,47 +14,56 @@
     $: allowFieldGoal = hasBall && inFieldGoalRange;
 </script>
 
-<div class="endZone" style={`background-color: ${primary};`}>        
+<div class="endZone" style={`background-color: ${primary};`}>
     <div 
-        class={`helmetLogo helmetTop helmet${position} rotate${position}`}
-        class:flipLeft={position === POSITION.LEFT}>
-        <CustomHelmet 
-            bg={primary}
-            faceMask={faceMask} 
-            helmet={helmet}
-            stripe={stripe}
-            trim={trim}
-            logo={team.logo}
-            logoWidth={team.logoWidth || 2.5}
-            logoPosition={team.logoPosition || [13, 20]}
-            height={55}
-            width={55} 
-        />
-    </div>
-    
-    <div 
-        class={`name name${position} rotate${position}`}
-        style={`color: ${secondary};`}>
-        {team.name}
-    </div>
+        class="endZoneElements"
+        class:endZoneElementsRight={position === POSITION.RIGHT}
+    >
+        <div></div>
+        <div 
+            class={`helmetLogo rotate${position}`}
+            class:flipLeft={position === POSITION.LEFT}
+        >
+            <CustomHelmet 
+                bg={primary}
+                faceMask={faceMask} 
+                helmet={helmet}
+                stripe={stripe}
+                trim={trim}
+                logo={team.logo}
+                logoWidth={team.logoWidth || 2.5}
+                logoPosition={team.logoPosition || [13, 20]}
+                height={55}
+                width={55} 
+            />
+        </div>       
+        
+        <div 
+            class={`name`}
+            class:flipName={position === POSITION.RIGHT}
+            style={`color: ${secondary};`}>
+            {team.name}
+        </div>
 
-    <div 
-        class={`helmetLogo helmetBottom helmet${position} rotate${position}`}
-        class:flipRight={position === POSITION.RIGHT}>
-        <CustomHelmet 
-            bg={primary}
-            faceMask={faceMask} 
-            helmet={helmet}
-            stripe={stripe}
-            trim={trim}
-            logo={team.logo}
-            logoWidth={team.logoWidth || 2.5}
-            logoPosition={team.logoPosition || [13, 20]}
-            height={55}
-            width={55} 
-        />
+        <div 
+            class={`helmetLogo rotate${position}`}
+            class:flipRight={position === POSITION.RIGHT}
+        >
+            <CustomHelmet 
+                bg={primary}
+                faceMask={faceMask} 
+                helmet={helmet}
+                stripe={stripe}
+                trim={trim}
+                logo={team.logo}
+                logoWidth={team.logoWidth || 2.5}
+                logoPosition={team.logoPosition || [13, 20]}
+                height={55}
+                width={55} 
+            />
+        </div>
+        <div></div>
     </div>
-
     <div 
         class="goalPost"
         class:right={position === POSITION.RIGHT}
@@ -78,6 +87,17 @@
         width: 10%;
         border: 0.125rem solid var(--white);
         background-color: var(--yellow);
+    }
+    .endZoneElements{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.5em 3em auto 3em 0.5em;
+        gap: 0.25em;
+        height: 100%;
+        width: 95%;
+    }
+    .endZoneElementsRight {
+        margin-left: 0.4rem;
     }
     .goalPost {
         display: flex;
@@ -108,46 +128,36 @@
         background-color: var(--yellow);
     }
     .helmetLogo {
-        position: absolute;
-        height: 3rem;
-        width: 3rem;        
-    }
-    .helmetLeft {        
-        left: 45%;
-    }
-    .helmetRight {        
-        left: 55%;
-    }
-    .helmetTop {
-        top: 10%;
-    }
-    .helmetBottom {
-        top: 90%;
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        height: 100%;
+        width: 3rem;     
     }
     .name {
+        display: flex;
         font-weight:700;
         font-family: 'Bebas Neue';
-        font-size: 330%;
-        position: absolute;
-        top: 50%;
-    }
-    .nameLeft {
-        left: 55%;
-    }
-    .nameRight {
-        left: 45%;
+        font-size: clamp(2.5rem, 1.2250rem + 4.5333vw, 3.35rem);
+        transform: rotate(180deg);
+        writing-mode: vertical-lr;
+        justify-content: center;
+
     }
     .rotateLeft {
-        transform:  translateX(-50%) translateY(-50%) rotate(-90deg); 
+        transform: rotate(-90deg); 
     }
     .rotateRight {
-        transform:  translateX(-50%) translateY(-50%) rotate(90deg);
+        transform: rotate(90deg);
     }
     .flipLeft {
-        transform:  translateX(-50%) translateY(-50%) rotate(-90deg) scale(-1, 1);
+        transform: rotate(-90deg) scale(-1, 1);
     }
     .flipRight {
-        transform:  translateX(-50%) translateY(-50%) rotate(90deg) scale(-1, 1);
+        transform: rotate(90deg) scale(-1, 1);
+    }
+    .flipName {
+        transform: rotate(360deg);
     }
     .pulse {
         animation: pulse-animation 2s infinite;

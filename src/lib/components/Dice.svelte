@@ -36,7 +36,7 @@
     $: if($settings.mode === GAME_MODE.SOLO && $game.possession === TEAM.AWAY && isRollAction($game.action)){
         if($game.ballIndex > 0 || $game.currentDown > 0){
             tick();
-            sleep(1000).then(() => {
+            sleep(2000).then(() => {
                 handleRollDice();
             }
         );
