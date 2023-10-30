@@ -26,96 +26,127 @@
 </script>
 
 <div class="field-wrapper">
-    <EndZone 
-        hasBall={possession === TEAM.AWAY}
-        {inFieldGoalRange}
-        position={POSITION.LEFT} 
-        team={homeTeam}
-        {toggleFieldGoal}
-    />
-
-    <div class="field">
-        <div class="fieldLogo">
-            <img 
-                alt={`${homeTeam.city} ${homeTeam.name} Logo`} 
-                src={`/logos/${homeTeam.hasOwnProperty('isCustom') ? `custom/${homeTeam.logo}` : homeTeam.name}.png`}
-            />
-        </div>
-        {#each fieldData as block, i}
-            <div class="fiveYards" 
-                class:fiveYardsLeft={i===0}
-                class:firstDown={i === firstDownIndex}
-            >
-                <div class="hashes"></div>
-                <div class={`upper fieldNumber flipV ${i % 2 ? 'number' : 'zero' }`}>
-                    {block.upperNumber}
-                </div>
-                <div class="first-mid hashes"></div>
-                <div class="second-mid hashes"></div>
-                <div class={`lower fieldNumber ${i % 2 ? 'number' : 'zero' }`}>
-                    {block.lowerNumber}
-                </div>
-                <div class="lower hashes"></div>
-            </div>
-        {/each}
-        <div 
-            class="football"
-            class:center={!missedKick}
-            class:missLeft={missedKick && missDirection === 'left'} 
-            class:missRight={missedKick && missDirection === 'right'}
-            style:left={`${ballPosition}%`}
-            style:rotate={onsideKick ? '3turn' : 'initial'}
-            style:transition={onsideKick ? 
-                'left 0.5s ease-in-out, top 0.5s ease-in-out, rotate 0.5s ease-in-out' 
-                : 'left 0.5s ease-in-out, top 0.5s ease-in-out, rotate 0s ease-in-out'
-            }
-        >
-            <img alt="Football" src={`/images/football.png`}/>
-        </div>
-        <div 
-            class="downToGo"
-            class:showDownDistance={showDownDistance} 
-            style:left={`${ballPosition}%`}
-        >
-            {downToGo}
-        </div>
+    <div class="fieldLogo">
+        <img 
+            alt={`${homeTeam.city} ${homeTeam.name} Logo`} 
+            src={`/logos/${homeTeam.hasOwnProperty('isCustom') ? `custom/${homeTeam.logo}` : homeTeam.name}.png`}
+        />
     </div>
+    <div class="field-grid">
+        <EndZone 
+            hasBall={possession === TEAM.AWAY}
+            {inFieldGoalRange}
+            position={POSITION.LEFT} 
+            team={homeTeam}
+            {toggleFieldGoal}
+        />
 
-    <EndZone 
-        hasBall={possession === TEAM.HOME}
-        {inFieldGoalRange}
-        position={POSITION.RIGHT} 
-        team={awayTeam}
-        {toggleFieldGoal}
-    />
+        <div class="field">
+            {#each fieldData as block, i}
+                <div 
+                    class:yardsHome={i<=9} 
+                    class:yardsAway={i>9}
+                    class:firstDownLeft={i<=9 && i === firstDownIndex}
+                    class:firstDownRight={i>9 && i === firstDownIndex+1}
+                >
+                    <div class="hashes"></div>
+                    <div class={`upper fieldNumber flipV ${i % 2 ? 'number' : 'zero' }`}>
+                        {block.upperNumber}
+                    </div>
+                    <div class="first-mid hashes"></div>
+                    <div class="second-mid hashes"></div>
+                    <div class={`lower fieldNumber ${i % 2 ? 'number' : 'zero' }`}>
+                        {block.lowerNumber}
+                    </div>
+                    <div class="lower hashes"></div>
+                </div>
+            {/each}
+            <div 
+                class="football"
+                class:center={!missedKick}
+                class:missLeft={missedKick && missDirection === 'left'} 
+                class:missRight={missedKick && missDirection === 'right'}
+                style:left={`${ballPosition}%`}
+                style:rotate={onsideKick ? '3turn' : 'initial'}
+                style:transition={onsideKick ? 
+                    'left 0.5s ease-in-out, top 0.5s ease-in-out, rotate 0.5s ease-in-out' 
+                    : 'left 0.5s ease-in-out, top 0.5s ease-in-out, rotate 0s ease-in-out'
+                }
+            >
+                <img alt="Football" src={`/images/football.png`}/>
+            </div>
+            <div 
+                class="downToGo"
+                class:showDownDistance={showDownDistance} 
+                style:left={`${ballPosition}%`}
+            >
+                {downToGo}
+            </div>
+        </div>
+
+        <EndZone 
+            hasBall={possession === TEAM.HOME}
+            {inFieldGoalRange}
+            position={POSITION.RIGHT} 
+            team={awayTeam}
+            {toggleFieldGoal}
+        />
+    </div>
 </div>
 
 <style>
     .field-wrapper {
-        display: flex;
-        max-width: 53.125rem;
         min-height: 23.61rem;
+        max-width: 53.125rem;
         min-width: 37.5rem;
         margin: 0 auto;
         background-color: var(--field);
     }
-    .field {
-        display: flex;
-        width: 80%; 
+
+    .field-grid {
+        display: grid;
+        grid-template-columns: 10% auto 10%;
+        min-height: 23.61rem;
+        max-width: 53.125rem;
+        min-width: 37.5rem;
     }
-    .field div.fiveYards:first-child {
-        border-left: 1px solid var(--white);
+
+    .field {
+        display: grid;
+        grid-template-columns: repeat(20, 5%); 
     }
     .fieldLogo {
         position: absolute;
         top: 50%;
         left: 50%;
-        max-width: 20%;
+        max-width: 16%;
         transform: translate(-50%, -50%);
     }
     .fieldLogo img {
         width: 100%;
         opacity: .8;
+    }
+    .football {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        z-index: 10;
+        width: 4.5%;
+    }
+    .football img {
+        width: 100%;
+        transition: all 0.5s ease-in-out;
+    }
+    .yardsAway {
+        border-top: 2px solid var(--white);
+        border-bottom: 2px solid var(--white);
+        border-left: 1px solid var(--white);
+    }
+    .yardsHome {
+        border-top: 2px solid var(--white);
+        border-bottom: 2px solid var(--white);
+        border-right: 1px solid var(--white);
     }
     .fieldNumber {
         position: absolute;
@@ -152,17 +183,6 @@
         -o-transform: scale(-1 -1);
         -ms-transform: scale(-1, -1);
     }
-    .football {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        z-index: 10;
-        width: 4.5%;
-    }
-    .football img {
-        width: 100%;
-        transition: all 0.5s ease-in-out;
-    }
-
     .downToGo {
         position: absolute;
         opacity: 0;
@@ -180,22 +200,11 @@
         transition-duration: 0.5s;
         transition-delay: 0.75s;
     }
-    .yardBlocks {
-        display: flex;
-        height: 100%;
-        width: 100%;
-    }
-    .fiveYards {
-        width: 5%;
-        border-top: 2px solid var(--white);
-        border-bottom: 2px solid var(--white);
-        border-right: 1px solid var(--white);
-    }
-    .fiveYardsLeft {
-        border-left: 1px solid var(--white);
-    }
-    .firstDown {
+    .firstDownLeft {
         border-right: 2px solid var(--yellow);
+    }
+    .firstDownRight {
+        border-left: 2px solid var(--yellow);
     }
     .hashes {
         position: absolute;

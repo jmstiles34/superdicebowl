@@ -84,7 +84,6 @@
         cursor: pointer;
     }
     .endZone {
-        width: 10%;
         border: 0.125rem solid var(--white);
         background-color: var(--yellow);
     }

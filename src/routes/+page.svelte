@@ -62,7 +62,7 @@
     <div class="begin-row">
         <div class="score-select">
             <label class="score-label" for="winScore">Win Score:</label>
-            <select id="winScore" class="winScore" bind:value={winScore}>
+            <select id="winScore" class="win-score" bind:value={winScore}>
                 {#each Array(99) as _, i}
                     <option value={i+1}>{i+1}</option>
                 {/each}
@@ -123,7 +123,7 @@
         font-size: 1.75rem;
         margin: auto 0;
     }
-    .winScore {
+    .win-score {
         font-family: inherit;
         font-size: inherit;
         background-color: var(--ltblue);
