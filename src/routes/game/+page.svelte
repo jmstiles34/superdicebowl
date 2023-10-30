@@ -103,7 +103,10 @@
 {#if isGameReady}
     <main>
         <div class="game">
-            <div class="controls">
+            <div class="scoreboard">
+                <div class="last-play">
+                    <p>{lastPlay}</p>
+                </div>
                 <div class="dice-container">
                     <div class="action">{action}</div>
                     <Dice
@@ -114,11 +117,8 @@
                         <div class="dice-block" />
                     {/if}
                 </div>
-                <div class="scoreboard">
+                <div class="scores">
                     <Scores {awayTeam} {homeTeam} {possession} {score} />
-                    <div class="last-play">
-                        {lastPlay}
-                    </div>
                 </div>
             </div>
 
@@ -167,25 +167,28 @@
     .game{
         max-width: 53.125rem;
         min-width: 37.5rem;
-        margin: 0 auto;
+        margin: -3.25rem auto 0 auto;
     }
-    .controls {
-        display: flex;
-        background-color: var(--smoke);
-        border-top-left-radius: 0.25rem;
-        border-top-right-radius: 0.25rem;
+    .scoreboard {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        column-gap: .25rem;
+        top: 2.5rem;
     }
     .dice-container {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        padding: 0.25rem
+        align-items: center;
+        background-color: var(--smoke);
+        border: 1px solid var(--white);
+        border-radius: 1rem;
+        padding: 0.25rem 0.5rem;
+        z-index: 100;
     }
     .action {
         color: var(--white);
         font-family: inherit;
-        line-height: 1.5rem;
-        font-size: 1rem;
+        font-size: .9rem;
         white-space: nowrap;
         margin: 0 auto;
     }
@@ -197,18 +200,19 @@
         background-color: var(--black);
         opacity: .2; 
     }
-    .scoreboard {
+    .scores {
         display: flex;
         flex-direction: column;
+        margin-top: 0.6rem;
         width: 100%;
-        padding: 0.25rem
     }
 
     .last-play {
         text-align: center;
-        font-size: 1.25rem;
+        font-size: 0.9rem;
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         color: gold;
+        vertical-align: middle;
     }
 
     :global(.fireworks) {

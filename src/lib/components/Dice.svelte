@@ -84,10 +84,11 @@
         cursor: pointer;
         border-radius: .625rem;
         padding: .25rem;
-        gap: .5rem;
+        gap: .3rem;
+        margin: 0;
     }
     .dice-button:hover {
-        background-color: var(--gray);
+        background-color: var(--steelblue);
     }
     .face {
         display: grid;
@@ -95,12 +96,12 @@
             "a . c"
             "e g f"
             "d . b";
-        padding: .625rem;
-        min-height: 4rem;
-        min-width: 4rem;
+        padding: .5rem;
+        min-height: 3rem;
+        min-width: 3rem;
         background-color: var(--ivory);
-        box-shadow: inset 0 5px var(--white), inset 0 -5px #bbb, inset 5px 0 #d7d7d7,
-            inset -5px 0 #d7d7d7;
+        box-shadow: inset 0 4px var(--white), inset 0 -4px #bbb, inset 4px 0 #d7d7d7,
+            inset -4px 0 #d7d7d7;
         border-radius: 10%;
         cursor: pointer;
     }
@@ -109,11 +110,11 @@
         display: block;
         align-self: center;
         justify-self: center;
-        min-width: 0.75rem;
-        min-height: 0.75rem;
+        min-width: 0.6rem;
+        min-height: 0.6rem;
         border-radius: 50%;
         background-color: var(--pip);
-        box-shadow: inset 0 3px #111, inset 0 -3px #555;
+        box-shadow: inset 0 2px #111, inset 0 -2px #555;
     }
 
     .pip:nth-child(2) {
