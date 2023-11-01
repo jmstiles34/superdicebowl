@@ -11,12 +11,12 @@
     import Modal from '$lib/components/Modal.svelte';
     import CustomHelmet from "$lib/components/CustomHelmet.svelte";
     import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
+    import randomize from '$lib/images/randomize.png';
     
     export let opponentId:string;
     export let saveTeam:SaveTeam;
     export let team:Team;
     export let teamType:string;
-    export let useRandomizer: boolean = false;
     
     let showCustomTeam:boolean;
 
@@ -93,12 +93,7 @@
             </div>
         {/if}
     </div>
-
-    {#if useRandomizer }
-        <button on:click={() => setRandomTeam(allTeamsData, opponentId, saveTeam)}>
-            Team Randomizer
-        </button>
-    {:else}
+    <div class="select-row">
         <select bind:value={selected} class="team-select">
             <option value="">Choose Your Team</option>
             {#each allTeamsData as team}
@@ -107,7 +102,19 @@
                 {/if}
             {/each}
         </select>
-    {/if}
+        <div 
+            class="random"
+            on:click={() => setRandomTeam(allTeamsData, opponentId, saveTeam)}
+            on:keydown={() => setRandomTeam(allTeamsData, opponentId, saveTeam)}
+            role="button"
+            tabindex=0  
+        >
+            <img  
+                alt={`Random ${teamType} Team`} 
+                src={randomize}
+            />
+        </div>
+    </div>
 </div>
 
 <Modal showModal={showCustomTeam} close={() => showCustomTeam = false}>
@@ -125,10 +132,6 @@
 		flex-direction: column;
         justify-content: space-between;
         padding: 0.8rem;
-    }
-    .team-card button {
-        height: 2.25rem;
-        min-width: 15rem;
     }
     .hover {
         cursor: pointer;
@@ -155,16 +158,25 @@
     .dice img {
         max-width: 55%;
     }
+    .select-row {
+        display: flex;
+        gap: 1rem;
+    }
+    .random:hover {
+        border-radius: var(--border-radius);
+        cursor: pointer;
+    }
+    .random img {
+        height: 2.5rem;
+    }
     .team-select {
         font-family: inherit;
-        font-size: inherit;
+        font-size: 1rem;
         background-color: var(--ltblue);
         border: none;
         border-radius: var(--border-radius);
         color: var(--black);
-        margin: 0 0 0.5em 0;
-        padding: 0.5em 1em;
-        line-height: 1;
-        min-width: 15rem;
+        margin: 0;
+        padding: 0.25em;
     }
 </style>

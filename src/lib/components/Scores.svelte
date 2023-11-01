@@ -73,7 +73,7 @@
     }
     .possession {
         width: 1rem;
-        height: .9rem;
+        height: .8rem;
         border-radius: 50%;
         margin-right: 0.3rem;
         margin-top: 0.175rem;

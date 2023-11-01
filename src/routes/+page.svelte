@@ -55,7 +55,6 @@
             saveTeam={(team) => {sfxByFile(gust); settings.updateAwayTeam(team)}}
             team={$settings.awayTeam}  
             teamType={TEAM.AWAY}
-            useRandomizer={$settings.mode === GAME_MODE.SOLO}
         />
     </div>
 
