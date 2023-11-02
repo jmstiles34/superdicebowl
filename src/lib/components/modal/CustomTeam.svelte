@@ -88,40 +88,36 @@
 </script>
 
 <div on:click|stopPropagation on:keydown|stopPropagation role="button" tabindex=0>
-    <div>
-        <h3>{customTeamId ? 'Edit' : 'Add'} Custom Team</h3>
-    </div>
+    <h3>{customTeamId ? 'Edit' : 'Add'} Custom Team</h3>
     <div class="container">
         <div class="form-row">
             <div class="form-label">Location:</div>
             <input type="text" maxlength="15" id="city" bind:value={city} class:error={errors.includes('city')}>
-            <div class="form-label">Endzone:</div>
-            <input type="color" id="primary" bind:value={primary}>
-        </div>
+        </div>          
         <div class="form-row">
             <div class="form-label">Name:</div>
             <input type="text" maxlength="10" id="name" bind:value={name} class:error={errors.includes('name')}>
-            <div class="form-label">Text:</div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Endzone:</div>
+            <input type="color" id="primary" bind:value={primary}>
+            <div class="text-label">Text:</div>
             <input type="color" id="secondary" bind:value={secondary}>
+        </div>
+        <div class="form-row">
+            <label class="form-label" for="logo">Logo:</label>
+            <select id="logo" bind:value={logo} class:error={errors.includes('logo')}>
+                <option value="">Choose...</option>
+                {#each sortedLogos as logo}
+                    <option value={logo.file}>{logo.name}</option>
+                {/each}
+            </select>
         </div>
         <div class="form-row">
             <div>
                 <div class="form-row">
-                    <label class="form-label" for="logo">Logo:</label>
-                    <select id="logo" bind:value={logo} class:error={errors.includes('logo')}>
-                        <option value="">Choose...</option>
-                        {#each sortedLogos as logo}
-                            <option value={logo.file}>{logo.name}</option>
-                        {/each}
-                    </select>
-                </div>
-                <div class="form-row">
                     <label class="form-label" for="helmet">Helmet:</label>
                     <input type="color" id="helmet" bind:value={helmet}>
-                </div>
-                <div class="form-row">
-                    <label class="form-label" for="secondaryColor">Face Mask:</label>
-                    <input type="color" id="faceMask" bind:value={faceMask}>
                 </div>
                 <div class="form-row">
                     <label class="form-label" for="stripe">Stripe 1:</label>
@@ -130,9 +126,13 @@
                 <div class="form-row">
                     <label class="form-label" for="secondaryColor">Stripe 2:</label>
                     <input type="color" id="trim" bind:value={trim}>
-                </div> 
+                </div>
+                <div class="form-row">
+                    <label class="form-label" for="secondaryColor">Face Mask:</label>
+                    <input type="color" id="faceMask" bind:value={faceMask}>
+                </div>
             </div>
-
+            <div class="helmet">
                 <CustomHelmet 
                     {bg}
                     {faceMask} 
@@ -143,6 +143,7 @@
                     height={200}
                     width={200} 
                 />
+            </div>
         </div>
     </div>
     <div class="button-row">
@@ -157,14 +158,16 @@
     </div>
 </div>
 
+
 <style>
     h3 {
         color: var(--black);
+        text-align: center;
     }
-    .button-row{
+    .button-row {
         display: flex;
-        padding: 5px;
-        justify-content: space-between;
+        justify-content: center;
+        padding: 0.3rem;
     }
     .container {
         display: flex;
@@ -173,28 +176,38 @@
     .error {
         border-color: var(--error);
     }
-    .form-label{
+    .form-label {
         color: var(--black);
-        font-family: var(--mono);
-        width: 110px;
+        font-family: inherit;
+        width: 6.25rem;
         text-align: right;
-        padding-right: 5px;
+        padding-right: 0.3rem;
+        white-space: nowrap;
     }
-    .form-row{
+    .text-label {
+        color: var(--black);
+        font-family: inherit;
+        text-align: right;
+        padding: 0 0.4em;
+    }
+    .form-row {
         display: flex;
-        padding: 5px;
+        padding: 0.3rem;
+    }
+    .helmet {
+        margin-top: -1em;
+        padding-left: 1em; 
     }
     .save-button {
-        margin: 0 15px;
-        min-width: 150px;
+        margin: 0 1em;
         cursor: pointer;
-        font-family: var(--mono);
+        font-family: inherit;
     }
     .delete-button {
-        margin: 0 15px;
-        min-width: 75px;
+        margin: 0 1em;
+        min-width: 4.5em;
         cursor: pointer;
-        font-family: var(--mono);
+        font-family: inherit;
         background-color: transparent;
         color: var(--error);
     }

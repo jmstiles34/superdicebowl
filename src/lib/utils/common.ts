@@ -65,13 +65,18 @@ export function shuffle(array: []) {
 }
 
 export function sleep(ms:number) {
-	return new Promise(fulfil => {
-		setTimeout(fulfil, ms)
+	return new Promise(fulfill => {
+		setTimeout(fulfill, ms)
 	});
 }
 
 export function sfx(name:string, ext = 'opus') {
 	const audioFile = new Audio(`/sfx/${name}.${ext}`);
+    audioFile.play();
+}
+
+export function sfxByFile(name:string) {
+	const audioFile = new Audio(name);
     audioFile.play();
 }
 

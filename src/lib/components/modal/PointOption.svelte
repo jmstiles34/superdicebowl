@@ -1,17 +1,18 @@
 <script lang="ts">
     import { CONVERSION, GAME_ACTION } from "$lib/constants/constants";
-	import { sfx } from "$lib/utils/common";
+	import { sfxByFile } from "$lib/utils/common";
+    import button from '$lib/assets/sfx/button.opus'
+
     export let savePointOption:(a: string) => void;
+
 </script>
 
-<div>
-    <h3>Choose a Conversion Option</h3>
-</div>
+<h3>Choose a Conversion Option</h3>
 <div class="wrapper">
-    <button class="point-button" on:click={() => {sfx('button'); savePointOption(GAME_ACTION.EXTRA_POINT)}}>
+    <button class="point-button" on:click={() => {sfxByFile(button); savePointOption(GAME_ACTION.EXTRA_POINT)}}>
         {CONVERSION.EXTRA_POINT_ATTEMPT}
     </button>
-    <button class="point-button" on:click={() => {sfx('button'); savePointOption(GAME_ACTION.TWO_POINT)}}>   
+    <button class="point-button" on:click={() => {sfxByFile(button); savePointOption(GAME_ACTION.TWO_POINT)}}>   
         {CONVERSION.TWO_POINT_ATTEMPT}
     </button>
 </div>
@@ -19,16 +20,18 @@
 <style>
     h3 {
         color: var(--black);
+        text-align: center;
     }
     .wrapper {
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 0.4rem;
     }
     .point-button {
-        margin: 0 15px;
-        min-width: 160px;
+        margin: 0 1em;
+        min-width: 8rem;
+        min-height: 3rem;
         cursor: pointer;
-        font-family: var(--mono);
+        font-family: inherit;
     }
 </style>

@@ -36,7 +36,7 @@
     $: if($settings.mode === GAME_MODE.SOLO && $game.possession === TEAM.AWAY && isRollAction($game.action)){
         if($game.ballIndex > 0 || $game.currentDown > 0){
             tick();
-            sleep(1000).then(() => {
+            sleep(2000).then(() => {
                 handleRollDice();
             }
         );
@@ -82,12 +82,13 @@
         display: flex;
         background: transparent;
         cursor: pointer;
-        border-radius: 10px;
-        padding: 8px;
-        gap: 8px;
+        border-radius: .625rem;
+        padding: .25rem;
+        gap: .3rem;
+        margin: 0;
     }
     .dice-button:hover {
-        background-color: var(--gray);
+        background-color: var(--steelblue);
     }
     .face {
         display: grid;
@@ -95,12 +96,12 @@
             "a . c"
             "e g f"
             "d . b";
-        padding: 10px;
-        min-height: 76px;
-        min-width: 76px;
+        padding: .5rem;
+        min-height: 3rem;
+        min-width: 3rem;
         background-color: var(--ivory);
-        box-shadow: inset 0 5px var(--white), inset 0 -5px #bbb, inset 5px 0 #d7d7d7,
-            inset -5px 0 #d7d7d7;
+        box-shadow: inset 0 4px var(--white), inset 0 -4px #bbb, inset 4px 0 #d7d7d7,
+            inset -4px 0 #d7d7d7;
         border-radius: 10%;
         cursor: pointer;
     }
@@ -109,11 +110,11 @@
         display: block;
         align-self: center;
         justify-self: center;
-        min-width: 16px;
-        min-height: 16px;
+        min-width: 0.6rem;
+        min-height: 0.6rem;
         border-radius: 50%;
         background-color: var(--pip);
-        box-shadow: inset 0 3px #111, inset 0 -3px #555;
+        box-shadow: inset 0 2px #111, inset 0 -2px #555;
     }
 
     .pip:nth-child(2) {

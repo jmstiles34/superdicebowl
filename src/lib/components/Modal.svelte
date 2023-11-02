@@ -12,15 +12,16 @@
         e.stopPropagation()
         close()
     }
-  </script>
-  
-  {#if showModal}
+</script>
+
+{#if showModal}
     <div class="backdrop" on:click={doClose} on:keydown={keydown} role="button" tabindex="0">
         <div class="modal">
             <slot/>
         </div>
     </div>
 {/if}
+
 
 <style>
     .backdrop {
@@ -31,14 +32,15 @@
         left: 0;
         background: var(--mask);
         z-index: 999;
+        display: flex;
+        justify-content: center;
     }
+    
     .modal {
-        padding: 10px;
-        border-radius: 10px;
-        max-width: 600px;
-        margin: 10% auto;
-        text-align: center;
+        padding: .75rem;
+        border-radius: 0.5rem;
         background: var(--white);
-        display: inline-block;
+        height:fit-content;
+        margin: auto 0;
     }
 </style>

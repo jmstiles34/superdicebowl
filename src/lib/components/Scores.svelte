@@ -45,19 +45,18 @@
     .team-scores {
         display: flex;
         color: var(--white);
-        font-family: var(--mono);
-        font-size: 24px;
+        font-size: .9rem;
         font-weight: bold;
         white-space: nowrap;
-        margin: 0 0 20px 12px;
+        margin-left: 0.2rem;
     }
     .team {
         display: flex;
         justify-content: flex-end;
         width: 40%;
-        padding: 8px 12px 8px 12px;
+        padding: 0.25rem 0.5rem;
         background-position: left;
-        background-position-x: -20px;
+        background-position-x: -1.25rem;
         background-size: 50%;
         background-repeat: no-repeat;
         transition: all 0.3s ease-out;
@@ -73,26 +72,25 @@
         display: none;
     }
     .possession {
-        width: 10px;
-        height: 10px;
-        padding: 9px 11px;
+        width: 1rem;
+        height: .8rem;
         border-radius: 50%;
-        margin-right: 10px;
-        margin-top: 5px;
-        box-shadow: inset 0 3px #111, inset 0 -3px #555;
+        margin-right: 0.3rem;
+        margin-top: 0.175rem;
+        box-shadow: inset 0 2px #111, inset 0 -2px #555;
         background-color: var(--white)
     }
     .score {
         width: 10%;
+        height: 100%;
         background-color: var(--white);
         color: var(--black);
+        padding-top: .25rem;
         text-align: center;
-        margin: auto 0;
-        padding: 8px;
     }
-    @media (min-width: 835px) {
+    @media (min-width: 52rem) {
         .team {
-            background-position-x: -30px;
+            background-position-x: -25px;
             background-size: 40%;
         }
         .cityKey {

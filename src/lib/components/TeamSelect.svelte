@@ -11,12 +11,12 @@
     import Modal from '$lib/components/Modal.svelte';
     import CustomHelmet from "$lib/components/CustomHelmet.svelte";
     import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
+    import randomize from '$lib/images/randomize.png';
     
     export let opponentId:string;
     export let saveTeam:SaveTeam;
     export let team:Team;
     export let teamType:string;
-    export let useRandomizer: boolean = false;
     
     let showCustomTeam:boolean;
 
@@ -46,10 +46,17 @@
         let customTeamData:Team[] = lsTeamData ? JSON.parse(lsTeamData) : [];
         allTeamsData = [...customTeamData, ...teamsData];
     }
+
+    function handleRandomizeKeydown(event: KeyboardEvent) {
+        if (event.key === 'Enter') {
+			event.preventDefault();
+			setRandomTeam(allTeamsData, opponentId, saveTeam)
+		}
+    }
 </script>
 
 <div class="team-card">
-    <div class="title">{teamType} Team</div>
+    <h1>{teamType} Team</h1>
     <div class="logo-image" class:flipLeft={teamType === TEAM.AWAY}>
         {#if team.id.length}
             {#each [team.id] as c (c)}
@@ -83,21 +90,17 @@
                 on:keydown
                 role="button"
                 tabindex=0
+                class="dice"
             >    
                 <img 
-                    class="dice hover" 
+                    class="hover" 
                     alt={`Team Placeholder`} 
                     src={`/images/${pickRandom(DICE_COLORS)}_dice.png`}
                 />
             </div>
         {/if}
     </div>
-
-    {#if useRandomizer }
-        <button on:click={() => setRandomTeam(allTeamsData, opponentId, saveTeam)}>
-            Team Randomizer
-        </button>
-    {:else}
+    <div class="select-row">
         <select bind:value={selected} class="team-select">
             <option value="">Choose Your Team</option>
             {#each allTeamsData as team}
@@ -106,7 +109,19 @@
                 {/if}
             {/each}
         </select>
-    {/if}
+        <div 
+            class="random"
+            on:click={() => setRandomTeam(allTeamsData, opponentId, saveTeam)}
+            on:keydown={handleRandomizeKeydown}
+            role="button"
+            tabindex=0  
+        >
+            <img  
+                alt={`Random ${teamType} Team`} 
+                src={randomize}
+            />
+        </div>
+    </div>
 </div>
 
 <Modal showModal={showCustomTeam} close={() => showCustomTeam = false}>
@@ -117,21 +132,13 @@
 
 <style>
     .team-card {
+        align-items: center;
+        background-color: var(--smoke);
+        border-radius: 0.5rem;
         display: flex;
 		flex-direction: column;
-        align-items: center;
-		justify-content: flex-start;
-        background-color: var(--smoke);
-        border-radius: 10px;
-        padding: 12px;
-        flex-basis: 25%;
-    }
-    .team-card button {
-        height: 36px;
-        min-width: 254px;
-    }
-    .title {
-        font-size: 28px;
+        justify-content: space-between;
+        padding: 0.8rem;
     }
     .hover {
         cursor: pointer;
@@ -141,27 +148,42 @@
 		flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-width: 300px;
-        min-height: 300px;
+        min-width: 18.75rem;
+        margin: 0 0 1rem 0;
     }
-    .logo-image img {
-        width: 100%;
-    }
+
     .flipLeft {
         transform:  scale(-1, 1);
     }
-    .dice {
+
+    .dice{
+        display: flex;
+        justify-content: center;
+        min-width: 18.75rem;
+        margin: 2.75rem 0;
+    }
+    .dice img {
         max-width: 55%;
     }
+    .select-row {
+        display: flex;
+        gap: 1rem;
+    }
+    .random:hover {
+        border-radius: var(--border-radius);
+        cursor: pointer;
+    }
+    .random img {
+        height: 2.5rem;
+    }
     .team-select {
-        font-family: var(--mono);
-        font-size: inherit;
+        font-family: inherit;
+        font-size: 1rem;
         background-color: var(--ltblue);
         border: none;
         border-radius: var(--border-radius);
-        margin: 0 0 0.5em 0;
-        padding: 0.5em 1em;
-        line-height: 1;
-        min-width: 254px;
+        color: var(--black);
+        margin: 0;
+        padding: 0.25em;
     }
 </style>
