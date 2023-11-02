@@ -96,9 +96,6 @@
 
 <style>
     .field-wrapper {
-        min-height: 23.61rem;
-        max-width: 53.125rem;
-        min-width: 37.5rem;
         margin: 0 auto;
         background-color: var(--field);
     }
@@ -106,9 +103,7 @@
     .field-grid {
         display: grid;
         grid-template-columns: 10% auto 10%;
-        min-height: 23.61rem;
-        max-width: 53.125rem;
-        min-width: 37.5rem;
+        min-height: 44vw;
     }
 
     .field {
@@ -185,6 +180,7 @@
     }
     .downToGo {
         position: absolute;
+        white-space: nowrap;
         opacity: 0;
         transform: translate(-50%);
         z-index: 10;

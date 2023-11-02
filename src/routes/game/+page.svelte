@@ -4,7 +4,8 @@
     import type { FireworksOptions } from '@fireworks-js/svelte'
     import { game } from '$lib/stores/Game'
     import { settings } from '$lib/stores/Settings'
-    import { equals, gt, sfx, sleep } from '$lib/utils/common'
+    import button from '$lib/assets/sfx/button.opus'
+    import { equals, gt, sfxByFile, sleep } from '$lib/utils/common'
     import { 
         compareFns,
         inFieldGoalRange, 
@@ -83,13 +84,13 @@
     $: if(isModalChoice(mode, possession, action)){
             if(action === GAME_ACTION.POINT_OPTION){
                 sleep(1000).then(() => {
-                    sfx('button');
+                    sfxByFile('button');
                     game.preparePointOption(makePointChoice(score, winScore));
                 });
             } else {
                 sleep(1000).then(() => {
                     const choiceAction = makeFourthDownChoice(score, ballIndex);
-                    sfx('button');               
+                    sfxByFile('button');               
                     if(choiceAction === GAME_ACTION.FIELD_GOAL){
                         game.toggleFieldGoal();
                     } else {
@@ -165,8 +166,7 @@
         padding: 1rem;
 	}
     .game{
-        max-width: 53.125rem;
-        min-width: 37.5rem;
+        max-width: 90%;
         margin: -3.25rem auto 0 auto;
     }
     .scoreboard {
@@ -209,10 +209,9 @@
 
     .last-play {
         text-align: center;
-        font-size: 0.9rem;
+        font-size: clamp(0.5rem, 0.3182rem + 0.7273vw, 0.9rem);
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         color: gold;
-        vertical-align: middle;
     }
 
     :global(.fireworks) {
@@ -223,4 +222,18 @@
         position: fixed;
         background: transparent;
     }
+    @media (max-width: 40rem) {
+        .scoreboard {
+            top: 2.25rem;
+        }
+        .scores {
+            margin-top: 0;
+        }
+        .dice-container {
+            padding: 0.2rem 0.25rem;
+        }
+        .action {
+            font-size: .7rem;
+        }
+	}
 </style>

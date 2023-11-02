@@ -77,6 +77,7 @@ export const GAME_ACTION = {
   GAME_OVER: "Game Over",
   INTERCEPTION: "Interception",
   KICKOFF: "Receive Kickoff",
+  KICKOFF_KICK: "Receive Kick",
   KICKOFF_ONSIDE: "Kickoff - Onside",
   KICKOFF_RETURN: "Kickoff - Return",
   KICKOFF_TOUCHDOWN: "Kickoff - Touchdown",
