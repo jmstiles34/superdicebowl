@@ -46,6 +46,13 @@
         let customTeamData:Team[] = lsTeamData ? JSON.parse(lsTeamData) : [];
         allTeamsData = [...customTeamData, ...teamsData];
     }
+
+    function handleRandomizeKeydown(event: KeyboardEvent) {
+        if (event.key === 'Enter') {
+			event.preventDefault();
+			setRandomTeam(allTeamsData, opponentId, saveTeam)
+		}
+    }
 </script>
 
 <div class="team-card">
@@ -105,7 +112,7 @@
         <div 
             class="random"
             on:click={() => setRandomTeam(allTeamsData, opponentId, saveTeam)}
-            on:keydown={() => setRandomTeam(allTeamsData, opponentId, saveTeam)}
+            on:keydown={handleRandomizeKeydown}
             role="button"
             tabindex=0  
         >
