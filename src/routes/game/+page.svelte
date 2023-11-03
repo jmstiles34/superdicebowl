@@ -84,13 +84,13 @@
     $: if(isModalChoice(mode, possession, action)){
             if(action === GAME_ACTION.POINT_OPTION){
                 sleep(1000).then(() => {
-                    sfxByFile('button');
+                    sfxByFile(button);
                     game.preparePointOption(makePointChoice(score, winScore));
                 });
             } else {
                 sleep(1000).then(() => {
                     const choiceAction = makeFourthDownChoice(score, ballIndex);
-                    sfxByFile('button');               
+                    sfxByFile(button);               
                     if(choiceAction === GAME_ACTION.FIELD_GOAL){
                         game.toggleFieldGoal();
                     } else {

@@ -211,3 +211,9 @@ export const POSITION = {
 export const TURNOVER_ONSIDE_KICK = "TURNOVER - Onside Kick";
 
 export const YARD_INTERVAL = 5;
+
+export const HELMET_SIZE = {
+  SMALL: "small",
+  MEDIUM: "medium",
+  LARGE: "large",
+}

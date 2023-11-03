@@ -1,12 +1,12 @@
 {
-    "short_name": "dice-ballers",
-    "name": "dice-ballers-pwa",
+    "short_name": "Super-Dice-Bowl",
+    "name": "Super Dice Bowl PWA",
     "start_url": "/",
     "icons": [
       {
-        "src": "/logos/Cowboys.png",
+        "src": "/sdb-logo.png",
         "type": "image/png",
-        "sizes": "300x300"
+        "sizes": "850x850"
       }
     ],
     "background_color": "#3367D6",

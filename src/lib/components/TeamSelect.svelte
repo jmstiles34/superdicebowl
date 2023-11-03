@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount, tick } from 'svelte';
     import { browser } from "$app/environment";
-    import { DEFAULT_TEAM, DICE_COLORS, NOOP, TEAM } from '$lib/constants/constants';
+    import { DEFAULT_TEAM, DICE_COLORS, HELMET_SIZE, NOOP, TEAM } from '$lib/constants/constants';
     import { teamsData } from '$lib/data/data.json'
     import type { SaveTeam, Team } from '$lib/types';
 	import { pickRandom } from '$lib/utils/common';
@@ -23,8 +23,19 @@
     let allTeamsData:(Team)[] = [];
     onMount(() => setTeamData());
 
-    let selected:string = "";
-    $: if(selected.length) {saveTeam(teamByUUId(allTeamsData)(selected))}
+    let selected:string = team.id;
+    //$: if(selected.length) {saveTeam(teamByUUId(allTeamsData)(selected))}
+    $: if(team.id) selected = team.id;
+
+    function handleTeamSelect(e:Event) {
+        const {value} = e.currentTarget as HTMLSelectElement;
+        if(!value || value === ""){
+            selected = "";
+            saveTeam(DEFAULT_TEAM)
+        } else {
+            {saveTeam(teamByUUId(allTeamsData)(value))}
+        }
+    };
 
     const fadeArgs = {
 		delay: 0,
@@ -37,7 +48,7 @@
         setTeamData();
         tick();
         showCustomTeam = false;
-        selected = id;
+        saveTeam(teamByUUId(allTeamsData)(id))
         if(!id) saveTeam(DEFAULT_TEAM);
     }
     
@@ -78,8 +89,7 @@
                         logoFlip={teamType === TEAM.AWAY && team.logoFixed}
                         logoWidth={team.logoWidth || 2.5}
                         logoPosition={team.logoPosition || [13, 20]}
-                        height={250}
-                        width={250}
+                        size={HELMET_SIZE.LARGE}
                         title={team.isCustom ? `EDIT: ${team.city} ${team.name}` : `${team.city} ${team.name}`} 
                     />
                 </div>
@@ -101,7 +111,7 @@
         {/if}
     </div>
     <div class="select-row">
-        <select bind:value={selected} class="team-select">
+        <select on:change={handleTeamSelect} bind:value={selected} class="team-select">
             <option value="">Choose Your Team</option>
             {#each allTeamsData as team}
                 {#if team.id !== opponentId}
