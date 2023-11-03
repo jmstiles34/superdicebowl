@@ -33,7 +33,12 @@
         }
     }
 
-    $: if($settings.mode === GAME_MODE.SOLO && $game.possession === TEAM.AWAY && isRollAction($game.action)){
+    $: if(
+        $settings.mode === GAME_MODE.SOLO && 
+        $game.possession === TEAM.AWAY && 
+        isRollAction($game.action) &&
+        canRoll
+        ){
         if($game.ballIndex > 0 || $game.currentDown > 0){
             tick();
             sleep(2000).then(() => {
@@ -136,4 +141,19 @@
     .pip:nth-child(odd):last-child {
         grid-area: g;
     }
+    @media (max-width: 40rem) {
+        .face {
+            padding: .25rem;
+            min-height: 2rem;
+            min-width: 2rem;
+            box-shadow: inset 0 3px var(--white), inset 0 -3px #bbb, inset 3px 0 #d7d7d7,
+                inset -3px 0 #d7d7d7;
+        }
+
+        .pip {
+            min-width: 0.4rem;
+            min-height: 0.4rem;
+            box-shadow: inset 0 2px #111, inset 0 -2px #555;
+        }
+	}
 </style>

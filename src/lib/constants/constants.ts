@@ -77,6 +77,7 @@ export const GAME_ACTION = {
   GAME_OVER: "Game Over",
   INTERCEPTION: "Interception",
   KICKOFF: "Receive Kickoff",
+  KICKOFF_KICK: "Receive Kick",
   KICKOFF_ONSIDE: "Kickoff - Onside",
   KICKOFF_RETURN: "Kickoff - Return",
   KICKOFF_TOUCHDOWN: "Kickoff - Touchdown",
@@ -210,3 +211,9 @@ export const POSITION = {
 export const TURNOVER_ONSIDE_KICK = "TURNOVER - Onside Kick";
 
 export const YARD_INTERVAL = 5;
+
+export const HELMET_SIZE = {
+  SMALL: "small",
+  MEDIUM: "medium",
+  LARGE: "large",
+}

@@ -3,7 +3,7 @@
 	import CustomHelmet from "$lib/components/CustomHelmet.svelte";
     import { logos } from '$lib/data/logos.json'
 	import type { Team } from "$lib/types";
-	import { DEFAULT_TEAM } from '$lib/constants/constants';
+	import { DEFAULT_TEAM, HELMET_SIZE } from '$lib/constants/constants';
     export let close: (id:string)=>void;
     export let customTeamId:string;
 
@@ -140,8 +140,7 @@
                     {stripe}
                     {trim}
                     {logo}
-                    height={200}
-                    width={200} 
+                    size={HELMET_SIZE.MEDIUM} 
                 />
             </div>
         </div>

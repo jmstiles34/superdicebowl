@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { DEFAULT_TEAM, NOOP, POSITION } from "$lib/constants/constants";
+    import { DEFAULT_TEAM, HELMET_SIZE, NOOP, POSITION } from "$lib/constants/constants";
     import CustomHelmet from "$lib/components/CustomHelmet.svelte";
 	import type { Team, Void } from "$lib/types";
     import '@fontsource/bebas-neue';
@@ -15,10 +15,7 @@
 </script>
 
 <div class="endZone" style={`background-color: ${primary};`}>
-    <div 
-        class="endZoneElements"
-        class:endZoneElementsRight={position === POSITION.RIGHT}
-    >
+    <div class="endZoneElements">
         <div></div>
         <div 
             class={`helmetLogo rotate${position}`}
@@ -31,18 +28,20 @@
                 stripe={stripe}
                 trim={trim}
                 logo={team.logo}
+                logoFlip={position === POSITION.LEFT && team.logoFixed}
                 logoWidth={team.logoWidth || 2.5}
                 logoPosition={team.logoPosition || [13, 20]}
-                height={55}
-                width={55} 
+                size={HELMET_SIZE.SMALL}
             />
         </div>       
         
-        <div 
-            class={`name`}
-            class:flipName={position === POSITION.RIGHT}
-            style={`color: ${secondary};`}>
-            {team.name}
+        <div class="name-container">
+            <div 
+                class={`name`}
+                class:flipName={position === POSITION.RIGHT}
+                style={`color: ${secondary};`}>
+                {team.name}
+            </div>
         </div>
 
         <div 
@@ -56,10 +55,10 @@
                 stripe={stripe}
                 trim={trim}
                 logo={team.logo}
+                logoFlip={position === POSITION.RIGHT && team.logoFixed}
                 logoWidth={team.logoWidth || 2.5}
                 logoPosition={team.logoPosition || [13, 20]}
-                height={55}
-                width={55} 
+                size={HELMET_SIZE.SMALL} 
             />
         </div>
         <div></div>
@@ -93,10 +92,6 @@
         grid-template-rows: 0.5em 3em auto 3em 0.5em;
         gap: 0.25em;
         height: 100%;
-        width: 95%;
-    }
-    .endZoneElementsRight {
-        margin-left: 0.4rem;
     }
     .goalPost {
         display: flex;
@@ -130,17 +125,21 @@
         display: flex;
         justify-content: center;
         margin: auto;
-        height: 100%;
-        width: 3rem;     
+        height: 3rem;
+        width: 3rem;    
+    }
+    .name-container {
+        display: flex;
+        justify-content: center;
     }
     .name {
-        display: flex;
         font-weight:700;
         font-family: 'Bebas Neue';
-        font-size: clamp(2.5rem, 1.2250rem + 4.5333vw, 3.35rem);
+        font-size: clamp(1.5rem, -0.0909rem + 6.3636vw, 5rem);
         transform: rotate(180deg);
         writing-mode: vertical-lr;
-        justify-content: center;
+        margin: auto 0;
+        
 
     }
     .rotateLeft {
@@ -169,4 +168,25 @@
             box-shadow: 0 0 0 1.25rem rgba(255, 215, 0, 0);
         }
     }
+
+    @media (max-width: 40rem) {
+        .endZoneElements{
+            grid-template-rows: 0.25em 2em auto 2em 0.25em;
+            gap: 0.15em;
+        }
+        .helmetLogo {
+            height: 2rem;
+            width: 2rem;     
+        }
+	}
+    @media (min-width: 60rem) {
+        .endZoneElements{
+            grid-template-rows: 0.25em 4em auto 4em 0.25em;
+            gap: 0.15em;
+        }
+        .helmetLogo {
+            height: 4rem;
+            width: 4rem;     
+        }
+	}
 </style>
