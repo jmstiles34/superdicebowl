@@ -33,6 +33,7 @@
 				<button>Log out</button>
 			</form>
 		{:else}
+			V1
 			<a href="/login">Log in</a>
 			<a href="/signup">Sign up</a>
 		{/if}
@@ -45,7 +46,7 @@
 
 <footer>
 	<p>
-		&copy;{currentYear} SuperDiceBowl.com
+		&copy;{currentYear} SuperDiceBowl.com v.010
 	</p>
 </footer>
 
