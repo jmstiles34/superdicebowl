@@ -1,10 +1,10 @@
 <script>
-  	import { enhance } from '$app/forms';
-  	import { page } from '$app/stores';
+	import { enhance } from '$app/forms';
+	import { page } from '$app/stores';
 	import '../styles.css';
-  	import '@fontsource/bebas-neue';
-  	import logo from '$lib/images/sdb-logo.png';
-  	export let data;
+	import '@fontsource/bebas-neue';
+	import logo from '$lib/images/sdb-logo.png';
+	export let data;
 
 	const currentYear = new Date().getFullYear();
 </script>
@@ -15,17 +15,17 @@
 </svelte:head>
 
 <nav>
-  <div class="logo">
-    <div>
-      <a href="/">
-        <img class="logo-image" alt="SuperDiceBowl" src={logo} />
-      </a>
-    </div>      
-    <div class="logo-text">
-      <a href="/">Super&middot;Dice&middot;Bowl</a>
-    </div>
-  </div>
-  
+	<div class="logo">
+		<div>
+			<a href="/">
+				<img class="logo-image" alt="SuperDiceBowl" src={logo} />
+			</a>
+		</div>      
+		<div class="logo-text">
+			<a href="/">Super&middot;Dice&middot;Bowl</a>
+		</div>
+	</div>
+	
 
 	<div class="links">
 		{#if data.hasOwnProperty('user')}
@@ -34,14 +34,13 @@
 			</form>
 		{:else}
 			<a href="/login">Log in</a>
-      |
-      <a href="/signup">Sign up</a>
+			<a href="/signup">Sign up</a>
 		{/if}
 	</div>
 </nav>
 
 <main>
-  <slot />
+	<slot />
 </main>
 
 <footer>
@@ -65,13 +64,14 @@
 		align-items: center;
 		justify-content: space-between;
 		max-width: var(--column);
+		z-index: 100;
 	}
 
 	footer {
 		display: flex;
 		height: 2rem;
 		align-items: center;
-    color: var(--gray);
+    	color: var(--gray);
 		font-size: 0.75rem;
 	}
 
@@ -99,37 +99,37 @@
 		overflow-y: scroll;
 	}
 
-  main::-webkit-scrollbar {
-    display: none;
-  }
+	main::-webkit-scrollbar {
+		display: none;
+	}
 
 	.links {
 		display: flex;
 		gap: 1em;
-    white-space: nowrap;
+		white-space: nowrap;
 	}
-  .logo {
-    display: flex;
-    flex-direction: row;
-    gap: .5em;
-    align-items: center;
-  }
+	.logo {
+		display: flex;
+		flex-direction: row;
+		gap: .5em;
+		align-items: center;
+	}
 
 	.logo-image {
 		height: 2.5em;
-    width: 2.5em;
+    	width: 2.5em;
 	}
 
-  .logo-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem;
-  }
+	.logo-text {
+		font-family: 'Bebas Neue', sans-serif;
+		font-size: 1.5rem;
+	}
 
-  @media (max-height: 30rem) {
+	@media (max-height: 30rem) {
 		footer, nav {
-      height: 0;
-      padding: 0.25rem var(--side);
-      visibility: collapse;
+			height: 0;
+			padding: 0.25rem var(--side);
+			visibility: collapse;
 		}
 	}
 </style>

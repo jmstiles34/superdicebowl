@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { v4 as uuidv4 } from 'uuid';
 	import CustomHelmet from "$lib/components/CustomHelmet.svelte";
     import { logos } from '$lib/data/logos.json'
 	import type { Team } from "$lib/types";
@@ -63,7 +64,7 @@
         !logo.length && errors.push("logo")
         
         if(!errors.length){
-            const newTeamId = customTeamId || crypto.randomUUID();
+            const newTeamId = customTeamId || uuidv4();
             const newTeam:Team = {
                 id: newTeamId,
                 city,
