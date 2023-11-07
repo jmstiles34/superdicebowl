@@ -1,7 +1,7 @@
 <script lang="ts">
     import { CONVERSION, GAME_ACTION } from "$lib/constants/constants";
-	import { sfxByFile } from "$lib/utils/common";
-    import button from '$lib/assets/sfx/button.opus'
+    import { sound } from "svelte-sound";
+    import button from '$lib/assets/sfx/button.mp3'
 
     export let savePointOption:(a: string) => void;
 
@@ -9,10 +9,16 @@
 
 <h3>Choose a Conversion Option</h3>
 <div class="wrapper">
-    <button class="point-button" on:click={() => {sfxByFile(button); savePointOption(GAME_ACTION.EXTRA_POINT)}}>
+    <button 
+        class="point-button" 
+        use:sound={{src: button, events: ["click"]}}
+        on:click={() => {savePointOption(GAME_ACTION.EXTRA_POINT)}}>
         {CONVERSION.EXTRA_POINT_ATTEMPT}
     </button>
-    <button class="point-button" on:click={() => {sfxByFile(button); savePointOption(GAME_ACTION.TWO_POINT)}}>   
+    <button 
+        class="point-button" 
+        use:sound={{src: button, events: ["click"]}}
+        on:click={() => {savePointOption(GAME_ACTION.TWO_POINT)}}>   
         {CONVERSION.TWO_POINT_ATTEMPT}
     </button>
 </div>

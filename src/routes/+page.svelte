@@ -6,10 +6,11 @@
     import { GAME_MODE, TEAM } from '$lib/constants/constants';
     import TeamSelect from '$lib/components/TeamSelect.svelte';
 	import { beginDisabled } from '$lib/utils/game';
-	import { sfxByFile, sleep } from '$lib/utils/common';
-    import tackle from '$lib/assets/sfx/tackle.opus'
-    import tap from '$lib/assets/sfx/tap.opus'
-    import gust from '$lib/assets/sfx/gust.opus'
+	import { sleep } from '$lib/utils/common';
+    import { sound, Sound } from "svelte-sound";
+    import tackle from '$lib/assets/sfx/tackle.mp3'
+    import tap from '$lib/assets/sfx/tap.mp3'
+    import gust from '$lib/assets/sfx/gust.mp3'
 
     onMount(() => {
         settings.reset();
@@ -18,10 +19,11 @@
     let winScore = $settings.winScore;
     $: settings.updateScore(winScore);
 
-    function beginGame () {
-        sfxByFile(tackle);  
+    function beginGame () { 
         sleep(1000).then(() => goto('/game'));
     }
+    
+    const gustSfx = new Sound(gust);
 </script>
 
 <main>
@@ -29,14 +31,16 @@
         <button 
             class="mode-button"
             class:mode-selected={$settings.mode === GAME_MODE.SOLO}
-            on:click={() => {sfxByFile(tap); settings.updateMode(GAME_MODE.SOLO)}}
+            use:sound={{src: tap, events: ["click"]}}
+            on:click={() => {settings.updateMode(GAME_MODE.SOLO)}}
         >
             Solo Play
         </button>
         <button 
             class="mode-button"    
             class:mode-selected={$settings.mode === GAME_MODE.HEAD_TO_HEAD}
-            on:click={() => {sfxByFile(tap); settings.updateMode(GAME_MODE.HEAD_TO_HEAD)}}
+            use:sound={{src: tap, events: ["click"]}}
+            on:click={() => {settings.updateMode(GAME_MODE.HEAD_TO_HEAD)}}
         >   
             Head-to-Head
         </button>
@@ -45,14 +49,14 @@
     <div class="team-select">      
         <TeamSelect 
             opponentId={$settings.awayTeam.id}
-            saveTeam={(team) => {sfxByFile(gust); settings.updateHomeTeam(team)}}
+            saveTeam={(team) => {gustSfx.play(); settings.updateHomeTeam(team)}}
             team={$settings.homeTeam}  
             teamType={TEAM.HOME}
         />
         <div class="vs">VS.</div>
         <TeamSelect 
             opponentId={$settings.homeTeam.id}
-            saveTeam={(team) => {sfxByFile(gust); settings.updateAwayTeam(team)}}
+            saveTeam={(team) => {gustSfx.play(); settings.updateAwayTeam(team)}}
             team={$settings.awayTeam}  
             teamType={TEAM.AWAY}
         />

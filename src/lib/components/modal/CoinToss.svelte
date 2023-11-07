@@ -2,7 +2,8 @@
     import { randomNumber, sfxByFile, sleep } from '$lib/utils/common'
 	import { NOOP, TEAM } from "$lib/constants/constants";
 	import type { Team } from '$lib/types';
-    import coinSpin from '$lib/assets/sfx/coin-spin.opus'
+    import { sound } from "svelte-sound";
+    import coinSpin from '$lib/assets/sfx/coin-spin.mp3'
 
     export let homeTeam:Team;
     export let awayTeam:Team;
@@ -18,7 +19,6 @@
 
     async function handleCoinToss(num:number) {
         winStyle = num === 0 ? TEAM.HOME : TEAM.AWAY;
-        sfxByFile(coinSpin);
         await sleep(4000);
         saveCoinToss(winStyle);
     }
@@ -29,7 +29,8 @@
 
 <div class="game-mode">
     <div id="coin" class={winStyle} 
-        on:click={winStyle ? NOOP : () => handleCoinToss(randomNumber())} 
+        on:click={winStyle ? NOOP : () => handleCoinToss(randomNumber())}
+        use:sound={{src: coinSpin, events: ["click"]}} 
         on:keydown={winStyle ? NOOP : () => handleCoinToss(randomNumber())}
         role="button"
         tabindex=0
