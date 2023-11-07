@@ -2,7 +2,7 @@
     import { randomNumber, sfxByFile, sleep } from '$lib/utils/common'
 	import { NOOP, TEAM } from "$lib/constants/constants";
 	import type { Team } from '$lib/types';
-    import coinSpin from '$lib/assets/sfx/coin-spin.opus'
+    import coinSpin from '$lib/assets/sfx/coin-spin.mp3'
 
     export let homeTeam:Team;
     export let awayTeam:Team;

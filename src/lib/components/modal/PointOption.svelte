@@ -1,7 +1,7 @@
 <script lang="ts">
     import { CONVERSION, GAME_ACTION } from "$lib/constants/constants";
 	import { sfxByFile } from "$lib/utils/common";
-    import button from '$lib/assets/sfx/button.opus'
+    import button from '$lib/assets/sfx/button.mp3'
 
     export let savePointOption:(a: string) => void;
 

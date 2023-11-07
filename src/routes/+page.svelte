@@ -7,9 +7,9 @@
     import TeamSelect from '$lib/components/TeamSelect.svelte';
 	import { beginDisabled } from '$lib/utils/game';
 	import { sfxByFile, sleep } from '$lib/utils/common';
-    import tackle from '$lib/assets/sfx/tackle.opus'
-    import tap from '$lib/assets/sfx/tap.opus'
-    import gust from '$lib/assets/sfx/gust.opus'
+    import tackle from '$lib/assets/sfx/tackle.mp3'
+    import tap from '$lib/assets/sfx/tap.mp3'
+    import gust from '$lib/assets/sfx/gust.mp3'
 
     onMount(() => {
         settings.reset();

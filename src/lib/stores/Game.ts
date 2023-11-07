@@ -55,12 +55,22 @@ import {
 	isArray,
 	lt,
 	pickRandom,
-	sfx,
+	sfxByFile,
 	sleep,
 	sumArrays,
 	sumDigits
 } from '$lib/utils/common';
 import { diceData } from '$lib/data/data.json';
+import chime from '$lib/assets/sfx/chime.mp3'
+import horns from '$lib/assets/sfx/horns.mp3'
+import kick from '$lib/assets/sfx/kick.mp3'
+import miss from '$lib/assets/sfx/miss.mp3'
+import miss1 from '$lib/assets/sfx/miss1.mp3'
+import offense from '$lib/assets/sfx/offense.mp3'
+import shake from '$lib/assets/sfx/shake.mp3'
+import touchdown from '$lib/assets/sfx/touchdown.mp3'
+import whiz from '$lib/assets/sfx/whiz.mp3'
+import whoosh from '$lib/assets/sfx/whoosh.mp3'
 
 export interface gStore {
 	type:
@@ -136,7 +146,7 @@ export const game = {
 				GAME_ACTION.KICKOFF_KICK;
 			self.ballIndex = isOnside ? self.ballIndex : BALL_ENDZONE[OPPOSITE_TEAM[self.possession]];
 			self.diceId = diceId;
-			isOnside ? sfx('whiz') : sfx('kick');
+			isOnside ? sfxByFile(whiz) : sfxByFile(kick);
 			return self;
 		});
 	},
@@ -173,7 +183,7 @@ export const game = {
 					const description = isTurnoverOnDowns
 						? 'TURNOVER: On downs'
 						: `TURNOVER: ${label} ${playYards} yards downfield`;
-					sfx('shake');
+						sfxByFile(shake);
 					if (isTouchback(playIndex)) {
 						const newPos = OPPOSITE_TEAM[self.possession];
 						self.action = GAME_ACTION.OFFENSE;
@@ -199,14 +209,14 @@ export const game = {
 					}
 				} else {
 					if (isTD) {
-						sfx('touchdown');
+						sfxByFile(touchdown);
 						self.action = GAME_ACTION.TOUCHDOWN;
 						self.ballIndex = BALL_ENDZONE[self.possession];
 						self.firstDownIndex = -1;
 						self.lastPlay = 'TOUCHDOWN!!!';
 						self.score = sumArrays([self.score, POINTS_TOUCHDOWN[self.possession]]);
 					} else {
-						sfx('offense');
+						sfxByFile(offense);
 						let isSafety = false;
 						if (lt(playYards, 0) && (lt(playIndex, 1) || gt(playIndex, 19))) {
 							isSafety = true;
@@ -258,7 +268,7 @@ export const game = {
 			self.score = success
 				? sumArrays([self.score, POINTS_TWO_POINT[self.possession]])
 				: self.score;
-			success ? sfx('horns') : sfx('miss1');
+			success ? sfxByFile(horns) : sfxByFile(miss1);
 			return self;
 		});
 	},
@@ -331,7 +341,7 @@ export const game = {
 			self.score = success
 				? sumArrays([self.score, POINTS_EXTRA_POINT[self.possession]])
 				: self.score;
-			success ? sfx('kick') : sfx('miss');
+			success ? sfxByFile(kick) : sfxByFile(miss);
 			return self;
 		});
 	},
@@ -347,7 +357,7 @@ export const game = {
 			self.score = success
 				? sumArrays([self.score, POINTS_FIELD_GOAL[self.possession]])
 				: self.score;
-			success ? sfx('kick') : sfx('miss');
+			success ? sfxByFile(kick) : sfxByFile(miss);
 			return self;
 		});
 	},
@@ -365,7 +375,7 @@ export const game = {
 			self.possession = newPos;
 			self.restrictDice = false;
 			self.yardsToGo = 10;
-			sfx('whoosh');
+			sfxByFile(whoosh);
 			return self;
 		});
 	},
@@ -424,7 +434,7 @@ export const game = {
 			(self.firstDownIndex = setFirstDownMarker(ballIndex, self.possession)),
 				(self.lastPlay = descKickoff(isTouchback, kickOffIndexFns[self.possession](ballIndex)));
 			self.restrictDice = false;
-			sfx('whoosh');
+			sfxByFile(whoosh);
 			return self;
 		});
 	},
@@ -476,7 +486,7 @@ export const game = {
 		});
 	},
 	saveTouchdown: () => {
-		sfx('touchdown');
+		sfxByFile(touchdown);
 		_game.update((self: gStore) => {
 			self.type = 'saveTouchdown';
 			self.action = GAME_ACTION.TOUCHDOWN;
@@ -510,7 +520,7 @@ export const game = {
 					: '';
 			self.modalContent = null;
 			self.restrictDice = false;
-			sfx('chime');
+			sfxByFile(chime);
 			return self;
 		});
 	},
