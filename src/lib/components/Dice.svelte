@@ -2,10 +2,11 @@
     import { game } from '$lib/stores/Game'
     import { settings } from '$lib/stores/Settings'
     import { elasticInOut } from "svelte/easing";
-    import { nonZeroRandomNumber, sfx, sleep } from '$lib/utils/common'
+    import { nonZeroRandomNumber, sfxByFile, sleep } from '$lib/utils/common'
 	import { isRollAction } from '$lib/utils/game';
 	import { GAME_MODE, TEAM } from '$lib/constants/constants';
 	import { tick } from 'svelte';
+    import flick from '$lib/assets/sfx/flick.mp3'
     
     export let dieColor:string;
     export let pipColor:string;
@@ -52,7 +53,7 @@
         if(!canRoll) return;
 
         game.restrictDice(true);
-        sfx('flick');
+        sfxByFile(flick);
         canRoll = false;
         let die1:number = nonZeroRandomNumber(pipCount);
         let die2:number = nonZeroRandomNumber(pipCount);

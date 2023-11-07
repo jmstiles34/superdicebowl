@@ -4,7 +4,7 @@
     import type { FireworksOptions } from '@fireworks-js/svelte'
     import { game } from '$lib/stores/Game'
     import { settings } from '$lib/stores/Settings'
-    import button from '$lib/assets/sfx/button.opus'
+    import button from '$lib/assets/sfx/button.mp3'
     import { equals, gt, sfxByFile, sleep } from '$lib/utils/common'
     import { 
         compareFns,
@@ -49,11 +49,11 @@
         sound: {
             enabled: true,
             files: [
-                '/sfx/firework1.opus',
-                '/sfx/firework2.opus',
-                '/sfx/firework3.opus',
-                '/sfx/firework4.opus',
-                '/sfx/firework5.opus',
+                '/sfx/firework1.mp3',
+                '/sfx/firework2.mp3',
+                '/sfx/firework3.mp3',
+                '/sfx/firework4.mp3',
+                '/sfx/firework5.mp3',
             ],
             volume: {
                 min: 2,
