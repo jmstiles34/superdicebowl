@@ -2,8 +2,7 @@
 	import { FOURTH_DOWN, GAME_ACTION } from "$lib/constants/constants";
 	import type { Void } from "$lib/types";
 	import { sfxByFile } from "$lib/utils/common";
-    import { sound } from "svelte-sound";
-    import button from '$lib/assets/sfx/button.mp3'
+    import button from '$lib/assets/sfx/button.opus'
 
     export let inFieldGoalRange: boolean = false;
     export let saveFourthDown:(a: string) => void;
@@ -12,24 +11,15 @@
 
 <h3>4th Down...Choose an Option</h3>
 <div class="wrapper">
-    <button 
-        class="point-button" 
-        use:sound={{src: button, events: ["click"]}}
-        on:click={() => {saveFourthDown(GAME_ACTION.OFFENSE)}}>
+    <button class="point-button" on:click={() => {sfxByFile(button); saveFourthDown(GAME_ACTION.OFFENSE)}}>
         {FOURTH_DOWN.GO_FOR_IT}
     </button>
     {#if inFieldGoalRange}
-        <button 
-            class="point-button" 
-            use:sound={{src: button, events: ["click"]}}
-            on:click={() => {toggleFieldGoal()}}>   
+        <button class="point-button" on:click={() => {sfxByFile(button); toggleFieldGoal()}}>   
             {FOURTH_DOWN.FIELD_GOAL}
         </button>
     {/if}
-    <button 
-        class="point-button" 
-        use:sound={{src: button, events: ["click"]}}
-        on:click={() => {saveFourthDown(GAME_ACTION.PUNT)}}>   
+    <button class="point-button" on:click={() => {sfxByFile(button); saveFourthDown(GAME_ACTION.PUNT)}}>   
         {FOURTH_DOWN.PUNT}
     </button>
 </div>
