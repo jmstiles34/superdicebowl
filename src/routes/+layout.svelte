@@ -142,6 +142,8 @@
 
 	.volumeButton{
 		cursor: pointer;
+		padding: 0;
+		margin: auto 0;
 	}
 	.volumeButton img {
 		height: 1.5em;
