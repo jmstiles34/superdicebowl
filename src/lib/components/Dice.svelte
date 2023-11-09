@@ -14,7 +14,7 @@
     export let pipCount:number = 6;
     export let rollDelay:number = 1000;
     
-    const flickSfx = new Sound(flick);
+    $: flickSfx = new Sound(flick, {volume: $settings.volume});
     let dice:number[][] = [Array(1).fill(0), Array(1).fill(0)];
     let canRoll:boolean = true;
 

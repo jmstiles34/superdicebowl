@@ -1,9 +1,12 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import { settings } from '$lib/stores/Settings'
 	import '../styles.css';
 	import '@fontsource/bebas-neue';
 	import logo from '$lib/images/sdb-logo.png';
+	import soundOn from '$lib/images/volume-high.svg';
+	import soundOff from '$lib/images/volume-xmark.svg';
 	export let data;
 
 	const currentYear = new Date().getFullYear();
@@ -36,6 +39,18 @@
 			<a href="/login">Log in</a>
 			<a href="/signup">Sign up</a>
 		{/if}
+		<button 
+			class="volumeButton"
+			on:click={settings.toggleVolume} 
+			on:keypress={settings.toggleVolume}
+			tabindex="0"
+			title={$settings.volume ? 'Mute sounds' : 'Play sounds'}
+		>
+			<img 
+				src={$settings.volume ? soundOn : soundOff}
+				alt="Sound toggle"
+			/>
+		</button>
 	</div>
 </nav>
 
@@ -45,7 +60,7 @@
 
 <footer>
 	<p>
-		&copy;{currentYear} SuperDiceBowl.com v0.1.2
+		&copy;{currentYear} SuperDiceBowl.com v0.1.3
 	</p>
 </footer>
 
@@ -117,12 +132,20 @@
 
 	.logo-image {
 		height: 2.5em;
-    	width: 2.5em;
+		width: 2.5em;
 	}
 
 	.logo-text {
 		font-family: 'Bebas Neue', sans-serif;
 		font-size: 1.5rem;
+	}
+
+	.volumeButton{
+		cursor: pointer;
+	}
+	.volumeButton img {
+		height: 1.5em;
+		width: 1.5em;
 	}
 
 	@media (max-height: 30rem) {

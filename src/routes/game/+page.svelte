@@ -63,7 +63,7 @@
         }
     }
     const isGameReady = awayTeam.id.length && homeTeam.id.length;
-    const buttonSfx = new Sound(button);
+    $: buttonSfx = new Sound(button, {volume: $settings.volume});
 
     onDestroy(() => {
         game.reset();

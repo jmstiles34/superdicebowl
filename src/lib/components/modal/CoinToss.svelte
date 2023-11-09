@@ -4,12 +4,13 @@
 	import type { Team } from '$lib/types';
     import { Sound } from "svelte-sound";
     import coinSpin from '$lib/assets/sfx/coin-spin.mp3'
+	import { settings } from '$lib/stores/Settings';
 
     export let homeTeam:Team;
     export let awayTeam:Team;
     export let saveCoinToss:(a: string) => void;
     let winStyle:string;
-    const coinSpinSfx = new Sound(coinSpin);
+    $: coinSpinSfx = new Sound(coinSpin, {volume: $settings.volume});
 
     function getCoinImage(team:Team) {
         if(team.hasOwnProperty('isCustom') || team.hasOwnProperty('logo')){

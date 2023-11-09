@@ -3,12 +3,13 @@
 	import type { Void } from "$lib/types";
     import { Sound } from "svelte-sound";
     import button from '$lib/assets/sfx/button.mp3'
+	import { settings } from "$lib/stores/Settings";
 
     export let inFieldGoalRange: boolean = false;
     export let saveFourthDown:(a: string) => void;
     export let toggleFieldGoal:Void;
 
-    const buttonSfx = new Sound(button);
+    $: buttonSfx = new Sound(button, {volume: $settings.volume});
 </script>
 
 <h3>4th Down...Choose an Option</h3>

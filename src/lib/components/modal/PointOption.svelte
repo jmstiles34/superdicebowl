@@ -2,9 +2,10 @@
     import { CONVERSION, GAME_ACTION } from "$lib/constants/constants";
     import { Sound } from "svelte-sound";
     import button from '$lib/assets/sfx/button.mp3'
+	import { settings } from "$lib/stores/Settings";
 
     export let savePointOption:(a: string) => void;
-    const buttonSfx = new Sound(button);
+    $: buttonSfx = new Sound(button, {volume: $settings.volume});
 </script>
 
 <h3>Choose a Conversion Option</h3>

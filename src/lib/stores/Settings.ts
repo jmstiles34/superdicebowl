@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import { DEFAULT_SETTINGS } from '$lib/constants/constants';
 import type { Team } from "$lib/types";
+import { game } from '$lib/stores/Game'
 
 export interface sStore {
     type: 'reset' | 'updateMode' | 'updateScore' | 'updateAwayTeam' | 'updateHomeTeam' | null,
@@ -8,6 +9,7 @@ export interface sStore {
     awayTeam: Team,
     mode: string;
     winScore: number,
+    volume: number,
 };
 
 const _settings = writable<sStore>({
@@ -24,16 +26,24 @@ export const settings = {
             return {type: null, ...DEFAULT_SETTINGS};
         })
     },
+    toggleVolume: () => {
+        _settings.update((self: sStore) => {
+            const newVolume = self.volume === 1 ? 0 : 1;
+            game.updateVolume(newVolume);
+            self.volume = newVolume;
+            return self;
+        })
+    },
     updateAwayTeam: (team:Team) => {
         _settings.update((self: sStore) => {
-            self.type = 'updateScore';
+            self.type = 'updateAwayTeam';
             self.awayTeam = team;
             return self;
         })
     },
     updateHomeTeam: (team:Team) => {
         _settings.update((self: sStore) => {
-            self.type = 'updateScore';
+            self.type = 'updateHomeTeam';
             self.homeTeam = team;
             return self;
         })

@@ -165,7 +165,8 @@ export const DEFAULT_SETTINGS = {
 	homeTeam: DEFAULT_TEAM,
 	awayTeam: DEFAULT_TEAM,
 	mode: GAME_MODE.SOLO,
-	winScore: 50
+	winScore: 50,
+	volume: 1,
 };
 
 export const HELMET_SIZE = {

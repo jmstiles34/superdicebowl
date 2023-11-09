@@ -580,5 +580,20 @@ export const game = {
 			self.type = 'updateGame';
 			return { ...self, ...props };
 		});
+	},
+	updateVolume: (volume:number) => {
+		_game.update((self: gStore) => {
+			chimeSfx.update({volume});
+			hornsSfx.update({volume});
+			kickSfx.update({volume});
+			missSfx.update({volume});
+			miss1Sfx.update({volume});
+			offenseSfx.update({volume});
+			shakeSfx.update({volume});
+			touchdownSfx.update({volume});
+			whizSfx.update({volume});
+			whooshSfx.update({volume});
+			return self;
+		});
 	}
 };

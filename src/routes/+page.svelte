@@ -12,9 +12,9 @@
     import tap from '$lib/assets/sfx/tap.mp3'
     import gust from '$lib/assets/sfx/gust.mp3'
 
-    const gustSfx = new Sound(gust);
-    const tackleSfx = new Sound(tackle);
-    const tapSfx = new Sound(tap);
+    $: gustSfx = new Sound(gust, {volume: $settings.volume});
+    $: tackleSfx = new Sound(tackle, {volume: $settings.volume});
+    $: tapSfx = new Sound(tap, {volume: $settings.volume});
 
     onMount(() => {
         settings.reset();
