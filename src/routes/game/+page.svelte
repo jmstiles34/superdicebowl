@@ -4,8 +4,9 @@
     import type { FireworksOptions } from '@fireworks-js/svelte'
     import { game } from '$lib/stores/Game'
     import { settings } from '$lib/stores/Settings'
+    import { Sound } from "svelte-sound";
     import button from '$lib/assets/sfx/button.mp3'
-    import { equals, gt, sfxByFile, sleep } from '$lib/utils/common'
+    import { equals, gt, sleep } from '$lib/utils/common'
     import { 
         compareFns,
         inFieldGoalRange, 
@@ -62,6 +63,7 @@
         }
     }
     const isGameReady = awayTeam.id.length && homeTeam.id.length;
+    $: buttonSfx = new Sound(button, {volume: $settings.volume});
 
     onDestroy(() => {
         game.reset();
@@ -84,13 +86,13 @@
     $: if(isModalChoice(mode, possession, action)){
             if(action === GAME_ACTION.POINT_OPTION){
                 sleep(1000).then(() => {
-                    sfxByFile(button);
+                    buttonSfx.play();
                     game.preparePointOption(makePointChoice(score, winScore));
                 });
             } else {
                 sleep(1000).then(() => {
                     const choiceAction = makeFourthDownChoice(score, ballIndex);
-                    sfxByFile(button);               
+                    buttonSfx.play();               
                     if(choiceAction === GAME_ACTION.FIELD_GOAL){
                         game.toggleFieldGoal();
                     } else {

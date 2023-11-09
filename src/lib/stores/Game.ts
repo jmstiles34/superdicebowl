@@ -55,12 +55,12 @@ import {
 	isArray,
 	lt,
 	pickRandom,
-	sfxByFile,
 	sleep,
 	sumArrays,
 	sumDigits
 } from '$lib/utils/common';
 import { diceData } from '$lib/data/data.json';
+import { Sound } from "svelte-sound";
 import chime from '$lib/assets/sfx/chime.mp3'
 import horns from '$lib/assets/sfx/horns.mp3'
 import kick from '$lib/assets/sfx/kick.mp3'
@@ -71,6 +71,17 @@ import shake from '$lib/assets/sfx/shake.mp3'
 import touchdown from '$lib/assets/sfx/touchdown.mp3'
 import whiz from '$lib/assets/sfx/whiz.mp3'
 import whoosh from '$lib/assets/sfx/whoosh.mp3'
+
+const chimeSfx = new Sound(chime);
+const hornsSfx = new Sound(horns);
+const kickSfx = new Sound(kick);
+const missSfx = new Sound(miss);
+const miss1Sfx = new Sound(miss1);
+const offenseSfx = new Sound(offense);
+const shakeSfx = new Sound(shake);
+const touchdownSfx = new Sound(touchdown);
+const whizSfx = new Sound(whiz);
+const whooshSfx = new Sound(whoosh);
 
 export interface gStore {
 	type:
@@ -146,7 +157,7 @@ export const game = {
 				GAME_ACTION.KICKOFF_KICK;
 			self.ballIndex = isOnside ? self.ballIndex : BALL_ENDZONE[OPPOSITE_TEAM[self.possession]];
 			self.diceId = diceId;
-			isOnside ? sfxByFile(whiz) : sfxByFile(kick);
+			isOnside ? whizSfx.play() : kickSfx.play();
 			return self;
 		});
 	},
@@ -183,7 +194,7 @@ export const game = {
 					const description = isTurnoverOnDowns
 						? 'TURNOVER: On downs'
 						: `TURNOVER: ${label} ${playYards} yards downfield`;
-						sfxByFile(shake);
+						shakeSfx.play();
 					if (isTouchback(playIndex)) {
 						const newPos = OPPOSITE_TEAM[self.possession];
 						self.action = GAME_ACTION.OFFENSE;
@@ -209,14 +220,14 @@ export const game = {
 					}
 				} else {
 					if (isTD) {
-						sfxByFile(touchdown);
+						touchdownSfx.play();
 						self.action = GAME_ACTION.TOUCHDOWN;
 						self.ballIndex = BALL_ENDZONE[self.possession];
 						self.firstDownIndex = -1;
 						self.lastPlay = 'TOUCHDOWN!!!';
 						self.score = sumArrays([self.score, POINTS_TOUCHDOWN[self.possession]]);
 					} else {
-						sfxByFile(offense);
+						offenseSfx.play();
 						let isSafety = false;
 						if (lt(playYards, 0) && (lt(playIndex, 1) || gt(playIndex, 19))) {
 							isSafety = true;
@@ -268,7 +279,7 @@ export const game = {
 			self.score = success
 				? sumArrays([self.score, POINTS_TWO_POINT[self.possession]])
 				: self.score;
-			success ? sfxByFile(horns) : sfxByFile(miss1);
+			success ? hornsSfx.play() : miss1Sfx.play();
 			return self;
 		});
 	},
@@ -341,7 +352,7 @@ export const game = {
 			self.score = success
 				? sumArrays([self.score, POINTS_EXTRA_POINT[self.possession]])
 				: self.score;
-			success ? sfxByFile(kick) : sfxByFile(miss);
+			success ? kickSfx.play() : missSfx.play();
 			return self;
 		});
 	},
@@ -357,7 +368,7 @@ export const game = {
 			self.score = success
 				? sumArrays([self.score, POINTS_FIELD_GOAL[self.possession]])
 				: self.score;
-			success ? sfxByFile(kick) : sfxByFile(miss);
+			success ? kickSfx.play() : missSfx.play();
 			return self;
 		});
 	},
@@ -375,7 +386,7 @@ export const game = {
 			self.possession = newPos;
 			self.restrictDice = false;
 			self.yardsToGo = 10;
-			sfxByFile(whoosh);
+			whooshSfx.play();
 			return self;
 		});
 	},
@@ -434,7 +445,7 @@ export const game = {
 			(self.firstDownIndex = setFirstDownMarker(ballIndex, self.possession)),
 				(self.lastPlay = descKickoff(isTouchback, kickOffIndexFns[self.possession](ballIndex)));
 			self.restrictDice = false;
-			sfxByFile(whoosh);
+			whooshSfx.play();
 			return self;
 		});
 	},
@@ -486,7 +497,7 @@ export const game = {
 		});
 	},
 	saveTouchdown: () => {
-		sfxByFile(touchdown);
+		touchdownSfx.play();
 		_game.update((self: gStore) => {
 			self.type = 'saveTouchdown';
 			self.action = GAME_ACTION.TOUCHDOWN;
@@ -520,7 +531,7 @@ export const game = {
 					: '';
 			self.modalContent = null;
 			self.restrictDice = false;
-			sfxByFile(chime);
+			chimeSfx.play();
 			return self;
 		});
 	},
@@ -568,6 +579,21 @@ export const game = {
 		_game.update((self: gStore) => {
 			self.type = 'updateGame';
 			return { ...self, ...props };
+		});
+	},
+	updateVolume: (volume:number) => {
+		_game.update((self: gStore) => {
+			chimeSfx.update({volume});
+			hornsSfx.update({volume});
+			kickSfx.update({volume});
+			missSfx.update({volume});
+			miss1Sfx.update({volume});
+			offenseSfx.update({volume});
+			shakeSfx.update({volume});
+			touchdownSfx.update({volume});
+			whizSfx.update({volume});
+			whooshSfx.update({volume});
+			return self;
 		});
 	}
 };
