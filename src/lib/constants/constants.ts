@@ -136,6 +136,18 @@ export const DOWN: { [key: number]: string } = {
 
 export const EXTRA_POINT_SUCCESS = 4;
 
+/* 
+	5 => 22 (96%) 4+
+	10 => 27 (94%) 4+
+	15 => 32 (90%) 4+
+	20 => 37(84%) 5+
+	25 => 42 (75%) 6+
+	30 => 47 (63%) 7+
+	35 => 52 (50%) 8+
+	40 => 57 (36%) 8+
+	45 => 62 (25%) 9+ 
+*/
+
 export const FIELD_GOAL_ROLL: { [key: number]: number } = {
 	5: 4,
 	10: 4,
