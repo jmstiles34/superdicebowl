@@ -9,6 +9,7 @@
     import { equals, gt, sleep } from '$lib/utils/common'
     import { 
         compareFns,
+        getScoreByTeam,
         inFieldGoalRange, 
         isGameComplete,
         isModalChoice,
@@ -35,10 +36,10 @@
         firstDownIndex,
         lastPlay,
         missedKick, 
-        onsideKick, 
+        onsideKick,
+        playLog, 
         possession,
         restrictDice, 
-        score,
         yardsToGo,
     } = $game);
 
@@ -69,13 +70,17 @@
         game.reset();
     })
 
-    $: if(isGameComplete(score, winScore)){
-        const winner = gt(score[1], score[0]) ? awayTeam.city : homeTeam.city
+    $: awayScore = getScoreByTeam(TEAM.AWAY, playLog);
+    $: homeScore = getScoreByTeam(TEAM.HOME, playLog);
+    $: gameOver = isGameComplete(awayScore, homeScore, winScore)
+
+    $: if(gameOver){
+        const winner = gt(awayScore, homeScore) ? awayTeam.city : homeTeam.city
         game.gameComplete(winner);
         
     }
     
-    $: game.handleNextAction(action, ballIndex, score, winScore);
+    $: game.handleNextAction(action, ballIndex, gameOver);
     $: if(action === GAME_ACTION.GAME_OVER){
         sleep(100).then(() => {
             const fireworks = fw.fireworksInstance()
@@ -87,11 +92,11 @@
             if(action === GAME_ACTION.POINT_OPTION){
                 sleep(1000).then(() => {
                     buttonSfx.play();
-                    game.preparePointOption(makePointChoice(score, winScore));
+                    game.preparePointOption(makePointChoice(awayScore, homeScore, winScore));
                 });
             } else {
                 sleep(1000).then(() => {
-                    const choiceAction = makeFourthDownChoice(score, ballIndex);
+                    const choiceAction = makeFourthDownChoice(awayScore, homeScore, ballIndex);
                     buttonSfx.play();               
                     if(choiceAction === GAME_ACTION.FIELD_GOAL){
                         game.toggleFieldGoal();
@@ -121,7 +126,7 @@
                     {/if}
                 </div>
                 <div class="scores">
-                    <Scores {awayTeam} {homeTeam} {possession} {score} />
+                    <Scores {awayTeam} {homeTeam} />
                 </div>
             </div>
 

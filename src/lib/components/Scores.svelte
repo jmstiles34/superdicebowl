@@ -2,11 +2,15 @@
     import { hexToRGB } from '$lib/utils/common'
     import { TEAM } from "$lib/constants/constants";
 	import type { Team } from '$lib/types';
+    import { game } from '$lib/stores/Game'
+	import { getScoreByTeam } from '$lib/utils/game';
 
     export let awayTeam:Team;
     export let homeTeam:Team;
-    export let possession:string;
-    export let score:number[];
+
+    $: awayScore = getScoreByTeam(TEAM.AWAY, $game.playLog);
+    $: homeScore = getScoreByTeam(TEAM.HOME, $game.playLog);
+    $: possession = $game.possession;
 
     let awayToRgb = hexToRGB(awayTeam.colors.primary);
     let homeToRgb = hexToRGB(homeTeam.colors.primary);
@@ -25,7 +29,7 @@
             <div class="cityKey">{homeTeam.cityKey}</div>
         </div>
     </div>
-    <div class="score">{score[0]}</div>
+    <div class="score">{homeScore}</div>
     <div class="team" style={`
         background-color: ${awayTeam.colors.primary};
         background-image: linear-gradient(to right, rgba(${awayToRgb.r},${awayToRgb.g},${awayToRgb.b}, 0.5) 0 100%), url(/logos/${awayTeam.hasOwnProperty('logo') ? `custom/${awayTeam.logo}` : awayTeam.name}.png);
@@ -38,7 +42,7 @@
             <div class="cityKey">{awayTeam.cityKey}</div>
         </div>
     </div>
-    <div class="score">{score[1]}</div>
+    <div class="score">{awayScore}</div>
 </div>
 
 <style>

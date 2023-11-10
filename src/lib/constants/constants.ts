@@ -87,6 +87,7 @@ export const GAME_ACTION = {
 	PLACE_TWO_POINT: 'Place Two Point',
 	POINT_OPTION: 'Point(s) Option',
 	PUNT: 'Punt',
+	SAFETY: 'Safety',
 	TOUCHBACK: 'Touchback',
 	TOUCHDOWN: 'Touchdown',
 	TURNOVER: 'Turnover',
@@ -105,10 +106,21 @@ export const DEFAULT_GAME = {
 	missedKick: false,
 	modalContent: null,
 	onsideKick: false,
+	playLog: [],
 	possession: TEAM.HOME,
 	restrictDice: false,
-	score: [0, 0],
 	yardsToGo: 10
+};
+
+export const DEFAULT_PLAY = {
+	team: '',
+	diceRoll: 0,
+	action: '',
+	description: '',
+	points: 0,
+	yards: 0,
+	penaltyYards: 0,
+	isFirstdown: false,
 };
 
 export const DEFAULT_TEAM = {
@@ -136,28 +148,16 @@ export const DOWN: { [key: number]: string } = {
 
 export const EXTRA_POINT_SUCCESS = 4;
 
-/* 
-	5 => 22 (96%) 4+
-	10 => 27 (94%) 4+
-	15 => 32 (90%) 4+
-	20 => 37(84%) 5+
-	25 => 42 (75%) 6+
-	30 => 47 (63%) 7+
-	35 => 52 (50%) 8+
-	40 => 57 (36%) 8+
-	45 => 62 (25%) 9+ 
-*/
-
 export const FIELD_GOAL_ROLL: { [key: number]: number } = {
-	5: 4,
-	10: 4,
-	15: 4,
-	20: 5,
-	25: 6,
-	30: 7,
-	35: 8,
-	40: 8,
-	45: 9
+	5: 4, // 22yds (96%) 4+
+	10: 4, // 27yds (94%) 4+
+	15: 4, // 32yds (90%) 4+
+	20: 5, // 37yds(84%) 5+
+	25: 6, // 42yds (75%) 6+
+	30: 7, // 47yds (63%) 7+
+	35: 8, // 52yds (50%) 8+
+	40: 8, // 57yds (36%) 8+
+	45: 9 // 62yds (25%) 9+
 };
 
 export const FIELD_GOAL_YARDS = 17;
@@ -178,7 +178,7 @@ export const DEFAULT_SETTINGS = {
 	awayTeam: DEFAULT_TEAM,
 	mode: GAME_MODE.SOLO,
 	winScore: 50,
-	volume: 1,
+	volume: 1
 };
 
 export const HELMET_SIZE = {
@@ -202,25 +202,13 @@ export const NOOP = () => {
 	// do nothing
 };
 
-export const POINTS_EXTRA_POINT = {
-	[TEAM.AWAY]: [0, 1],
-	[TEAM.HOME]: [1, 0]
-};
-
-export const POINTS_FIELD_GOAL = {
-	[TEAM.AWAY]: [0, 3],
-	[TEAM.HOME]: [3, 0]
-};
-
-export const POINTS_TOUCHDOWN = {
-	[TEAM.AWAY]: [0, 6],
-	[TEAM.HOME]: [6, 0]
-};
-
-export const POINTS_TWO_POINT = {
-	[TEAM.AWAY]: [0, 2],
-	[TEAM.HOME]: [2, 0]
-};
+export const POINTS = {
+	EXTRA_POINT: 1,
+	FIELD_GOAL: 3,
+	SAFETY: 2,
+	TOUCHDOWN: 6,
+	TWO_POINT: 2
+}
 
 export const POSITION = {
 	LEFT: 'Left',
