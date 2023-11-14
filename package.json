@@ -11,7 +11,8 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test:unit": "vitest",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write ."
+    "format": "prettier --plugin-search-dir . --write .",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@playwright/test": "^1.28.1",
@@ -25,6 +26,8 @@
     "autoprefixer": "^10.4.14",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0",
     "postcss": "^8.4.24",
     "postcss-load-config": "^4.0.1",
     "prettier": "^2.8.0",
@@ -45,5 +48,14 @@
     "parse-nested-form-data": "^1.0.0",
     "svelte-sound": "^0.6.0",
     "uuid": "^9.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,svelte}": "eslint --cache --fix",
+    "*.{js,css,md,ts,svelte}": "prettier --write"
   }
 }
