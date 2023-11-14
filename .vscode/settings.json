@@ -1,8 +1,6 @@
 {
-    "cSpell.words": [
-        "Randomizer",
-        "Seahawks",
-        "skeletonlabs",
-        "tailwindcss"
-    ]
+  "cSpell.words": ["Seahawks"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false
 }
