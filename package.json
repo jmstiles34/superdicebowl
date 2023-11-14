@@ -55,8 +55,8 @@
     }
   },
   "lint-staged": {
-    "*.{js,css,md,ts,svelte}": [
-      "prettier --write"
+    "*.{js,css,ts,svelte}": [
+      "prettier --plugin-search-dir . --write ."
     ]
   }
 }
