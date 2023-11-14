@@ -1,5 +1,5 @@
-import type { DiceRoll, Team } from '$lib/types';
-import { BALL_FIELD_GOAL, DEFAULT_TEAM, FIELD_GOAL_YARDS, GAME_ACTION, GAME_MODE, TEAM, YARD_INTERVAL } from '$lib/constants/constants';
+import type { DiceRoll, Play, Team } from '$lib/types';
+import { BALL_FIELD_GOAL, DEFAULT_TEAM, FIELD_GOAL_YARDS, GAME_ACTION, GAME_MODE, OPPOSITE_TEAM, TEAM, YARD_INTERVAL } from '$lib/constants/constants';
 import { 
     add, 
     buildTextString, 
@@ -63,16 +63,16 @@ export function calcYardsToGo(firstDownIndex:number, diffIndex:number){
 }
 
 export function descExtraPoint(success:boolean) {
-    return success ? 'Extra Point Is Good!' : 'Extra Point Is Missed';
+    return success ? 'Extra Point Made' : 'Extra Point Missed';
 }
 
 export function descFieldGoal(success:boolean, distance:number) {
-    return `${distance+FIELD_GOAL_YARDS} Yard Field Goal Is ${success ? 'Good!' : 'NO Good'}`;
+    return `${distance+FIELD_GOAL_YARDS} Yd Field Goal ${success ? 'Made' : 'Missed'}`;
 }
 
 export function descKickoff(isTouchback:boolean, ballIndex:number) {
-    if(isTouchback) return "Touchback - Start at 25 Yard Line";
-    return `Kickoff returned for ${ballIndex*YARD_INTERVAL} yards`;
+    if(isTouchback) return "Touchback - Start at 25 Yd Line";
+    return `Kickoff returned for ${ballIndex*YARD_INTERVAL} Yds`;
 }
 
 export function descPenalty(isPenalty:boolean) {
@@ -85,11 +85,11 @@ export function descPlay(plays:string[]) {
 }
 
 export function descPunt(isTouchback:boolean, distance:number) {
-    return `${distance} Yard Punt${descTouchback(isTouchback)}`;
+    return `${distance} Yd Punt${descTouchback(isTouchback)}`;
 }
 
 export function descSafety() {
-    return 'Safety!'
+    return 'Tackled in Endzone for Safety.'
 };
 
 function descTouchback(isTouchback:boolean) {
@@ -102,11 +102,20 @@ export function descTwoPoint(success:boolean) {
 
 export function descYardage(yards:number) {
     if(yards === 0) return '';
-    return yards > 0  ? `- ${yards} Yard Gain ` : `- ${yards*-1} Yard Loss`;
+    return yards > 0  ? `- ${yards} Yd Gain ` : `- ${yards*-1} Yd Loss`;
 }
 
 function forcePositive(index:number){
     return index >= 0 ? index : index*-1;
+}
+
+export function getScoreByTeam(teamType:string, playLog:Play[]){
+    return playLog
+        .filter(({description, points, team }) => 
+            (points > 0 && team === teamType) ||
+            (points === 2 && team === OPPOSITE_TEAM[teamType] && description.includes('Safety'))
+        )
+        .reduce((total, play) => total + play.points, 0)
 }
 
 export function indexToYards(yards:number){
@@ -129,8 +138,8 @@ export function isFourthDown(down:number) {
     return down === 4 
 }
 
-export function isGameComplete(score:number[], winScore:number){
-    return score.filter(s => s >= winScore).length > 0;
+export function isGameComplete(homeScore:number, awayScore:number, winScore:number){
+    return gte(awayScore, winScore) || gte(homeScore, winScore);
 }
 
 export function isOnsideKick(index:number) {
@@ -188,16 +197,16 @@ export function madeFirstDown(pos: string, ballIndex:number, firstDownIndex:numb
 }
 
 //TODO: Use winScore and factor in how close opponent is to winning
-export function makeFourthDownChoice(score:number[], ballIndex:number) {
-    if(ballIndex >= 10 && score[0] - score[1] <= 16) return GAME_ACTION.PUNT;
-    if(ballIndex <= 9 && score[0] - score[1] <= 16) return GAME_ACTION.FIELD_GOAL;
+export function makeFourthDownChoice(awayScore:number, homeScore:number, ballIndex:number) {
+    if(ballIndex >= 10 && homeScore - awayScore <= 16) return GAME_ACTION.PUNT;
+    if(ballIndex <= 9 && homeScore - awayScore <= 16) return GAME_ACTION.FIELD_GOAL;
 
     return GAME_ACTION.OFFENSE;
 }
 
-export function makePointChoice(score:number[], winScore:number) {
-    if(winScore - score[1] <= 2) return GAME_ACTION.TWO_POINT
-    if(score[0] - score[1] >= 10) return GAME_ACTION.TWO_POINT
+export function makePointChoice(awayScore:number, homeScore:number, winScore:number) {
+    if(winScore - awayScore <= 2) return GAME_ACTION.TWO_POINT
+    if(homeScore - awayScore >= 10) return GAME_ACTION.TWO_POINT
     return GAME_ACTION.EXTRA_POINT
 }
 
@@ -254,6 +263,11 @@ export function turnoverOnDowns(down: number, isFirstDown:boolean, isPenalty = f
 
 export function twoPointSuccess(total:number){
     return total >= 8;
+}
+
+export function yardsToEndzone(pos:string, ballIndex:number){
+    const yards = ballIndex*YARD_INTERVAL;
+    return isHomeBall(pos) ? 100 - yards : yards;
 }
 
 export function yardsToIndex(yards:number){

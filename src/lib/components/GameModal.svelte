@@ -2,7 +2,7 @@
 	import { GAME_ACTION } from "$lib/constants/constants";
     export let action:string;
     const modalActions = [
-        GAME_ACTION.COIN_TOSS, 
+        GAME_ACTION.COIN_TOSS,
         GAME_ACTION.FOURTH_DOWN_OPTIONS, 
         GAME_ACTION.POINT_OPTION
     ]
@@ -24,7 +24,7 @@
         top: 0;
         left: 0;
         background: var(--mask);
-        z-index: 999;
+        z-index: 420;
         display: flex;
         justify-content: center;
     }
