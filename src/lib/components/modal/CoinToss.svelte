@@ -6,11 +6,10 @@
     import coinSpin from '$lib/assets/sfx/coin-spin.mp3'
 	import { settings } from '$lib/stores/Settings';
 
-    export let homeTeam:Team;
-    export let awayTeam:Team;
+    const { awayTeam, homeTeam, volume } = $settings;
     export let saveCoinToss:(a: string) => void;
     let winStyle:string;
-    $: coinSpinSfx = new Sound(coinSpin, {volume: $settings.volume});
+    $: coinSpinSfx = new Sound(coinSpin, {volume});
 
     function getCoinImage(team:Team) {
         if(team.hasOwnProperty('isCustom') || team.hasOwnProperty('logo')){

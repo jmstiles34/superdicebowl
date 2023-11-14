@@ -1,5 +1,5 @@
 import type { DiceRoll, Play, Team } from '$lib/types';
-import { BALL_FIELD_GOAL, DEFAULT_TEAM, FIELD_GOAL_YARDS, GAME_ACTION, GAME_MODE, TEAM, YARD_INTERVAL } from '$lib/constants/constants';
+import { BALL_FIELD_GOAL, DEFAULT_TEAM, FIELD_GOAL_YARDS, GAME_ACTION, GAME_MODE, OPPOSITE_TEAM, TEAM, YARD_INTERVAL } from '$lib/constants/constants';
 import { 
     add, 
     buildTextString, 
@@ -63,16 +63,16 @@ export function calcYardsToGo(firstDownIndex:number, diffIndex:number){
 }
 
 export function descExtraPoint(success:boolean) {
-    return success ? 'Extra Point Is Good!' : 'Extra Point Is Missed';
+    return success ? 'Extra Point Made' : 'Extra Point Missed';
 }
 
 export function descFieldGoal(success:boolean, distance:number) {
-    return `${distance+FIELD_GOAL_YARDS} Yard Field Goal Is ${success ? 'Good!' : 'NO Good'}`;
+    return `${distance+FIELD_GOAL_YARDS} Yd Field Goal ${success ? 'Made' : 'Missed'}`;
 }
 
 export function descKickoff(isTouchback:boolean, ballIndex:number) {
-    if(isTouchback) return "Touchback - Start at 25 Yard Line";
-    return `Kickoff returned for ${ballIndex*YARD_INTERVAL} yards`;
+    if(isTouchback) return "Touchback - Start at 25 Yd Line";
+    return `Kickoff returned for ${ballIndex*YARD_INTERVAL} Yds`;
 }
 
 export function descPenalty(isPenalty:boolean) {
@@ -85,11 +85,11 @@ export function descPlay(plays:string[]) {
 }
 
 export function descPunt(isTouchback:boolean, distance:number) {
-    return `${distance} Yard Punt${descTouchback(isTouchback)}`;
+    return `${distance} Yd Punt${descTouchback(isTouchback)}`;
 }
 
 export function descSafety() {
-    return 'Safety!'
+    return 'Tackled in Endzone for Safety.'
 };
 
 function descTouchback(isTouchback:boolean) {
@@ -102,7 +102,7 @@ export function descTwoPoint(success:boolean) {
 
 export function descYardage(yards:number) {
     if(yards === 0) return '';
-    return yards > 0  ? `- ${yards} Yard Gain ` : `- ${yards*-1} Yard Loss`;
+    return yards > 0  ? `- ${yards} Yd Gain ` : `- ${yards*-1} Yd Loss`;
 }
 
 function forcePositive(index:number){
@@ -111,7 +111,10 @@ function forcePositive(index:number){
 
 export function getScoreByTeam(teamType:string, playLog:Play[]){
     return playLog
-        .filter(({points, team }) => points > 0 && team === teamType)
+        .filter(({description, points, team }) => 
+            (points > 0 && team === teamType) ||
+            (points === 2 && team === OPPOSITE_TEAM[teamType] && description.includes('Safety'))
+        )
         .reduce((total, play) => total + play.points, 0)
 }
 

@@ -1,12 +1,13 @@
 <script lang="ts">
     import { onDestroy } from 'svelte';
-    import { Fireworks } from '@fireworks-js/svelte'
-    import type { FireworksOptions } from '@fireworks-js/svelte'
-    import { game } from '$lib/stores/Game'
-    import { settings } from '$lib/stores/Settings'
+    import { Fireworks } from '@fireworks-js/svelte';
+    import type { FireworksOptions } from '@fireworks-js/svelte';
+    import { game } from '$lib/stores/Game';
+    import { settings } from '$lib/stores/Settings';
     import { Sound } from "svelte-sound";
-    import button from '$lib/assets/sfx/button.mp3'
-    import { equals, gt, sleep } from '$lib/utils/common'
+    import button from '$lib/assets/sfx/button.mp3';
+    import chime from '$lib/assets/sfx/chime.mp3';
+    import { equals, gt, sleep } from '$lib/utils/common';
     import { 
         compareFns,
         getScoreByTeam,
@@ -25,8 +26,13 @@
     import Field from '$lib/components/Field.svelte';
 	import FourthDown from '$lib/components/modal/FourthDown.svelte';
     import GameModal from '$lib/components/GameModal.svelte';
+    import Modal from '$lib/components/Modal.svelte';
     import PointOption from '$lib/components/modal/PointOption.svelte';
     import Scores from '$lib/components/Scores.svelte';
+	import GameSummary from '$lib/components/modal/GameSummary.svelte';
+    import exit from '$lib/images/exit.svg';
+    import summary from '$lib/images/summary.svg';
+	import ConfirmExit from '$lib/components/modal/ConfirmExit.svelte';
 
     const {awayTeam, homeTeam, mode, winScore} = $settings;
     $: ({
@@ -43,6 +49,8 @@
         yardsToGo,
     } = $game);
 
+    let cancelExitAction = '';
+    let showGameSummary = false;
     let fw: Fireworks
     let options: FireworksOptions = {
         explosion: 3,
@@ -65,6 +73,7 @@
     }
     const isGameReady = awayTeam.id.length && homeTeam.id.length;
     $: buttonSfx = new Sound(button, {volume: $settings.volume});
+    $: chimeSfx = new Sound(chime, {volume: $settings.volume});
 
     onDestroy(() => {
         game.reset();
@@ -86,6 +95,7 @@
             const fireworks = fw.fireworksInstance()
             fireworks.start()}
         );
+        sleep(3000).then(() => showGameSummary = true)
     }
 
     $: if(isModalChoice(mode, possession, action)){
@@ -106,14 +116,61 @@
                 });
             }
     }
+
+    function cancelExit(){
+        buttonSfx.play();
+        game.setAction(cancelExitAction);
+    }
+
+    function handleExitClick (){
+        buttonSfx.play();
+        cancelExitAction = action;
+        game.setAction(GAME_ACTION.EXIT);
+    }
+
+    function toggleGameSummary (){
+        buttonSfx.play();
+        showGameSummary = !showGameSummary;
+    }
 </script>
 
 {#if isGameReady}
     <main>
         <div class="game">
             <div class="scoreboard">
-                <div class="last-play">
-                    <p>{lastPlay}</p>
+                <div class="menu-with-play">
+                    <div class="toolbar">
+                        <div>
+                            <button 
+                                class="toolbarButton flip"
+                                on:click={handleExitClick} 
+                                on:keypress={handleExitClick}
+                                tabindex="0"
+                                title="Quit Game"
+                            >
+                                <img 
+                                    src={exit}
+                                    alt="Quit Game"
+                                />
+                            </button>
+                        </div>
+                        <div class="divider">|</div>
+                        <div>
+                            <button 
+                                class="toolbarButton"
+                                on:click={toggleGameSummary} 
+                                on:keypress={toggleGameSummary}
+                                tabindex="0"
+                                title={`${showGameSummary ? 'Close' : 'Open'}  Game Summary`}
+                            >
+                                <img 
+                                    src={summary}
+                                    alt="Game Summary"
+                                />
+                            </button>
+                        </div>
+                    </div>
+                    <div class="last-play">{lastPlay}</div>
                 </div>
                 <div class="dice-container">
                     <div class="action">{action}</div>
@@ -148,10 +205,18 @@
             {/if}
         </div>
 
+        <Modal showModal={showGameSummary} close={toggleGameSummary} hasClose={true}>
+            <GameSummary {awayTeam} {homeTeam} {playLog} gameIsOver={equals(action, GAME_ACTION.GAME_OVER)} />
+        </Modal>
+
+        <Modal showModal={equals(action, GAME_ACTION.EXIT)} close={cancelExit} hasClose={true}>
+            <ConfirmExit />
+        </Modal>
+
         <GameModal {action} on:click={game.clearModal}>
             <div class="model-content">
                 {#if equals(action, GAME_ACTION.COIN_TOSS)}
-                    <CoinToss {awayTeam} {homeTeam} saveCoinToss={game.saveCoinToss} />
+                    <CoinToss saveCoinToss={game.saveCoinToss} />
                 {/if}
                 {#if equals(action, GAME_ACTION.POINT_OPTION) && !equals(action, GAME_ACTION.GAME_OVER)}
                     <PointOption savePointOption={game.preparePointOption} />
@@ -167,10 +232,19 @@
         </GameModal>
     </main>
 {/if}
+
 <style>
     main {
         position: relative;
         padding: 1rem;
+	}
+    button {
+		background: none;
+		border: none;
+		font-family: inherit;
+		font-size: inherit;
+		color: inherit;
+		cursor: pointer;
 	}
     .game{
         max-width: 90%;
@@ -181,6 +255,28 @@
         grid-template-columns: 1fr auto 1fr;
         column-gap: .25rem;
         top: 2.5rem;
+    }
+    .toolbar {
+        display: flex;
+        gap: 8px;
+		margin-top: 14px;
+        z-index: 100;
+    }
+    .toolbarButton {
+        cursor: pointer;
+		padding: 0;
+    }
+	.toolbarButton img {
+		height: 1.5em;
+		width: 1.5em;
+	}
+    .flip {
+        transform: scale(-1, 1);
+    }
+    .divider {
+        color: var(--steelblue);
+        font-weight: bold;
+        font-size: 1.25rem;
     }
     .dice-container {
         display: flex;
@@ -210,15 +306,18 @@
     .scores {
         display: flex;
         flex-direction: column;
-        margin-top: 0.6rem;
-        width: 100%;
+        margin-top: 10px;
     }
-
+    .menu-with-play {
+        display: flex;
+    }
     .last-play {
         text-align: center;
         font-size: clamp(0.5rem, 0.3182rem + 0.7273vw, 0.9rem);
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         color: gold;
+        margin-top: 18px;
+        width: 100%;
     }
 
     :global(.fireworks) {
@@ -241,6 +340,20 @@
         }
         .action {
             font-size: .7rem;
+        }
+        .toolbar {
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .toolbarButton img {
+            height: 16px;
+            width: 16px;
+        }
+        .divider {
+            font-size: .85rem;
+        }
+        .last-play {
+            margin-top: 8px;
         }
 	}
 </style>

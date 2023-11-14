@@ -27,6 +27,12 @@ export interface Play {
 	isFirstdown: boolean;
 }
 
+export interface PlaySummary {
+	description: string;
+	homeScore: number;
+	awayScore: number;
+}
+
 export interface Team {
 	id: string;
 	city: string;

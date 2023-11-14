@@ -46,16 +46,7 @@ import {
 	twoPointSuccess,
 	yardsToEndzone
 } from '$lib/utils/game';
-import {
-	equals,
-	gt,
-	gte,
-	isArray,
-	lt,
-	pickRandom,
-	sleep,
-	sumDigits
-} from '$lib/utils/common';
+import { equals, gt, gte, isArray, lt, pickRandom, sleep, sumDigits } from '$lib/utils/common';
 import { diceData } from '$lib/data/data.json';
 import { Sound } from 'svelte-sound';
 import chime from '$lib/assets/sfx/chime.mp3';
@@ -176,6 +167,7 @@ export const game = {
 					playYards,
 					isPenalty
 				);
+				const endzoneDistance = yardsToEndzone(self.possession, self.ballIndex);
 				const isTD =
 					equals(yards, 100) ||
 					isTouchdown(possession, ballIndex, playYards, isPenalty, isTurnover);
@@ -193,17 +185,17 @@ export const game = {
 					diceRoll: diceId,
 					action: GAME_ACTION.OFFENSE,
 					points: isTD ? POINTS.TOUCHDOWN : 0,
-					yards: !isPenalty ? Math.min(playYards, yardsToEndzone(self.possession, self.ballIndex)) : 0,
+					yards: !isPenalty ? Math.min(playYards, endzoneDistance) : 0,
 					penaltyYards: isPenalty ? playYards : 0
 				};
 
 				if (isTurnover || isTurnoverOnDowns) {
 					const isInterception = INTERCEPTION_ROLLS.includes(diceId);
 					const playIndex = ballPosition(ballIndex, possession, playYards);
-					const label = isInterception ? 'Interception' : 'Fumble';
+					const label = isInterception ? 'Int' : 'Fumble';
 					const description = isTurnoverOnDowns
 						? 'TURNOVER: On downs'
-						: `TURNOVER: ${label} ${playYards} yards downfield`;
+						: `TURNOVER: ${label} ${playYards} Yds downfield`;
 					shakeSfx.play();
 					if (isTouchback(playIndex)) {
 						const newPos = OPPOSITE_TEAM[self.possession];
@@ -211,7 +203,7 @@ export const game = {
 						self.ballIndex = BALL_PUNT[newPos];
 						self.currentDown = 1;
 						self.firstDownIndex = setFirstDownMarker(BALL_PUNT[newPos], newPos);
-						self.lastPlay = 'TURNOVER: Interception in the endzone (Touchback)';
+						self.lastPlay = 'TURNOVER: Int in the endzone (Touchback)';
 						self.possession = newPos;
 						self.restrictDice = false;
 						self.yardsToGo = 10;
@@ -228,6 +220,7 @@ export const game = {
 						self.restrictDice = false;
 						self.yardsToGo = calcYardsToGo(newFirstDown, newFirstDown - playIndex);
 					}
+					playResult.description = self.lastPlay;
 				} else {
 					if (isTD) {
 						touchdownSfx.play();
@@ -235,6 +228,7 @@ export const game = {
 						self.ballIndex = BALL_ENDZONE[self.possession];
 						self.firstDownIndex = -1;
 						self.lastPlay = 'TOUCHDOWN!!!';
+						playResult.description = `${endzoneDistance} Yd play for touchdown.`;
 					} else {
 						offenseSfx.play();
 						let isSafety = false;
@@ -249,6 +243,7 @@ export const game = {
 							self.firstDownIndex = -1;
 							self.lastPlay = descSafety();
 							self.yardsToGo = 10;
+							playResult.points = POINTS.SAFETY;
 						} else {
 							self.ballIndex = playIndex;
 							self.currentDown = isPenalty ? currentDown : currentDown + 1;
@@ -261,8 +256,10 @@ export const game = {
 								self.firstDownIndex = newFirstDown;
 								self.yardsToGo = calcYardsToGo(newFirstDown, newFirstDown - playIndex);
 							}
+							self.lastPlay = lastPlayDesc(possession, playIndex, { ...diceRoll, yards: playYards });
 						}
-						self.lastPlay = lastPlayDesc(possession, playIndex, { ...diceRoll, yards: playYards });
+						
+						playResult.description = self.lastPlay;
 					}
 					if (!isTD && isFourthDown(self.currentDown)) {
 						self.action = GAME_ACTION.FOURTH_DOWN;
@@ -270,7 +267,6 @@ export const game = {
 						self.restrictDice = false;
 					}
 				}
-				playResult.description = self.lastPlay;
 				self.playLog = [...self.playLog, playResult];
 			}
 
@@ -523,7 +519,7 @@ export const game = {
 			self.yardsToGo = 10;
 			const playResult: Play = {
 				...DEFAULT_PLAY,
-				team: self.possession,
+				team: OPPOSITE_TEAM[self.possession],
 				diceRoll: diceId || 0,
 				action: GAME_ACTION.PUNT,
 				description: self.lastPlay
@@ -561,7 +557,7 @@ export const game = {
 				team: self.possession,
 				diceRoll: self.diceId || 0,
 				action: self.action,
-				description: 'TOUCHDOWN!!!',
+				description: '100 Yd kickoff for touchdown.',
 				points: POINTS.TOUCHDOWN
 			};
 			self.type = 'saveTouchdown';
@@ -592,7 +588,7 @@ export const game = {
 			self.action = newAction;
 			self.lastPlay =
 				newAction === GAME_ACTION.FIELD_GOAL
-					? `${distanceRequired + FIELD_GOAL_YARDS} Yard Field Goal Attempt (${diceTotal}+)`
+					? `${distanceRequired + FIELD_GOAL_YARDS} Yd Field Goal Attempt (${diceTotal}+)`
 					: '';
 			self.modalContent = null;
 			self.restrictDice = false;
@@ -626,7 +622,7 @@ export const game = {
 			self.ballIndex = BALL_PUNT[newPos];
 			self.currentDown = 1;
 			self.firstDownIndex = setFirstDownMarker(BALL_PUNT[newPos], newPos);
-			self.lastPlay = 'TURNOVER: Interception in the endzone (Touchback)';
+			self.lastPlay = 'TURNOVER: Int in the endzone (Touchback)';
 			self.possession = newPos;
 			self.yardsToGo = 10;
 			return self;

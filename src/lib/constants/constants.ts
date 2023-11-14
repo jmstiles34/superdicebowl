@@ -65,6 +65,7 @@ export const CONVERSION = {
 
 export const GAME_ACTION = {
 	COIN_TOSS: 'Coin Toss',
+	EXIT: 'Exit Game',
 	EXTRA_POINT: 'Extra Point',
 	EXTRA_POINT_MADE: 'Extra Point Made',
 	EXTRA_POINT_MISS: 'Extra Point Missed',
@@ -121,6 +122,11 @@ export const DEFAULT_PLAY = {
 	yards: 0,
 	penaltyYards: 0,
 	isFirstdown: false,
+};
+export const DEFAULT_PLAY_SUMMARY = {
+	description: '',
+	homeScore: 0,
+	awayScore: 0,
 };
 
 export const DEFAULT_TEAM = {

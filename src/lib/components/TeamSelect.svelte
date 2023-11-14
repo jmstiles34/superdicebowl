@@ -19,13 +19,14 @@
     export let teamType:string;
     
     let showCustomTeam:boolean;
+    let selected:string = team.id;
+    $: if(team.id) selected = team.id;
 
     let allTeamsData:(Team)[] = [];
-    onMount(() => setTeamData());
-
-    let selected:string = team.id;
-    //$: if(selected.length) {saveTeam(teamByUUId(allTeamsData)(selected))}
-    $: if(team.id) selected = team.id;
+    onMount(() => {
+        setTeamData();
+        selected = ''
+    });
 
     function handleTeamSelect(e:Event) {
         const {value} = e.currentTarget as HTMLSelectElement;
@@ -134,7 +135,7 @@
     </div>
 </div>
 
-<Modal showModal={showCustomTeam} close={() => showCustomTeam = false}>
+<Modal showModal={showCustomTeam} close={() => showCustomTeam = false} hasClose={true}>
     <div class="model-content">
         <CustomTeam customTeamId={selected} close={closeCustomTeamModal}/>
     </div>
