@@ -1,17 +1,17 @@
 {
-    "short_name": "Super-Dice-Bowl",
-    "name": "Super Dice Bowl PWA",
-    "start_url": "/",
-    "icons": [
-      {
-        "src": "/sdb-logo.png",
-        "type": "image/png",
-        "sizes": "850x850"
-      }
-    ],
-    "background_color": "#3367D6",
-    "display": "standalone",
-    "scope": "/",
-    "theme_color": "#3367D6",
-    "description": "Football dice game."
-  }
+  "short_name": "Super-Dice-Bowl",
+  "name": "Super Dice Bowl PWA",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/sdb-logo.png",
+      "type": "image/png",
+      "sizes": "850x850"
+    }
+  ],
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#3367D6",
+  "description": "Football dice game."
+}
