@@ -1,12 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import {
-    DEFAULT_PLAY,
-    DEFAULT_PLAY_SUMMARY,
-    GAME_ACTION,
-    POINTS,
-    TEAM
-  } from '$lib/constants/constants';
+  import { DEFAULT_PLAY, DEFAULT_PLAY_SUMMARY, GAME_ACTION, TEAM } from '$lib/constants/constants';
   import type { Play, PlaySummary, Team } from '$lib/types';
   import '@fontsource/bebas-neue';
 
@@ -59,6 +53,7 @@
       if (isSafety) {
         return [
           {
+            team: play.team,
             description: play.description,
             homeScore:
               play.team === TEAM.AWAY
@@ -75,6 +70,7 @@
       return [
         ...log,
         {
+          team: play.team,
           description: play.description,
           homeScore:
             play.team === TEAM.HOME ? play.points + previousPlay.homeScore : previousPlay.homeScore,
@@ -248,7 +244,7 @@
 
   {#if activeTab === 1}
     <div>
-      <div class="grid-container-score">
+      <div class="grid-container-score-header">
         <!-- Row 1 -->
         <div class="grid-item score" />
         <div
@@ -273,6 +269,17 @@
       <div class="score-list">
         <div class="grid-container-score">
           {#each scoringPlays as play}
+            <div
+              class="teamLogo"
+              style={`background-color: ${
+                play.team === TEAM.HOME ? homeTeam.colors.primary : awayTeam.colors.primary
+              };`}
+            >
+              <img
+                alt="Team Logo"
+                src={`/logos/custom/${play.team === TEAM.HOME ? homeTeam.logo : awayTeam.logo}.png`}
+              />
+            </div>
             <div class="grid-item score-item">
               <div class="description">{play.description}</div>
             </div>
@@ -334,6 +341,11 @@
   }
   .grid-container-score {
     display: grid;
+    grid-template-columns: auto 1fr 15% 15%;
+    grid-gap: 1px;
+  }
+  .grid-container-score-header {
+    display: grid;
     grid-template-columns: auto 15% 15%;
     grid-gap: 1px;
   }
@@ -362,6 +374,14 @@
     font-weight: 700;
     font-family: 'Bebas Neue';
     font-size: 1.5rem;
+  }
+  .teamLogo {
+    width: 32px;
+    height: 32px;
+  }
+  .teamLogo img {
+    width: 32px;
+    height: 32px;
   }
   .description {
     color: var(--pip);

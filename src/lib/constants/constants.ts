@@ -124,6 +124,7 @@ export const DEFAULT_PLAY = {
   isFirstdown: false
 };
 export const DEFAULT_PLAY_SUMMARY = {
+  team: '',
   description: '',
   homeScore: 0,
   awayScore: 0

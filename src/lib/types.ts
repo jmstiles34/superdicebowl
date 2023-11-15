@@ -28,6 +28,7 @@ export interface Play {
 }
 
 export interface PlaySummary {
+  team: string;
   description: string;
   homeScore: number;
   awayScore: number;
