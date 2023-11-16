@@ -18,7 +18,8 @@
 </script>
 
 {#if showModal}
-  <div class="backdrop" on:click={doClose} on:keydown={keydown} role="button" tabindex="0">
+  <!-- <div class="backdrop" on:click={doClose} on:keydown={keydown} role="button" tabindex="0"> -->
+  <div class="backdrop">
     <div class="modal">
       {#if hasClose}
         <div

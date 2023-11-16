@@ -1,10 +1,17 @@
 import { writable } from 'svelte/store';
-import { DEFAULT_SETTINGS } from '$lib/constants/constants';
+import { DEFAULT_SETTINGS, DEFAULT_TEAM } from '$lib/constants/constants';
 import type { Team } from '$lib/types';
 import { game } from '$lib/stores/Game';
 
 export interface sStore {
-  type: 'reset' | 'updateMode' | 'updateScore' | 'updateAwayTeam' | 'updateHomeTeam' | null;
+  type:
+    | 'reset'
+    | 'resetTeams'
+    | 'updateMode'
+    | 'updateScore'
+    | 'updateAwayTeam'
+    | 'updateHomeTeam'
+    | null;
   homeTeam: Team;
   awayTeam: Team;
   mode: string;
@@ -24,6 +31,14 @@ export const settings = {
   reset: () => {
     _settings.update(() => {
       return { type: null, ...DEFAULT_SETTINGS };
+    });
+  },
+  resetTeams: () => {
+    _settings.update((self: sStore) => {
+      self.type = 'resetTeams';
+      self.awayTeam = DEFAULT_TEAM;
+      self.homeTeam = DEFAULT_TEAM;
+      return self;
     });
   },
   toggleVolume: () => {

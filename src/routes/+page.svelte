@@ -17,7 +17,7 @@
   $: tapSfx = new Sound(tap, { volume: $settings.volume });
 
   onMount(() => {
-    settings.reset();
+    settings.resetTeams();
     game.reset();
   });
   let winScore = $settings.winScore;

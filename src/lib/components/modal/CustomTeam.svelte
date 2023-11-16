@@ -88,75 +88,76 @@
   }
 </script>
 
-<div on:click|stopPropagation on:keydown|stopPropagation role="button" tabindex="0">
-  <h3>{customTeamId ? 'Edit' : 'Add'} Custom Team</h3>
-  <div class="container">
-    <div class="form-row">
-      <div class="form-label">Location:</div>
-      <input
-        type="text"
-        maxlength="15"
-        id="city"
-        bind:value={city}
-        class:error={errors.includes('city')}
-      />
-    </div>
-    <div class="form-row">
-      <div class="form-label">Name:</div>
-      <input
-        type="text"
-        maxlength="10"
-        id="name"
-        bind:value={name}
-        class:error={errors.includes('name')}
-      />
-    </div>
-    <div class="form-row">
-      <div class="form-label">Endzone:</div>
-      <input type="color" id="primary" bind:value={primary} />
-      <div class="text-label">Text:</div>
-      <input type="color" id="secondary" bind:value={secondary} />
-    </div>
-    <div class="form-row">
-      <label class="form-label" for="logo">Logo:</label>
-      <select id="logo" bind:value={logo} class:error={errors.includes('logo')}>
-        <option value="">Choose...</option>
-        {#each sortedLogos as logo}
-          <option value={logo.file}>{logo.name}</option>
-        {/each}
-      </select>
-    </div>
-    <div class="form-row">
-      <div>
-        <div class="form-row">
-          <label class="form-label" for="helmet">Helmet:</label>
-          <input type="color" id="helmet" bind:value={helmet} />
-        </div>
-        <div class="form-row">
-          <label class="form-label" for="stripe">Stripe 1:</label>
-          <input type="color" id="stripe" bind:value={stripe} />
-        </div>
-        <div class="form-row">
-          <label class="form-label" for="secondaryColor">Stripe 2:</label>
-          <input type="color" id="trim" bind:value={trim} />
-        </div>
-        <div class="form-row">
-          <label class="form-label" for="secondaryColor">Face Mask:</label>
-          <input type="color" id="faceMask" bind:value={faceMask} />
-        </div>
-      </div>
-      <div class="helmet">
-        <CustomHelmet {bg} {faceMask} {helmet} {stripe} {trim} {logo} size={HELMET_SIZE.MEDIUM} />
-      </div>
-    </div>
+<!-- <div on:click|stopPropagation on:keydown|stopPropagation role="button" tabindex="0"> -->
+<h3>{customTeamId ? 'Edit' : 'Add'} Custom Team</h3>
+<div class="container">
+  <div class="form-row">
+    <div class="form-label">Location:</div>
+    <input
+      type="text"
+      maxlength="15"
+      id="city"
+      bind:value={city}
+      class:error={errors.includes('city')}
+    />
   </div>
-  <div class="button-row">
-    {#if customTeamId}
-      <button class="delete-button" on:click={deleteTeam}> Delete </button>
-    {/if}
-    <button class="save-button" on:click={saveTeam}> Save Custom Team </button>
+  <div class="form-row">
+    <div class="form-label">Name:</div>
+    <input
+      type="text"
+      maxlength="10"
+      id="name"
+      bind:value={name}
+      class:error={errors.includes('name')}
+    />
+  </div>
+  <div class="form-row">
+    <div class="form-label">Endzone:</div>
+    <input type="color" id="primary" bind:value={primary} />
+    <div class="text-label">Text:</div>
+    <input type="color" id="secondary" bind:value={secondary} />
+  </div>
+  <div class="form-row">
+    <label class="form-label" for="logo">Logo:</label>
+    <select id="logo" bind:value={logo} class:error={errors.includes('logo')}>
+      <option value="">Choose...</option>
+      {#each sortedLogos as logo}
+        <option value={logo.file}>{logo.name}</option>
+      {/each}
+    </select>
+  </div>
+  <div class="form-row">
+    <div>
+      <div class="form-row">
+        <label class="form-label" for="helmet">Helmet:</label>
+        <input type="color" id="helmet" bind:value={helmet} />
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="stripe">Stripe 1:</label>
+        <input type="color" id="stripe" bind:value={stripe} />
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="secondaryColor">Stripe 2:</label>
+        <input type="color" id="trim" bind:value={trim} />
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="secondaryColor">Face Mask:</label>
+        <input type="color" id="faceMask" bind:value={faceMask} />
+      </div>
+    </div>
+    <div class="helmet">
+      <CustomHelmet {bg} {faceMask} {helmet} {stripe} {trim} {logo} size={HELMET_SIZE.MEDIUM} />
+    </div>
   </div>
 </div>
+<div class="button-row">
+  {#if customTeamId}
+    <button class="delete-button" on:click={deleteTeam}> Delete </button>
+  {/if}
+  <button class="save-button" on:click={saveTeam}> Save Custom Team </button>
+</div>
+
+<!-- </div> -->
 
 <style>
   h3 {

@@ -341,12 +341,12 @@
   }
   .grid-container-score {
     display: grid;
-    grid-template-columns: auto 1fr 15% 15%;
+    grid-template-columns: auto 1fr 48px 48px;
     grid-gap: 1px;
   }
   .grid-container-score-header {
     display: grid;
-    grid-template-columns: auto 15% 15%;
+    grid-template-columns: auto 48px 48px;
     grid-gap: 1px;
   }
 
