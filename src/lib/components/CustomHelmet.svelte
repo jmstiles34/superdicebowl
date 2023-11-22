@@ -47,6 +47,10 @@
 		setTransform(transform);
 		//console.log(transform);
 	}
+
+	function toggleMoveableTarget() {
+		moveable ? (moveable = null) : (moveable = target);
+	}
 </script>
 
 <svelte:window bind:innerWidth={screenSize} />
@@ -271,9 +275,8 @@
 	</div>
 	{#if logo}
 		<div
-			on:click={canCustomize ? () => (moveable = target) : NOOP}
-			on:keydown={canCustomize ? () => (moveable = target) : NOOP}
-			on:dblclick={canCustomize ? () => (moveable = null) : NOOP}
+			on:click={canCustomize ? toggleMoveableTarget : NOOP}
+			on:keydown={canCustomize ? toggleMoveableTarget : NOOP}
 			role="button"
 			tabindex="0"
 			class="logoContainer"
