@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Moveable from 'svelte-moveable';
+	import { tap } from 'svelte-gestures';
 	import { HELMET_SIZE, NOOP } from '$lib/constants/constants';
 
 	export let bg = '#2e2e2e';
@@ -277,6 +278,8 @@
 		<div
 			on:click={canCustomize ? toggleMoveableTarget : NOOP}
 			on:keydown={canCustomize ? toggleMoveableTarget : NOOP}
+			on:dblclick={canCustomize ? toggleMoveableTarget : NOOP}
+			on:tap={canCustomize ? toggleMoveableTarget : NOOP}
 			role="button"
 			tabindex="0"
 			class="logoContainer"

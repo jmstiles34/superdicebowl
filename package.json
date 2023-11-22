@@ -47,6 +47,7 @@
 		"@fontsource/bebas-neue": "^5.0.12",
 		"eslint-plugin-svelte": "^2.32.2",
 		"parse-nested-form-data": "^1.0.0",
+		"svelte-gestures": "^1.5.2",
 		"svelte-moveable": "^0.44.0",
 		"svelte-selecto": "^1.26.1",
 		"svelte-sound": "^0.6.0",
