@@ -135,7 +135,9 @@ export const DEFAULT_TEAM = {
 	city: '',
 	cityKey: '',
 	name: '',
+	logo: '',
 	logoFixed: false,
+	logoLeft: '',
 	logoTransform: '',
 	colors: {
 		primary: '',

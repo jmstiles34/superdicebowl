@@ -53,6 +53,7 @@
 		showCustomTeam = false;
 		saveTeam(teamByUUId(allTeamsData)(id));
 		if (!id) saveTeam(DEFAULT_TEAM);
+		selected = '';
 	}
 
 	function setTeamData() {
@@ -90,6 +91,7 @@
 						trim={team.colors.trim}
 						logo={team.logo}
 						logoFlip={teamType === TEAM.AWAY && team.logoFixed}
+						logoLeft={team.logoLeft}
 						logoTransform={team.logoTransform || ''}
 						setTransform={NOOP}
 						title={team.isCustom ? `EDIT: ${team.city} ${team.name}` : `${team.city} ${team.name}`}

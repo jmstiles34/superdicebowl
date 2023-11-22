@@ -8,6 +8,7 @@
 	export let stripe = '#ffffff';
 	export let trim = '#002244';
 	export let logo: string | null = null;
+	export let logoLeft: string | null = null;
 	export let logoFlip: boolean = false;
 	export let title: string = 'Custom Football Helmet';
 	export let size: string = HELMET_SIZE.LARGE;
@@ -283,7 +284,7 @@
 				alt={`${logo} Logo`}
 				bind:this={target}
 				class="target"
-				src={`/logos/custom/${logo}.webp`}
+				src={`/logos/custom/${logoFlip && logoLeft ? logoLeft : logo}.webp`}
 				style={`
 					width: ${logoImgWidth}px; 
 					transform: ${logoFlip ? logoTransform.replace('scale(', 'scale(-') : logoTransform}

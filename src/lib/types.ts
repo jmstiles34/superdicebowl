@@ -42,6 +42,7 @@ export interface Team {
 	isCustom?: boolean;
 	logo?: string;
 	logoFixed?: boolean;
+	logoLeft?: string;
 	logoTransform?: string;
 	name: string;
 }
