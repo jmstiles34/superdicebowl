@@ -34,6 +34,7 @@
 				{stripe}
 				{trim}
 				logo={team.logo}
+				logoLeft={team.logoLeft}
 				logoFlip={position === POSITION.LEFT && team.logoFixed}
 				logoTransform={removeTranslate(team.logoTransform) || ''}
 				setTransform={NOOP}
@@ -59,6 +60,7 @@
 				{stripe}
 				{trim}
 				logo={team.logo}
+				logoLeft={team.logoLeft}
 				logoFlip={position === POSITION.RIGHT && team.logoFixed}
 				logoTransform={removeTranslate(team.logoTransform) || ''}
 				setTransform={NOOP}
