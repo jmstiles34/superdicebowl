@@ -1,782 +1,789 @@
 {
-  "teamsData": [
-    {
-      "city": "Arizona",
-      "cityKey": "ARI",
-      "name": "Cardinals",
-      "logo": "nfl-cardinals",
-      "id": "0d8ee4cf-1798-4b9f-9d67-b5ce287dda6c",
-      "colors": {
-        "primary": "#97233F",
-        "secondary": "#000000",
-        "faceMask": "#79868B",
-        "helmet": "#F5F5F5",
-        "stripe": "#F5F5F5",
-        "trim": "#F5F5F5"
-      }
-    },
-    {
-      "city": "Atlanta",
-      "cityKey": "ATL",
-      "name": "Falcons",
-      "logo": "nfl-falcons",
-      "id": "e3418906-808f-41bc-9797-fb3691d64d72",
-      "colors": {
-        "primary": "#A71930",
-        "secondary": "#000000",
-        "faceMask": "#141414",
-        "helmet": "#000000",
-        "stripe": "#141414",
-        "trim": "#141414"
-      }
-    },
-    {
-      "city": "Baltimore",
-      "cityKey": "BAL",
-      "name": "Ravens",
-      "logo": "nfl-ravens",
-      "logoFixed": true,
-      "logoWidth": 2,
-      "id": "15aa55fb-bafe-4957-aeb8-ed82ba286f32",
-      "colors": {
-        "primary": "#241773",
-        "secondary": "#9E7C0C",
-        "faceMask": "#000000",
-        "helmet": "#141414",
-        "stripe": "#241773",
-        "trim": "#141414"
-      }
-    },
-    {
-      "city": "Buffalo",
-      "cityKey": "BUF",
-      "name": "Bills",
-      "logo": "nfl-bills",
-      "id": "68d32c8e-95db-4dbf-a724-0a8e1f6b3330",
-      "colors": {
-        "primary": "#00338D",
-        "secondary": "#C60C30",
-        "faceMask": "#79868B",
-        "helmet": "#F5F5F5",
-        "stripe": "#C60C30",
-        "trim": "#00338D"
-      }
-    },
-    {
-      "city": "Carolina",
-      "cityKey": "CAR",
-      "name": "Panthers",
-      "logo": "nfl-panthers",
-      "logoWidth": 2.25,
-      "id": "6e40d2ca-e183-4236-bdc0-7626e75c8af3",
-      "colors": {
-        "primary": "#0085CA",
-        "secondary": "#101820",
-        "faceMask": "#141414",
-        "helmet": "#BFC0BF",
-        "stripe": "#141414",
-        "trim": "#0085CA"
-      }
-    },
-    {
-      "city": "Chicago",
-      "cityKey": "CHI",
-      "name": "Bears",
-      "logo": "nfl-bears",
-      "logoFixed": true,
-      "id": "f2cbeb55-19fd-4a72-a772-fe72e6e2469a",
-      "colors": {
-        "primary": "#0B162A",
-        "secondary": "#C83803",
-        "faceMask": "#0B162A",
-        "helmet": "#0B162A",
-        "stripe": "#0B162A",
-        "trim": "#0B162A"
-      }
-    },
-    {
-      "city": "Cincinnati",
-      "cityKey": "CIN",
-      "name": "Bengals",
-      "logo": "nfl-bengals",
-      "logoWidth": 1.4,
-      "logoPosition": [8, 10],
-      "id": "5a75b4dc-98b2-4f17-94ed-1ddabdd7c995",
-      "colors": {
-        "primary": "#FB4F14",
-        "secondary": "#000000",
-        "faceMask": "#141414",
-        "helmet": "#FB4F14",
-        "stripe": "#FB4F14",
-        "trim": "#FB4F14"
-      }
-    },
-    {
-      "city": "Cleveland",
-      "cityKey": "CLE",
-      "name": "Browns",
-      "id": "cdeed602-64ef-44c4-91b3-fecd1b489a2a",
-      "colors": {
-        "primary": "#311D00",
-        "secondary": "#FF3C00",
-        "faceMask": "#311D00",
-        "helmet": "#FF3C00",
-        "stripe": "#F5F5F5",
-        "trim": "#311D00"
-      }
-    },
-    {
-      "city": "Dallas",
-      "cityKey": "DAL",
-      "logo": "nfl-cowboys",
-      "name": "Cowboys",
-      "id": "f81b352b-ac32-479c-91d2-c27e6853f0a9",
-      "colors": {
-        "primary": "#002244",
-        "secondary": "#869397",
-        "faceMask": "#79868B",
-        "helmet": "#869397",
-        "stripe": "F5F5F5",
-        "trim": "#002244"
-      }
-    },
-    {
-      "city": "Denver",
-      "cityKey": "DEN",
-      "name": "Broncos",
-      "logo": "nfl-broncos",
-      "logoWidth": 2,
-      "id": "02bcb997-66a8-4d0f-bd94-b2ff7883d76c",
-      "colors": {
-        "primary": "#FB4F14",
-        "secondary": "#002244",
-        "faceMask": "#002244",
-        "helmet": "#002244",
-        "stripe": "#FB4F14",
-        "trim": "#002244"
-      }
-    },
-    {
-      "city": "Detroit",
-      "cityKey": "DET",
-      "name": "Lions",
-      "logo": "nfl-lions",
-      "id": "a2187c5a-dae2-4560-a89b-0ffa3c810df9",
-      "colors": {
-        "primary": "#0076B6",
-        "secondary": "#B0B7BC",
-        "faceMask": "#79868B",
-        "helmet": "#B0B7BC",
-        "stripe": "#F5F5F5",
-        "trim": "#0076B6"
-      }
-    },
-    {
-      "city": "Green Bay",
-      "cityKey": "GB",
-      "name": "Packers",
-      "logo": "nfl-packers",
-      "logoFixed": true,
-      "id": "0876a61a-d9d0-4cdc-885a-ec5abe1939be",
-      "colors": {
-        "primary": "#203731",
-        "secondary": "#FFB612",
-        "faceMask": "#203731",
-        "helmet": "#FFB612",
-        "stripe": "F5F5F5",
-        "trim": "#203731"
-      }
-    },
-    {
-      "city": "Houston",
-      "cityKey": "HOU",
-      "name": "Texans",
-      "logo": "nfl-texans",
-      "id": "0a78aaa7-c1f9-445a-94af-72c671b59a3d",
-      "colors": {
-        "primary": "#03202F",
-        "secondary": "#A71930",
-        "faceMask": "#03202F",
-        "helmet": "#03202F",
-        "stripe": "#03202F",
-        "trim": "#03202F"
-      }
-    },
-    {
-      "city": "Indianapolis",
-      "cityKey": "IND",
-      "name": "Colts",
-      "logo": "nfl-colts",
-      "id": "7a821691-33f7-45fd-b258-96bce4d552d0",
-      "colors": {
-        "primary": "#002C5F",
-        "secondary": "#A2AAAD",
-        "faceMask": "#79868B",
-        "helmet": "#F5F5F5",
-        "stripe": "#002C5F",
-        "trim": "#F5F5F5"
-      }
-    },
-    {
-      "city": "Jacksonville",
-      "cityKey": "JAX",
-      "name": "Jaguars",
-      "logo": "nfl-jaguars",
-      "id": "3ff1c454-719a-41f8-b9b0-901b0236af92",
-      "colors": {
-        "primary": "#006778",
-        "secondary": "#101820",
-        "faceMask": "#101820",
-        "helmet": "#101820",
-        "stripe": "#101820",
-        "trim": "#101820"
-      }
-    },
-    {
-      "city": "Kansas City",
-      "cityKey": "KC",
-      "name": "Chiefs",
-      "logo": "nfl-chiefs",
-      "logoFixed": true,
-      "id": "4bc4b950-5d7d-4b47-8f6c-c06e76948df9",
-      "colors": {
-        "primary": "#E31837",
-        "secondary": "#FFB81C",
-        "faceMask": "#F5F5F5",
-        "helmet": "#E31837",
-        "stripe": "#E31837",
-        "trim": "#E31837"
-      }
-    },
-    {
-      "city": "Las Vegas",
-      "cityKey": "LV",
-      "name": "Raiders",
-      "logo": "nfl-raiders",
-      "logoFixed": true,
-      "id": "f5efbfb5-4919-4abd-8ff6-0982423ed371",
-      "colors": {
-        "primary": "#000000",
-        "secondary": "#A5ACAF",
-        "faceMask": "#79868B",
-        "helmet": "#A5ACAF",
-        "stripe": "#000000",
-        "trim": "#A5ACAF"
-      }
-    },
-    {
-      "city": "Los Angeles",
-      "cityKey": "LAC",
-      "name": "Chargers",
-      "logo": "nfl-chargers",
-      "logoWidth": 1.5,
-      "logoPosition": [6, 16],
-      "id": "459a7109-eac2-482a-a067-ebd5f527c75f",
-      "colors": {
-        "primary": "#0080C6",
-        "secondary": "#FFC20E",
-        "faceMask": "#FFC20E",
-        "helmet": "#F5F5F5",
-        "stripe": "#F5F5F5",
-        "trim": "#F5F5F5"
-      }
-    },
-    {
-      "city": "Los Angeles",
-      "cityKey": "LAR",
-      "name": "Rams",
-      "logo": "nfl-rams",
-      "logoWidth": 1.5,
-      "logoPosition": [6, 14],
-      "id": "66ecf340-2f75-420a-b219-0275f819b9bd",
-      "colors": {
-        "primary": "#003594",
-        "secondary": "#e0cb69",
-        "faceMask": "#003594",
-        "helmet": "#003594",
-        "stripe": "#003594",
-        "trim": "#003594"
-      }
-    },
-    {
-      "city": "Miami",
-      "cityKey": "MIA",
-      "name": "Dolphins",
-      "logo": "nfl-dolphins",
-      "id": "36a2f7a8-fe32-457b-8b6e-93d1b3f7b047",
-      "colors": {
-        "primary": "#008E97",
-        "secondary": "#FC4C02",
-        "faceMask": "#F5F5F5",
-        "helmet": "#F5F5F5",
-        "stripe": "#FC4C02",
-        "trim": "#008E97"
-      }
-    },
-    {
-      "city": "Minnesota",
-      "cityKey": "MIN",
-      "name": "Vikings",
-      "logo": "nfl-vikings",
-      "logoWidth": 1.75,
-      "logoPosition": [13, 15],
-      "id": "6aa5aec9-3f2a-453b-825e-421745de1f39",
-      "colors": {
-        "primary": "#4F2683",
-        "secondary": "#FFC62F",
-        "faceMask": "#141414",
-        "helmet": "#4F2683",
-        "stripe": "#4F2683",
-        "trim": "#4F2683"
-      }
-    },
-    {
-      "city": "New England",
-      "cityKey": "NE",
-      "name": "Patriots",
-      "logo": "nfl-patriots",
-      "logoWidth": 1.65,
-      "logoPosition": [9, 15],
-      "id": "b81d790c-0059-40f5-8e08-f5fc10799114",
-      "colors": {
-        "primary": "#002244",
-        "secondary": "#B0B7BC",
-        "faceMask": "#C60C30",
-        "helmet": "#B0B7BC",
-        "stripe": "#B0B7BC",
-        "trim": "#B0B7BC"
-      }
-    },
-    {
-      "city": "New Orleans",
-      "cityKey": "NO",
-      "name": "Saints",
-      "logo": "nfl-saints",
-      "id": "29eed103-8298-4d90-ac50-d898a88d47f3",
-      "colors": {
-        "primary": "#D3BC8D",
-        "secondary": "#101820",
-        "faceMask": "#101820",
-        "helmet": "#D3BC8D",
-        "stripe": "#F5F5F5",
-        "trim": "#101820"
-      }
-    },
-    {
-      "city": "New York",
-      "cityKey": "NYG",
-      "name": "Giants",
-      "logo": "nfl-giants",
-      "logoFixed": true,
-      "id": "0c84e360-a04d-4e02-93f5-1f8fd636b05e",
-      "colors": {
-        "primary": "#0B2265",
-        "secondary": "#A71930",
-        "faceMask": "#79868B",
-        "helmet": "#0B2265",
-        "stripe": "#A71930",
-        "trim": "#0B2265"
-      }
-    },
-    {
-      "city": "New York",
-      "cityKey": "NYJ",
-      "name": "Jets",
-      "logo": "nfl-jets",
-      "logoFixed": true,
-      "id": "6b736d05-ce38-4a36-9e0d-7ea1b9eb25ac",
-      "colors": {
-        "primary": "#125740",
-        "secondary": "#F5F5F5",
-        "faceMask": "#125740",
-        "helmet": "#F5F5F5",
-        "stripe": "#F5F5F5",
-        "trim": "#125740"
-      }
-    },
-    {
-      "city": "Philadelphia",
-      "cityKey": "PHI",
-      "name": "Eagles",
-      "logo": "nfl-eagles",
-      "logoWidth": 1.3,
-      "logoPosition": [14, 11],
-      "id": "68da8e98-ea9c-4fea-9c92-8bf09441e4dc",
-      "colors": {
-        "primary": "#004C54",
-        "secondary": "#ACC0C6",
-        "faceMask": "#565A5C",
-        "helmet": "#004C54",
-        "stripe": "#004C54",
-        "trim": "#004C54"
-      }
-    },
-    {
-      "city": "Pittsburgh",
-      "cityKey": "PIT",
-      "name": "Steelers",
-      "logo": "nfl-steelers",
-      "logoFixed": true,
-      "id": "bc2a94eb-79f5-4520-93ce-7b4d69748d65",
-      "colors": {
-        "primary": "#FFB612",
-        "secondary": "#101820",
-        "faceMask": "#101820",
-        "helmet": "#101820",
-        "stripe": "#FFB612",
-        "trim": "#101820"
-      }
-    },
-    {
-      "city": "San Francisco",
-      "cityKey": "SF",
-      "name": "49ers",
-      "logo": "nfl-49ers",
-      "logoFixed": true,
-      "id": "aa39e173-b594-4646-b1b4-9d3c40b4caee",
-      "colors": {
-        "primary": "#AA0000",
-        "secondary": "#B3995D",
-        "faceMask": "#79868B",
-        "helmet": "#B3995D",
-        "stripe": "#F5F5F5",
-        "trim": "#AA0000"
-      }
-    },
-    {
-      "city": "Seattle",
-      "cityKey": "SEA",
-      "name": "Seahawks",
-      "logo": "nfl-seahawks",
-      "logoWidth": 1.75,
-      "logoPosition": [5, 10],
-      "id": "97836634-f26b-4ed1-a5b6-ba815c946575",
-      "colors": {
-        "primary": "#002244",
-        "secondary": "#69BE28",
-        "faceMask": "#002244",
-        "helmet": "#002244",
-        "stripe": "#28354D",
-        "trim": "#002244"
-      }
-    },
-    {
-      "city": "Tampa Bay",
-      "cityKey": "TB",
-      "name": "Buccaneers",
-      "logo": "nfl-buccaneers",
-      "id": "70ed9a2c-b047-444b-834e-584d8bcc4b70",
-      "colors": {
-        "primary": "#34302B",
-        "secondary": "#FF7900",
-        "faceMask": "#0A0A08",
-        "helmet": "#34302B",
-        "stripe": "#34302B",
-        "trim": "#34302B"
-      }
-    },
-    {
-      "city": "Tennessee",
-      "cityKey": "TEN",
-      "name": "Titans",
-      "logo": "nfl-titans",
-      "id": "13ea5f58-109b-4979-91af-190ccc8c4f1f",
-      "colors": {
-        "primary": "#0C2340",
-        "secondary": "#4B92DB",
-        "faceMask": "#0C2340",
-        "helmet": "#F5F5F5",
-        "stripe": "#F5F5F5",
-        "trim": "#0C2340"
-      }
-    },
-    {
-      "city": "Washington",
-      "cityKey": "WSH",
-      "name": "Commanders",
-      "logo": "nfl-commanders",
-      "logoFixed": true,
-      "id": "8d6f51f9-5736-47ba-932f-c69dfba5b10f",
-      "colors": {
-        "primary": "#5A1414",
-        "secondary": "#FFB612",
-        "faceMask": "#FFB612",
-        "helmet": "#5A1414",
-        "stripe": "#FFB612",
-        "trim": "#F5F5F5"
-      }
-    }
-  ],
-  "diceData": [
-    {
-      "id": 11,
-      "yards": 100,
-      "description": ["Touchdown Pass to RB", "Touchdown Pass to TE", "Touchdown Pass to WR"]
-    },
-    {
-      "id": 12,
-      "isTurnover": true,
-      "yards": 10,
-      "description": ["Interception"]
-    },
-    {
-      "id": 13,
-      "yards": 20,
-      "description": [
-        "Counter Dive",
-        "Deep Out",
-        "Hitch and Go",
-        "Option Right",
-        "Quarterback Scramble",
-        "Reverse Play",
-        "Run Up the Middle",
-        "Seam Pass"
-      ]
-    },
-    {
-      "id": 14,
-      "yards": -5,
-      "description": ["Fumble (Recovered)", "Quarterback Sack", "Tackle in Backfield"]
-    },
-    {
-      "id": 15,
-      "yards": 5,
-      "description": [
-        "Check Down Pass",
-        "Draw Play",
-        "Option Right",
-        "Quarterback Sneak",
-        "Wheel Route"
-      ]
-    },
-    {
-      "id": 16,
-      "yards": 0,
-      "description": [
-        "Bad Throw",
-        "Incomplete Pass",
-        "Pass Batted Down",
-        "Pass Dropped",
-        "Throw Away"
-      ]
-    },
-    {
-      "id": 22,
-      "isPenalty": true,
-      "yards": 5,
-      "description": ["Too Many Men On Field", "Offside Defense"]
-    },
-    {
-      "id": 23,
-      "isTurnover": true,
-      "yards": 0,
-      "description": ["Fumble"]
-    },
-    {
-      "id": 24,
-      "yards": 20,
-      "description": [
-        "Deep Cross",
-        "Deep Post",
-        "Left Power Left",
-        "Left Power Sweep",
-        "Pass Down the Sideline",
-        "Reverse Play",
-        "Right Power Right",
-        "Right Power Sweep"
-      ]
-    },
-    {
-      "id": 25,
-      "yards": -5,
-      "description": ["Busted Play", "Quarterback Sack", "Tackle in backfield"]
-    },
-    {
-      "id": 26,
-      "yards": 5,
-      "description": ["Button Hook", "Quick Hitch", "Screen Pass", "Shallow Cross", "Shovel Pass"]
-    },
-    {
-      "id": 33,
-      "autoFirstDown": true,
-      "isPenalty": true,
-      "yards": 15,
-      "description": [
-        "Pass Interference",
-        "Roughing the Passer",
-        "Taunting",
-        "Unnecessary Roughness"
-      ]
-    },
-    {
-      "id": 34,
-      "yards": 0,
-      "description": ["Incomplete Pass"]
-    },
-    {
-      "id": 35,
-      "yards": 5,
-      "description": [
-        "Counter Left",
-        "Fullback Dive",
-        "Halfback Run",
-        "Off Tackle Run",
-        "Pass to Flat"
-      ]
-    },
-    {
-      "id": 36,
-      "isPenalty": true,
-      "yards": -5,
-      "description": ["Delay of Game", "False Start", "Illegal Formation", "Illegal Shift"]
-    },
-    {
-      "id": 44,
-      "yards": [30, 35, 40, 45, 50, 55, 60, 65, 70],
-      "description": [
-        "Fake Reverse Pass",
-        "Flea Flicker",
-        "Hail Mary",
-        "Halfback Pass",
-        "Hook and Lateral",
-        "Stiles Special",
-        "Wide Receiver Screen"
-      ]
-    },
-    {
-      "id": 45,
-      "isTurnover": true,
-      "yards": [20, 25, 30, 35, 40],
-      "description": ["Interception"]
-    },
-    {
-      "id": 46,
-      "yards": 10,
-      "description": ["Fumblerooski"]
-    },
-    {
-      "id": 55,
-      "yards": 10,
-      "description": [
-        "Curl Route",
-        "Drag Route",
-        "Pass Complete",
-        "Play Action Pass",
-        "Wide Receiver Slant"
-      ]
-    },
-    {
-      "id": 56,
-      "isPenalty": true,
-      "yards": -10,
-      "description": ["Illegal Use of Hands", "Offensive Holding", "Offensive Pass Interference"]
-    },
-    {
-      "id": 66,
-      "yards": 100,
-      "description": ["Touchdown Run"]
-    }
-  ],
-  "fieldData": [
-    {
-      "id": 0,
-      "upperNumber": "",
-      "lowerNumber": ""
-    },
-    {
-      "id": 1,
-      "upperNumber": "0",
-      "lowerNumber": "1"
-    },
-    {
-      "id": 2,
-      "upperNumber": "1",
-      "lowerNumber": "0"
-    },
-    {
-      "id": 3,
-      "upperNumber": "0",
-      "lowerNumber": "2"
-    },
-    {
-      "id": 4,
-      "upperNumber": "2",
-      "lowerNumber": "0"
-    },
-    {
-      "id": 5,
-      "upperNumber": "0",
-      "lowerNumber": "3"
-    },
-    {
-      "id": 6,
-      "upperNumber": "3",
-      "lowerNumber": "0"
-    },
-    {
-      "id": 7,
-      "upperNumber": "0",
-      "lowerNumber": "4"
-    },
-    {
-      "id": 8,
-      "upperNumber": "4",
-      "lowerNumber": "0"
-    },
-    {
-      "id": 9,
-      "upperNumber": "0",
-      "lowerNumber": "5"
-    },
-    {
-      "id": 10,
-      "upperNumber": "5",
-      "lowerNumber": "0"
-    },
-    {
-      "id": 11,
-      "upperNumber": "0",
-      "lowerNumber": "4"
-    },
-    {
-      "id": 12,
-      "upperNumber": "4",
-      "lowerNumber": "0"
-    },
-    {
-      "id": 13,
-      "upperNumber": "0",
-      "lowerNumber": "3"
-    },
-    {
-      "id": 14,
-      "upperNumber": "3",
-      "lowerNumber": "0"
-    },
-    {
-      "id": 15,
-      "upperNumber": "0",
-      "lowerNumber": "2"
-    },
-    {
-      "id": 16,
-      "upperNumber": "2",
-      "lowerNumber": "0"
-    },
-    {
-      "id": 17,
-      "upperNumber": "0",
-      "lowerNumber": "1"
-    },
-    {
-      "id": 18,
-      "upperNumber": "1",
-      "lowerNumber": "0"
-    },
-    {
-      "id": 19,
-      "upperNumber": "",
-      "lowerNumber": ""
-    }
-  ]
+	"teamsData": [
+		{
+			"city": "Arizona",
+			"cityKey": "ARI",
+			"name": "Cardinals",
+			"logo": "nfl-cardinals",
+			"logoTransform": "translate(7px, -1px) scale(1.21, 1.14)",
+			"id": "0d8ee4cf-1798-4b9f-9d67-b5ce287dda6c",
+			"colors": {
+				"primary": "#97233F",
+				"secondary": "#000000",
+				"faceMask": "#79868B",
+				"helmet": "#F5F5F5",
+				"stripe": "#F5F5F5",
+				"trim": "#F5F5F5"
+			}
+		},
+		{
+			"city": "Atlanta",
+			"cityKey": "ATL",
+			"name": "Falcons",
+			"logo": "nfl-falcons",
+			"id": "e3418906-808f-41bc-9797-fb3691d64d72",
+			"colors": {
+				"primary": "#A71930",
+				"secondary": "#000000",
+				"faceMask": "#141414",
+				"helmet": "#000000",
+				"stripe": "#141414",
+				"trim": "#141414"
+			}
+		},
+		{
+			"city": "Baltimore",
+			"cityKey": "BAL",
+			"name": "Ravens",
+			"logo": "nfl-ravens",
+			"logoLeft": "nfl-ravens-left",
+			"logoFixed": true,
+			"logoTransform": "translate(5px, 10px) scale(1.25, 1.26)",
+			"id": "15aa55fb-bafe-4957-aeb8-ed82ba286f32",
+			"colors": {
+				"primary": "#241773",
+				"secondary": "#9E7C0C",
+				"faceMask": "#000000",
+				"helmet": "#141414",
+				"stripe": "#241773",
+				"trim": "#141414"
+			}
+		},
+		{
+			"city": "Buffalo",
+			"cityKey": "BUF",
+			"name": "Bills",
+			"logo": "nfl-bills",
+			"id": "68d32c8e-95db-4dbf-a724-0a8e1f6b3330",
+			"colors": {
+				"primary": "#00338D",
+				"secondary": "#C60C30",
+				"faceMask": "#79868B",
+				"helmet": "#F5F5F5",
+				"stripe": "#C60C30",
+				"trim": "#00338D"
+			}
+		},
+		{
+			"city": "Carolina",
+			"cityKey": "CAR",
+			"name": "Panthers",
+			"logo": "nfl-panthers",
+			"logoTransform": "translate(7px, 9px) scale(1.21, 1.21)",
+			"id": "6e40d2ca-e183-4236-bdc0-7626e75c8af3",
+			"colors": {
+				"primary": "#0085CA",
+				"secondary": "#101820",
+				"faceMask": "#141414",
+				"helmet": "#BFC0BF",
+				"stripe": "#141414",
+				"trim": "#0085CA"
+			}
+		},
+		{
+			"city": "Chicago",
+			"cityKey": "CHI",
+			"name": "Bears",
+			"logo": "nfl-bears",
+			"logoFixed": true,
+			"logoTransform": "translate(0px, -3px) scale(1.11, 1.11)",
+			"id": "f2cbeb55-19fd-4a72-a772-fe72e6e2469a",
+			"colors": {
+				"primary": "#0B162A",
+				"secondary": "#C83803",
+				"faceMask": "#0B162A",
+				"helmet": "#0B162A",
+				"stripe": "#0B162A",
+				"trim": "#0B162A"
+			}
+		},
+		{
+			"city": "Cincinnati",
+			"cityKey": "CIN",
+			"name": "Bengals",
+			"logo": "nfl-bengals",
+			"logoTransform": "translate(11px, 11px) scale(1.8, 1.75)",
+			"id": "5a75b4dc-98b2-4f17-94ed-1ddabdd7c995",
+			"colors": {
+				"primary": "#FB4F14",
+				"secondary": "#000000",
+				"faceMask": "#141414",
+				"helmet": "#FB4F14",
+				"stripe": "#FB4F14",
+				"trim": "#FB4F14"
+			}
+		},
+		{
+			"city": "Cleveland",
+			"cityKey": "CLE",
+			"name": "Browns",
+			"id": "cdeed602-64ef-44c4-91b3-fecd1b489a2a",
+			"colors": {
+				"primary": "#311D00",
+				"secondary": "#FF3C00",
+				"faceMask": "#311D00",
+				"helmet": "#FF3C00",
+				"stripe": "#F5F5F5",
+				"trim": "#311D00"
+			}
+		},
+		{
+			"city": "Dallas",
+			"cityKey": "DAL",
+			"logo": "nfl-cowboys",
+			"logoTransform": "translate(8px, -1px) scale(1.09, 1.09)",
+			"name": "Cowboys",
+			"id": "f81b352b-ac32-479c-91d2-c27e6853f0a9",
+			"colors": {
+				"primary": "#002244",
+				"secondary": "#869397",
+				"faceMask": "#79868B",
+				"helmet": "#869397",
+				"stripe": "F5F5F5",
+				"trim": "#002244"
+			}
+		},
+		{
+			"city": "Denver",
+			"cityKey": "DEN",
+			"name": "Broncos",
+			"logo": "nfl-broncos",
+			"logoTransform": "translate(6px, 6px) scale(1.3, 1.3)",
+			"id": "02bcb997-66a8-4d0f-bd94-b2ff7883d76c",
+			"colors": {
+				"primary": "#FB4F14",
+				"secondary": "#002244",
+				"faceMask": "#002244",
+				"helmet": "#002244",
+				"stripe": "#FB4F14",
+				"trim": "#002244"
+			}
+		},
+		{
+			"city": "Detroit",
+			"cityKey": "DET",
+			"name": "Lions",
+			"logo": "nfl-lions",
+			"logoTransform": "scale(1.18, 1.18)",
+			"id": "a2187c5a-dae2-4560-a89b-0ffa3c810df9",
+			"colors": {
+				"primary": "#0076B6",
+				"secondary": "#B0B7BC",
+				"faceMask": "#79868B",
+				"helmet": "#B0B7BC",
+				"stripe": "#F5F5F5",
+				"trim": "#0076B6"
+			}
+		},
+		{
+			"city": "Green Bay",
+			"cityKey": "GB",
+			"name": "Packers",
+			"logo": "nfl-packers",
+			"logoFixed": true,
+			"logoTransform": "translate(4px, 1px) scale(1.13, 1.12)",
+			"id": "0876a61a-d9d0-4cdc-885a-ec5abe1939be",
+			"colors": {
+				"primary": "#203731",
+				"secondary": "#FFB612",
+				"faceMask": "#203731",
+				"helmet": "#FFB612",
+				"stripe": "F5F5F5",
+				"trim": "#203731"
+			}
+		},
+		{
+			"city": "Houston",
+			"cityKey": "HOU",
+			"name": "Texans",
+			"logo": "nfl-texans",
+			"logoTransform": "translate(6px, 2px) scale(1.12, 1.1)",
+			"id": "0a78aaa7-c1f9-445a-94af-72c671b59a3d",
+			"colors": {
+				"primary": "#03202F",
+				"secondary": "#A71930",
+				"faceMask": "#03202F",
+				"helmet": "#03202F",
+				"stripe": "#03202F",
+				"trim": "#03202F"
+			}
+		},
+		{
+			"city": "Indianapolis",
+			"cityKey": "IND",
+			"name": "Colts",
+			"logo": "nfl-colts",
+			"id": "7a821691-33f7-45fd-b258-96bce4d552d0",
+			"colors": {
+				"primary": "#002C5F",
+				"secondary": "#A2AAAD",
+				"faceMask": "#79868B",
+				"helmet": "#F5F5F5",
+				"stripe": "#002C5F",
+				"trim": "#F5F5F5"
+			}
+		},
+		{
+			"city": "Jacksonville",
+			"cityKey": "JAX",
+			"name": "Jaguars",
+			"logo": "nfl-jaguars",
+			"logoTransform": "translate(5px, 1px) rotate(-6.55143deg) scale(1.07, 1.07)",
+			"id": "3ff1c454-719a-41f8-b9b0-901b0236af92",
+			"colors": {
+				"primary": "#006778",
+				"secondary": "#101820",
+				"faceMask": "#101820",
+				"helmet": "#101820",
+				"stripe": "#101820",
+				"trim": "#101820"
+			}
+		},
+		{
+			"city": "Kansas City",
+			"cityKey": "KC",
+			"name": "Chiefs",
+			"logo": "nfl-chiefs",
+			"logoLeft": "nfl-chiefs-left",
+			"logoFixed": true,
+			"logoTransform": "translate(15px, 1px) scale(1.13, 1.08)",
+			"id": "4bc4b950-5d7d-4b47-8f6c-c06e76948df9",
+			"colors": {
+				"primary": "#E31837",
+				"secondary": "#FFB81C",
+				"faceMask": "#F5F5F5",
+				"helmet": "#E31837",
+				"stripe": "#E31837",
+				"trim": "#E31837"
+			}
+		},
+		{
+			"city": "Las Vegas",
+			"cityKey": "LV",
+			"name": "Raiders",
+			"logo": "nfl-raiders",
+			"logoFixed": true,
+			"id": "f5efbfb5-4919-4abd-8ff6-0982423ed371",
+			"colors": {
+				"primary": "#000000",
+				"secondary": "#A5ACAF",
+				"faceMask": "#79868B",
+				"helmet": "#A5ACAF",
+				"stripe": "#000000",
+				"trim": "#A5ACAF"
+			}
+		},
+		{
+			"city": "Los Angeles",
+			"cityKey": "LAC",
+			"name": "Chargers",
+			"logo": "nfl-chargers",
+			"logoTransform": "translate(11px, -13px) scale(1.76, 1.6)",
+			"id": "459a7109-eac2-482a-a067-ebd5f527c75f",
+			"colors": {
+				"primary": "#0080C6",
+				"secondary": "#FFC20E",
+				"faceMask": "#FFC20E",
+				"helmet": "#F5F5F5",
+				"stripe": "#F5F5F5",
+				"trim": "#F5F5F5"
+			}
+		},
+		{
+			"city": "Los Angeles",
+			"cityKey": "LAR",
+			"name": "Rams",
+			"logo": "nfl-rams",
+			"logoTransform": "translate(18px, 14px) scale(1.77, 1.63)",
+			"id": "66ecf340-2f75-420a-b219-0275f819b9bd",
+			"colors": {
+				"primary": "#003594",
+				"secondary": "#e0cb69",
+				"faceMask": "#003594",
+				"helmet": "#003594",
+				"stripe": "#003594",
+				"trim": "#003594"
+			}
+		},
+		{
+			"city": "Miami",
+			"cityKey": "MIA",
+			"name": "Dolphins",
+			"logo": "nfl-dolphins",
+			"id": "36a2f7a8-fe32-457b-8b6e-93d1b3f7b047",
+			"colors": {
+				"primary": "#008E97",
+				"secondary": "#FC4C02",
+				"faceMask": "#F5F5F5",
+				"helmet": "#F5F5F5",
+				"stripe": "#FC4C02",
+				"trim": "#008E97"
+			}
+		},
+		{
+			"city": "Minnesota",
+			"cityKey": "MIN",
+			"name": "Vikings",
+			"logo": "nfl-vikings",
+			"logoTransform": "translate(4px, 10px) scale(1.41, 1.44)",
+			"id": "6aa5aec9-3f2a-453b-825e-421745de1f39",
+			"colors": {
+				"primary": "#4F2683",
+				"secondary": "#FFC62F",
+				"faceMask": "#141414",
+				"helmet": "#4F2683",
+				"stripe": "#4F2683",
+				"trim": "#4F2683"
+			}
+		},
+		{
+			"city": "New England",
+			"cityKey": "NE",
+			"name": "Patriots",
+			"logo": "nfl-patriots",
+			"logoTransform": "translate(5px, 11px) rotate(-9.48413deg) scale(1.70642, 1.69956)",
+			"id": "b81d790c-0059-40f5-8e08-f5fc10799114",
+			"colors": {
+				"primary": "#002244",
+				"secondary": "#B0B7BC",
+				"faceMask": "#C60C30",
+				"helmet": "#B0B7BC",
+				"stripe": "#B0B7BC",
+				"trim": "#B0B7BC"
+			}
+		},
+		{
+			"city": "New Orleans",
+			"cityKey": "NO",
+			"name": "Saints",
+			"logo": "nfl-saints",
+			"logoTransform": "translate(12px, -5px)",
+			"id": "29eed103-8298-4d90-ac50-d898a88d47f3",
+			"colors": {
+				"primary": "#D3BC8D",
+				"secondary": "#101820",
+				"faceMask": "#101820",
+				"helmet": "#D3BC8D",
+				"stripe": "#F5F5F5",
+				"trim": "#101820"
+			}
+		},
+		{
+			"city": "New York",
+			"cityKey": "NYG",
+			"name": "Giants",
+			"logo": "nfl-giants",
+			"logoFixed": true,
+			"id": "0c84e360-a04d-4e02-93f5-1f8fd636b05e",
+			"colors": {
+				"primary": "#0B2265",
+				"secondary": "#A71930",
+				"faceMask": "#79868B",
+				"helmet": "#0B2265",
+				"stripe": "#A71930",
+				"trim": "#0B2265"
+			}
+		},
+		{
+			"city": "New York",
+			"cityKey": "NYJ",
+			"name": "Jets",
+			"logo": "nfl-jets",
+			"logoFixed": true,
+			"logoTransform": "translate(9px, -4px) scale(1.25, 1.17)",
+			"id": "6b736d05-ce38-4a36-9e0d-7ea1b9eb25ac",
+			"colors": {
+				"primary": "#125740",
+				"secondary": "#F5F5F5",
+				"faceMask": "#125740",
+				"helmet": "#F5F5F5",
+				"stripe": "#F5F5F5",
+				"trim": "#125740"
+			}
+		},
+		{
+			"city": "Philadelphia",
+			"cityKey": "PHI",
+			"name": "Eagles",
+			"logo": "nfl-eagles",
+			"logoTransform": "translate(27px, 14px) scale(1.99, 1.9)",
+			"id": "68da8e98-ea9c-4fea-9c92-8bf09441e4dc",
+			"colors": {
+				"primary": "#004C54",
+				"secondary": "#ACC0C6",
+				"faceMask": "#565A5C",
+				"helmet": "#004C54",
+				"stripe": "#004C54",
+				"trim": "#004C54"
+			}
+		},
+		{
+			"city": "Pittsburgh",
+			"cityKey": "PIT",
+			"name": "Steelers",
+			"logo": "nfl-steelers",
+			"logoFixed": true,
+			"id": "bc2a94eb-79f5-4520-93ce-7b4d69748d65",
+			"colors": {
+				"primary": "#FFB612",
+				"secondary": "#101820",
+				"faceMask": "#101820",
+				"helmet": "#101820",
+				"stripe": "#FFB612",
+				"trim": "#101820"
+			}
+		},
+		{
+			"city": "San Francisco",
+			"cityKey": "SF",
+			"name": "49ers",
+			"logo": "nfl-49ers",
+			"logoFixed": true,
+			"id": "aa39e173-b594-4646-b1b4-9d3c40b4caee",
+			"colors": {
+				"primary": "#AA0000",
+				"secondary": "#B3995D",
+				"faceMask": "#79868B",
+				"helmet": "#B3995D",
+				"stripe": "#F5F5F5",
+				"trim": "#AA0000"
+			}
+		},
+		{
+			"city": "Seattle",
+			"cityKey": "SEA",
+			"name": "Seahawks",
+			"logo": "nfl-seahawks",
+			"logoTransform": "translate(-6px, 6px) rotate(-8.77151deg) scale(1.45, 1.46)",
+			"id": "97836634-f26b-4ed1-a5b6-ba815c946575",
+			"colors": {
+				"primary": "#002244",
+				"secondary": "#69BE28",
+				"faceMask": "#002244",
+				"helmet": "#002244",
+				"stripe": "#28354D",
+				"trim": "#002244"
+			}
+		},
+		{
+			"city": "Tampa Bay",
+			"cityKey": "TB",
+			"name": "Buccaneers",
+			"logo": "nfl-buccaneers",
+			"id": "70ed9a2c-b047-444b-834e-584d8bcc4b70",
+			"colors": {
+				"primary": "#34302B",
+				"secondary": "#FF7900",
+				"faceMask": "#0A0A08",
+				"helmet": "#34302B",
+				"stripe": "#34302B",
+				"trim": "#34302B"
+			}
+		},
+		{
+			"city": "Tennessee",
+			"cityKey": "TEN",
+			"name": "Titans",
+			"logo": "nfl-titans",
+			"logoTransform": "translate(4px, 3px) scale(1.11, 1.09)",
+			"id": "13ea5f58-109b-4979-91af-190ccc8c4f1f",
+			"colors": {
+				"primary": "#0C2340",
+				"secondary": "#4B92DB",
+				"faceMask": "#0C2340",
+				"helmet": "#F5F5F5",
+				"stripe": "#F5F5F5",
+				"trim": "#0C2340"
+			}
+		},
+		{
+			"city": "Washington",
+			"cityKey": "WSH",
+			"name": "Commanders",
+			"logo": "nfl-commanders",
+			"logoFixed": true,
+			"logoTransform": "translate(0px, 5px)",
+			"id": "8d6f51f9-5736-47ba-932f-c69dfba5b10f",
+			"colors": {
+				"primary": "#5A1414",
+				"secondary": "#FFB612",
+				"faceMask": "#FFB612",
+				"helmet": "#5A1414",
+				"stripe": "#FFB612",
+				"trim": "#F5F5F5"
+			}
+		}
+	],
+	"diceData": [
+		{
+			"id": 11,
+			"yards": 100,
+			"description": ["Touchdown Pass to RB", "Touchdown Pass to TE", "Touchdown Pass to WR"]
+		},
+		{
+			"id": 12,
+			"isTurnover": true,
+			"yards": 10,
+			"description": ["Interception"]
+		},
+		{
+			"id": 13,
+			"yards": 20,
+			"description": [
+				"Counter Dive",
+				"Deep Out",
+				"Hitch and Go",
+				"Option Right",
+				"Quarterback Scramble",
+				"Reverse Play",
+				"Run Up the Middle",
+				"Seam Pass"
+			]
+		},
+		{
+			"id": 14,
+			"yards": -5,
+			"description": ["Fumble (Recovered)", "Quarterback Sack", "Tackle in Backfield"]
+		},
+		{
+			"id": 15,
+			"yards": 5,
+			"description": [
+				"Check Down Pass",
+				"Draw Play",
+				"Option Right",
+				"Quarterback Sneak",
+				"Wheel Route"
+			]
+		},
+		{
+			"id": 16,
+			"yards": 0,
+			"description": [
+				"Bad Throw",
+				"Incomplete Pass",
+				"Pass Batted Down",
+				"Pass Dropped",
+				"Throw Away"
+			]
+		},
+		{
+			"id": 22,
+			"isPenalty": true,
+			"yards": 5,
+			"description": ["Too Many Men On Field", "Offside Defense"]
+		},
+		{
+			"id": 23,
+			"isTurnover": true,
+			"yards": 0,
+			"description": ["Fumble"]
+		},
+		{
+			"id": 24,
+			"yards": 20,
+			"description": [
+				"Deep Cross",
+				"Deep Post",
+				"Left Power Left",
+				"Left Power Sweep",
+				"Pass Down the Sideline",
+				"Reverse Play",
+				"Right Power Right",
+				"Right Power Sweep"
+			]
+		},
+		{
+			"id": 25,
+			"yards": -5,
+			"description": ["Busted Play", "Quarterback Sack", "Tackle in backfield"]
+		},
+		{
+			"id": 26,
+			"yards": 5,
+			"description": ["Button Hook", "Quick Hitch", "Screen Pass", "Shallow Cross", "Shovel Pass"]
+		},
+		{
+			"id": 33,
+			"autoFirstDown": true,
+			"isPenalty": true,
+			"yards": 15,
+			"description": [
+				"Pass Interference",
+				"Roughing the Passer",
+				"Taunting",
+				"Unnecessary Roughness"
+			]
+		},
+		{
+			"id": 34,
+			"yards": 0,
+			"description": ["Incomplete Pass"]
+		},
+		{
+			"id": 35,
+			"yards": 5,
+			"description": [
+				"Counter Left",
+				"Fullback Dive",
+				"Halfback Run",
+				"Off Tackle Run",
+				"Pass to Flat"
+			]
+		},
+		{
+			"id": 36,
+			"isPenalty": true,
+			"yards": -5,
+			"description": ["Delay of Game", "False Start", "Illegal Formation", "Illegal Shift"]
+		},
+		{
+			"id": 44,
+			"yards": [30, 35, 40, 45, 50, 55, 60, 65, 70],
+			"description": [
+				"Fake Reverse Pass",
+				"Flea Flicker",
+				"Hail Mary",
+				"Halfback Pass",
+				"Hook and Lateral",
+				"Stiles Special",
+				"Wide Receiver Screen"
+			]
+		},
+		{
+			"id": 45,
+			"isTurnover": true,
+			"yards": [20, 25, 30, 35, 40],
+			"description": ["Interception"]
+		},
+		{
+			"id": 46,
+			"yards": 10,
+			"description": ["Fumblerooski"]
+		},
+		{
+			"id": 55,
+			"yards": 10,
+			"description": [
+				"Curl Route",
+				"Drag Route",
+				"Pass Complete",
+				"Play Action Pass",
+				"Wide Receiver Slant"
+			]
+		},
+		{
+			"id": 56,
+			"isPenalty": true,
+			"yards": -10,
+			"description": ["Illegal Use of Hands", "Offensive Holding", "Offensive Pass Interference"]
+		},
+		{
+			"id": 66,
+			"yards": 100,
+			"description": ["Touchdown Run"]
+		}
+	],
+	"fieldData": [
+		{
+			"id": 0,
+			"upperNumber": "",
+			"lowerNumber": ""
+		},
+		{
+			"id": 1,
+			"upperNumber": "0",
+			"lowerNumber": "1"
+		},
+		{
+			"id": 2,
+			"upperNumber": "1",
+			"lowerNumber": "0"
+		},
+		{
+			"id": 3,
+			"upperNumber": "0",
+			"lowerNumber": "2"
+		},
+		{
+			"id": 4,
+			"upperNumber": "2",
+			"lowerNumber": "0"
+		},
+		{
+			"id": 5,
+			"upperNumber": "0",
+			"lowerNumber": "3"
+		},
+		{
+			"id": 6,
+			"upperNumber": "3",
+			"lowerNumber": "0"
+		},
+		{
+			"id": 7,
+			"upperNumber": "0",
+			"lowerNumber": "4"
+		},
+		{
+			"id": 8,
+			"upperNumber": "4",
+			"lowerNumber": "0"
+		},
+		{
+			"id": 9,
+			"upperNumber": "0",
+			"lowerNumber": "5"
+		},
+		{
+			"id": 10,
+			"upperNumber": "5",
+			"lowerNumber": "0"
+		},
+		{
+			"id": 11,
+			"upperNumber": "0",
+			"lowerNumber": "4"
+		},
+		{
+			"id": 12,
+			"upperNumber": "4",
+			"lowerNumber": "0"
+		},
+		{
+			"id": 13,
+			"upperNumber": "0",
+			"lowerNumber": "3"
+		},
+		{
+			"id": 14,
+			"upperNumber": "3",
+			"lowerNumber": "0"
+		},
+		{
+			"id": 15,
+			"upperNumber": "0",
+			"lowerNumber": "2"
+		},
+		{
+			"id": 16,
+			"upperNumber": "2",
+			"lowerNumber": "0"
+		},
+		{
+			"id": 17,
+			"upperNumber": "0",
+			"lowerNumber": "1"
+		},
+		{
+			"id": 18,
+			"upperNumber": "1",
+			"lowerNumber": "0"
+		},
+		{
+			"id": 19,
+			"upperNumber": "",
+			"lowerNumber": ""
+		}
+	]
 }
