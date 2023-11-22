@@ -1,63 +1,65 @@
 {
-  "name": "superdicebowl",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "preview": "vite preview",
-    "test": "playwright test",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "test:unit": "vitest",
-    "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write .",
-    "prepare": "husky install"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.28.1",
-    "@rollup/plugin-json": "^6.0.0",
-    "@sveltejs/adapter-auto": "^2.1.0",
-    "@sveltejs/adapter-static": "^2.0.3",
-    "@sveltejs/kit": "^1.0.0",
-    "@types/node": "^20.6.0",
-    "@types/uuid": "^9.0.7",
-    "@typescript-eslint/eslint-plugin": "^5.45.0",
-    "@typescript-eslint/parser": "^5.45.0",
-    "autoprefixer": "^10.4.14",
-    "eslint": "^8.44.0",
-    "eslint-config-prettier": "^8.5.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.1.0",
-    "postcss": "^8.4.24",
-    "postcss-load-config": "^4.0.1",
-    "prettier": "^2.8.0",
-    "prettier-plugin-svelte": "^2.8.1",
-    "svelte": "^4.0.2",
-    "svelte-check": "^3.4.4",
-    "tslib": "^2.4.1",
-    "typescript": "^5.1.6",
-    "vite": "^4.0.0",
-    "vitest": "^0.32.4"
-  },
-  "type": "module",
-  "dependencies": {
-    "@fireworks-js/svelte": "^2.10.2",
-    "@fontsource/abril-fatface": "^5.0.15",
-    "@fontsource/bebas-neue": "^5.0.12",
-    "eslint-plugin-svelte": "^2.32.2",
-    "parse-nested-form-data": "^1.0.0",
-    "svelte-sound": "^0.6.0",
-    "uuid": "^9.0.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,css,ts,svelte}": [
-      "prettier --plugin-search-dir . --write ."
-    ]
-  }
+	"name": "superdicebowl",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"test": "playwright test",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"test:unit": "vitest",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --plugin-search-dir . --write .",
+		"prepare": "husky install"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.28.1",
+		"@rollup/plugin-json": "^6.0.0",
+		"@sveltejs/adapter-auto": "^2.1.0",
+		"@sveltejs/adapter-static": "^2.0.3",
+		"@sveltejs/kit": "^1.0.0",
+		"@types/node": "^20.6.0",
+		"@types/uuid": "^9.0.7",
+		"@typescript-eslint/eslint-plugin": "^5.45.0",
+		"@typescript-eslint/parser": "^5.45.0",
+		"autoprefixer": "^10.4.14",
+		"eslint": "^8.44.0",
+		"eslint-config-prettier": "^8.5.0",
+		"husky": "^8.0.3",
+		"lint-staged": "^15.1.0",
+		"postcss": "^8.4.24",
+		"postcss-load-config": "^4.0.1",
+		"prettier": "^2.8.0",
+		"prettier-plugin-svelte": "^2.8.1",
+		"svelte": "^4.0.2",
+		"svelte-check": "^3.4.4",
+		"tslib": "^2.4.1",
+		"typescript": "^5.1.6",
+		"vite": "^4.0.0",
+		"vitest": "^0.32.4"
+	},
+	"type": "module",
+	"dependencies": {
+		"@fireworks-js/svelte": "^2.10.2",
+		"@fontsource/abril-fatface": "^5.0.15",
+		"@fontsource/bebas-neue": "^5.0.12",
+		"eslint-plugin-svelte": "^2.32.2",
+		"parse-nested-form-data": "^1.0.0",
+		"svelte-moveable": "^0.44.0",
+		"svelte-selecto": "^1.26.1",
+		"svelte-sound": "^0.6.0",
+		"uuid": "^9.0.1"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"*.{js,css,ts,svelte}": [
+			"prettier --plugin-search-dir . --write ."
+		]
+	}
 }
