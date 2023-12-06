@@ -1,24 +1,32 @@
 :root {
 	/*COLORS*/
-	--black: #171321;
-	--error: crimson;
-	--field: forestgreen;
-	--gray: dimgray;
-	--ivory: #e7e7e7;
-	--ltblue: lightblue;
-	--pip: #333333;
-	--smoke: #2e2e2e;
-	--smokeDk: #222;
-	--steelblue: steelblue;
-	--white: #f7f8fa;
-	--yellow: gold;
-	--button-hover: rgb(166, 230, 255);
-	--mask: rgba(0, 0, 0, 0.8);
-	--ltmask: rgba(0, 0, 0, 0.4);
-	color: #e7e7e7;
+	--black: hsl(257 27% 10%);
+	--error: hsl(348 83% 47%);
+	--field: hsl(120 61% 34%);
+	--gray: hsl(0 0% 41%);
+	--ivory: hsl(0 0% 91%);
+	--ltblue: hsl(195 53% 79%);
+	--pip: hsl(0 0% 20%);
+	--smoke: hsl(0 0% 18%);
+	--smokeDk: hsl(0 0% 13%);
+	--steelblue: hsl(207 44% 49%);
+	--white: hsl(220 23% 97%);
+	--yellow: hsl(51 100% 50%);
+	--button-hover: hsl(197 100% 83%);
+	--mask: hsl(0 0% 0% / 0.8);
+	--ltmask: hsl(0 0% 0% / 0.4);
+	color: hsl(0 0% 91%);
 
 	/*FONTS*/
 	--font-size: 1.3rem;
+	--14px: 0.875rem;
+	--15px: 0.9375rem;
+	--16px: 1rem;
+	--17px: 1.0625rem;
+	--18px: 1.125rem;
+	--19px: 1.1875rem;
+	--20px: 1.25rem;
+	--21px: 1.3125rem;
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
 		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
@@ -29,18 +37,14 @@
 }
 
 * {
-	position: relative;
 	box-sizing: border-box;
+	margin: 0;
+	position: relative;
 }
 
 *::before,
 *::after {
 	box-sizing: inherit;
-}
-
-html,
-body {
-	margin: 0;
 }
 
 html {
@@ -50,9 +54,11 @@ html {
 }
 
 body {
-	height: 100vh;
 	display: flex;
 	flex-direction: column;
+	height: 100vh;
+	height: 100dvh;
+	-webkit-font-smoothing: antialiased;
 }
 
 p {
@@ -67,7 +73,6 @@ a {
 button {
 	font-family: inherit;
 	font-size: inherit;
-	background-color: var(--ltblue);
 	color: var(--black);
 	border: none;
 	border-radius: var(--border-radius);
@@ -80,10 +85,6 @@ button {
 
 button:not(:disabled):active {
 	transform: translateY(1px);
-}
-
-button:not(:disabled):hover {
-	background-color: var(--button-hover);
 }
 
 button:disabled {
@@ -107,9 +108,36 @@ h1 {
 	font-size: 1.75rem;
 }
 
-input {
+input,
+button,
+textarea,
+select {
+	font: inherit;
 	font-family: inherit;
 	font-size: inherit;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+}
+
+#root {
+	isolation: isolate;
 }
 
 .column {

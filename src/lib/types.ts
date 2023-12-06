@@ -8,8 +8,8 @@ export interface DiceRoll {
 }
 
 interface Colors {
-	primary: string;
-	secondary: string;
+	primary?: string;
+	secondary?: string;
 	faceMask?: string;
 	helmet?: string;
 	stripe?: string;

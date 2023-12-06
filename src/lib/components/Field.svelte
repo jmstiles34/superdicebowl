@@ -1,13 +1,7 @@
 <script lang="ts">
 	import '@fontsource/abril-fatface';
 	import { fieldData } from '$lib/data/data.json';
-	import {
-		BALL_KICK_GOOD,
-		GAME_ACTION,
-		POSITION,
-		TEAM,
-		YARD_INTERVAL
-	} from '$lib/constants/constants';
+	import { BALL_KICK_GOOD, POSITION, TEAM, YARD_INTERVAL } from '$lib/constants/constants';
 	import EndZone from '$lib/components/Endzone.svelte';
 	import { randomNumber } from '$lib/utils/common';
 	import type { Team, Void } from '$lib/types';

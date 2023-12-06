@@ -1,3 +1,6 @@
+import convert from 'color-convert';
+import type { HSL } from 'color-convert/conversions';
+
 export function add(a: number, b: number) {
 	return a + b;
 }
@@ -12,12 +15,20 @@ export function equals(a: unknown, b: unknown) {
 	return a === b;
 }
 
+export function formatHsl(code: number[]) {
+	return `hsl(${code[0]} ${code[1]}% ${code[2]}% / 1)`;
+}
+
 export function gt(a: number, b: number) {
 	return a > b;
 }
 
 export function gte(a: number, b: number) {
 	return a >= b;
+}
+
+export function hexToHsl(hex: string) {
+	return formatHsl(convert.hex.hsl(hex));
 }
 
 export function hexToRGB(hex: string) {
@@ -27,6 +38,15 @@ export function hexToRGB(hex: string) {
 		g: parseInt(m[2], 16),
 		b: parseInt(m[3], 16)
 	};
+}
+
+export function hslToHex(hsl: string) {
+	const parts = hsl.replace('hsl(', '').split(' ');
+	const degree = parseInt(parts[0]);
+	const saturation = parseInt(parts[1]);
+	const lightness = parseInt(parts[2]);
+
+	return `#${convert.hsl.hex([degree, saturation, lightness])}`;
 }
 
 export const isArray = (x: unknown[]) => Array.isArray(x);

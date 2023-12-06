@@ -28,6 +28,6 @@
 	}
 
 	.construction-icon {
-		height: 6rem;
+		height: 96px;
 	}
 </style>

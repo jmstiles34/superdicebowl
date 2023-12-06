@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import closeIcon from '$lib/images/close.svg';
 
 	export let close: () => void;
@@ -18,8 +19,7 @@
 </script>
 
 {#if showModal}
-	<!-- <div class="backdrop" on:click={doClose} on:keydown={keydown} role="button" tabindex="0"> -->
-	<div class="backdrop">
+	<div class="backdrop" transition:fade>
 		<div class="modal">
 			{#if hasClose}
 				<div
@@ -52,8 +52,8 @@
 	}
 
 	.modal {
-		padding: 0.75rem;
-		border-radius: 0.5rem;
+		padding: 12px;
+		border-radius: 8px;
 		background: var(--white);
 		height: fit-content;
 		margin: auto 0;

@@ -1,43 +1,24 @@
 <script lang="ts">
 	import Moveable from 'svelte-moveable';
-	import { tap } from 'svelte-gestures';
-	import { HELMET_SIZE, NOOP } from '$lib/constants/constants';
+	import { HELMET_SIZE, HELMET_WIDTH, NOOP, POSITION } from '$lib/constants/constants';
 
-	export let bg = '#2e2e2e';
-	export let faceMask = '#d8d8d8';
-	export let helmet = '#4682b4';
-	export let stripe = '#ffffff';
-	export let trim = '#002244';
+	export let bg = 'hsl(0 100% 100% / 1)';
+	export let faceMask = 'hsl(0 0% 85% / 1)';
+	export let helmet = 'hsl(207 44% 49% / 1)';
+	export let stripe = 'hsl(0 100% 100% / 1)';
+	export let trim = 'hsl(210 100% 13% / 1)';
+	export let direction = POSITION.RIGHT;
 	export let logo: string | null = null;
 	export let logoLeft: string | null = null;
-	export let logoFlip: boolean = false;
+	export let logoFixed: boolean = false;
 	export let title: string = 'Custom Football Helmet';
 	export let size: string = HELMET_SIZE.LARGE;
 	export let logoTransform: string;
+	export let logoWidth: number = HELMET_WIDTH[size] / 2.5;
 	export let setTransform: (t: string) => void;
 	export let canCustomize: boolean = false;
 	let moveable: HTMLElement | null;
 	let target: HTMLElement;
-
-	const width = {
-		[HELMET_SIZE.SMALL]: 48,
-		[HELMET_SIZE.LARGE]: 250
-	};
-
-	let screenSize: number;
-	let logoImgWidth = width[size] / 2.5;
-
-	$: if (screenSize && size === HELMET_SIZE.SMALL) {
-		if (screenSize >= 960) {
-			logoImgWidth = 64 / 2.5;
-		}
-		if (screenSize <= 640) {
-			logoImgWidth = 32 / 2.5;
-		}
-		if (screenSize < 960 && screenSize > 640) {
-			logoImgWidth = 48 / 2.5;
-		}
-	}
 
 	/* function onResize({ target, width, height, delta }) {
 		delta[0] && (target.style.width = `${width}px`);
@@ -54,10 +35,8 @@
 	}
 </script>
 
-<svelte:window bind:innerWidth={screenSize} />
-
-<div {title}>
-	<div>
+<div class="helmet-container" {title}>
+	<div class:small={size === HELMET_SIZE.SMALL} class:large={size === HELMET_SIZE.LARGE}>
 		<svg
 			class:small={size === HELMET_SIZE.SMALL}
 			class:large={size === HELMET_SIZE.LARGE}
@@ -276,26 +255,25 @@
 	</div>
 	{#if logo}
 		<div
+			class="logo-container"
+			class:small={size === HELMET_SIZE.SMALL}
+			class:large={size === HELMET_SIZE.LARGE}
 			on:click={canCustomize ? toggleMoveableTarget : NOOP}
 			on:keydown={canCustomize ? toggleMoveableTarget : NOOP}
 			on:dblclick={canCustomize ? toggleMoveableTarget : NOOP}
-			on:tap={canCustomize ? toggleMoveableTarget : NOOP}
 			role="button"
 			tabindex="0"
-			class="logoContainer"
-			class:small={size === HELMET_SIZE.SMALL}
-			class:large={size === HELMET_SIZE.LARGE}
 		>
 			<img
 				alt={`${logo} Logo`}
 				bind:this={target}
 				class="target"
-				src={`/logos/custom/${logoFlip && logoLeft ? logoLeft : logo}.webp`}
+				src={`/logos/custom/${direction === POSITION.LEFT && logoLeft ? logoLeft : logo}.webp`}
 				style={`
-					width: ${logoImgWidth}px; 
-					transform: ${logoFlip ? logoTransform.replace('scale(', 'scale(-') : logoTransform}
-				`}
-				class:flipRight={logoFlip}
+				width: ${logoWidth}px; 
+				transform: ${logoFixed ? logoTransform.replace('scale(', 'scale(-') : logoTransform}
+			`}
+				class:flipRight={logoFixed}
 			/>
 		</div>
 		{#if canCustomize}
@@ -310,13 +288,13 @@
 				renderDirections={['nw', 'ne', 'sw', 'se', 'n', 'w', 's', 'e']}
 				throttleScale={0}
 				rotatable={true}
-				scalable={false}
+				scalable={true}
 				snappable={true}
 				bounds={{ left: 0, top: 0, right: 0, bottom: 0, position: 'css' }}
 				on:scale={({ detail }) => onTransform(detail.transform)}
 				throttleRotate={0}
 				on:rotate={({ detail }) => onTransform(detail.transform)}
-				warpable={true}
+				warpable={false}
 				on:warp={({ detail }) => onTransform(detail.transform)}
 			/>
 		{/if}
@@ -324,17 +302,11 @@
 </div>
 
 <style>
-	.logoContainer {
-		position: absolute;
-		top: 0;
+	.helmet-container {
+		display: flex;
+		position: relative;
 	}
-	.target {
-		top: 14%;
-		left: 20%;
-	}
-	.flipRight {
-		transform: scale(-1, 1);
-	}
+
 	.small {
 		width: 3rem;
 		height: 3rem;
@@ -342,6 +314,17 @@
 	.large {
 		width: 15.625rem;
 		height: 15.625rem;
+	}
+	.logo-container {
+		position: absolute;
+		top: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.flipRight {
+		transform: scale(-1, 1);
 	}
 
 	@media (max-width: 40rem) {

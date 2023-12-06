@@ -8,14 +8,15 @@
 	export let close: (id: string) => void;
 	export let customTeamId: string;
 	import '@fontsource/bebas-neue';
+	import { hexToHsl, hslToHex } from '$lib/utils/common';
 
-	let bg = '#ffffff';
-	let faceMask = '#d8d8d8';
-	let helmet = '#4682b4';
-	let stripe = '#ffffff';
-	let trim = '#002244';
-	let primary = '#002244';
-	let secondary = '#4682b4';
+	let bg = 'hsl(0 100% 100% / 1)';
+	let faceMask = 'hsl(0 0% 85% / 1)';
+	let helmet = 'hsl(207 44% 49% / 1)';
+	let stripe = 'hsl(0 100% 100% / 1)';
+	let trim = 'hsl(210 100% 13% / 1)';
+	let primary = 'hsl(210 100% 13% / 1)';
+	let secondary = 'hsl(207 44% 49% / 1)';
 	let logo = '';
 	let logoTransform = '';
 	let city = '';
@@ -25,19 +26,17 @@
 	const sortedLogos = logos.sort((a, b) => (a.name > b.name ? 1 : -1));
 
 	onMount(() => {
-		if (customTeamId) {
-			const team: Team = getTeam();
-			faceMask = team.colors.faceMask || faceMask;
-			helmet = team.colors.helmet || helmet;
-			stripe = team.colors.stripe || stripe;
-			trim = team.colors.trim || trim;
-			primary = team.colors.primary;
-			secondary = team.colors.secondary;
-			logo = team.logo || logo;
-			logoTransform = team.logoTransform || '';
-			city = team.city;
-			name = team.name;
-		}
+		const team: Team = getTeam();
+		faceMask = hslToHex(team.colors.faceMask || faceMask);
+		helmet = hslToHex(team.colors.helmet || helmet);
+		stripe = hslToHex(team.colors.stripe || stripe);
+		trim = hslToHex(team.colors.trim || trim);
+		primary = hslToHex(team.colors.primary || primary);
+		secondary = hslToHex(team.colors.secondary || secondary);
+		logo = team.logo || logo;
+		logoTransform = team.logoTransform || '';
+		city = team.city;
+		name = team.name;
 	});
 
 	function getTeam() {
@@ -77,12 +76,12 @@
 				logoTransform,
 				name,
 				colors: {
-					primary,
-					secondary,
-					helmet,
-					faceMask,
-					stripe,
-					trim
+					primary: hexToHsl(primary),
+					secondary: hexToHsl(secondary),
+					helmet: hexToHsl(helmet),
+					faceMask: hexToHsl(faceMask),
+					stripe: hexToHsl(stripe),
+					trim: hexToHsl(trim)
 				}
 			};
 			let teamsToKeep = lsTeams.filter(({ id }) => id !== customTeamId);
@@ -103,6 +102,7 @@
 				{stripe}
 				{trim}
 				{logo}
+				logoFixed={false}
 				{logoTransform}
 				setTransform={(t) => (logoTransform = t)}
 				canCustomize={true}

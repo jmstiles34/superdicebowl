@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { hexToRGB } from '$lib/utils/common';
 	import { TEAM } from '$lib/constants/constants';
 	import type { Team } from '$lib/types';
 	import { game } from '$lib/stores/Game';
@@ -12,8 +11,8 @@
 	$: homeScore = getScoreByTeam(TEAM.HOME, $game.playLog);
 	$: possession = $game.possession;
 
-	let awayToRgb = hexToRGB(awayTeam.colors.primary);
-	let homeToRgb = hexToRGB(homeTeam.colors.primary);
+	let awayToRgb = awayTeam.colors.primary.replace('/ 1', '/ 0.5');
+	let homeToRgb = homeTeam.colors.primary.replace('/ 1', '/ 0.5');
 </script>
 
 <div class="team-scores">
@@ -21,9 +20,7 @@
 		class="team"
 		style={`
         background-color: ${homeTeam.colors.primary};
-        background-image: linear-gradient(to right, rgba(${homeToRgb.r},${homeToRgb.g},${
-			homeToRgb.b
-		}, 0.5) 0 100%), url(/logos/${
+        background-image: linear-gradient(to right, ${homeToRgb} 0 100%), url(/logos/${
 			homeTeam.hasOwnProperty('logo') ? `custom/${homeTeam.logo}` : homeTeam.name
 		}.webp);
     `}
@@ -41,9 +38,7 @@
 		class="team"
 		style={`
         background-color: ${awayTeam.colors.primary};
-        background-image: linear-gradient(to right, rgba(${awayToRgb.r},${awayToRgb.g},${
-			awayToRgb.b
-		}, 0.5) 0 100%), url(/logos/${
+        background-image: linear-gradient(to right, ${awayToRgb} 0 100%), url(/logos/${
 			awayTeam.hasOwnProperty('logo') ? `custom/${awayTeam.logo}` : awayTeam.name
 		}.webp);
     `}

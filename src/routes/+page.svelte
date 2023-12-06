@@ -8,9 +8,9 @@
 	import { beginDisabled } from '$lib/utils/game';
 	import { sleep } from '$lib/utils/common';
 	import { Sound } from 'svelte-sound';
+	import gust from '$lib/assets/sfx/gust.mp3';
 	import tackle from '$lib/assets/sfx/tackle.mp3';
 	import tap from '$lib/assets/sfx/tap.mp3';
-	import gust from '$lib/assets/sfx/gust.mp3';
 
 	$: gustSfx = new Sound(gust, { volume: $settings.volume });
 	$: tackleSfx = new Sound(tackle, { volume: $settings.volume });
@@ -96,24 +96,28 @@
 
 <style>
 	main {
-		align-items: center;
 		display: flex;
 		flex-direction: column;
-		gap: 1em;
-		padding: 2rem;
+		gap: 16px;
+		align-items: center;
+		padding: 32px;
 	}
 
 	.begin-row {
 		display: flex;
-		gap: 0.5em;
+		gap: 8px;
 	}
 
 	.mode-row {
 		display: flex;
-		gap: 2em;
+		gap: 32px;
 	}
 	.mode-button {
+		background-color: var(--ltblue);
 		min-width: 8.75rem;
+		&:hover {
+			background-color: var(--button-hover);
+		}
 	}
 	.mode-selected,
 	.mode-selected:hover {
@@ -124,7 +128,7 @@
 	.score-label {
 		color: var(--ivory);
 		margin: auto 0;
-		padding-right: 0.4rem;
+		padding-right: 6px;
 		white-space: nowrap;
 	}
 
@@ -133,7 +137,7 @@
 	}
 	.team-select {
 		display: flex;
-		gap: 1em;
+		gap: 16px;
 	}
 	.vs {
 		color: var(--ivory);
@@ -147,8 +151,8 @@
 		border: none;
 		border-radius: var(--border-radius);
 		color: var(--black);
-		margin: 0 0.5em 0.5em 0;
-		padding: 0.2em 0.5em;
+		margin: 0 8px 8px 0;
+		padding: 3px 8px;
 	}
 	@media (max-width: 40rem) {
 		.team-select {

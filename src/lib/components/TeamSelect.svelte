@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
 	import { browser } from '$app/environment';
-	import { DEFAULT_TEAM, DICE_COLORS, NOOP, TEAM } from '$lib/constants/constants';
+	import { DEFAULT_TEAM, DICE_COLORS, NOOP, POSITION, TEAM } from '$lib/constants/constants';
 	import { teamsData } from '$lib/data/data.json';
 	import type { SaveTeam, Team } from '$lib/types';
 	import { pickRandom } from '$lib/utils/common';
@@ -18,11 +18,19 @@
 	export let team: Team;
 	export let teamType: string;
 
+	const fadeArgs = {
+		delay: 0,
+		duration: 250,
+		easing: cubicInOut,
+		baseScale: 0.5
+	};
+
 	let showCustomTeam: boolean;
 	let selected: string = team.id;
 	$: if (team.id) selected = team.id;
 
 	let allTeamsData: Team[] = [];
+
 	onMount(() => {
 		setTeamData();
 		selected = '';
@@ -34,18 +42,9 @@
 			selected = '';
 			saveTeam(DEFAULT_TEAM);
 		} else {
-			{
-				saveTeam(teamByUUId(allTeamsData)(value));
-			}
+			saveTeam(teamByUUId(allTeamsData)(value));
 		}
 	}
-
-	const fadeArgs = {
-		delay: 0,
-		duration: 250,
-		easing: cubicInOut,
-		baseScale: 0.5
-	};
 
 	async function closeCustomTeamModal(id: string) {
 		setTeamData();
@@ -72,7 +71,7 @@
 
 <div class="team-card">
 	<h1>{teamType} Team</h1>
-	<div class="logo-image" class:flipLeft={teamType === TEAM.AWAY}>
+	<div class="helmet" class:flipLeft={teamType === TEAM.AWAY}>
 		{#if team.id.length}
 			{#each [team.id] as c (c)}
 				<div
@@ -89,8 +88,9 @@
 						helmet={team.colors.helmet}
 						stripe={team.colors.stripe}
 						trim={team.colors.trim}
+						direction={teamType === TEAM.HOME ? POSITION.RIGHT : POSITION.LEFT}
 						logo={team.logo}
-						logoFlip={teamType === TEAM.AWAY && team.logoFixed}
+						logoFixed={teamType === TEAM.AWAY && team.logoFixed}
 						logoLeft={team.logoLeft}
 						logoTransform={team.logoTransform || ''}
 						setTransform={NOOP}
@@ -149,18 +149,17 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		padding: 0.8rem;
+		padding: 13px;
 	}
 	.hover {
 		cursor: pointer;
 	}
-	.logo-image {
+	.helmet {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
 		min-width: 18.75rem;
-		margin: 0 0 1rem 0;
+		margin: 0 0 16px 0;
 	}
 
 	.flipLeft {
