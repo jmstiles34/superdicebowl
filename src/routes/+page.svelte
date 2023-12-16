@@ -32,7 +32,7 @@
 <main>
 	<div class="mode-row">
 		<button
-			class="mode-button"
+			class="game-button mode-button"
 			class:mode-selected={$settings.mode === GAME_MODE.SOLO}
 			on:click={() => {
 				tapSfx.play();
@@ -42,7 +42,7 @@
 			Solo Play
 		</button>
 		<button
-			class="mode-button"
+			class="game-button mode-button"
 			class:mode-selected={$settings.mode === GAME_MODE.HEAD_TO_HEAD}
 			on:click={() => {
 				tapSfx.play();
@@ -83,14 +83,15 @@
 					<option value={i + 1}>{i + 1}</option>
 				{/each}
 			</select>
+
+			<button
+				class="game-button"
+				disabled={beginDisabled([$settings.awayTeam.id, $settings.homeTeam.id])}
+				on:click={beginGame}
+			>
+				Let's Roll!
+			</button>
 		</div>
-		<button
-			class="begin-button"
-			disabled={beginDisabled([$settings.awayTeam.id, $settings.homeTeam.id])}
-			on:click={beginGame}
-		>
-			Let's Roll!
-		</button>
 	</div>
 </main>
 
@@ -112,46 +113,44 @@
 		display: flex;
 		gap: 32px;
 	}
+
 	.mode-button {
-		background-color: var(--ltblue);
 		min-width: 8.75rem;
-		&:hover {
-			background-color: var(--button-hover);
-		}
 	}
 	.mode-selected,
 	.mode-selected:hover {
-		background-color: var(--steelblue);
-		color: var(--ivory);
+		background-color: var(--color-blue-500);
+		color: var(--color-white);
+		font-weight: 600;
 		cursor: default;
 	}
 	.score-label {
-		color: var(--ivory);
+		color: var(--color-white);
 		margin: auto 0;
-		padding-right: 6px;
 		white-space: nowrap;
 	}
 
 	.score-select {
 		display: flex;
+		gap: 8px;
 	}
 	.team-select {
 		display: flex;
 		gap: 16px;
 	}
 	.vs {
-		color: var(--ivory);
+		color: var(--color-white);
 		font-size: 1.75rem;
 		margin: auto 0;
 	}
 	.win-score {
 		font-family: inherit;
 		font-size: inherit;
-		background-color: var(--ltblue);
+		background-color: var(--color-blue-300);
 		border: none;
 		border-radius: var(--border-radius);
-		color: var(--black);
-		margin: 0 8px 8px 0;
+		color: var(--color-offblack);
+		margin: 0;
 		padding: 3px 8px;
 	}
 	@media (max-width: 40rem) {

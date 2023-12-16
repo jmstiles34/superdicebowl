@@ -108,30 +108,36 @@
 			>
 				<img
 					class="hover"
-					alt={`Team Placeholder`}
+					alt={`${teamType} Team Placeholder`}
 					src={`/images/${pickRandom(DICE_COLORS)}_dice.png`}
 				/>
 			</div>
 		{/if}
 	</div>
 	<div class="select-row">
-		<select on:change={handleTeamSelect} bind:value={selected} class="team-select">
-			<option value="">Choose Your Team</option>
+		<select
+			name="teamSelect"
+			on:change={handleTeamSelect}
+			bind:value={selected}
+			class="team-select"
+		>
+			<option value="">Choose {teamType} Team</option>
 			{#each allTeamsData as team}
 				{#if team.id !== opponentId}
 					<option value={team.id}>{team.city} {team.name}</option>
 				{/if}
 			{/each}
 		</select>
-		<div
+		<button
 			class="random"
 			on:click={() => setRandomTeam(allTeamsData, opponentId, saveTeam)}
 			on:keydown={handleRandomizeKeydown}
-			role="button"
-			tabindex="0"
 		>
-			<img alt={`Random ${teamType} Team`} src={randomize} />
-		</div>
+			<picture>
+				<source type="image/avif" srcset="/images/randomize.avif" />
+				<img alt={`Random ${teamType} Team`} src="/images/randomize.png" />
+			</picture>
+		</button>
 	</div>
 </div>
 
@@ -144,7 +150,7 @@
 <style>
 	.team-card {
 		align-items: center;
-		background-color: var(--smoke);
+		background-color: var(--color-gray-900);
 		border-radius: 0.5rem;
 		display: flex;
 		flex-direction: column;
@@ -179,20 +185,18 @@
 		display: flex;
 		gap: 1rem;
 	}
-	.random:hover {
-		border-radius: var(--border-radius);
-		cursor: pointer;
-	}
+
 	.random img {
 		height: 2.5rem;
 	}
+
 	.team-select {
 		font-family: inherit;
 		font-size: 1rem;
-		background-color: var(--ltblue);
+		background-color: var(--color-blue-300);
 		border: none;
 		border-radius: var(--border-radius);
-		color: var(--black);
+		color: var(--color-offblack);
 		margin: 0;
 		padding: 0.25em;
 	}

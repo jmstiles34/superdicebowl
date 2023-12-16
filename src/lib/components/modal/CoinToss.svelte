@@ -88,7 +88,7 @@
 		box-shadow: inset 0 0 45px rgba(255, 255, 255, 0.3), 0 12px 20px -10px rgba(0, 0, 0, 0.4);
 	}
 	h3 {
-		color: var(--black);
+		color: var(--color-offblack);
 		text-align: center;
 	}
 	.helmetLogo {

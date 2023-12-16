@@ -32,7 +32,7 @@
 	.modal {
 		padding: 0.75rem;
 		border-radius: 0.5rem;
-		background: var(--white);
+		background: var(--color-white);
 		height: fit-content;
 		margin: auto 0;
 		min-width: 20rem;

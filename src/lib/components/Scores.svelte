@@ -57,7 +57,7 @@
 <style>
 	.team-scores {
 		display: flex;
-		color: var(--white);
+		color: var(--color-white);
 		font-size: 0.9rem;
 		font-weight: bold;
 		white-space: nowrap;
@@ -91,13 +91,13 @@
 		margin-right: 0.3rem;
 		margin-top: 0.175rem;
 		box-shadow: inset 0 2px #111, inset 0 -2px #555;
-		background-color: var(--white);
+		background-color: var(--color-white);
 	}
 	.score {
 		width: 10%;
 		height: 100%;
-		background-color: var(--white);
-		color: var(--black);
+		background-color: var(--color-white);
+		color: var(--color-offblack);
 		padding-top: 0.25rem;
 		text-align: center;
 	}

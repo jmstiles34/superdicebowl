@@ -349,7 +349,7 @@
 			"logoTransform": "translate(-16px, -27.1248px) rotate(-9.48413deg) scale(1.70642, 1.69956)",
 			"id": "b81d790c-0059-40f5-8e08-f5fc10799114",
 			"colors": {
-				"primary": "hsl(210 100% / 13% / 1)",
+				"primary": "hsl(210 100% 13% / 1)",
 				"secondary": "hsl(205 8% 71% / 1)",
 				"faceMask": "hsl(348 89% 41% / 1)",
 				"helmet": "hsl(205 8% 71% / 1)",

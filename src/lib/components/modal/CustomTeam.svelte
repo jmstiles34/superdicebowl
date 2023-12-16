@@ -186,7 +186,7 @@
 
 <style>
 	h3 {
-		color: var(--black);
+		color: var(--color-offblack);
 		text-align: center;
 	}
 	.button-row {
@@ -199,10 +199,10 @@
 		flex-direction: column;
 	}
 	.error {
-		border-color: var(--error);
+		border-color: var(--urgent);
 	}
 	.form-label {
-		color: var(--black);
+		color: var(--color-offblack);
 		font-family: inherit;
 		width: 5.1rem;
 		text-align: right;
@@ -216,14 +216,14 @@
 	.divider {
 		width: 95%;
 		margin: 4px 0 4px auto;
-		border-bottom: 2px dotted var(--ltblue);
+		border-bottom: 2px dotted var(--color-blue-300);
 	}
 	.helmet {
 		margin: -20px auto 0 auto;
 		width: 250px;
 	}
 	.notes {
-		color: var(--black);
+		color: var(--color-offblack);
 		font-size: 0.75rem;
 		font-style: italic;
 		padding: 4px;
@@ -233,6 +233,9 @@
 		cursor: pointer;
 		font-family: 'Bebas Neue';
 		font-size: 1.5rem;
+		padding: 0.25em;
+		text-align: center;
+		border-radius: var(--border-radius);
 	}
 	.delete-button {
 		margin: 0;
@@ -240,12 +243,14 @@
 		cursor: pointer;
 		font-family: 'Bebas Neue';
 		background-color: transparent;
-		color: var(--error);
+		color: var(--urgent);
 		font-size: 2rem;
 		padding: 0;
-		border: 1px solid var(--error);
+		text-align: center;
+		border: 1px solid var(--urgent);
+		border-radius: var(--border-radius);
 	}
 	.delete-button:hover {
-		background-color: #fad2dc;
+		background-color: var(--urgent-hover);
 	}
 </style>

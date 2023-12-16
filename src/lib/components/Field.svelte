@@ -131,18 +131,18 @@
 		transition: all 0.5s ease-in-out;
 	}
 	.yardsAway {
-		border-top: 2px solid var(--white);
-		border-bottom: 2px solid var(--white);
-		border-left: 1px solid var(--white);
+		border-top: 2px solid var(--color-white);
+		border-bottom: 2px solid var(--color-white);
+		border-left: 1px solid var(--color-white);
 	}
 	.yardsHome {
-		border-top: 2px solid var(--white);
-		border-bottom: 2px solid var(--white);
-		border-right: 1px solid var(--white);
+		border-top: 2px solid var(--color-white);
+		border-bottom: 2px solid var(--color-white);
+		border-right: 1px solid var(--color-white);
 	}
 	.fieldNumber {
 		position: absolute;
-		color: var(--white);
+		color: var(--color-white);
 		font-size: clamp(0.5rem, 0.225rem + 2.4vw, 1.5rem);
 		font-family: 'Abril Fatface', sans-serif;
 		opacity: 0.95;
@@ -181,7 +181,7 @@
 		opacity: 0;
 		transform: translate(-50%);
 		z-index: 10;
-		color: var(--yellow);
+		color: var(--color-yellow);
 		font-size: 1rem;
 		font-family: inherit;
 		top: 53%;
@@ -194,17 +194,17 @@
 		transition-delay: 0.75s;
 	}
 	.firstDownLeft {
-		border-right: 2px solid var(--yellow);
+		border-right: 2px solid var(--color-yellow);
 	}
 	.firstDownRight {
-		border-left: 2px solid var(--yellow);
+		border-left: 2px solid var(--color-yellow);
 	}
 	.hashes {
 		position: absolute;
 		left: 15%;
 		right: 0;
 		height: 3%;
-		background: -webkit-linear-gradient(left, var(--white) 25%, transparent 25%);
+		background: -webkit-linear-gradient(left, var(--color-white) 25%, transparent 25%);
 		background-size: 25% 100%;
 	}
 	.first-mid.hashes {

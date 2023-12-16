@@ -323,17 +323,17 @@
 		display: flex;
 		width: 50%;
 		font-size: 1rem;
-		color: var(--black);
+		color: var(--color-offblack);
 		text-align: center;
 		padding: 8px;
-		background-color: var(--ltblue);
+		background-color: var(--color-blue-300);
 		cursor: pointer;
 		white-space: nowrap;
 	}
 	.tab-selected,
 	.tab-selected:hover {
-		background-color: var(--steelblue);
-		color: var(--ivory);
+		background-color: var(--color-blue-500);
+		color: var(--color-white);
 		cursor: default;
 	}
 	.grid-container {
@@ -354,7 +354,7 @@
 
 	.grid-item {
 		background-color: #e4e4e4;
-		color: var(--white);
+		color: var(--color-white);
 		padding: 5px;
 		text-align: center;
 	}
@@ -364,8 +364,8 @@
 		overflow-y: scroll;
 	}
 	.score {
-		background-color: var(--white);
-		color: var(--black);
+		background-color: var(--color-white);
+		color: var(--color-offblack);
 		font-size: 1rem;
 		border: 1px solid #e4e4e4;
 	}
@@ -386,20 +386,20 @@
 		height: 32px;
 	}
 	.description {
-		color: var(--pip);
+		color: var(---color-gray-900);
 		font-size: 0.75rem;
 		margin: auto 0;
 		padding: 4px;
 		white-space: nowrap;
 	}
 	.stat {
-		background-color: var(--white);
-		color: var(--black);
+		background-color: var(--color-white);
+		color: var(--color-offblack);
 		font-size: 0.85rem;
 		border: 1px solid #e4e4e4;
 	}
 	.statName {
-		color: var(--pip);
+		color: var(--color-gray-900);
 		font-size: 0.75rem;
 	}
 	.returnButton {

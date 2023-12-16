@@ -4,7 +4,6 @@
 	import { settings } from '$lib/stores/Settings';
 	import '../styles.css';
 	import '@fontsource/bebas-neue';
-	import logo from '$lib/images/sdb-logo.png';
 	import soundOn from '$lib/images/volume-high.svg';
 	import soundOff from '$lib/images/volume-xmark.svg';
 	export let data;
@@ -14,33 +13,39 @@
 
 <svelte:head>
 	<title>{$page.data.title ?? 'SuperDiceBowl'}</title>
-	<meta name="description" content="Football at the Roll of a Dice" />
+	<meta name="description" content="Football at the Roll of the Dice" />
 </svelte:head>
 
 <nav>
-	<a href="/">
-		<img alt="SuperDiceBowl" src={logo} />
+	<a class="logo-wrapper" href="/">
+		<picture>
+			<source type="image/avif" srcset="/sdb-logo.avif" />
+			<source type="image/webp" srcset="/sdb-logo.webp" />
+			<img alt="SuperDiceBowl" src="/sdb-logo.png" />
+		</picture>
+		<h1>Super&middot;Dice&middot;Bowl</h1>
 	</a>
-	<a class="logo-text" href="/">Super&middot;Dice&middot;Bowl</a>
 
-	{#if data.hasOwnProperty('user')}
-		<form method="POST" action="/logout" use:enhance>
-			<button>Log out</button>
-		</form>
-	{:else}
-		<a href="/login">Log in</a>
-		<a href="/signup">Sign up</a>
-	{/if}
+	<div class="menu-wrapper">
+		{#if data.hasOwnProperty('user')}
+			<form method="POST" action="/logout" use:enhance>
+				<button>Log out</button>
+			</form>
+		{:else}
+			<a class="link" href="/login">Log in</a>
+			<a class="link" href="/signup">Sign up</a>
+		{/if}
 
-	<button
-		class="volumeButton"
-		on:click={settings.toggleVolume}
-		on:keypress={settings.toggleVolume}
-		tabindex="0"
-		title={$settings.volume ? 'Mute sounds' : 'Play sounds'}
-	>
-		<img src={$settings.volume ? soundOn : soundOff} alt="Sound toggle" />
-	</button>
+		<button
+			class="volumeButton"
+			on:click={settings.toggleVolume}
+			on:keypress={settings.toggleVolume}
+			tabindex="0"
+			title={$settings.volume ? 'Mute sounds' : 'Play sounds'}
+		>
+			<img src={$settings.volume ? soundOn : soundOff} alt="Sound toggle" />
+		</button>
+	</div>
 </nav>
 
 <main>
@@ -57,37 +62,26 @@
 	nav,
 	footer {
 		margin: 0 auto;
-		padding: 16px;
+		padding: 8px 16px;
 	}
 
 	nav {
-		color: var(--ivory);
-		display: flex;
-		gap: 16px;
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: center;
 		width: 100%;
-		height: 3rem;
-		align-items: center;
 		max-width: var(--column);
-		z-index: 100;
 	}
 
-	nav img {
-		height: 2.5rem;
-	}
-
-	.logo-text {
+	h1 {
 		font-family: 'Bebas Neue', sans-serif;
-		font-size: 1.5rem;
-		margin-left: -8px;
-		margin-right: auto;
+		margin: 0;
 	}
 
-	footer {
-		display: flex;
-		height: 2rem;
-		align-items: center;
-		color: var(--gray);
-		font-size: 0.75rem;
+	a {
+		color: var(--color-white);
+		font-weight: 500;
+		text-wrap: nowrap;
 	}
 
 	main {
@@ -96,23 +90,43 @@
 		overflow-y: scroll;
 	}
 
-	a {
-		text-wrap: nowrap;
-	}
-
 	main::-webkit-scrollbar {
 		display: none;
 	}
 
+	footer {
+		display: flex;
+		height: 2rem;
+		align-items: center;
+		color: var(--color-gray-300);
+		font-size: 0.75rem;
+	}
+
+	.logo-wrapper {
+		display: flex;
+		gap: 8px;
+		align-items: center;
+	}
+
+	.logo-wrapper img {
+		height: 2.5rem;
+	}
+
+	.menu-wrapper {
+		display: flex;
+		gap: 16px;
+		justify-content: end;
+	}
+
 	.volumeButton {
 		padding: 0;
-		margin-top: 12px;
 		background: none;
+		margin-top: -2px;
 	}
 
 	.volumeButton img {
-		height: 24px;
-		width: 24px;
+		height: 1.5rem;
+		width: 1.5rem;
 	}
 
 	@media (max-height: 30rem) {

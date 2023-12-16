@@ -168,8 +168,8 @@
 				<div class="dice-container">
 					<div class="action">{action}</div>
 					<Dice
-						dieColor={primaryColor($settings, possession)}
-						pipColor={secondaryColor($settings, possession)}
+						dieColor={primaryColor($settings, possession) || '#FFF'}
+						pipColor={secondaryColor($settings, possession) || '000'}
 					/>
 					{#if restrictDice || (mode === GAME_MODE.SOLO && possession === TEAM.AWAY)}
 						<div class="dice-block" />
@@ -272,7 +272,7 @@
 		transform: scale(-1, 1);
 	}
 	.divider {
-		color: var(--steelblue);
+		color: var(--color-blue-500);
 		font-weight: bold;
 		font-size: 1.25rem;
 	}
@@ -280,14 +280,14 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		background-color: var(--smoke);
-		border: 1px solid var(--white);
+		background-color: var(--color-gray-900);
+		border: 1px solid var(--color-white);
 		border-radius: 1rem;
 		padding: 0.25rem 0.5rem;
 		z-index: 100;
 	}
 	.action {
-		color: var(--white);
+		color: var(--color-white);
 		font-family: inherit;
 		font-size: 0.9rem;
 		white-space: nowrap;
@@ -298,7 +298,7 @@
 		top: 0;
 		height: 100%;
 		width: 100%;
-		background-color: var(--black);
+		background-color: var(--color-offblack);
 		opacity: 0.2;
 	}
 	.scores {

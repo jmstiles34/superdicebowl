@@ -54,7 +54,7 @@
 	.modal {
 		padding: 12px;
 		border-radius: 8px;
-		background: var(--white);
+		background: var(--color-white);
 		height: fit-content;
 		margin: auto 0;
 	}
@@ -71,7 +71,7 @@
 	.closeButton img {
 		height: 32px;
 		width: 32px;
-		background-color: var(--white);
+		background-color: var(--color-white);
 		border-radius: 50%;
 	}
 </style>

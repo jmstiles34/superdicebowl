@@ -6,6 +6,7 @@
 	<h3>Are you sure you want to exit?</h3>
 
 	<button
+		class="game-button"
 		on:click={() => {
 			goto('/');
 		}}
@@ -20,14 +21,12 @@
 		flex-direction: column;
 	}
 	h3 {
-		color: var(--black);
+		color: var(--color-offblack);
 		text-align: center;
 	}
 	button {
 		margin: 0 1em;
 		min-width: 8rem;
 		min-height: 3rem;
-		cursor: pointer;
-		font-family: inherit;
 	}
 </style>

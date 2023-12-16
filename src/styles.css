@@ -1,21 +1,26 @@
 :root {
 	/*COLORS*/
-	--black: hsl(257 27% 10%);
-	--error: hsl(348 83% 47%);
-	--field: hsl(120 61% 34%);
-	--gray: hsl(0 0% 41%);
-	--ivory: hsl(0 0% 91%);
-	--ltblue: hsl(195 53% 79%);
-	--pip: hsl(0 0% 20%);
-	--smoke: hsl(0 0% 18%);
-	--smokeDk: hsl(0 0% 13%);
-	--steelblue: hsl(207 44% 49%);
-	--white: hsl(220 23% 97%);
-	--yellow: hsl(51 100% 50%);
-	--button-hover: hsl(197 100% 83%);
-	--mask: hsl(0 0% 0% / 0.8);
-	--ltmask: hsl(0 0% 0% / 0.4);
-	color: hsl(0 0% 91%);
+	--color-white: hsl(220deg 23% 97%);
+	--color-offblack: hsl(240deg 5% 6%);
+	--color-blue-100: hsl(210deg 45% 92%);
+	--color-blue-300: hsl(207deg 44% 72%);
+	--color-blue-500: hsl(207deg 44% 49%);
+	--color-blue-700: hsl(208deg 44% 32%);
+	--color-blue-900: hsl(207deg 44% 12%);
+	--color-gray-100: hsl(256deg 12% 95%);
+	--color-gray-300: hsl(251deg 8% 80%);
+	--color-gray-500: hsl(246deg 4% 60%);
+	--color-gray-700: hsl(244deg 5% 40%);
+	--color-gray-900: hsl(240deg 6% 16%);
+	--color-yellow: hsl(51deg 100% 50%);
+	--urgent: hsl(0deg 55% 54%);
+	--urgent-hover: hsl(0deg 54% 88%);
+	--mask: hsl(240deg 5% 6%/ 0.8);
+	--ltmask: hsl(240deg 5% 6% / 0.4);
+
+	--field-odd: hsl(120deg 61% 40%);
+	--field-even: hsl(120deg 61% 32%);
+	--field: hsl(120deg 61% 34%);
 
 	/*FONTS*/
 	--font-size: 1.3rem;
@@ -71,15 +76,15 @@ a {
 }
 
 button {
-	font-family: inherit;
-	font-size: inherit;
-	color: var(--black);
+	display: block;
+	margin: 0;
+	padding: 0;
 	border: none;
-	border-radius: var(--border-radius);
-	margin: 0 0 0.5em 0;
-	padding: 0.5em 1em;
-	line-height: 1;
+	background: transparent;
 	cursor: pointer;
+	text-align: left;
+	font: inherit;
+	color: inherit;
 	transition: all 0.2s ease-in-out;
 }
 
@@ -88,7 +93,7 @@ button:not(:disabled):active {
 }
 
 button:disabled {
-	background-color: var(--gray);
+	background-color: var(--color-gray-700);
 }
 
 h1,
@@ -99,7 +104,7 @@ h5,
 h6 {
 	font-weight: 400;
 	font-family: inherit;
-	color: var(--ivory);
+	color: var(--color-white);
 	margin: 0 0 0.5em 0;
 	line-height: 1.1;
 }
@@ -153,6 +158,25 @@ h6 {
 	flex-direction: column;
 	height: 100%;
 	gap: 1rem;
+}
+
+.game-button {
+	background-color: var(--color-blue-300);
+	border: 1px solid var(--color-blue-500);
+	border-radius: var(--border-radius);
+	padding: 0.5em;
+	text-align: center;
+
+	&:disabled,
+	&:disabled:hover {
+		background-color: var(--color-gray-700);
+		border: 1px solid var(--color-gray-700);
+		cursor: default;
+	}
+	&:hover {
+		background-color: var(--color-blue-100);
+		border: 1px solid var(--color-blue-500);
+	}
 }
 
 @media (min-width: 40rem) {

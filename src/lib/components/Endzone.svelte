@@ -134,8 +134,8 @@
 		cursor: pointer;
 	}
 	.endZone {
-		border: 0.125rem solid var(--white);
-		background-color: var(--yellow);
+		border: 0.125rem solid var(--color-white);
+		background-color: var(--color-yellow);
 	}
 	.endZoneElements {
 		display: grid;
@@ -165,12 +165,12 @@
 		-webkit-border-radius: 50%;
 		-moz-border-radius: 50%;
 		border-radius: 50%;
-		background-color: var(--yellow);
+		background-color: var(--color-yellow);
 	}
 	.bar {
 		width: 0.25rem;
 		height: 100%;
-		background-color: var(--yellow);
+		background-color: var(--color-yellow);
 	}
 	.helmetLogo {
 		display: flex;
