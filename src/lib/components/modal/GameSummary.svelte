@@ -252,6 +252,8 @@
 					style={`
                     background-color: ${homeTeam.colors.primary};
                     color: ${homeTeam.colors.secondary};
+										font-family: 'Bebas Neue';
+										font-size: 1.35rem;
                 `}
 				>
 					{homeTeam.cityKey}
@@ -261,6 +263,8 @@
 					style={`
                     background-color: ${awayTeam.colors.primary};
                     color: ${awayTeam.colors.secondary};
+										font-family: 'Bebas Neue';
+										font-size: 1.35rem;
                 `}
 				>
 					{awayTeam.cityKey}
@@ -312,7 +316,7 @@
 		grid-template-columns: 1fr;
 		grid-template-rows: auto 1fr auto;
 		width: 400px;
-		min-height: 300px;
+		min-height: 310px;
 	}
 	.tab-row {
 		display: flex;
