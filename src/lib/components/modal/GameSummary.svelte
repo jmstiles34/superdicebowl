@@ -189,7 +189,7 @@
 			>
 				{homeTeam.name}
 			</div>
-			<div class="grid-item statName">vs</div>
+			<div class="grid-item vs">vs</div>
 			<div
 				class="grid-item team"
 				style={`
@@ -281,9 +281,7 @@
 						>
 							<img
 								alt="Team Logo"
-								src={`/logos/custom/${
-									play.team === TEAM.HOME ? homeTeam.logo : awayTeam.logo
-								}.webp`}
+								src={`/logos/${play.team === TEAM.HOME ? homeTeam.logo : awayTeam.logo}.webp`}
 							/>
 						</div>
 						<div class="grid-item score-item">
@@ -326,7 +324,7 @@
 	.tab {
 		display: flex;
 		width: 50%;
-		font-size: 1rem;
+		font-size: var(--16px);
 		color: var(--color-offblack);
 		text-align: center;
 		padding: 8px;
@@ -338,6 +336,7 @@
 	.tab-selected:hover {
 		background-color: var(--color-blue-500);
 		color: var(--color-white);
+		font-weight: 600;
 		cursor: default;
 	}
 	.grid-container {
@@ -357,7 +356,7 @@
 	}
 
 	.grid-item {
-		background-color: #e4e4e4;
+		background-color: var(--color-gray-200);
 		color: var(--color-white);
 		padding: 5px;
 		text-align: center;
@@ -370,8 +369,8 @@
 	.score {
 		background-color: var(--color-white);
 		color: var(--color-offblack);
-		font-size: 1rem;
-		border: 1px solid #e4e4e4;
+		font-size: var(--16px);
+		border: 1px solid var(--color-gray-200);
 	}
 	.score-item {
 		text-align: left;
@@ -379,7 +378,7 @@
 	.team {
 		font-weight: 700;
 		font-family: 'Bebas Neue';
-		font-size: 1.5rem;
+		font-size: var(--24px);
 	}
 	.teamLogo {
 		width: 32px;
@@ -390,8 +389,8 @@
 		height: 32px;
 	}
 	.description {
-		color: var(---color-gray-900);
-		font-size: 0.75rem;
+		color: var(--color-gray-900);
+		font-size: var(--12px);
 		margin: auto 0;
 		padding: 4px;
 		white-space: nowrap;
@@ -399,12 +398,19 @@
 	.stat {
 		background-color: var(--color-white);
 		color: var(--color-offblack);
-		font-size: 0.85rem;
-		border: 1px solid #e4e4e4;
+		font-size: var(--14px);
+		border: 1px solid var(--color-gray-200);
 	}
 	.statName {
 		color: var(--color-gray-900);
-		font-size: 0.75rem;
+		font-size: var(--12px);
+	}
+	.vs {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: var(--color-gray-900);
+		font-size: var(--16px);
 	}
 	.returnButton {
 		display: flex;

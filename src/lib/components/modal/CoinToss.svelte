@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { randomNumber, sleep } from '$lib/utils/common';
 	import { NOOP, TEAM } from '$lib/constants/constants';
-	import type { Team } from '$lib/types';
 	import { Sound } from 'svelte-sound';
 	import coinSpin from '$lib/assets/sfx/coin-spin.mp3';
 	import { settings } from '$lib/stores/Settings';
@@ -10,13 +9,6 @@
 	export let saveCoinToss: (a: string) => void;
 	let winStyle: string;
 	$: coinSpinSfx = new Sound(coinSpin, { volume });
-
-	function getCoinImage(team: Team) {
-		if (team.hasOwnProperty('isCustom') || team.hasOwnProperty('logo')) {
-			return `/logos/custom/${team.logo}.webp`;
-		}
-		return `/logos/${team.name}.webp`;
-	}
 
 	async function handleCoinToss(num: number) {
 		winStyle = num === 0 ? TEAM.HOME : TEAM.AWAY;
@@ -44,11 +36,14 @@
                 border: 1px solid ${homeTeam.colors.secondary};
             `}
 		>
-			<img
-				alt={`${homeTeam.city} ${homeTeam.name} Helmet`}
-				class={`helmetLogo`}
-				src={getCoinImage(homeTeam)}
-			/>
+			<picture>
+				<source type="image/avif" srcset={`/logos/${homeTeam.fieldLogo}.avif`} />
+				<img
+					alt={`${homeTeam.city} ${homeTeam.name} Logo`}
+					class={`helmetLogo`}
+					src={`/logos/${homeTeam.fieldLogo}.webp`}
+				/>
+			</picture>
 		</div>
 		<div
 			class="side-away"
@@ -57,11 +52,14 @@
                 border: 1px solid ${awayTeam.colors.secondary};
             `}
 		>
-			<img
-				alt={`${awayTeam.city} ${awayTeam.name} Helmet`}
-				class={`helmetLogo`}
-				src={getCoinImage(awayTeam)}
-			/>
+			<picture>
+				<source type="image/avif" srcset={`/logos/${awayTeam.fieldLogo}.avif`} />
+				<img
+					alt={`${awayTeam.city} ${awayTeam.name} Logo`}
+					class={`helmetLogo`}
+					src={`/logos/${awayTeam.fieldLogo}.webp`}
+				/>
+			</picture>
 		</div>
 	</div>
 </div>
@@ -77,6 +75,7 @@
 	#coin div {
 		display: flex;
 		justify-content: center;
+		align-items: center;
 		width: 100%;
 		height: 100%;
 		-webkit-border-radius: 50%;
@@ -94,7 +93,6 @@
 	.helmetLogo {
 		height: 5.5rem;
 		width: 5.5rem;
-		margin: auto 0;
 	}
 	#coin {
 		transition: -webkit-transform 1s ease-in;

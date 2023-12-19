@@ -137,11 +137,15 @@ export const DEFAULT_TEAM = {
 	city: '',
 	cityKey: '',
 	name: '',
+	fieldLogo: '',
 	logo: '',
 	logoFixed: false,
 	logoLeft: '',
 	logoTransform: '',
-	colors: {}
+	colors: {
+		primary: '#FFFFFF',
+		secondary: '#000000'
+	}
 };
 
 export const DICE_COLORS = ['blue', 'red', 'orange', 'purple', 'green'];

@@ -11,7 +11,6 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
 	import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
-	import randomize from '$lib/images/randomize.png';
 
 	export let opponentId: string;
 	export let saveTeam: SaveTeam;
@@ -141,7 +140,12 @@
 	</div>
 </div>
 
-<Modal showModal={showCustomTeam} close={() => (showCustomTeam = false)} hasClose={true}>
+<Modal
+	showModal={showCustomTeam}
+	close={() => (showCustomTeam = false)}
+	hasClose={true}
+	choiceRequired={false}
+>
 	<div class="model-content">
 		<CustomTeam customTeamId={selected} close={closeCustomTeamModal} />
 	</div>

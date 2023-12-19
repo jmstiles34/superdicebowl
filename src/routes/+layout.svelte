@@ -99,7 +99,7 @@
 		height: 2rem;
 		align-items: center;
 		color: var(--color-gray-300);
-		font-size: 0.75rem;
+		font-size: var(--12px);
 	}
 
 	.logo-wrapper {

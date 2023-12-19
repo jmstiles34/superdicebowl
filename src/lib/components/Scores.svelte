@@ -20,10 +20,7 @@
 		class="team"
 		style={`
         background-color: ${homeTeam.colors.primary};
-        background-image: linear-gradient(to right, ${homeToRgb} 0 100%), url(/logos/${
-			homeTeam.hasOwnProperty('logo') ? `custom/${homeTeam.logo}` : homeTeam.name
-		}.webp);
-    `}
+        background-image: linear-gradient(to right, ${homeToRgb} 0 100%), url(/logos/${homeTeam.fieldLogo}.webp)`}
 	>
 		<div class="city-wrapper">
 			{#if possession === TEAM.HOME}
@@ -38,10 +35,7 @@
 		class="team"
 		style={`
         background-color: ${awayTeam.colors.primary};
-        background-image: linear-gradient(to right, ${awayToRgb} 0 100%), url(/logos/${
-			awayTeam.hasOwnProperty('logo') ? `custom/${awayTeam.logo}` : awayTeam.name
-		}.webp);
-    `}
+        background-image: linear-gradient(to right, ${awayToRgb} 0 100%), url(/logos/${awayTeam.fieldLogo}.webp)`}
 	>
 		<div class="city-wrapper">
 			{#if possession === TEAM.AWAY}

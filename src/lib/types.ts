@@ -8,8 +8,8 @@ export interface DiceRoll {
 }
 
 interface Colors {
-	primary?: string;
-	secondary?: string;
+	primary: string;
+	secondary: string;
 	faceMask?: string;
 	helmet?: string;
 	stripe?: string;
@@ -40,6 +40,7 @@ export interface Team {
 	cityKey: string;
 	colors: Colors;
 	isCustom?: boolean;
+	fieldLogo?: string;
 	logo?: string;
 	logoFixed?: boolean;
 	logoLeft?: string;

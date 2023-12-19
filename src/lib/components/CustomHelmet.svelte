@@ -268,7 +268,7 @@
 				alt={`${logo} Logo`}
 				bind:this={target}
 				class="target"
-				src={`/logos/custom/${direction === POSITION.LEFT && logoLeft ? logoLeft : logo}.webp`}
+				src={`/logos/${direction === POSITION.LEFT && logoLeft ? logoLeft : logo}.webp`}
 				style={`
 				width: ${logoWidth}px; 
 				transform: ${logoFixed ? logoTransform.replace('scale(', 'scale(-') : logoTransform}

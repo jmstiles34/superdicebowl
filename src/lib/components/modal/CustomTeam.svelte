@@ -72,6 +72,7 @@
 				city,
 				isCustom: true,
 				cityKey: city.substring(0, 3).toUpperCase(),
+				fieldLogo: logo,
 				logo,
 				logoTransform,
 				name,

@@ -34,7 +34,7 @@
 	$: scaledTransform = scaleTranslate(team.logoTransform, logoWidth);
 
 	function scaleTranslate(tf: string = '', logoWidth: number) {
-		console.log({ start: tf });
+		/* console.log({ start: tf }); */
 		const translateIndex = tf.indexOf('translate(');
 		if (translateIndex === -1) return tf;
 
@@ -49,12 +49,12 @@
 		const translate = `translate(${parseFloat(translateNums[0]) * parseFloat(scalePercent)}px, ${
 			parseFloat(translateNums[1]) * parseFloat(scalePercent)
 		}px)`;
-		console.log({
+		/* console.log({
 			end: (tf.substring(0, translateIndex + 10) + tf.substring(closingParenIndex)).replace(
 				'translate()',
 				translate
 			)
-		});
+		}); */
 		return (tf.substring(0, translateIndex + 10) + tf.substring(closingParenIndex)).replace(
 			'translate()',
 			translate

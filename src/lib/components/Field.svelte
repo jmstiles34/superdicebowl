@@ -27,12 +27,13 @@
 
 <div class="field-wrapper">
 	<div class="fieldLogo">
-		<img
-			alt={`${homeTeam.city} ${homeTeam.name} Logo`}
-			src={`/logos/${
-				homeTeam.hasOwnProperty('isCustom') ? `custom/${homeTeam.logo}` : homeTeam.name
-			}.webp`}
-		/>
+		<picture>
+			<!-- <source type="image/avif" srcset={`/logos/${homeTeam.fieldLogo}.avif`} /> -->
+			<img
+				alt={`${homeTeam.city} ${homeTeam.name} Logo`}
+				src={`/logos/${homeTeam.fieldLogo}.webp`}
+			/>
+		</picture>
 	</div>
 	<div class="field-grid">
 		<EndZone
@@ -129,6 +130,7 @@
 	.football img {
 		width: 100%;
 		transition: all 0.5s ease-in-out;
+		filter: drop-shadow(3px 6px 8px hsl(0deg 0% 0% / 0.5));
 	}
 	.yardsAway {
 		border-top: 2px solid var(--color-white);
@@ -185,7 +187,8 @@
 		font-size: 1rem;
 		font-family: inherit;
 		top: 53%;
-		filter: drop-shadow(0 0 0.4rem #125618) drop-shadow(0 0 0.4rem #125618);
+		filter: drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.5));
+		/* filter: drop-shadow(0 0 0.4rem #125618) drop-shadow(0 0 0.4rem #125618); */
 	}
 	.showDownDistance {
 		opacity: 1;
