@@ -95,7 +95,52 @@
 <style>
 	.field-wrapper {
 		margin: 0 auto;
-		background-color: var(--field);
+		background-image: linear-gradient(
+			90deg,
+			white 0%,
+			white 9.99%,
+			var(--field-odd) 10%,
+			var(--field-odd) 13.99%,
+			var(--field-even) 14%,
+			var(--field-even) 17.99%,
+			var(--field-odd) 18%,
+			var(--field-odd) 21.99%,
+			var(--field-even) 22%,
+			var(--field-even) 25.99%,
+			var(--field-odd) 26%,
+			var(--field-odd) 29.99%,
+			var(--field-even) 30%,
+			var(--field-even) 33.99%,
+			var(--field-odd) 34%,
+			var(--field-odd) 37.99%,
+			var(--field-even) 38%,
+			var(--field-even) 41.99%,
+			var(--field-odd) 42%,
+			var(--field-odd) 45.99%,
+			var(--field-even) 46%,
+			var(--field-even) 49.99%,
+			var(--field-odd) 50%,
+			var(--field-odd) 53.99%,
+			var(--field-even) 54%,
+			var(--field-even) 57.99%,
+			var(--field-odd) 58%,
+			var(--field-odd) 61.99%,
+			var(--field-even) 62%,
+			var(--field-even) 65.99%,
+			var(--field-odd) 66%,
+			var(--field-odd) 69.99%,
+			var(--field-even) 70%,
+			var(--field-even) 73.99%,
+			var(--field-odd) 74%,
+			var(--field-odd) 77.99%,
+			var(--field-even) 78%,
+			var(--field-even) 81.99%,
+			var(--field-odd) 82%,
+			var(--field-odd) 85.99%,
+			var(--field-even) 86%,
+			var(--field-even) 89.99%,
+			white 40%
+		);
 	}
 
 	.field-grid {
@@ -114,10 +159,10 @@
 		left: 50%;
 		max-width: 16%;
 		transform: translate(-50%, -50%);
-	}
-	.fieldLogo img {
-		width: 100%;
-		opacity: 0.8;
+		& img {
+			width: 100%;
+			opacity: 0.8;
+		}
 	}
 	.football {
 		position: absolute;
@@ -126,11 +171,11 @@
 		left: 50%;
 		z-index: 10;
 		width: 4.5%;
-	}
-	.football img {
-		width: 100%;
-		transition: all 0.5s ease-in-out;
-		filter: drop-shadow(3px 6px 8px hsl(0deg 0% 0% / 0.5));
+		& img {
+			width: 100%;
+			transition: all 0.5s ease-in-out;
+			filter: drop-shadow(3px 6px 8px hsl(0deg 0% 0% / 0.5));
+		}
 	}
 	.yardsAway {
 		border-top: 2px solid var(--color-white);
@@ -188,7 +233,6 @@
 		font-family: inherit;
 		top: 53%;
 		filter: drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.5));
-		/* filter: drop-shadow(0 0 0.4rem #125618) drop-shadow(0 0 0.4rem #125618); */
 	}
 	.showDownDistance {
 		opacity: 1;

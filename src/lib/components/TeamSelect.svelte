@@ -82,7 +82,6 @@
 					tabindex="0"
 				>
 					<CustomHelmet
-						bg="#2e2e2e"
 						faceMask={team.colors.faceMask}
 						helmet={team.colors.helmet}
 						stripe={team.colors.stripe}

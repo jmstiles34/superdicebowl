@@ -10,7 +10,6 @@
 	import '@fontsource/bebas-neue';
 	import { hexToHsl, hslToHex } from '$lib/utils/common';
 
-	let bg = 'hsl(0 100% 100% / 1)';
 	let faceMask = 'hsl(0 0% 85% / 1)';
 	let helmet = 'hsl(207 44% 49% / 1)';
 	let stripe = 'hsl(0 100% 100% / 1)';
@@ -97,7 +96,6 @@
 	<div class="form-row">
 		<div class="helmet">
 			<CustomHelmet
-				{bg}
 				{faceMask}
 				{helmet}
 				{stripe}
@@ -221,7 +219,7 @@
 	}
 	.helmet {
 		margin: -20px auto 0 auto;
-		width: 250px;
+		width: 275px;
 	}
 	.notes {
 		color: var(--color-offblack);

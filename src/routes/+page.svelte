@@ -119,7 +119,7 @@
 	}
 	.mode-selected,
 	.mode-selected:hover {
-		background-color: var(--color-blue-500);
+		background-color: var(--color-blue-600);
 		color: var(--color-white);
 		font-weight: 600;
 		cursor: default;

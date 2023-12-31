@@ -334,7 +334,7 @@
 	}
 	.tab-selected,
 	.tab-selected:hover {
-		background-color: var(--color-blue-500);
+		background-color: var(--color-blue-600);
 		color: var(--color-white);
 		font-weight: 600;
 		cursor: default;
@@ -356,7 +356,7 @@
 	}
 
 	.grid-item {
-		background-color: var(--color-gray-200);
+		background-color: var(--color-gray-100);
 		color: var(--color-white);
 		padding: 5px;
 		text-align: center;
@@ -370,7 +370,7 @@
 		background-color: var(--color-white);
 		color: var(--color-offblack);
 		font-size: var(--16px);
-		border: 1px solid var(--color-gray-200);
+		border: 1px solid var(--color-gray-100);
 	}
 	.score-item {
 		text-align: left;

@@ -67,7 +67,7 @@
 <div class="endZone" style={`background-color: ${primary};`}>
 	<div class="endZoneElements">
 		<div />
-		<div class={`helmetLogo rotate${position}`} class:flipLeft={position === POSITION.LEFT}>
+		<div class={`helmetLogo`}>
 			<CustomHelmet
 				{faceMask}
 				{helmet}
@@ -85,16 +85,10 @@
 		</div>
 
 		<div class="name-container">
-			<div
-				class={`name`}
-				class:flipName={position === POSITION.RIGHT}
-				style={`color: ${secondary};`}
-			>
-				{team.name}
-			</div>
+			<div class={`name`} style={`color: ${secondary};`}>Chickens</div>
 		</div>
 
-		<div class={`helmetLogo rotate${position}`} class:flipRight={position === POSITION.RIGHT}>
+		<div class={`helmetLogo`} class:flipRight={position === POSITION.RIGHT}>
 			<CustomHelmet
 				{faceMask}
 				{helmet}
@@ -137,8 +131,7 @@
 	}
 	.endZoneElements {
 		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: 0.5em 3em auto 3em 0.5em;
+		grid-template-columns: 0.5em 3em auto 3em 0.5em;
 		gap: 0.25em;
 		height: 100%;
 	}
@@ -185,8 +178,8 @@
 		font-weight: 700;
 		font-family: 'Bebas Neue';
 		font-size: clamp(1.5rem, -0.0909rem + 6.3636vw, 5rem);
-		transform: rotate(180deg);
-		writing-mode: vertical-lr;
+		/* transform: rotate(180deg);
+		writing-mode: vertical-lr; */
 		margin: auto 0;
 		letter-spacing: 0.25rem;
 	}

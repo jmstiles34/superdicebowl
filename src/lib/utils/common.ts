@@ -55,6 +55,17 @@ export function joinText(a: string, b: string) {
 	return `${a}${a.length ? ' ' : ''}${b}`;
 }
 
+export function lightenColor(color: string, num = 15) {
+	const firstPercentIndex = color.indexOf('%') + 2;
+	const nextPercentIndex = color.indexOf('%', firstPercentIndex);
+
+	const lightness = parseInt(color.substring(firstPercentIndex, nextPercentIndex));
+
+	return (
+		color.substring(0, firstPercentIndex) + (lightness + num) + color.substring(nextPercentIndex)
+	);
+}
+
 export function lt(a: number, b: number) {
 	return a < b;
 }

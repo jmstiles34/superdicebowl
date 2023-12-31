@@ -144,7 +144,7 @@ export const DEFAULT_TEAM = {
 	logoTransform: '',
 	colors: {
 		primary: '#FFFFFF',
-		secondary: '#000000'
+		secondary: ''
 	}
 };
 
@@ -200,6 +200,11 @@ export const HELMET_SIZE = {
 export const HELMET_WIDTH = {
 	[HELMET_SIZE.SMALL]: 48,
 	[HELMET_SIZE.LARGE]: 250
+};
+
+export const WIDTH_DIVIDER = {
+	[HELMET_SIZE.SMALL]: 3,
+	[HELMET_SIZE.LARGE]: 2.5
 };
 
 export const INTERCEPTION_ROLLS = [12, 45];
