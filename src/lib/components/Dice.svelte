@@ -90,7 +90,7 @@
 		margin: 0;
 	}
 	.dice-button:hover {
-		background-color: var(--steelblue);
+		background-color: var(--color-blue-500);
 	}
 	.face {
 		display: grid;
@@ -101,8 +101,8 @@
 		padding: 0.5rem;
 		min-height: 3rem;
 		min-width: 3rem;
-		background-color: var(--ivory);
-		box-shadow: inset 0 4px var(--white), inset 0 -4px #bbb, inset 4px 0 #d7d7d7,
+		background-color: var(--color-white);
+		box-shadow: inset 0 4px var(--color-white), inset 0 -4px #bbb, inset 4px 0 #d7d7d7,
 			inset -4px 0 #d7d7d7;
 		border-radius: 10%;
 		cursor: pointer;
@@ -115,7 +115,7 @@
 		min-width: 0.6rem;
 		min-height: 0.6rem;
 		border-radius: 50%;
-		background-color: var(--pip);
+		background-color: var(--color-gray-900);
 		box-shadow: inset 0 2px #111, inset 0 -2px #555;
 	}
 
@@ -143,7 +143,7 @@
 			padding: 0.25rem;
 			min-height: 2rem;
 			min-width: 2rem;
-			box-shadow: inset 0 3px var(--white), inset 0 -3px #bbb, inset 3px 0 #d7d7d7,
+			box-shadow: inset 0 3px var(--color-white), inset 0 -3px #bbb, inset 3px 0 #d7d7d7,
 				inset -3px 0 #d7d7d7;
 		}
 

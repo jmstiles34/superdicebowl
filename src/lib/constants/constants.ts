@@ -88,6 +88,7 @@ export const GAME_ACTION = {
 	PLACE_TWO_POINT: 'Place Two Point',
 	POINT_OPTION: 'Point(s) Option',
 	PUNT: 'Punt',
+	QUIT: 'quit',
 	SAFETY: 'Safety',
 	TOUCHBACK: 'Touchback',
 	TOUCHDOWN: 'Touchdown',
@@ -123,6 +124,7 @@ export const DEFAULT_PLAY = {
 	penaltyYards: 0,
 	isFirstdown: false
 };
+
 export const DEFAULT_PLAY_SUMMARY = {
 	team: '',
 	description: '',
@@ -135,12 +137,13 @@ export const DEFAULT_TEAM = {
 	city: '',
 	cityKey: '',
 	name: '',
+	fieldLogo: '',
 	logo: '',
 	logoFixed: false,
 	logoLeft: '',
 	logoTransform: '',
 	colors: {
-		primary: '',
+		primary: '#FFFFFF',
 		secondary: ''
 	}
 };
@@ -184,15 +187,24 @@ export const GAME_MODE = {
 export const DEFAULT_SETTINGS = {
 	homeTeam: DEFAULT_TEAM,
 	awayTeam: DEFAULT_TEAM,
-	mode: GAME_MODE.SOLO,
-	winScore: 50,
+	mode: GAME_MODE.HEAD_TO_HEAD,
+	winScore: 30,
 	volume: 1
 };
 
 export const HELMET_SIZE = {
 	SMALL: 'small',
-	MEDIUM: 'medium',
 	LARGE: 'large'
+};
+
+export const HELMET_WIDTH = {
+	[HELMET_SIZE.SMALL]: 48,
+	[HELMET_SIZE.LARGE]: 250
+};
+
+export const WIDTH_DIVIDER = {
+	[HELMET_SIZE.SMALL]: 3,
+	[HELMET_SIZE.LARGE]: 2.5
 };
 
 export const INTERCEPTION_ROLLS = [12, 45];

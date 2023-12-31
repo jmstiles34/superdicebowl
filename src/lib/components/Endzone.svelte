@@ -1,5 +1,11 @@
 <script lang="ts">
-	import { DEFAULT_TEAM, HELMET_SIZE, NOOP, POSITION } from '$lib/constants/constants';
+	import {
+		DEFAULT_TEAM,
+		HELMET_SIZE,
+		HELMET_WIDTH,
+		NOOP,
+		POSITION
+	} from '$lib/constants/constants';
 	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
 	import type { Team, Void } from '$lib/types';
 	import '@fontsource/bebas-neue';
@@ -9,34 +15,70 @@
 	export let position = POSITION.LEFT;
 	export let team: Team = DEFAULT_TEAM;
 	export let toggleFieldGoal: Void;
+	let screenSize: number;
+	let logoWidth = 64 / 2.6;
 	const { primary, secondary, faceMask, helmet, stripe, trim } = team.colors;
 
 	$: allowFieldGoal = hasBall && inFieldGoalRange;
+	$: if (screenSize) {
+		if (screenSize >= 900) {
+			logoWidth = 64 / 2.6;
+		}
+		if (screenSize <= 640) {
+			logoWidth = 48 / 4.2;
+		}
+		if (screenSize > 640 && screenSize < 900) {
+			logoWidth = 48 / 2.8;
+		}
+	}
+	$: scaledTransform = scaleTranslate(team.logoTransform, logoWidth);
 
-	function removeTranslate(tf: string = '') {
+	function scaleTranslate(tf: string = '', logoWidth: number) {
+		/* console.log({ start: tf }); */
 		const translateIndex = tf.indexOf('translate(');
 		if (translateIndex === -1) return tf;
 
+		const originalWidth = HELMET_WIDTH[HELMET_SIZE.LARGE] / 2.5;
+		const scalePercent = (logoWidth / originalWidth).toFixed(2);
 		const closingParenIndex = tf.indexOf(')', translateIndex);
+		const translateNums = tf
+			.substring(translateIndex + 10, closingParenIndex)
+			.replaceAll('px', '')
+			.split(', ');
 
-		return tf.substring(0, translateIndex) + tf.substring(closingParenIndex + 1);
+		const translate = `translate(${parseFloat(translateNums[0]) * parseFloat(scalePercent)}px, ${
+			parseFloat(translateNums[1]) * parseFloat(scalePercent)
+		}px)`;
+		/* console.log({
+			end: (tf.substring(0, translateIndex + 10) + tf.substring(closingParenIndex)).replace(
+				'translate()',
+				translate
+			)
+		}); */
+		return (tf.substring(0, translateIndex + 10) + tf.substring(closingParenIndex)).replace(
+			'translate()',
+			translate
+		);
 	}
 </script>
+
+<svelte:window bind:innerWidth={screenSize} />
 
 <div class="endZone" style={`background-color: ${primary};`}>
 	<div class="endZoneElements">
 		<div />
 		<div class={`helmetLogo rotate${position}`} class:flipLeft={position === POSITION.LEFT}>
 			<CustomHelmet
-				bg={primary}
 				{faceMask}
 				{helmet}
 				{stripe}
 				{trim}
+				direction={position === POSITION.LEFT ? POSITION.LEFT : POSITION.RIGHT}
 				logo={team.logo}
 				logoLeft={team.logoLeft}
-				logoFlip={position === POSITION.LEFT && team.logoFixed}
-				logoTransform={removeTranslate(team.logoTransform) || ''}
+				logoFixed={position === POSITION.LEFT && team.logoFixed}
+				logoTransform={scaledTransform || ''}
+				{logoWidth}
 				setTransform={NOOP}
 				size={HELMET_SIZE.SMALL}
 			/>
@@ -54,15 +96,16 @@
 
 		<div class={`helmetLogo rotate${position}`} class:flipRight={position === POSITION.RIGHT}>
 			<CustomHelmet
-				bg={primary}
 				{faceMask}
 				{helmet}
 				{stripe}
 				{trim}
+				direction={position === POSITION.LEFT ? POSITION.RIGHT : POSITION.LEFT}
 				logo={team.logo}
 				logoLeft={team.logoLeft}
-				logoFlip={position === POSITION.RIGHT && team.logoFixed}
-				logoTransform={removeTranslate(team.logoTransform) || ''}
+				logoFixed={position === POSITION.RIGHT && team.logoFixed}
+				logoTransform={scaledTransform || ''}
+				{logoWidth}
 				setTransform={NOOP}
 				size={HELMET_SIZE.SMALL}
 			/>
@@ -89,8 +132,8 @@
 		cursor: pointer;
 	}
 	.endZone {
-		border: 0.125rem solid var(--white);
-		background-color: var(--yellow);
+		border: 0.125rem solid var(--color-white);
+		background-color: var(--color-yellow);
 	}
 	.endZoneElements {
 		display: grid;
@@ -120,12 +163,12 @@
 		-webkit-border-radius: 50%;
 		-moz-border-radius: 50%;
 		border-radius: 50%;
-		background-color: var(--yellow);
+		background-color: var(--color-yellow);
 	}
 	.bar {
 		width: 0.25rem;
 		height: 100%;
-		background-color: var(--yellow);
+		background-color: var(--color-yellow);
 	}
 	.helmetLogo {
 		display: flex;
@@ -145,6 +188,7 @@
 		transform: rotate(180deg);
 		writing-mode: vertical-lr;
 		margin: auto 0;
+		letter-spacing: 0.25rem;
 	}
 	.rotateLeft {
 		transform: rotate(-90deg);

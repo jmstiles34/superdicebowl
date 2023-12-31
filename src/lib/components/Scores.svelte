@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { hexToRGB } from '$lib/utils/common';
 	import { TEAM } from '$lib/constants/constants';
 	import type { Team } from '$lib/types';
 	import { game } from '$lib/stores/Game';
@@ -12,8 +11,8 @@
 	$: homeScore = getScoreByTeam(TEAM.HOME, $game.playLog);
 	$: possession = $game.possession;
 
-	let awayToRgb = hexToRGB(awayTeam.colors.primary);
-	let homeToRgb = hexToRGB(homeTeam.colors.primary);
+	let awayToRgb = awayTeam.colors.primary.replace('/ 1', '/ 0.5');
+	let homeToRgb = homeTeam.colors.primary.replace('/ 1', '/ 0.5');
 </script>
 
 <div class="team-scores">
@@ -21,12 +20,7 @@
 		class="team"
 		style={`
         background-color: ${homeTeam.colors.primary};
-        background-image: linear-gradient(to right, rgba(${homeToRgb.r},${homeToRgb.g},${
-			homeToRgb.b
-		}, 0.5) 0 100%), url(/logos/${
-			homeTeam.hasOwnProperty('logo') ? `custom/${homeTeam.logo}` : homeTeam.name
-		}.webp);
-    `}
+        background-image: linear-gradient(to right, ${homeToRgb} 0 100%), url(/logos/${homeTeam.fieldLogo}.webp)`}
 	>
 		<div class="city-wrapper">
 			{#if possession === TEAM.HOME}
@@ -41,12 +35,7 @@
 		class="team"
 		style={`
         background-color: ${awayTeam.colors.primary};
-        background-image: linear-gradient(to right, rgba(${awayToRgb.r},${awayToRgb.g},${
-			awayToRgb.b
-		}, 0.5) 0 100%), url(/logos/${
-			awayTeam.hasOwnProperty('logo') ? `custom/${awayTeam.logo}` : awayTeam.name
-		}.webp);
-    `}
+        background-image: linear-gradient(to right, ${awayToRgb} 0 100%), url(/logos/${awayTeam.fieldLogo}.webp)`}
 	>
 		<div class="city-wrapper">
 			{#if possession === TEAM.AWAY}
@@ -62,7 +51,7 @@
 <style>
 	.team-scores {
 		display: flex;
-		color: var(--white);
+		color: var(--color-white);
 		font-size: 0.9rem;
 		font-weight: bold;
 		white-space: nowrap;
@@ -96,13 +85,13 @@
 		margin-right: 0.3rem;
 		margin-top: 0.175rem;
 		box-shadow: inset 0 2px #111, inset 0 -2px #555;
-		background-color: var(--white);
+		background-color: var(--color-white);
 	}
 	.score {
 		width: 10%;
 		height: 100%;
-		background-color: var(--white);
-		color: var(--black);
+		background-color: var(--color-white);
+		color: var(--color-offblack);
 		padding-top: 0.25rem;
 		text-align: center;
 	}

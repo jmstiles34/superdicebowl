@@ -15,7 +15,7 @@
 <h3>4th Down...Choose an Option</h3>
 <div class="wrapper">
 	<button
-		class="point-button"
+		class="game-button"
 		on:click={() => {
 			buttonSfx.play();
 			saveFourthDown(GAME_ACTION.OFFENSE);
@@ -25,7 +25,7 @@
 	</button>
 	{#if inFieldGoalRange}
 		<button
-			class="point-button"
+			class="game-button"
 			on:click={() => {
 				buttonSfx.play();
 				toggleFieldGoal();
@@ -35,7 +35,7 @@
 		</button>
 	{/if}
 	<button
-		class="point-button"
+		class="game-button"
 		on:click={() => {
 			buttonSfx.play();
 			saveFourthDown(GAME_ACTION.PUNT);
@@ -47,19 +47,19 @@
 
 <style>
 	h3 {
-		color: var(--black);
+		color: var(--color-offblack);
 		text-align: center;
 	}
+
+	button {
+		margin: 0;
+		min-width: 8rem;
+		min-height: 3rem;
+	}
+
 	.wrapper {
 		display: flex;
 		justify-content: center;
 		gap: 0.25rem;
-	}
-	.point-button {
-		margin: 0;
-		min-width: 8rem;
-		min-height: 3rem;
-		cursor: pointer;
-		font-family: inherit;
 	}
 </style>

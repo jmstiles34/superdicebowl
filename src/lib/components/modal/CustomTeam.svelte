@@ -8,14 +8,14 @@
 	export let close: (id: string) => void;
 	export let customTeamId: string;
 	import '@fontsource/bebas-neue';
+	import { hexToHsl, hslToHex } from '$lib/utils/common';
 
-	let bg = '#ffffff';
-	let faceMask = '#d8d8d8';
-	let helmet = '#4682b4';
-	let stripe = '#ffffff';
-	let trim = '#002244';
-	let primary = '#002244';
-	let secondary = '#4682b4';
+	let faceMask = 'hsl(0 0% 85% / 1)';
+	let helmet = 'hsl(207 44% 49% / 1)';
+	let stripe = 'hsl(0 100% 100% / 1)';
+	let trim = 'hsl(210 100% 13% / 1)';
+	let primary = 'hsl(210 100% 13% / 1)';
+	let secondary = 'hsl(207 44% 49% / 1)';
 	let logo = '';
 	let logoTransform = '';
 	let city = '';
@@ -25,19 +25,17 @@
 	const sortedLogos = logos.sort((a, b) => (a.name > b.name ? 1 : -1));
 
 	onMount(() => {
-		if (customTeamId) {
-			const team: Team = getTeam();
-			faceMask = team.colors.faceMask || faceMask;
-			helmet = team.colors.helmet || helmet;
-			stripe = team.colors.stripe || stripe;
-			trim = team.colors.trim || trim;
-			primary = team.colors.primary;
-			secondary = team.colors.secondary;
-			logo = team.logo || logo;
-			logoTransform = team.logoTransform || '';
-			city = team.city;
-			name = team.name;
-		}
+		const team: Team = getTeam();
+		faceMask = hslToHex(team.colors.faceMask || faceMask);
+		helmet = hslToHex(team.colors.helmet || helmet);
+		stripe = hslToHex(team.colors.stripe || stripe);
+		trim = hslToHex(team.colors.trim || trim);
+		primary = hslToHex(team.colors.primary || primary);
+		secondary = hslToHex(team.colors.secondary || secondary);
+		logo = team.logo || logo;
+		logoTransform = team.logoTransform || '';
+		city = team.city;
+		name = team.name;
 	});
 
 	function getTeam() {
@@ -73,16 +71,17 @@
 				city,
 				isCustom: true,
 				cityKey: city.substring(0, 3).toUpperCase(),
+				fieldLogo: logo,
 				logo,
 				logoTransform,
 				name,
 				colors: {
-					primary,
-					secondary,
-					helmet,
-					faceMask,
-					stripe,
-					trim
+					primary: hexToHsl(primary),
+					secondary: hexToHsl(secondary),
+					helmet: hexToHsl(helmet),
+					faceMask: hexToHsl(faceMask),
+					stripe: hexToHsl(stripe),
+					trim: hexToHsl(trim)
 				}
 			};
 			let teamsToKeep = lsTeams.filter(({ id }) => id !== customTeamId);
@@ -97,12 +96,12 @@
 	<div class="form-row">
 		<div class="helmet">
 			<CustomHelmet
-				{bg}
 				{faceMask}
 				{helmet}
 				{stripe}
 				{trim}
 				{logo}
+				logoFixed={false}
 				{logoTransform}
 				setTransform={(t) => (logoTransform = t)}
 				canCustomize={true}
@@ -186,7 +185,7 @@
 
 <style>
 	h3 {
-		color: var(--black);
+		color: var(--color-offblack);
 		text-align: center;
 	}
 	.button-row {
@@ -199,10 +198,10 @@
 		flex-direction: column;
 	}
 	.error {
-		border-color: var(--error);
+		border-color: var(--urgent);
 	}
 	.form-label {
-		color: var(--black);
+		color: var(--color-offblack);
 		font-family: inherit;
 		width: 5.1rem;
 		text-align: right;
@@ -216,14 +215,14 @@
 	.divider {
 		width: 95%;
 		margin: 4px 0 4px auto;
-		border-bottom: 2px dotted var(--ltblue);
+		border-bottom: 2px dotted var(--color-blue-300);
 	}
 	.helmet {
 		margin: -20px auto 0 auto;
-		width: 250px;
+		width: 275px;
 	}
 	.notes {
-		color: var(--black);
+		color: var(--color-offblack);
 		font-size: 0.75rem;
 		font-style: italic;
 		padding: 4px;
@@ -233,6 +232,9 @@
 		cursor: pointer;
 		font-family: 'Bebas Neue';
 		font-size: 1.5rem;
+		padding: 0.25em;
+		text-align: center;
+		border-radius: var(--border-radius);
 	}
 	.delete-button {
 		margin: 0;
@@ -240,12 +242,14 @@
 		cursor: pointer;
 		font-family: 'Bebas Neue';
 		background-color: transparent;
-		color: var(--error);
+		color: var(--urgent);
 		font-size: 2rem;
 		padding: 0;
-		border: 1px solid var(--error);
+		text-align: center;
+		border: 1px solid var(--urgent);
+		border-radius: var(--border-radius);
 	}
 	.delete-button:hover {
-		background-color: #fad2dc;
+		background-color: var(--urgent-hover);
 	}
 </style>

@@ -40,6 +40,7 @@ export interface Team {
 	cityKey: string;
 	colors: Colors;
 	isCustom?: boolean;
+	fieldLogo?: string;
 	logo?: string;
 	logoFixed?: boolean;
 	logoLeft?: string;

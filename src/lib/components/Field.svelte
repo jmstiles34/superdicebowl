@@ -1,13 +1,7 @@
 <script lang="ts">
 	import '@fontsource/abril-fatface';
 	import { fieldData } from '$lib/data/data.json';
-	import {
-		BALL_KICK_GOOD,
-		GAME_ACTION,
-		POSITION,
-		TEAM,
-		YARD_INTERVAL
-	} from '$lib/constants/constants';
+	import { BALL_KICK_GOOD, POSITION, TEAM, YARD_INTERVAL } from '$lib/constants/constants';
 	import EndZone from '$lib/components/Endzone.svelte';
 	import { randomNumber } from '$lib/utils/common';
 	import type { Team, Void } from '$lib/types';
@@ -33,12 +27,13 @@
 
 <div class="field-wrapper">
 	<div class="fieldLogo">
-		<img
-			alt={`${homeTeam.city} ${homeTeam.name} Logo`}
-			src={`/logos/${
-				homeTeam.hasOwnProperty('isCustom') ? `custom/${homeTeam.logo}` : homeTeam.name
-			}.webp`}
-		/>
+		<picture>
+			<!-- <source type="image/avif" srcset={`/logos/${homeTeam.fieldLogo}.avif`} /> -->
+			<img
+				alt={`${homeTeam.city} ${homeTeam.name} Logo`}
+				src={`/logos/${homeTeam.fieldLogo}.webp`}
+			/>
+		</picture>
 	</div>
 	<div class="field-grid">
 		<EndZone
@@ -100,7 +95,52 @@
 <style>
 	.field-wrapper {
 		margin: 0 auto;
-		background-color: var(--field);
+		background-image: linear-gradient(
+			90deg,
+			white 0%,
+			white 9.99%,
+			var(--field-odd) 10%,
+			var(--field-odd) 13.99%,
+			var(--field-even) 14%,
+			var(--field-even) 17.99%,
+			var(--field-odd) 18%,
+			var(--field-odd) 21.99%,
+			var(--field-even) 22%,
+			var(--field-even) 25.99%,
+			var(--field-odd) 26%,
+			var(--field-odd) 29.99%,
+			var(--field-even) 30%,
+			var(--field-even) 33.99%,
+			var(--field-odd) 34%,
+			var(--field-odd) 37.99%,
+			var(--field-even) 38%,
+			var(--field-even) 41.99%,
+			var(--field-odd) 42%,
+			var(--field-odd) 45.99%,
+			var(--field-even) 46%,
+			var(--field-even) 49.99%,
+			var(--field-odd) 50%,
+			var(--field-odd) 53.99%,
+			var(--field-even) 54%,
+			var(--field-even) 57.99%,
+			var(--field-odd) 58%,
+			var(--field-odd) 61.99%,
+			var(--field-even) 62%,
+			var(--field-even) 65.99%,
+			var(--field-odd) 66%,
+			var(--field-odd) 69.99%,
+			var(--field-even) 70%,
+			var(--field-even) 73.99%,
+			var(--field-odd) 74%,
+			var(--field-odd) 77.99%,
+			var(--field-even) 78%,
+			var(--field-even) 81.99%,
+			var(--field-odd) 82%,
+			var(--field-odd) 85.99%,
+			var(--field-even) 86%,
+			var(--field-even) 89.99%,
+			white 40%
+		);
 	}
 
 	.field-grid {
@@ -119,10 +159,10 @@
 		left: 50%;
 		max-width: 16%;
 		transform: translate(-50%, -50%);
-	}
-	.fieldLogo img {
-		width: 100%;
-		opacity: 0.8;
+		& img {
+			width: 100%;
+			opacity: 0.8;
+		}
 	}
 	.football {
 		position: absolute;
@@ -131,24 +171,25 @@
 		left: 50%;
 		z-index: 10;
 		width: 4.5%;
-	}
-	.football img {
-		width: 100%;
-		transition: all 0.5s ease-in-out;
+		& img {
+			width: 100%;
+			transition: all 0.5s ease-in-out;
+			filter: drop-shadow(3px 6px 8px hsl(0deg 0% 0% / 0.5));
+		}
 	}
 	.yardsAway {
-		border-top: 2px solid var(--white);
-		border-bottom: 2px solid var(--white);
-		border-left: 1px solid var(--white);
+		border-top: 2px solid var(--color-white);
+		border-bottom: 2px solid var(--color-white);
+		border-left: 1px solid var(--color-white);
 	}
 	.yardsHome {
-		border-top: 2px solid var(--white);
-		border-bottom: 2px solid var(--white);
-		border-right: 1px solid var(--white);
+		border-top: 2px solid var(--color-white);
+		border-bottom: 2px solid var(--color-white);
+		border-right: 1px solid var(--color-white);
 	}
 	.fieldNumber {
 		position: absolute;
-		color: var(--white);
+		color: var(--color-white);
 		font-size: clamp(0.5rem, 0.225rem + 2.4vw, 1.5rem);
 		font-family: 'Abril Fatface', sans-serif;
 		opacity: 0.95;
@@ -187,11 +228,11 @@
 		opacity: 0;
 		transform: translate(-50%);
 		z-index: 10;
-		color: var(--yellow);
+		color: var(--color-yellow);
 		font-size: 1rem;
 		font-family: inherit;
 		top: 53%;
-		filter: drop-shadow(0 0 0.4rem #125618) drop-shadow(0 0 0.4rem #125618);
+		filter: drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.5));
 	}
 	.showDownDistance {
 		opacity: 1;
@@ -200,17 +241,17 @@
 		transition-delay: 0.75s;
 	}
 	.firstDownLeft {
-		border-right: 2px solid var(--yellow);
+		border-right: 2px solid var(--color-yellow);
 	}
 	.firstDownRight {
-		border-left: 2px solid var(--yellow);
+		border-left: 2px solid var(--color-yellow);
 	}
 	.hashes {
 		position: absolute;
 		left: 15%;
 		right: 0;
 		height: 3%;
-		background: -webkit-linear-gradient(left, var(--white) 25%, transparent 25%);
+		background: -webkit-linear-gradient(left, var(--color-white) 25%, transparent 25%);
 		background-size: 25% 100%;
 	}
 	.first-mid.hashes {

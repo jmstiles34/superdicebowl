@@ -4,7 +4,6 @@
 	import { settings } from '$lib/stores/Settings';
 	import '../styles.css';
 	import '@fontsource/bebas-neue';
-	import logo from '$lib/images/sdb-logo.png';
 	import soundOn from '$lib/images/volume-high.svg';
 	import soundOff from '$lib/images/volume-xmark.svg';
 	export let data;
@@ -14,30 +13,29 @@
 
 <svelte:head>
 	<title>{$page.data.title ?? 'SuperDiceBowl'}</title>
-	<meta name="description" content="Football at the Roll of a Dice" />
+	<meta name="description" content="Football at the Roll of the Dice" />
 </svelte:head>
 
 <nav>
-	<div class="logo">
-		<div>
-			<a href="/">
-				<img class="logo-image" alt="SuperDiceBowl" src={logo} />
-			</a>
-		</div>
-		<div class="logo-text">
-			<a href="/">Super&middot;Dice&middot;Bowl</a>
-		</div>
-	</div>
+	<a class="logo-wrapper" href="/">
+		<picture>
+			<source type="image/avif" srcset="/sdb-logo.avif" />
+			<source type="image/webp" srcset="/sdb-logo.webp" />
+			<img alt="SuperDiceBowl" src="/sdb-logo.png" />
+		</picture>
+		<h1>Super&middot;Dice&middot;Bowl</h1>
+	</a>
 
-	<div class="links">
+	<div class="menu-wrapper">
 		{#if data.hasOwnProperty('user')}
 			<form method="POST" action="/logout" use:enhance>
 				<button>Log out</button>
 			</form>
 		{:else}
-			<a href="/login">Log in</a>
-			<a href="/signup">Sign up</a>
+			<a class="link" href="/login">Log in</a>
+			<a class="link" href="/signup">Sign up</a>
 		{/if}
+
 		<button
 			class="volumeButton"
 			on:click={settings.toggleVolume}
@@ -64,44 +62,26 @@
 	nav,
 	footer {
 		margin: 0 auto;
-		padding: 1rem;
+		padding: 8px 16px;
 	}
 
 	nav {
-		color: var(--ivory);
-		display: flex;
-		width: 100%;
-		height: 3rem;
+		display: grid;
+		grid-template-columns: auto 1fr;
 		align-items: center;
-		justify-content: space-between;
+		width: 100%;
 		max-width: var(--column);
-		z-index: 100;
 	}
 
-	footer {
-		display: flex;
-		height: 2rem;
-		align-items: center;
-		color: var(--gray);
-		font-size: 0.75rem;
+	h1 {
+		font-family: 'Bebas Neue', sans-serif;
+		margin: 0;
 	}
 
 	a {
-		text-decoration: none;
-	}
-
-	button {
-		background: none;
-		border: none;
-		font-family: inherit;
-		font-size: inherit;
-		color: inherit;
-		cursor: pointer;
-	}
-
-	.links {
-		display: flex;
-		align-items: center;
+		color: var(--color-white);
+		font-weight: 500;
+		text-wrap: nowrap;
 	}
 
 	main {
@@ -114,43 +94,46 @@
 		display: none;
 	}
 
-	.links {
+	footer {
 		display: flex;
-		gap: 1em;
-		white-space: nowrap;
+		height: 2rem;
+		align-items: center;
+		color: var(--color-gray-300);
+		font-size: var(--12px);
 	}
-	.logo {
+
+	.logo-wrapper {
 		display: flex;
-		flex-direction: row;
-		gap: 0.5em;
+		gap: 8px;
 		align-items: center;
 	}
 
-	.logo-image {
-		height: 2.5em;
-		width: 2.5em;
+	.logo-wrapper img {
+		height: 2.5rem;
 	}
 
-	.logo-text {
-		font-family: 'Bebas Neue', sans-serif;
-		font-size: 1.5rem;
+	.menu-wrapper {
+		display: flex;
+		gap: 16px;
+		justify-content: end;
 	}
 
 	.volumeButton {
-		cursor: pointer;
 		padding: 0;
-		margin: auto 0;
+		background: none;
+		margin-top: -2px;
 	}
+
 	.volumeButton img {
-		height: 1.5em;
-		width: 1.5em;
+		height: 1.5rem;
+		width: 1.5rem;
 	}
 
 	@media (max-height: 30rem) {
 		footer,
 		nav {
 			height: 0;
-			padding: 0.25rem var(--side);
+			padding: 4px var(--side);
 			visibility: collapse;
 		}
 	}

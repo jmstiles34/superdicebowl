@@ -11,7 +11,7 @@
 <h3>Choose a Conversion Option</h3>
 <div class="wrapper">
 	<button
-		class="point-button"
+		class="game-button"
 		on:click={() => {
 			buttonSfx.play();
 			savePointOption(GAME_ACTION.EXTRA_POINT);
@@ -20,7 +20,7 @@
 		{CONVERSION.EXTRA_POINT_ATTEMPT}
 	</button>
 	<button
-		class="point-button"
+		class="game-button"
 		on:click={() => {
 			buttonSfx.play();
 			savePointOption(GAME_ACTION.TWO_POINT);
@@ -32,19 +32,17 @@
 
 <style>
 	h3 {
-		color: var(--black);
+		color: var(--color-offblack);
 		text-align: center;
+	}
+	button {
+		margin: 0 1em;
+		min-width: 8rem;
+		min-height: 3rem;
 	}
 	.wrapper {
 		display: flex;
 		align-items: center;
 		gap: 0.4rem;
-	}
-	.point-button {
-		margin: 0 1em;
-		min-width: 8rem;
-		min-height: 3rem;
-		cursor: pointer;
-		font-family: inherit;
 	}
 </style>

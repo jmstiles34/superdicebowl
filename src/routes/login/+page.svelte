@@ -1,9 +1,10 @@
-<script lang="ts">
-	import construction from '$lib/images/under-construction.gif';
-</script>
-
 <div class="container">
-	<img class="construction-icon" alt="Construction Icon" src={construction} />
+	<picture>
+		<source type="image/avif" srcset="/images/under-construction.avif" />
+		<source type="image/webp" srcset="/images/under-construction.webp" />
+		<img class="construction-icon" alt="Construction Icon" src="/images/under-construction.gif" />
+	</picture>
+
 	<div>
 		<h1>Under Construction</h1>
 		<p>We're working on something amazing! Please check back soon.</p>
@@ -28,6 +29,6 @@
 	}
 
 	.construction-icon {
-		height: 6rem;
+		height: 96px;
 	}
 </style>

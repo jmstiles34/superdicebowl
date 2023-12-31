@@ -20,12 +20,18 @@
 		secondaryColor,
 		showDownDistance
 	} from '$lib/utils/game';
-	import { BALL_FIELD_GOAL, DOWN, GAME_ACTION, GAME_MODE, TEAM } from '$lib/constants/constants';
+	import {
+		BALL_FIELD_GOAL,
+		DOWN,
+		GAME_ACTION,
+		GAME_MODE,
+		NOOP,
+		TEAM
+	} from '$lib/constants/constants';
 	import Dice from '$lib/components/Dice.svelte';
 	import CoinToss from '$lib/components/modal/CoinToss.svelte';
 	import Field from '$lib/components/Field.svelte';
 	import FourthDown from '$lib/components/modal/FourthDown.svelte';
-	import GameModal from '$lib/components/GameModal.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import PointOption from '$lib/components/modal/PointOption.svelte';
 	import Scores from '$lib/components/Scores.svelte';
@@ -33,6 +39,11 @@
 	import exit from '$lib/images/exit.svg';
 	import summary from '$lib/images/summary.svg';
 	import ConfirmExit from '$lib/components/modal/ConfirmExit.svelte';
+	const modalActions = [
+		GAME_ACTION.COIN_TOSS,
+		GAME_ACTION.FOURTH_DOWN_OPTIONS,
+		GAME_ACTION.POINT_OPTION
+	];
 
 	const { awayTeam, homeTeam, mode, winScore } = $settings;
 	$: ({
@@ -168,8 +179,8 @@
 				<div class="dice-container">
 					<div class="action">{action}</div>
 					<Dice
-						dieColor={primaryColor($settings, possession)}
-						pipColor={secondaryColor($settings, possession)}
+						dieColor={primaryColor($settings, possession) || '#FFF'}
+						pipColor={secondaryColor($settings, possession) || '000'}
 					/>
 					{#if restrictDice || (mode === GAME_MODE.SOLO && possession === TEAM.AWAY)}
 						<div class="dice-block" />
@@ -198,7 +209,12 @@
 			{/if}
 		</div>
 
-		<Modal showModal={showGameSummary} close={toggleGameSummary} hasClose={true}>
+		<Modal
+			showModal={showGameSummary}
+			close={toggleGameSummary}
+			hasClose={true}
+			choiceRequired={false}
+		>
 			<GameSummary
 				{awayTeam}
 				{homeTeam}
@@ -207,11 +223,16 @@
 			/>
 		</Modal>
 
-		<Modal showModal={equals(action, GAME_ACTION.EXIT)} close={cancelExit} hasClose={true}>
+		<Modal
+			showModal={equals(action, GAME_ACTION.EXIT)}
+			close={cancelExit}
+			hasClose={true}
+			choiceRequired={false}
+		>
 			<ConfirmExit />
 		</Modal>
 
-		<GameModal {action} on:click={game.clearModal}>
+		<Modal showModal={modalActions.includes(action)} close={NOOP} on:click={game.clearModal}>
 			<div class="model-content">
 				{#if equals(action, GAME_ACTION.COIN_TOSS)}
 					<CoinToss saveCoinToss={game.saveCoinToss} />
@@ -227,7 +248,7 @@
 					/>
 				{/if}
 			</div>
-		</GameModal>
+		</Modal>
 	</main>
 {/if}
 
@@ -272,7 +293,7 @@
 		transform: scale(-1, 1);
 	}
 	.divider {
-		color: var(--steelblue);
+		color: var(--color-blue-500);
 		font-weight: bold;
 		font-size: 1.25rem;
 	}
@@ -280,14 +301,15 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		background-color: var(--smoke);
-		border: 1px solid var(--white);
+		background-color: var(--color-gray-900);
+		border: 1px solid var(--color-white);
 		border-radius: 1rem;
 		padding: 0.25rem 0.5rem;
 		z-index: 100;
+		filter: drop-shadow(3px 6px 8px hsl(0deg 0% 0% / 0.5));
 	}
 	.action {
-		color: var(--white);
+		color: var(--color-white);
 		font-family: inherit;
 		font-size: 0.9rem;
 		white-space: nowrap;
@@ -298,7 +320,7 @@
 		top: 0;
 		height: 100%;
 		width: 100%;
-		background-color: var(--black);
+		background-color: var(--color-offblack);
 		opacity: 0.2;
 	}
 	.scores {
