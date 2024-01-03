@@ -181,13 +181,13 @@
 		<div class="grid-container">
 			<!-- Row 1 -->
 			<div
-				class="grid-item team"
+				class="grid-item"
 				style={`
                 background-color: ${homeTeam.colors.primary};
                 color: ${homeTeam.colors.secondary};
             `}
 			>
-				{homeTeam.name}
+				<div class="team">{homeTeam.name}</div>
 			</div>
 			<div class="grid-item vs">vs</div>
 			<div
@@ -197,7 +197,7 @@
                 color: ${awayTeam.colors.secondary};
             `}
 			>
-				{awayTeam.name}
+				<div class="team">{awayTeam.name}</div>
 			</div>
 
 			<!-- Row 2 -->
@@ -248,23 +248,19 @@
 				<!-- Row 1 -->
 				<div class="grid-item score" />
 				<div
-					class="grid-item"
+					class="grid-item city-key"
 					style={`
                     background-color: ${homeTeam.colors.primary};
                     color: ${homeTeam.colors.secondary};
-										font-family: 'Bebas Neue';
-										font-size: 1.35rem;
                 `}
 				>
 					{homeTeam.cityKey}
 				</div>
 				<div
-					class="grid-item"
+					class="grid-item city-key"
 					style={`
                     background-color: ${awayTeam.colors.primary};
                     color: ${awayTeam.colors.secondary};
-										font-family: 'Bebas Neue';
-										font-size: 1.35rem;
                 `}
 				>
 					{awayTeam.cityKey}
@@ -379,6 +375,12 @@
 		font-weight: 700;
 		font-family: 'Bebas Neue';
 		font-size: var(--24px);
+		transform: translateY(1.5px);
+	}
+	.city-key {
+		font-family: 'Bebas Neue';
+		font-size: 1.35rem;
+		transform: translateY(1.5px);
 	}
 	.teamLogo {
 		width: 32px;
@@ -402,6 +404,9 @@
 		border: 1px solid var(--color-gray-200);
 	}
 	.statName {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		color: var(--color-gray-900);
 		font-size: var(--12px);
 	}

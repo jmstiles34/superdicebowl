@@ -1,5 +1,4 @@
 import convert from 'color-convert';
-import type { HSL } from 'color-convert/conversions';
 
 export function add(a: number, b: number) {
 	return a + b;

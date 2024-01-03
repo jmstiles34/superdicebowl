@@ -5,7 +5,7 @@
 		<img class="construction-icon" alt="Construction Icon" src="/images/under-construction.gif" />
 	</picture>
 	<div>
-		<h1>Under Construction</h1>
+		<h2>Under Construction</h2>
 		<p>We're working on something amazing! Please check back soon.</p>
 	</div>
 </div>
@@ -19,12 +19,12 @@
 		gap: 1rem;
 	}
 
-	h1 {
-		color: #333;
+	h2 {
+		color: var(--color-blue-500);
 	}
 
 	p {
-		color: #666;
+		color: var(--color-gray-400);
 	}
 
 	.construction-icon {
