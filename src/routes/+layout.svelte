@@ -54,7 +54,7 @@
 
 <footer>
 	<p>
-		&copy;{currentYear} SuperDiceBowl.com v0.1.4
+		&copy;{currentYear} SuperDiceBowl.com v0.1.5
 	</p>
 </footer>
 
