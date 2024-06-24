@@ -10,28 +10,47 @@
 	import type { Team, Void } from '$lib/types';
 	import '@fontsource/bebas-neue';
 
-	export let hasBall = false;
-	export let inFieldGoalRange = false;
-	export let position = POSITION.LEFT;
-	export let team: Team = DEFAULT_TEAM;
-	export let toggleFieldGoal: Void;
-	let screenSize: number;
-	let logoWidth = 64 / 2.6;
-	const { primary, secondary, faceMask, helmet, stripe, trim } = team.colors;
+	type EndZoneProps = {
+		hasBall: boolean;
+		inFieldGoalRange: boolean;
+		position: string;
+		team: Team;
+		toggleFieldGoal: Void;
+	};
+	let {
+		hasBall = false,
+		inFieldGoalRange = false,
+		position = POSITION.LEFT,
+		team = DEFAULT_TEAM,
+		toggleFieldGoal
+	}: EndZoneProps = $props();
 
-	$: allowFieldGoal = hasBall && inFieldGoalRange;
-	$: if (screenSize) {
-		if (screenSize >= 900) {
-			logoWidth = 64 / 2.6;
+	const {
+		primary = '',
+		secondary = '',
+		faceMask = '',
+		helmet = '',
+		stripe = '',
+		trim = ''
+	} = team.colors;
+
+	let allowFieldGoal = $derived(hasBall && inFieldGoalRange);
+
+	const setLogoWidth = (ss: number | undefined) => {
+		if (ss) {
+			if (ss <= 640) {
+				return 48 / 4.2;
+			}
+			if (ss > 640 && ss < 900) {
+				return 48 / 2.8;
+			}
 		}
-		if (screenSize <= 640) {
-			logoWidth = 48 / 4.2;
-		}
-		if (screenSize > 640 && screenSize < 900) {
-			logoWidth = 48 / 2.8;
-		}
-	}
-	$: scaledTransform = scaleTranslate(team.logoTransform, logoWidth);
+
+		return 64 / 2.6;
+	};
+	let screenSize: number | undefined = $state(undefined);
+	let logoWidth: number = $derived(setLogoWidth(screenSize));
+	let scaledTransform = $derived(scaleTranslate(team.logoTransform, logoWidth));
 
 	function scaleTranslate(tf: string = '', logoWidth: number) {
 		/* console.log({ start: tf }); */
@@ -66,7 +85,7 @@
 
 <div class="endZone" style={`background-color: ${primary};`}>
 	<div class="endZoneElements">
-		<div />
+		<div></div>
 		<div class={`helmetLogo rotate${position}`} class:flipLeft={position === POSITION.LEFT}>
 			<CustomHelmet
 				{faceMask}
@@ -74,9 +93,9 @@
 				{stripe}
 				{trim}
 				direction={position === POSITION.LEFT ? POSITION.LEFT : POSITION.RIGHT}
-				logo={team.logo}
-				logoLeft={team.logoLeft}
-				logoFixed={position === POSITION.LEFT && team.logoFixed}
+				logo={team.logo || ''}
+				logoLeft={team.logoLeft || ''}
+				logoFixed={(position === POSITION.LEFT && team.logoFixed) || false}
 				logoTransform={scaledTransform || ''}
 				{logoWidth}
 				setTransform={NOOP}
@@ -101,29 +120,29 @@
 				{stripe}
 				{trim}
 				direction={position === POSITION.LEFT ? POSITION.RIGHT : POSITION.LEFT}
-				logo={team.logo}
-				logoLeft={team.logoLeft}
-				logoFixed={position === POSITION.RIGHT && team.logoFixed}
+				logo={team.logo || ''}
+				logoLeft={team.logoLeft || ''}
+				logoFixed={(position === POSITION.RIGHT && team.logoFixed) || false}
 				logoTransform={scaledTransform || ''}
 				{logoWidth}
 				setTransform={NOOP}
 				size={HELMET_SIZE.SMALL}
 			/>
 		</div>
-		<div />
+		<div></div>
 	</div>
 	<div
 		class="goalPost"
 		class:right={position === POSITION.RIGHT}
 		class:clickable={allowFieldGoal}
-		on:click={allowFieldGoal ? () => toggleFieldGoal() : NOOP}
-		on:keydown={allowFieldGoal ? () => toggleFieldGoal() : NOOP}
+		onclick={allowFieldGoal ? () => toggleFieldGoal() : NOOP}
+		onkeydown={allowFieldGoal ? () => toggleFieldGoal() : NOOP}
 		role="button"
 		tabindex="0"
 	>
-		<div class="post" class:pulse={allowFieldGoal} />
-		<div class="bar" class:pulse={allowFieldGoal} />
-		<div class="post" class:pulse={allowFieldGoal} />
+		<div class="post" class:pulse={allowFieldGoal}></div>
+		<div class="bar" class:pulse={allowFieldGoal}></div>
+		<div class="post" class:pulse={allowFieldGoal}></div>
 	</div>
 </div>
 

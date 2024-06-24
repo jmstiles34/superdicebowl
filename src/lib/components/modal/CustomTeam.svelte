@@ -5,22 +5,27 @@
 	import { logos } from '$lib/data/logos.json';
 	import type { Team } from '$lib/types';
 	import { DEFAULT_TEAM } from '$lib/constants/constants';
-	export let close: (id: string) => void;
-	export let customTeamId: string;
 	import '@fontsource/bebas-neue';
 	import { hexToHsl, hslToHex } from '$lib/utils/common';
 
-	let faceMask = 'hsl(0 0% 85% / 1)';
-	let helmet = 'hsl(207 44% 49% / 1)';
-	let stripe = 'hsl(0 100% 100% / 1)';
-	let trim = 'hsl(210 100% 13% / 1)';
-	let primary = 'hsl(210 100% 13% / 1)';
-	let secondary = 'hsl(207 44% 49% / 1)';
-	let logo = '';
-	let logoTransform = '';
-	let city = '';
-	let name = '';
-	let errors: string[] = [];
+	type CustomTeamProps = {
+		close: (id: string) => void;
+		customTeamId: string;
+	};
+
+	let { close, customTeamId }: CustomTeamProps = $props();
+
+	let faceMask = $state('hsl(0 0% 85% / 1)');
+	let helmet = $state('hsl(207 44% 49% / 1)');
+	let stripe = $state('hsl(0 100% 100% / 1)');
+	let trim = $state('hsl(210 100% 13% / 1)');
+	let primary = $state('hsl(210 100% 13% / 1)');
+	let secondary = $state('hsl(207 44% 49% / 1)');
+	let logo = $state('');
+	let logoTransform = $state('');
+	let city = $state('');
+	let name = $state('');
+	let errors: string[] = $state([]);
 	let lsTeams = loadTeams();
 	const sortedLogos = logos.sort((a, b) => (a.name > b.name ? 1 : -1));
 
@@ -134,7 +139,7 @@
 				/>
 			</div>
 
-			<div class="divider" />
+			<div class="divider"></div>
 
 			<div class="form-row">
 				<label class="form-label" for="logo">Logo:</label>
@@ -158,7 +163,7 @@
 				<input type="color" id="trim" bind:value={trim} />
 			</div>
 
-			<div class="divider" />
+			<div class="divider"></div>
 
 			<div class="form-row">
 				<label class="form-label" for="secondaryColor">Endzone:</label>
@@ -169,12 +174,12 @@
 
 			<div class="button-row">
 				{#if customTeamId}
-					<button class="delete-button" on:click={deleteTeam} title="Delete"> X </button>
+					<button class="delete-button" onclick={deleteTeam} title="Delete"> X </button>
 				{/if}
 				<button
 					class="save-button"
 					style={`color: ${secondary}; background-color: ${primary}`}
-					on:click={saveTeam}
+					onclick={saveTeam}
 				>
 					Save Custom Team
 				</button>

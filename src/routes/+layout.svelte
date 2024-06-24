@@ -6,8 +6,8 @@
 	import '@fontsource/bebas-neue';
 	import soundOn from '$lib/images/volume-high.svg';
 	import soundOff from '$lib/images/volume-xmark.svg';
-	export let data;
 
+	let { children, data } = $props();
 	const currentYear = new Date().getFullYear();
 </script>
 
@@ -38,8 +38,8 @@
 
 		<button
 			class="volumeButton"
-			on:click={settings.toggleVolume}
-			on:keypress={settings.toggleVolume}
+			onclick={settings.toggleVolume}
+			onkeypress={settings.toggleVolume}
 			tabindex="0"
 			title={$settings.volume ? 'Mute sounds' : 'Play sounds'}
 		>
@@ -49,7 +49,7 @@
 </nav>
 
 <main>
-	<slot />
+	{@render children()}
 </main>
 
 <footer>

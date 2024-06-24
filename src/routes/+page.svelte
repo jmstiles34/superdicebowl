@@ -6,58 +6,56 @@
 	import { GAME_MODE, TEAM } from '$lib/constants/constants';
 	import TeamSelect from '$lib/components/TeamSelect.svelte';
 	import { beginDisabled } from '$lib/utils/game';
-	import { sleep } from '$lib/utils/common';
+	import { playSound, sleep } from '$lib/utils/common';
 	import { Sound } from 'svelte-sound';
 	import gust from '$lib/assets/sfx/gust.mp3';
 	import tackle from '$lib/assets/sfx/tackle.mp3';
 	import tap from '$lib/assets/sfx/tap.mp3';
 
-	$: gustSfx = new Sound(gust, { volume: $settings.volume });
-	$: tackleSfx = new Sound(tackle, { volume: $settings.volume });
-	$: tapSfx = new Sound(tap, { volume: $settings.volume });
+	const gustSfx: Sound = new Sound(gust);
+	const tackleSfx: Sound = new Sound(tackle);
+	const tapSfx: Sound = new Sound(tap);
 
 	onMount(() => {
 		settings.resetTeams();
 		game.reset();
 	});
-	let winScore = $settings.winScore;
-	$: settings.updateScore(winScore);
 
-	function beginGame() {
-		tackleSfx.play();
+	const beginGame = () => {
+		playSound(tackleSfx, $settings.volume);
 		sleep(1000).then(() => goto('/game'));
-	}
+	};
+
+	const handleScoreChange = (e: Event) => {
+		const { value } = e.currentTarget as HTMLSelectElement;
+		settings.updateScore(parseInt(value));
+	};
 </script>
+
+{#snippet modeButton(mode, text)}
+	<button
+		class="game-button mode-button"
+		class:mode-selected={$settings.mode === mode}
+		onclick={() => {
+			playSound(tapSfx, $settings.volume);
+			settings.updateMode(mode);
+		}}
+	>
+		{text}
+	</button>
+{/snippet}
 
 <main>
 	<div class="mode-row">
-		<button
-			class="game-button mode-button"
-			class:mode-selected={$settings.mode === GAME_MODE.SOLO}
-			on:click={() => {
-				tapSfx.play();
-				settings.updateMode(GAME_MODE.SOLO);
-			}}
-		>
-			Solo Play
-		</button>
-		<button
-			class="game-button mode-button"
-			class:mode-selected={$settings.mode === GAME_MODE.HEAD_TO_HEAD}
-			on:click={() => {
-				tapSfx.play();
-				settings.updateMode(GAME_MODE.HEAD_TO_HEAD);
-			}}
-		>
-			Head-to-Head
-		</button>
+		{@render modeButton(GAME_MODE.SOLO, 'Solo Play')}
+		{@render modeButton(GAME_MODE.HEAD_TO_HEAD, 'Head-to-Head')}
 	</div>
 
 	<div class="team-select">
 		<TeamSelect
 			opponentId={$settings.awayTeam.id}
 			saveTeam={(team) => {
-				gustSfx.play();
+				playSound(gustSfx, $settings.volume);
 				settings.updateHomeTeam(team);
 			}}
 			team={$settings.homeTeam}
@@ -67,7 +65,7 @@
 		<TeamSelect
 			opponentId={$settings.homeTeam.id}
 			saveTeam={(team) => {
-				gustSfx.play();
+				playSound(gustSfx, $settings.volume);
 				settings.updateAwayTeam(team);
 			}}
 			team={$settings.awayTeam}
@@ -78,7 +76,12 @@
 	<div class="begin-row">
 		<div class="score-select">
 			<label class="score-label" for="winScore">Win Score:</label>
-			<select id="winScore" class="win-score" bind:value={winScore}>
+			<select
+				id="winScore"
+				class="win-score"
+				value={$settings.winScore}
+				onchange={handleScoreChange}
+			>
 				{#each Array(99) as _, i}
 					<option value={i + 1}>{i + 1}</option>
 				{/each}
@@ -87,7 +90,7 @@
 			<button
 				class="game-button"
 				disabled={beginDisabled([$settings.awayTeam.id, $settings.homeTeam.id])}
-				on:click={beginGame}
+				onclick={beginGame}
 			>
 				Let's Roll!
 			</button>
@@ -129,7 +132,6 @@
 		margin: auto 0;
 		white-space: nowrap;
 	}
-
 	.score-select {
 		display: flex;
 		gap: 8px;

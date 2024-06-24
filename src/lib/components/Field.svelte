@@ -6,23 +6,43 @@
 	import { randomNumber } from '$lib/utils/common';
 	import type { Team, Void } from '$lib/types';
 
-	export let awayTeam: Team;
-	export let ballIndex: number;
-	export let downToGo: string;
-	export let firstDownIndex: number;
-	export let homeTeam: Team;
-	export let inFieldGoalRange: boolean;
-	export let missedKick: boolean;
-	export let onsideKick: boolean;
-	export let possession: string;
-	export let showDownDistance: boolean;
-	export let toggleFieldGoal: Void;
+	type FieldProps = {
+		awayTeam: Team;
+		ballIndex: number;
+		downToGo: string;
+		firstDownIndex: number;
+		homeTeam: Team;
+		inFieldGoalRange: boolean;
+		missedKick: boolean;
+		onsideKick: boolean;
+		possession: string;
+		showDownDistance: boolean;
+		toggleFieldGoal: Void;
+	};
 
-	$: ballPosition = (missedKick ? BALL_KICK_GOOD[possession] : ballIndex) * YARD_INTERVAL;
-	let missDirection: string | undefined;
-	$: if (missedKick) {
-		missDirection = ['left', 'right'][randomNumber()];
-	}
+	let {
+		awayTeam,
+		ballIndex,
+		downToGo,
+		firstDownIndex,
+		homeTeam,
+		inFieldGoalRange,
+		missedKick,
+		onsideKick,
+		possession,
+		showDownDistance,
+		toggleFieldGoal
+	}: FieldProps = $props();
+	let ballPosition = $derived(
+		(missedKick ? BALL_KICK_GOOD[possession] : ballIndex) * YARD_INTERVAL
+	);
+
+	let missDirection: string | undefined = $state();
+	$effect(() => {
+		if (missedKick) {
+			missDirection = ['left', 'right'][randomNumber()];
+		}
+	});
 </script>
 
 <div class="field-wrapper">
@@ -52,16 +72,16 @@
 					class:firstDownLeft={i <= 9 && i === firstDownIndex}
 					class:firstDownRight={i > 9 && i === firstDownIndex + 1}
 				>
-					<div class="hashes" />
+					<div class="hashes"></div>
 					<div class={`upper fieldNumber flipV ${i % 2 ? 'number' : 'zero'}`}>
 						{block.upperNumber}
 					</div>
-					<div class="first-mid hashes" />
-					<div class="second-mid hashes" />
+					<div class="first-mid hashes"></div>
+					<div class="second-mid hashes"></div>
 					<div class={`lower fieldNumber ${i % 2 ? 'number' : 'zero'}`}>
 						{block.lowerNumber}
 					</div>
-					<div class="lower hashes" />
+					<div class="lower hashes"></div>
 				</div>
 			{/each}
 			<div

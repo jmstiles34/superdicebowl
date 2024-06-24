@@ -189,7 +189,7 @@ export const DEFAULT_SETTINGS = {
 	awayTeam: DEFAULT_TEAM,
 	mode: GAME_MODE.HEAD_TO_HEAD,
 	winScore: 30,
-	volume: 1
+	volume: true
 };
 
 export const HELMET_SIZE = {
