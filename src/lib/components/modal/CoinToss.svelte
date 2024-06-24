@@ -1,21 +1,22 @@
 <script lang="ts">
-	import { randomNumber, sleep } from '$lib/utils/common';
+	import { playSound, randomNumber, sleep } from '$lib/utils/common';
 	import { NOOP, TEAM } from '$lib/constants/constants';
 	import { Sound } from 'svelte-sound';
 	import coinSpin from '$lib/assets/sfx/coin-spin.mp3';
 	import { settings } from '$lib/stores/Settings';
 
-	const { awayTeam, homeTeam, volume } = $settings;
-	export let saveCoinToss: (a: string) => void;
-	let winStyle: string;
-	$: coinSpinSfx = new Sound(coinSpin, { volume });
+	let { saveCoinToss }: { saveCoinToss: (a: string) => void } = $props();
 
-	async function handleCoinToss(num: number) {
+	const { awayTeam, homeTeam, volume } = $settings;
+	const coinSpinSfx = new Sound(coinSpin);
+	let winStyle: string | undefined = $state();
+
+	const handleCoinToss = async (num: number) => {
 		winStyle = num === 0 ? TEAM.HOME : TEAM.AWAY;
-		coinSpinSfx.play();
+		playSound(coinSpinSfx, volume);
 		await sleep(4000);
 		saveCoinToss(winStyle);
-	}
+	};
 </script>
 
 <h3>Coin Toss for Possession</h3>
@@ -24,8 +25,8 @@
 	<div
 		id="coin"
 		class={winStyle}
-		on:click={winStyle ? NOOP : () => handleCoinToss(randomNumber())}
-		on:keydown={winStyle ? NOOP : () => handleCoinToss(randomNumber())}
+		onclick={winStyle ? NOOP : () => handleCoinToss(randomNumber())}
+		onkeydown={winStyle ? NOOP : () => handleCoinToss(randomNumber())}
 		role="button"
 		tabindex="0"
 	>
@@ -81,10 +82,15 @@
 		-webkit-border-radius: 50%;
 		-moz-border-radius: 50%;
 		border-radius: 50%;
-		-webkit-box-shadow: inset 0 0 45px rgba(255, 255, 255, 0.3),
+		-webkit-box-shadow:
+			inset 0 0 45px rgba(255, 255, 255, 0.3),
 			0 12px 20px -10px rgba(0, 0, 0, 0.4);
-		-moz-box-shadow: inset 0 0 45px rgba(255, 255, 255, 0.3), 0 12px 20px -10px rgba(0, 0, 0, 0.4);
-		box-shadow: inset 0 0 45px rgba(255, 255, 255, 0.3), 0 12px 20px -10px rgba(0, 0, 0, 0.4);
+		-moz-box-shadow:
+			inset 0 0 45px rgba(255, 255, 255, 0.3),
+			0 12px 20px -10px rgba(0, 0, 0, 0.4);
+		box-shadow:
+			inset 0 0 45px rgba(255, 255, 255, 0.3),
+			0 12px 20px -10px rgba(0, 0, 0, 0.4);
 	}
 	h3 {
 		color: var(--color-offblack);

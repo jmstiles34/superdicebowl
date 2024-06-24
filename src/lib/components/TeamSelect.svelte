@@ -12,10 +12,14 @@
 	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
 	import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
 
-	export let opponentId: string;
-	export let saveTeam: SaveTeam;
-	export let team: Team;
-	export let teamType: string;
+	type TeamSelectProps = {
+		opponentId: string;
+		saveTeam: SaveTeam;
+		team: Team;
+		teamType: string;
+	};
+
+	let { opponentId, saveTeam, team, teamType }: TeamSelectProps = $props();
 
 	const fadeArgs = {
 		delay: 0,
@@ -24,21 +28,18 @@
 		baseScale: 0.5
 	};
 
-	let showCustomTeam: boolean;
-	let selected: string = team.id;
-	$: if (team.id) selected = team.id;
-
-	let allTeamsData: Team[] = [];
+	let showCustomTeam: boolean = $state(false);
+	let selected: string = $derived(team.id);
+	let diceColor = pickRandom(DICE_COLORS);
+	let allTeamsData: Team[] = $state([]);
 
 	onMount(() => {
 		setTeamData();
-		selected = '';
 	});
 
 	function handleTeamSelect(e: Event) {
 		const { value } = e.currentTarget as HTMLSelectElement;
 		if (!value || value === '') {
-			selected = '';
 			saveTeam(DEFAULT_TEAM);
 		} else {
 			saveTeam(teamByUUId(allTeamsData)(value));
@@ -51,7 +52,6 @@
 		showCustomTeam = false;
 		saveTeam(teamByUUId(allTeamsData)(id));
 		if (!id) saveTeam(DEFAULT_TEAM);
-		selected = '';
 	}
 
 	function setTeamData() {
@@ -73,12 +73,10 @@
 	<div class="helmet" class:flipLeft={teamType === TEAM.AWAY}>
 		{#if team.id.length}
 			{#each [team.id] as c (c)}
-				<div
+				<button
 					in:fadeScale|global={fadeArgs}
 					class:hover={team.isCustom}
-					on:click={team.isCustom ? () => (showCustomTeam = true) : NOOP}
-					on:keydown
-					role="button"
+					onclick={team.isCustom ? () => (showCustomTeam = true) : NOOP}
 					tabindex="0"
 				>
 					<CustomHelmet
@@ -94,31 +92,20 @@
 						setTransform={NOOP}
 						title={team.isCustom ? `EDIT: ${team.city} ${team.name}` : `${team.city} ${team.name}`}
 					/>
-				</div>
+				</button>
 			{/each}
 		{:else}
-			<div
-				on:click={() => (showCustomTeam = true)}
-				on:keydown
-				role="button"
-				tabindex="0"
-				class="dice"
-			>
+			<button onclick={() => (showCustomTeam = true)} tabindex="0" class="dice">
 				<img
 					class="hover"
 					alt={`${teamType} Team Placeholder`}
-					src={`/images/${pickRandom(DICE_COLORS)}_dice.png`}
+					src={`/images/${diceColor}_dice.png`}
 				/>
-			</div>
+			</button>
 		{/if}
 	</div>
 	<div class="select-row">
-		<select
-			name="teamSelect"
-			on:change={handleTeamSelect}
-			bind:value={selected}
-			class="team-select"
-		>
+		<select name="teamSelect" onchange={handleTeamSelect} value={selected} class="team-select">
 			<option value="">Choose {teamType} Team</option>
 			{#each allTeamsData as team}
 				{#if team.id !== opponentId}
@@ -128,8 +115,8 @@
 		</select>
 		<button
 			class="random"
-			on:click={() => setRandomTeam(allTeamsData, opponentId, saveTeam)}
-			on:keydown={handleRandomizeKeydown}
+			onclick={() => setRandomTeam(allTeamsData, opponentId, saveTeam)}
+			onkeydown={handleRandomizeKeydown}
 		>
 			<picture>
 				<source type="image/avif" srcset="/images/randomize.avif" />

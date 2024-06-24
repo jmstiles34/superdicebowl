@@ -2,28 +2,29 @@
 	import { game } from '$lib/stores/Game';
 	import { settings } from '$lib/stores/Settings';
 	import { elasticInOut } from 'svelte/easing';
-	import { nonZeroRandomNumber, sleep } from '$lib/utils/common';
+	import { nonZeroRandomNumber, playSound, sleep } from '$lib/utils/common';
 	import { isRollAction } from '$lib/utils/game';
 	import { GAME_MODE, TEAM } from '$lib/constants/constants';
-	import { tick } from 'svelte';
 	import { Sound } from 'svelte-sound';
 	import flick from '$lib/assets/sfx/flick.mp3';
 
-	export let dieColor: string;
-	export let pipColor: string;
-	export let pipCount: number = 6;
-	export let rollDelay: number = 1000;
+	type DiceProps = {
+		dieColor: string;
+		pipColor: string;
+		pipCount?: number;
+		rollDelay?: number;
+	};
 
-	$: flickSfx = new Sound(flick, { volume: $settings.volume });
-	let dice: number[][] = [Array(1).fill(0), Array(1).fill(0)];
-	let canRoll: boolean = true;
+	let { dieColor, pipColor, pipCount = 6, rollDelay = 1000 }: DiceProps = $props();
+
+	const flickSfx: Sound = new Sound(flick);
+	let dice: number[][] = $state([Array(1).fill(0), Array(1).fill(0)]);
+	let canRoll: boolean = $state(true);
 
 	function diceTransition(e: HTMLDivElement) {
 		return {
 			css: (t: number) => {
-				return `
-                transform: scale(${t});
-                `;
+				return `transform: scale(${t});`;
 			},
 			easing: elasticInOut,
 			duration: 1000
@@ -36,25 +37,26 @@
 		}
 	}
 
-	$: if (
-		$settings.mode === GAME_MODE.SOLO &&
-		$game.possession === TEAM.AWAY &&
-		isRollAction($game.action) &&
-		canRoll
-	) {
-		if ($game.ballIndex > 0 || $game.currentDown > 0) {
-			tick();
-			sleep(2000).then(() => {
-				handleRollDice();
-			});
+	$effect(() => {
+		if (
+			$settings.mode === GAME_MODE.SOLO &&
+			$game.possession === TEAM.AWAY &&
+			isRollAction($game.action) &&
+			canRoll
+		) {
+			if ($game.ballIndex > 0 || $game.currentDown > 0) {
+				sleep(2000).then(() => {
+					handleRollDice();
+				});
+			}
 		}
-	}
+	});
 
 	async function handleRollDice() {
 		if (!canRoll) return;
 
 		game.restrictDice(true);
-		flickSfx.play();
+		playSound(flickSfx, $settings.volume);
 		canRoll = false;
 		let die1: number = nonZeroRandomNumber(pipCount);
 		let die2: number = nonZeroRandomNumber(pipCount);
@@ -69,11 +71,11 @@
 	}
 </script>
 
-<button class="dice-button" on:click={handleRollDice} on:keypress={handleKeyPress}>
+<button class="dice-button" onclick={handleRollDice} onkeypress={handleKeyPress}>
 	{#each dice as die}
 		<div class="face" style={`background-color: ${dieColor};`} in:diceTransition out:diceTransition>
 			{#each die as pip}
-				<span class="pip" style={`background-color: ${pipColor};`} />
+				<span class="pip" style={`background-color: ${pipColor};`}></span>
 			{/each}
 		</div>
 	{/each}
@@ -102,7 +104,10 @@
 		min-height: 3rem;
 		min-width: 3rem;
 		background-color: var(--color-white);
-		box-shadow: inset 0 4px var(--color-white), inset 0 -4px #bbb, inset 4px 0 #d7d7d7,
+		box-shadow:
+			inset 0 4px var(--color-white),
+			inset 0 -4px #bbb,
+			inset 4px 0 #d7d7d7,
 			inset -4px 0 #d7d7d7;
 		border-radius: 10%;
 		cursor: pointer;
@@ -116,7 +121,9 @@
 		min-height: 0.6rem;
 		border-radius: 50%;
 		background-color: var(--color-gray-900);
-		box-shadow: inset 0 2px #111, inset 0 -2px #555;
+		box-shadow:
+			inset 0 2px #111,
+			inset 0 -2px #555;
 	}
 
 	.pip:nth-child(2) {
@@ -143,14 +150,19 @@
 			padding: 0.25rem;
 			min-height: 2rem;
 			min-width: 2rem;
-			box-shadow: inset 0 3px var(--color-white), inset 0 -3px #bbb, inset 3px 0 #d7d7d7,
+			box-shadow:
+				inset 0 3px var(--color-white),
+				inset 0 -3px #bbb,
+				inset 3px 0 #d7d7d7,
 				inset -3px 0 #d7d7d7;
 		}
 
 		.pip {
 			min-width: 0.4rem;
 			min-height: 0.4rem;
-			box-shadow: inset 0 2px #111, inset 0 -2px #555;
+			box-shadow:
+				inset 0 2px #111,
+				inset 0 -2px #555;
 		}
 	}
 </style>

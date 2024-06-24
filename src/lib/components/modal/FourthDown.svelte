@@ -4,20 +4,24 @@
 	import { Sound } from 'svelte-sound';
 	import button from '$lib/assets/sfx/button.mp3';
 	import { settings } from '$lib/stores/Settings';
+	import { playSound } from '$lib/utils/common';
 
-	export let inFieldGoalRange: boolean = false;
-	export let saveFourthDown: (a: string) => void;
-	export let toggleFieldGoal: Void;
+	type FourthDownProps = {
+		inFieldGoalRange: boolean;
+		saveFourthDown: (a: string) => void;
+		toggleFieldGoal: Void;
+	};
 
-	$: buttonSfx = new Sound(button, { volume: $settings.volume });
+	let { inFieldGoalRange, saveFourthDown, toggleFieldGoal }: FourthDownProps = $props();
+	const buttonSfx = new Sound(button);
 </script>
 
 <h3>4th Down...Choose an Option</h3>
 <div class="wrapper">
 	<button
 		class="game-button"
-		on:click={() => {
-			buttonSfx.play();
+		onclick={() => {
+			playSound(buttonSfx, $settings.volume);
 			saveFourthDown(GAME_ACTION.OFFENSE);
 		}}
 	>
@@ -26,8 +30,8 @@
 	{#if inFieldGoalRange}
 		<button
 			class="game-button"
-			on:click={() => {
-				buttonSfx.play();
+			onclick={() => {
+				playSound(buttonSfx, $settings.volume);
 				toggleFieldGoal();
 			}}
 		>
@@ -36,8 +40,8 @@
 	{/if}
 	<button
 		class="game-button"
-		on:click={() => {
-			buttonSfx.play();
+		onclick={() => {
+			playSound(buttonSfx, $settings.volume);
 			saveFourthDown(GAME_ACTION.PUNT);
 		}}
 	>

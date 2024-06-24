@@ -317,7 +317,7 @@
 			"cityKey": "LAR",
 			"name": "Rams",
 			"fieldLogo": "nfl-rams-field",
-			"logo": "nfl-rams2",
+			"logo": "nfl-rams",
 			"logoTransform": "translate(-15px, -35px) scale(1.9, 1.9)",
 			"id": "66ecf340-2f75-420a-b219-0275f819b9bd",
 			"colors": {
@@ -529,12 +529,12 @@
 			"logoTransform": "translate(-30px, -42px) scale(1.11, 1.09)",
 			"id": "13ea5f58-109b-4979-91af-190ccc8c4f1f",
 			"colors": {
-				"primary": "hsl(213 68% / 15% / 1)",
+				"primary": "hsl(213 68% 15% / 1)",
 				"secondary": "hsl(210 67% 58% / 1)",
-				"faceMask": "hsl(213 68% / 15% / 1)",
+				"faceMask": "hsl(213 68% 15% / 1)",
 				"helmet": "hsl(0 0% 96% / 1)",
 				"stripe": "hsl(0 0% 96% / 1)",
-				"trim": "hsl(213 68% / 15% / 1)"
+				"trim": "hsl(213 68% 15% / 1)"
 			}
 		},
 		{

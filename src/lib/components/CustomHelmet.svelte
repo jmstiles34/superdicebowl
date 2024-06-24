@@ -9,23 +9,43 @@
 	} from '$lib/constants/constants';
 	import { lightenColor } from '$lib/utils/common';
 
-	export let faceMask = 'hsl(0 0% 85% / 1)';
-	export let helmet = 'hsl(207 44% 49% / 1)';
-	export let stripe = 'hsl(0 100% 100% / 1)';
-	export let trim = 'hsl(210 100% 13% / 1)';
-	export let direction = POSITION.RIGHT;
-	export let logo: string | null = null;
-	export let logoLeft: string | null = null;
-	export let logoFixed: boolean = false;
-	export let title: string = 'Custom Football Helmet';
-	export let size: string = HELMET_SIZE.LARGE;
-	export let logoTransform: string;
-	export let logoWidth: number = HELMET_WIDTH[size] / WIDTH_DIVIDER[size];
-	export let setTransform: (t: string) => void;
-	export let canCustomize: boolean = false;
-	let moveable: HTMLElement | null;
-	let target: HTMLElement;
-	let earOutline = lightenColor(helmet);
+	type CustomHelmetProps = {
+		faceMask: string;
+		helmet: string;
+		stripe: string;
+		trim: string;
+		direction: string;
+		logo: string | null;
+		logoLeft: string | null;
+		logoFixed: boolean;
+		title?: string;
+		size: string;
+		logoTransform: string;
+		logoWidth: number;
+		setTransform: (t: string) => void;
+		canCustomize?: boolean;
+	};
+
+	let {
+		faceMask = 'hsl(0 0% 85% / 1)',
+		helmet = 'hsl(207 44% 49% / 1)',
+		stripe = 'hsl(0 100% 100% / 1)',
+		trim = 'hsl(210 100% 13% / 1)',
+		direction = POSITION.RIGHT,
+		logo = null,
+		logoLeft = null,
+		logoFixed = false,
+		title = 'Custom Football Helmet',
+		size = HELMET_SIZE.LARGE,
+		logoTransform,
+		logoWidth = HELMET_WIDTH[size] / WIDTH_DIVIDER[size],
+		setTransform,
+		canCustomize = false
+	}: CustomHelmetProps = $props();
+
+	let moveable: HTMLElement | null = $state(null);
+	let target: HTMLElement | null = $state(null);
+	let earOutline = $derived(lightenColor(helmet));
 
 	/* function onResize({ target, width, height, delta }) {
 		delta[0] && (target.style.width = `${width}px`);
@@ -213,9 +233,9 @@ M 641.087 272.197 L 641.11 272.25 C 639.82 280.54 635.28 286.19 629.28 291.09 C 
 			class="logo-container"
 			class:small={size === HELMET_SIZE.SMALL}
 			class:large={size === HELMET_SIZE.LARGE}
-			on:click={canCustomize ? toggleMoveableTarget : NOOP}
-			on:keydown={canCustomize ? toggleMoveableTarget : NOOP}
-			on:dblclick={canCustomize ? toggleMoveableTarget : NOOP}
+			onclick={canCustomize ? toggleMoveableTarget : NOOP}
+			onkeydown={canCustomize ? toggleMoveableTarget : NOOP}
+			ondblclick={canCustomize ? toggleMoveableTarget : NOOP}
 			role="button"
 			tabindex="0"
 		>

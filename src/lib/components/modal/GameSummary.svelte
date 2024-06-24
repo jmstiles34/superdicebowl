@@ -4,12 +4,15 @@
 	import type { Play, PlaySummary, Team } from '$lib/types';
 	import '@fontsource/bebas-neue';
 
-	export let awayTeam: Team;
-	export let homeTeam: Team;
-	export let playLog: Play[];
-	export let gameIsOver = false;
+	type SummaryProps = {
+		awayTeam: Team;
+		homeTeam: Team;
+		playLog: Play[];
+		gameIsOver: boolean;
+	};
 
-	let activeTab = 0;
+	let { awayTeam, homeTeam, playLog, gameIsOver }: SummaryProps = $props();
+	let activeTab = $state(0);
 
 	const pointAfterMade = [GAME_ACTION.EXTRA_POINT_MADE, GAME_ACTION.TWO_POINT_MADE];
 	const pointAfterMiss = [GAME_ACTION.EXTRA_POINT_MISS, GAME_ACTION.TWO_POINT_MISS];
@@ -158,8 +161,8 @@
 		<div
 			class="tab"
 			class:tab-selected={activeTab === 0}
-			on:click|stopPropagation={() => toggleTab(0)}
-			on:keydown|stopPropagation={() => toggleTab(0)}
+			onclick={() => toggleTab(0)}
+			onkeydown={() => toggleTab(0)}
 			role="button"
 			tabindex="0"
 		>
@@ -168,8 +171,8 @@
 		<div
 			class="tab"
 			class:tab-selected={activeTab === 1}
-			on:click|stopPropagation={() => toggleTab(1)}
-			on:keydown|stopPropagation={() => toggleTab(1)}
+			onclick={() => toggleTab(1)}
+			onkeydown={() => toggleTab(1)}
 			role="button"
 			tabindex="0"
 		>
@@ -246,7 +249,7 @@
 		<div>
 			<div class="grid-container-score-header">
 				<!-- Row 1 -->
-				<div class="grid-item score" />
+				<div class="grid-item score"></div>
 				<div
 					class="grid-item city-key"
 					style={`
@@ -294,7 +297,7 @@
 	{#if gameIsOver}
 		<div class="returnButton">
 			<button
-				on:click={() => {
+				onclick={() => {
 					goto('/');
 				}}
 			>
@@ -347,7 +350,7 @@
 	}
 	.grid-container-score-header {
 		display: grid;
-		grid-template-columns: auto 48px 48px;
+		grid-template-columns: auto 48px 48px 14px;
 		grid-gap: 1px;
 	}
 
@@ -359,7 +362,7 @@
 	}
 	.score-list {
 		margin-top: 2px;
-		height: 100%;
+		height: 234px;
 		overflow-y: scroll;
 	}
 	.score {

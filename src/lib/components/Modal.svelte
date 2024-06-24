@@ -4,13 +4,28 @@
 	import ModalPortal from './modal/ModalPortal.svelte';
 	import TrapFocus from './modal/TrapFocus.svelte';
 	import { NOOP } from '$lib/constants/constants';
+	import type { Snippet } from 'svelte';
+	import { self, stopPropagation } from '$lib/utils/events';
 
-	export let close: () => void;
-	export let showModal: boolean;
-	export let choiceRequired = true;
-	export let hasClose = false;
-	export let initialFocusElement: HTMLElement | null = null;
-	export let returnFocusElement: HTMLElement | null = null;
+	type ModalProps = {
+		children: Snippet;
+		choiceRequired: boolean;
+		close: () => void;
+		hasClose: boolean;
+		initialFocusElement: HTMLElement | null;
+		returnFocusElement: HTMLElement | null;
+		showModal: boolean;
+	};
+
+	let {
+		children,
+		choiceRequired = true,
+		close,
+		hasClose = false,
+		initialFocusElement = null,
+		returnFocusElement = null,
+		showModal
+	}: ModalProps = $props();
 
 	let keydown = (e: KeyboardEvent) => {
 		e.stopPropagation();
@@ -30,8 +45,8 @@
 	<ModalPortal>
 		<div
 			class="backdrop"
-			on:click|self|stopPropagation={choiceRequired ? NOOP : doClose}
-			on:keydown|self|stopPropagation={choiceRequired ? NOOP : keydown}
+			onclick={self(stopPropagation(choiceRequired ? NOOP : doClose))}
+			onkeydown={self(stopPropagation(choiceRequired ? NOOP : keydown))}
 			role="button"
 			tabindex="-1"
 			transition:fade
@@ -41,8 +56,8 @@
 					{#if hasClose}
 						<div
 							class="closeButton"
-							on:click={doClose}
-							on:keydown={keydown}
+							onclick={doClose}
+							onkeydown={keydown}
 							role="button"
 							tabindex="0"
 							title="Close"
@@ -51,7 +66,7 @@
 						</div>
 					{/if}
 					<div>
-						<slot />
+						{@render children()}
 					</div>
 				</TrapFocus>
 			</div>

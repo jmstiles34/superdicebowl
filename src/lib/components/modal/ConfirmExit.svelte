@@ -7,7 +7,7 @@
 
 	<button
 		class="game-button"
-		on:click={() => {
+		onclick={() => {
 			goto('/');
 		}}
 	>

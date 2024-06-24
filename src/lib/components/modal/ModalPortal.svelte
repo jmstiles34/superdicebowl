@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 
+	let { children }: { children: Snippet } = $props();
 	let ref: HTMLDivElement;
 	let portal: HTMLDivElement;
 
@@ -17,5 +18,5 @@
 </script>
 
 <div bind:this={ref}>
-	<slot />
+	{@render children()}
 </div>

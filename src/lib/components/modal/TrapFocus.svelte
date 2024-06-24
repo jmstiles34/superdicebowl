@@ -1,10 +1,14 @@
 <script lang="ts">
-	import { onMount, onDestroy, tick } from 'svelte';
+	import { onMount, onDestroy, tick, type Snippet } from 'svelte';
 
-	// Props
-	export let initialFocusElement: HTMLElement | null;
-	export let returnFocusElement: HTMLElement | null;
-	export let hasClose = false;
+	type TrapProps = {
+		children: Snippet;
+		hasClose: boolean;
+		initialFocusElement: HTMLElement | null;
+		returnFocusElement: HTMLElement | null;
+	};
+
+	let { children, hasClose = false, initialFocusElement, returnFocusElement }: TrapProps = $props();
 
 	let ref: HTMLElement;
 	let tabbableChildren: Element[];
@@ -68,5 +72,5 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <div bind:this={ref}>
-	<slot />
+	{@render children()}
 </div>

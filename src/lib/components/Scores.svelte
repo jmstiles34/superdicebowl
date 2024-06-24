@@ -4,12 +4,14 @@
 	import { game } from '$lib/stores/Game';
 	import { getScoreByTeam } from '$lib/utils/game';
 
-	export let awayTeam: Team;
-	export let homeTeam: Team;
+	type ScoresProps = {
+		awayTeam: Team;
+		homeTeam: Team;
+	};
 
-	$: awayScore = getScoreByTeam(TEAM.AWAY, $game.playLog);
-	$: homeScore = getScoreByTeam(TEAM.HOME, $game.playLog);
-	$: possession = $game.possession;
+	let { awayTeam, homeTeam }: ScoresProps = $props();
+	let awayScore = $derived(getScoreByTeam(TEAM.AWAY, $game.playLog));
+	let homeScore = $derived(getScoreByTeam(TEAM.HOME, $game.playLog));
 
 	let awayToRgb = awayTeam.colors.primary.replace('/ 1', '/ 0.5');
 	let homeToRgb = homeTeam.colors.primary.replace('/ 1', '/ 0.5');
@@ -23,8 +25,8 @@
         background-image: linear-gradient(to right, ${homeToRgb} 0 100%), url(/logos/${homeTeam.fieldLogo}.webp)`}
 	>
 		<div class="city-wrapper">
-			{#if possession === TEAM.HOME}
-				<div class="possession" />
+			{#if $game.possession === TEAM.HOME}
+				<div class="possession"></div>
 			{/if}
 			<div class="cityName">{homeTeam.city}</div>
 			<div class="cityKey">{homeTeam.cityKey}</div>
@@ -38,8 +40,8 @@
         background-image: linear-gradient(to right, ${awayToRgb} 0 100%), url(/logos/${awayTeam.fieldLogo}.webp)`}
 	>
 		<div class="city-wrapper">
-			{#if possession === TEAM.AWAY}
-				<div class="possession" />
+			{#if $game.possession === TEAM.AWAY}
+				<div class="possession"></div>
 			{/if}
 			<div class="cityName">{awayTeam.city}</div>
 			<div class="cityKey">{awayTeam.cityKey}</div>
@@ -84,7 +86,9 @@
 		border-radius: 50%;
 		margin-right: 0.3rem;
 		margin-top: 0.175rem;
-		box-shadow: inset 0 2px #111, inset 0 -2px #555;
+		box-shadow:
+			inset 0 2px #111,
+			inset 0 -2px #555;
 		background-color: var(--color-white);
 	}
 	.score {

@@ -3,17 +3,18 @@
 	import { Sound } from 'svelte-sound';
 	import button from '$lib/assets/sfx/button.mp3';
 	import { settings } from '$lib/stores/Settings';
+	import { playSound } from '$lib/utils/common';
 
-	export let savePointOption: (a: string) => void;
-	$: buttonSfx = new Sound(button, { volume: $settings.volume });
+	let { savePointOption }: { savePointOption: (a: string) => void } = $props();
+	const buttonSfx = new Sound(button);
 </script>
 
 <h3>Choose a Conversion Option</h3>
 <div class="wrapper">
 	<button
 		class="game-button"
-		on:click={() => {
-			buttonSfx.play();
+		onclick={() => {
+			playSound(buttonSfx, $settings.volume);
 			savePointOption(GAME_ACTION.EXTRA_POINT);
 		}}
 	>
@@ -21,8 +22,8 @@
 	</button>
 	<button
 		class="game-button"
-		on:click={() => {
-			buttonSfx.play();
+		onclick={() => {
+			playSound(buttonSfx, $settings.volume);
 			savePointOption(GAME_ACTION.TWO_POINT);
 		}}
 	>
