@@ -1,14 +1,15 @@
 <script lang="ts">
-	import { playSound, randomNumber, sleep } from '$lib/utils/common';
+	import { randomNumber, sleep } from '$lib/utils/common';
 	import { NOOP, TEAM } from '$lib/constants/constants';
-	import { Sound } from 'svelte-sound';
 	import coinSpin from '$lib/assets/sfx/coin-spin.mp3';
 	import { settings } from '$lib/stores/Settings';
+	import type { Howl } from 'howler';
+	import { createSound, playSound } from '$lib/utils/sound';
 
 	let { saveCoinToss }: { saveCoinToss: (a: string) => void } = $props();
 
 	const { awayTeam, homeTeam, volume } = $settings;
-	const coinSpinSfx = new Sound(coinSpin);
+	const coinSpinSfx: Howl = createSound(coinSpin);
 	let winStyle: string | undefined = $state();
 
 	const handleCoinToss = async (num: number) => {

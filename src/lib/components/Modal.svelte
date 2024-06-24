@@ -9,11 +9,11 @@
 
 	type ModalProps = {
 		children: Snippet;
-		choiceRequired: boolean;
+		choiceRequired?: boolean;
 		close: () => void;
-		hasClose: boolean;
-		initialFocusElement: HTMLElement | null;
-		returnFocusElement: HTMLElement | null;
+		hasClose?: boolean;
+		initialFocusElement?: HTMLElement | null;
+		returnFocusElement?: HTMLElement | null;
 		showModal: boolean;
 	};
 

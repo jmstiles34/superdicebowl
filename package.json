@@ -21,6 +21,7 @@
 		"@sveltejs/kit": "^2.5.17",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
 		"@types/color-convert": "^2.0.3",
+		"@types/howler": "^2.2.11",
 		"@types/node": "^20.14.8",
 		"@types/uuid": "^10.0.0",
 		"@typescript-eslint/eslint-plugin": "^7.13.1",
@@ -48,10 +49,8 @@
 		"@fontsource/bebas-neue": "^5.0.20",
 		"color-convert": "^2.0.1",
 		"eslint-plugin-svelte": "^2.40.0",
-		"parse-nested-form-data": "^1.0.0",
-		"svelte-gestures": "^5.0.1",
+		"howler": "^2.2.4",
 		"svelte-moveable": "^0.45.0",
-		"svelte-sound": "^0.6.0",
 		"uuid": "^10.0.0"
 	},
 	"husky": {

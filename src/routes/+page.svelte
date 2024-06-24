@@ -6,15 +6,16 @@
 	import { GAME_MODE, TEAM } from '$lib/constants/constants';
 	import TeamSelect from '$lib/components/TeamSelect.svelte';
 	import { beginDisabled } from '$lib/utils/game';
-	import { playSound, sleep } from '$lib/utils/common';
-	import { Sound } from 'svelte-sound';
+	import { sleep } from '$lib/utils/common';
 	import gust from '$lib/assets/sfx/gust.mp3';
 	import tackle from '$lib/assets/sfx/tackle.mp3';
 	import tap from '$lib/assets/sfx/tap.mp3';
+	import type { Howl } from 'howler';
+	import { createSound, playSound } from '$lib/utils/sound';
 
-	const gustSfx: Sound = new Sound(gust);
-	const tackleSfx: Sound = new Sound(tackle);
-	const tapSfx: Sound = new Sound(tap);
+	const gustSfx: Howl = createSound(gust);
+	const tackleSfx: Howl = createSound(tackle);
+	const tapSfx: Howl = createSound(tap);
 
 	onMount(() => {
 		settings.resetTeams();

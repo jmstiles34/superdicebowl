@@ -48,19 +48,10 @@ import {
 	twoPointSuccess,
 	yardsToEndzone
 } from '$lib/utils/game';
-import {
-	equals,
-	gt,
-	gte,
-	isArray,
-	lt,
-	pickRandom,
-	playSound,
-	sleep,
-	sumDigits
-} from '$lib/utils/common';
+import { equals, gt, gte, isArray, lt, pickRandom, sleep, sumDigits } from '$lib/utils/common';
+import type { Howl } from 'howler';
+import { createSound, playSound } from '$lib/utils/sound';
 import { diceData } from '$lib/data/data.json';
-import { Sound } from 'svelte-sound';
 import chime from '$lib/assets/sfx/chime.mp3';
 import horns from '$lib/assets/sfx/horns.mp3';
 import kick from '$lib/assets/sfx/kick.mp3';
@@ -73,16 +64,16 @@ import whiz from '$lib/assets/sfx/whiz.mp3';
 import whoosh from '$lib/assets/sfx/whoosh.mp3';
 import type { Play } from '$lib/types';
 
-const chimeSfx = new Sound(chime);
-const hornsSfx = new Sound(horns);
-const kickSfx = new Sound(kick);
-const missSfx = new Sound(miss);
-const miss1Sfx = new Sound(miss1);
-const offenseSfx = new Sound(offense);
-const shakeSfx = new Sound(shake);
-const touchdownSfx = new Sound(touchdown);
-const whizSfx = new Sound(whiz);
-const whooshSfx = new Sound(whoosh);
+const chimeSfx: Howl = createSound(chime);
+const hornsSfx: Howl = createSound(horns);
+const kickSfx: Howl = createSound(kick);
+const missSfx: Howl = createSound(miss);
+const miss1Sfx: Howl = createSound(miss1);
+const offenseSfx: Howl = createSound(offense);
+const shakeSfx: Howl = createSound(shake);
+const touchdownSfx: Howl = createSound(touchdown);
+const whizSfx: Howl = createSound(whiz);
+const whooshSfx: Howl = createSound(whoosh);
 
 export interface gStore {
 	type:

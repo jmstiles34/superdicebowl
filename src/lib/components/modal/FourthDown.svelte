@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { FOURTH_DOWN, GAME_ACTION } from '$lib/constants/constants';
 	import type { Void } from '$lib/types';
-	import { Sound } from 'svelte-sound';
 	import button from '$lib/assets/sfx/button.mp3';
 	import { settings } from '$lib/stores/Settings';
-	import { playSound } from '$lib/utils/common';
+	import type { Howl } from 'howler';
+	import { createSound, playSound } from '$lib/utils/sound';
 
 	type FourthDownProps = {
 		inFieldGoalRange: boolean;
@@ -13,7 +13,7 @@
 	};
 
 	let { inFieldGoalRange, saveFourthDown, toggleFieldGoal }: FourthDownProps = $props();
-	const buttonSfx = new Sound(button);
+	const buttonSfx: Howl = createSound(button);
 </script>
 
 <h3>4th Down...Choose an Option</h3>
