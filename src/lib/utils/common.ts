@@ -1,5 +1,4 @@
 import convert from 'color-convert';
-import { Sound } from 'svelte-sound';
 
 export function add(a: number, b: number) {
 	return a + b;
@@ -82,10 +81,6 @@ export function pickRandom(array: unknown[]): unknown {
 	const index = Math.floor(array.length * Math.random());
 	return array[index];
 }
-
-export const playSound = async (sfx: Sound, volumeOn: boolean) => {
-	if (volumeOn) sfx.play();
-};
 
 export function randomNumber(max = 2) {
 	return Math.floor(Math.random() * max);

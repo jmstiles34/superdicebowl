@@ -4,9 +4,8 @@
 	import type { FireworksOptions } from '@fireworks-js/svelte';
 	import { game } from '$lib/stores/Game';
 	import { settings } from '$lib/stores/Settings';
-	import { Sound } from 'svelte-sound';
 	import button from '$lib/assets/sfx/button.mp3';
-	import { equals, gt, playSound, sleep } from '$lib/utils/common';
+	import { equals, gt, sleep } from '$lib/utils/common';
 	import {
 		compareFns,
 		getScoreByTeam,
@@ -38,6 +37,9 @@
 	import exit from '$lib/images/exit.svg';
 	import summary from '$lib/images/summary.svg';
 	import ConfirmExit from '$lib/components/modal/ConfirmExit.svelte';
+	import type { Howl } from 'howler';
+	import { createSound, playSound } from '$lib/utils/sound';
+
 	const modalActions = [
 		GAME_ACTION.COIN_TOSS,
 		GAME_ACTION.FOURTH_DOWN_OPTIONS,
@@ -68,7 +70,7 @@
 		}
 	};
 	const isGameReady = awayTeam.id.length && homeTeam.id.length;
-	const buttonSfx = new Sound(button);
+	const buttonSfx: Howl = createSound(button);
 	let awayScore = $derived(getScoreByTeam(TEAM.AWAY, $game.playLog));
 	let homeScore = $derived(getScoreByTeam(TEAM.HOME, $game.playLog));
 	let gameOver = $derived(isGameComplete(awayScore, homeScore, winScore));

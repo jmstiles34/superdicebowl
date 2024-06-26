@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { CONVERSION, GAME_ACTION } from '$lib/constants/constants';
-	import { Sound } from 'svelte-sound';
 	import button from '$lib/assets/sfx/button.mp3';
 	import { settings } from '$lib/stores/Settings';
-	import { playSound } from '$lib/utils/common';
+	import type { Howl } from 'howler';
+	import { createSound, playSound } from '$lib/utils/sound';
 
 	let { savePointOption }: { savePointOption: (a: string) => void } = $props();
-	const buttonSfx = new Sound(button);
+	const buttonSfx: Howl = createSound(button);
 </script>
 
 <h3>Choose a Conversion Option</h3>

@@ -2,11 +2,12 @@
 	import { game } from '$lib/stores/Game';
 	import { settings } from '$lib/stores/Settings';
 	import { elasticInOut } from 'svelte/easing';
-	import { nonZeroRandomNumber, playSound, sleep } from '$lib/utils/common';
+	import { nonZeroRandomNumber, sleep } from '$lib/utils/common';
 	import { isRollAction } from '$lib/utils/game';
 	import { GAME_MODE, TEAM } from '$lib/constants/constants';
-	import { Sound } from 'svelte-sound';
 	import flick from '$lib/assets/sfx/flick.mp3';
+	import type { Howl } from 'howler';
+	import { createSound, playSound } from '$lib/utils/sound';
 
 	type DiceProps = {
 		dieColor: string;
@@ -17,7 +18,7 @@
 
 	let { dieColor, pipColor, pipCount = 6, rollDelay = 1000 }: DiceProps = $props();
 
-	const flickSfx: Sound = new Sound(flick);
+	const flickSfx: Howl = createSound(flick);
 	let dice: number[][] = $state([Array(1).fill(0), Array(1).fill(0)]);
 	let canRoll: boolean = $state(true);
 
