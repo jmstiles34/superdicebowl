@@ -2,7 +2,7 @@
 	import { FOURTH_DOWN, GAME_ACTION } from '$lib/constants/constants';
 	import type { Void } from '$lib/types';
 	import button from '$lib/assets/sfx/button.mp3';
-	import { settings } from '$lib/stores/Settings';
+	import { settings } from '$lib/state/settings.svelte';
 	import type { Howl } from 'howler';
 	import { createSound, playSound } from '$lib/utils/sound';
 
@@ -21,7 +21,7 @@
 	<button
 		class="game-button"
 		onclick={() => {
-			playSound(buttonSfx, $settings.volume);
+			playSound(buttonSfx, settings.volume);
 			saveFourthDown(GAME_ACTION.OFFENSE);
 		}}
 	>
@@ -31,7 +31,7 @@
 		<button
 			class="game-button"
 			onclick={() => {
-				playSound(buttonSfx, $settings.volume);
+				playSound(buttonSfx, settings.volume);
 				toggleFieldGoal();
 			}}
 		>
@@ -41,7 +41,7 @@
 	<button
 		class="game-button"
 		onclick={() => {
-			playSound(buttonSfx, $settings.volume);
+			playSound(buttonSfx, settings.volume);
 			saveFourthDown(GAME_ACTION.PUNT);
 		}}
 	>

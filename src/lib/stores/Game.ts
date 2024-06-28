@@ -1,6 +1,5 @@
 import { writable } from 'svelte/store';
-import { settings } from '$lib/stores/Settings';
-import { get } from 'svelte/store';
+import { settings } from '$lib/state/settings.svelte';
 import {
 	BALL_ENDZONE,
 	BALL_EXTRA_POINT,
@@ -149,9 +148,7 @@ export const game = {
 				GAME_ACTION.KICKOFF_KICK;
 			self.ballIndex = isOnside ? self.ballIndex : BALL_ENDZONE[OPPOSITE_TEAM[self.possession]];
 			self.diceId = diceId;
-			isOnside
-				? playSound(whizSfx, get(settings).volume)
-				: playSound(kickSfx, get(settings).volume);
+			isOnside ? playSound(whizSfx, settings.volume) : playSound(kickSfx, settings.volume);
 			return self;
 		});
 	},
@@ -200,7 +197,7 @@ export const game = {
 					const description = isTurnoverOnDowns
 						? 'TURNOVER: On downs'
 						: `TURNOVER: ${label} ${playYards} Yds downfield`;
-					playSound(shakeSfx, get(settings).volume);
+					playSound(shakeSfx, settings.volume);
 					if (isTouchback(playIndex)) {
 						const newPos = OPPOSITE_TEAM[self.possession];
 						self.action = GAME_ACTION.OFFENSE;
@@ -227,14 +224,14 @@ export const game = {
 					playResult.description = self.lastPlay;
 				} else {
 					if (isTD) {
-						playSound(touchdownSfx, get(settings).volume);
+						playSound(touchdownSfx, settings.volume);
 						self.action = GAME_ACTION.TOUCHDOWN;
 						self.ballIndex = BALL_ENDZONE[self.possession];
 						self.firstDownIndex = -1;
 						self.lastPlay = 'TOUCHDOWN!!!';
 						playResult.description = `${endzoneDistance} Yd play for touchdown.`;
 					} else {
-						playSound(offenseSfx, get(settings).volume);
+						playSound(offenseSfx, settings.volume);
 						let isSafety = false;
 						if (lt(playYards, 0) && (lt(playIndex, 1) || gt(playIndex, 19))) {
 							isSafety = true;
@@ -296,9 +293,7 @@ export const game = {
 				points: success ? POINTS.TWO_POINT : 0
 			};
 			self.playLog = [...self.playLog, playResult];
-			success
-				? playSound(hornsSfx, get(settings).volume)
-				: playSound(miss1Sfx, get(settings).volume);
+			success ? playSound(hornsSfx, settings.volume) : playSound(miss1Sfx, settings.volume);
 			return self;
 		});
 	},
@@ -376,7 +371,7 @@ export const game = {
 				points: success ? POINTS.EXTRA_POINT : 0
 			};
 			self.playLog = [...self.playLog, playResult];
-			success ? playSound(kickSfx, get(settings).volume) : playSound(missSfx, get(settings).volume);
+			success ? playSound(kickSfx, settings.volume) : playSound(missSfx, settings.volume);
 			return self;
 		});
 	},
@@ -398,7 +393,7 @@ export const game = {
 				points: success ? POINTS.FIELD_GOAL : 0
 			};
 			self.playLog = [...self.playLog, playResult];
-			success ? playSound(kickSfx, get(settings).volume) : playSound(missSfx, get(settings).volume);
+			success ? playSound(kickSfx, settings.volume) : playSound(missSfx, settings.volume);
 			return self;
 		});
 	},
@@ -416,7 +411,7 @@ export const game = {
 			self.possession = newPos;
 			self.restrictDice = false;
 			self.yardsToGo = 10;
-			playSound(whooshSfx, get(settings).volume);
+			playSound(whooshSfx, settings.volume);
 			return self;
 		});
 	},
@@ -483,7 +478,7 @@ export const game = {
 				description: self.lastPlay
 			};
 			self.playLog = [...self.playLog, playResult];
-			playSound(whooshSfx, get(settings).volume);
+			playSound(whooshSfx, settings.volume);
 			return self;
 		});
 	},
@@ -559,7 +554,7 @@ export const game = {
 		});
 	},
 	saveTouchdown: () => {
-		playSound(touchdownSfx, get(settings).volume);
+		playSound(touchdownSfx, settings.volume);
 		_game.update((self: gStore) => {
 			const playResult: Play = {
 				...DEFAULT_PLAY,
@@ -601,7 +596,7 @@ export const game = {
 					: '';
 			self.modalContent = null;
 			self.restrictDice = false;
-			playSound(chimeSfx, get(settings).volume);
+			playSound(chimeSfx, settings.volume);
 			return self;
 		});
 	},

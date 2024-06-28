@@ -1,7 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import { settings } from '$lib/stores/Settings';
+	import { settings } from '$lib/state/settings.svelte';
 	import '../styles.css';
 	import '@fontsource/bebas-neue';
 	import soundOn from '$lib/images/volume-high.svg';
@@ -41,9 +41,9 @@
 			onclick={settings.toggleVolume}
 			onkeypress={settings.toggleVolume}
 			tabindex="0"
-			title={$settings.volume ? 'Mute sounds' : 'Play sounds'}
+			title={settings.volume ? 'Mute sounds' : 'Play sounds'}
 		>
-			<img src={$settings.volume ? soundOn : soundOff} alt="Sound toggle" />
+			<img src={settings.volume ? soundOn : soundOff} alt="Sound toggle" />
 		</button>
 	</div>
 </nav>

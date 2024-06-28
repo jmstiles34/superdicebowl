@@ -102,7 +102,7 @@ export const DEFAULT_GAME = {
 	action: GAME_ACTION.COIN_TOSS,
 	ballIndex: 10,
 	currentDown: 1,
-	diceId: null,
+	diceId: 0,
 	firstDownIndex: -1,
 	lastPlay: '',
 	missedKick: false,

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { settings } from '$lib/stores/Settings';
 	import { game } from '$lib/stores/Game';
 	import { goto } from '$app/navigation';
 	import { GAME_MODE, TEAM } from '$lib/constants/constants';
@@ -12,34 +11,35 @@
 	import tap from '$lib/assets/sfx/tap.mp3';
 	import type { Howl } from 'howler';
 	import { createSound, playSound } from '$lib/utils/sound';
+	import { settings } from '$lib/state/settings.svelte';
 
 	const gustSfx: Howl = createSound(gust);
 	const tackleSfx: Howl = createSound(tackle);
 	const tapSfx: Howl = createSound(tap);
 
 	onMount(() => {
-		settings.resetTeams();
+		settings.resetSettings();
 		game.reset();
 	});
 
 	const beginGame = () => {
-		playSound(tackleSfx, $settings.volume);
+		playSound(tackleSfx, settings.volume);
 		sleep(1000).then(() => goto('/game'));
 	};
 
 	const handleScoreChange = (e: Event) => {
 		const { value } = e.currentTarget as HTMLSelectElement;
-		settings.updateScore(parseInt(value));
+		settings.winScore = parseInt(value);
 	};
 </script>
 
 {#snippet modeButton(mode, text)}
 	<button
 		class="game-button mode-button"
-		class:mode-selected={$settings.mode === mode}
+		class:mode-selected={settings.mode === mode}
 		onclick={() => {
-			playSound(tapSfx, $settings.volume);
-			settings.updateMode(mode);
+			playSound(tapSfx, settings.volume);
+			settings.mode = mode;
 		}}
 	>
 		{text}
@@ -54,22 +54,22 @@
 
 	<div class="team-select">
 		<TeamSelect
-			opponentId={$settings.awayTeam.id}
+			opponentId={settings.awayTeam.id}
 			saveTeam={(team) => {
-				playSound(gustSfx, $settings.volume);
-				settings.updateHomeTeam(team);
+				playSound(gustSfx, settings.volume);
+				settings.homeTeam = team;
 			}}
-			team={$settings.homeTeam}
+			team={settings.homeTeam}
 			teamType={TEAM.HOME}
 		/>
 		<div class="vs">VS.</div>
 		<TeamSelect
-			opponentId={$settings.homeTeam.id}
+			opponentId={settings.homeTeam.id}
 			saveTeam={(team) => {
-				playSound(gustSfx, $settings.volume);
-				settings.updateAwayTeam(team);
+				playSound(gustSfx, settings.volume);
+				settings.awayTeam = team;
 			}}
-			team={$settings.awayTeam}
+			team={settings.awayTeam}
 			teamType={TEAM.AWAY}
 		/>
 	</div>
@@ -80,7 +80,7 @@
 			<select
 				id="winScore"
 				class="win-score"
-				value={$settings.winScore}
+				value={settings.winScore}
 				onchange={handleScoreChange}
 			>
 				{#each Array(99) as _, i}
@@ -90,7 +90,7 @@
 
 			<button
 				class="game-button"
-				disabled={beginDisabled([$settings.awayTeam.id, $settings.homeTeam.id])}
+				disabled={beginDisabled([settings.awayTeam.id, settings.homeTeam.id])}
 				onclick={beginGame}
 			>
 				Let's Roll!

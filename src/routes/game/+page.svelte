@@ -3,7 +3,7 @@
 	import { Fireworks } from '@fireworks-js/svelte';
 	import type { FireworksOptions } from '@fireworks-js/svelte';
 	import { game } from '$lib/stores/Game';
-	import { settings } from '$lib/stores/Settings';
+	import { settings } from '$lib/state/settings.svelte';
 	import button from '$lib/assets/sfx/button.mp3';
 	import { equals, gt, sleep } from '$lib/utils/common';
 	import {
@@ -46,7 +46,7 @@
 		GAME_ACTION.POINT_OPTION
 	];
 
-	const { awayTeam, homeTeam, mode, winScore } = $settings;
+	const { awayTeam, homeTeam, mode, winScore } = settings;
 	let cancelExitAction = '';
 	let showGameSummary = $state(false);
 	let fw: Fireworks;
@@ -104,13 +104,13 @@
 		if (isModalChoice(mode, $game.possession, $game.action)) {
 			if ($game.action === GAME_ACTION.POINT_OPTION) {
 				sleep(1000).then(() => {
-					playSound(buttonSfx, $settings.volume);
+					playSound(buttonSfx, settings.volume);
 					game.preparePointOption(makePointChoice(awayScore, homeScore, winScore));
 				});
 			} else {
 				sleep(1000).then(() => {
 					const choiceAction = makeFourthDownChoice(awayScore, homeScore, $game.ballIndex);
-					playSound(buttonSfx, $settings.volume);
+					playSound(buttonSfx, settings.volume);
 					if (choiceAction === GAME_ACTION.FIELD_GOAL) {
 						game.toggleFieldGoal();
 					} else {
@@ -122,18 +122,18 @@
 	});
 
 	function cancelExit() {
-		playSound(buttonSfx, $settings.volume);
+		playSound(buttonSfx, settings.volume);
 		game.setAction(cancelExitAction);
 	}
 
 	function handleExitClick() {
-		playSound(buttonSfx, $settings.volume);
+		playSound(buttonSfx, settings.volume);
 		cancelExitAction = $game.action;
 		game.setAction(GAME_ACTION.EXIT);
 	}
 
 	function toggleGameSummary() {
-		playSound(buttonSfx, $settings.volume);
+		playSound(buttonSfx, settings.volume);
 		showGameSummary = !showGameSummary;
 	}
 </script>
@@ -173,8 +173,8 @@
 				<div class="dice-container">
 					<div class="action">{$game.action}</div>
 					<Dice
-						dieColor={primaryColor($settings, $game.possession) || '#FFF'}
-						pipColor={secondaryColor($settings, $game.possession) || '000'}
+						dieColor={primaryColor(settings, $game.possession) || '#FFF'}
+						pipColor={secondaryColor(settings, $game.possession) || '000'}
 					/>
 					{#if $game.restrictDice || (mode === GAME_MODE.SOLO && $game.possession === TEAM.AWAY)}
 						<div class="dice-block"></div>

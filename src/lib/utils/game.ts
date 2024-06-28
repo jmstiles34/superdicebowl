@@ -10,7 +10,7 @@ import {
 	YARD_INTERVAL
 } from '$lib/constants/constants';
 import { add, buildTextString, equals, gte, lte, randomNumber, subtract } from '$lib/utils/common';
-import type { sStore } from '$lib/stores/Settings';
+import type { Settings } from '$lib/state/settings.svelte';
 
 export const backFns = {
 	[TEAM.AWAY]: add,
@@ -240,12 +240,12 @@ export function setFirstDownMarker(ballIndex: number, pos: string) {
 	return add(ballIndex, modifier);
 }
 
-export function primaryColor(settings: sStore, team = 'home') {
+export function primaryColor(settings: Settings, team = 'home') {
 	const teamTyped = `${team.toLowerCase()}Team` as keyof typeof settings;
 	return (settings[teamTyped] as Team).colors.primary;
 }
 
-export function secondaryColor(settings: sStore, team = 'home') {
+export function secondaryColor(settings: Settings, team = 'home') {
 	const teamTyped = `${team.toLowerCase()}Team` as keyof typeof settings;
 	return (settings[teamTyped] as Team).colors.secondary;
 }
