@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { game } from '$lib/stores/Game';
+	import { game } from '$lib/state/game.svelte';
 	import { goto } from '$app/navigation';
 	import { GAME_MODE, TEAM } from '$lib/constants/constants';
 	import TeamSelect from '$lib/components/TeamSelect.svelte';
@@ -19,7 +19,7 @@
 
 	onMount(() => {
 		settings.resetSettings();
-		game.reset();
+		game.resetGame();
 	});
 
 	const beginGame = () => {

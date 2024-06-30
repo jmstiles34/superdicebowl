@@ -16,17 +16,13 @@ class SettingsState {
 	winScore = $state(30);
 	volume = $state(true);
 
-	resetSettings() {
+	resetSettings = () => {
 		this.awayTeam = DEFAULT_SETTINGS.awayTeam;
 		this.homeTeam = DEFAULT_SETTINGS.homeTeam;
 		this.mode = DEFAULT_SETTINGS.mode;
 		this.winScore = DEFAULT_SETTINGS.winScore;
 		this.volume = DEFAULT_SETTINGS.volume;
-	}
-
-	toggleVolume() {
-		this.volume = !this.volume;
-	}
+	};
 }
 
 export const settings = new SettingsState();

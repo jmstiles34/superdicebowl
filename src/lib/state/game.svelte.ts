@@ -105,21 +105,19 @@ class GameState {
 	restrictDice = $state(DEFAULT_GAME.restrictDice);
 	yardsToGo: number | string = $state(DEFAULT_GAME.yardsToGo);
 
-	doKickoff(diceId: number) {
+	doKickoff = (diceId: number) => {
 		const isOnside = isOnsideKick(diceId);
-		this.action =
+		game.action =
 			KICKOFF_RETURN_ACTION[diceId as keyof typeof KICKOFF_RETURN_ACTION] ||
 			GAME_ACTION.KICKOFF_KICK;
-		this.ballIndex = isOnside ? this.ballIndex : BALL_ENDZONE[OPPOSITE_TEAM[this.possession]];
-		this.diceId = diceId;
+		game.ballIndex = isOnside ? game.ballIndex : BALL_ENDZONE[OPPOSITE_TEAM[game.possession]];
+		game.diceId = diceId;
 		isOnside ? playSound(whizSfx, settings.volume) : playSound(kickSfx, settings.volume);
-	}
+	};
 
-	doOffensivePlay(diceId: number) {
+	doOffensivePlay = (diceId: number) => {
 		const diceRoll = diceData.find((d) => d.id === diceId);
-
 		if (diceRoll) {
-			const { ballIndex, currentDown, firstDownIndex, possession } = this;
 			const { autoFirstDown, isPenalty, isTurnover, yards = 0 } = diceRoll;
 			const playYards: number = isArray(yards as number[])
 				? (pickRandom(yards as number[]) as number)
@@ -127,9 +125,15 @@ class GameState {
 			const playIndex: number = ballPosition(this.ballIndex, this.possession, playYards, isPenalty);
 			const endzoneDistance = yardsToEndzone(this.possession, this.ballIndex);
 			const isTD =
-				equals(yards, 100) || isTouchdown(possession, ballIndex, playYards, isPenalty, isTurnover);
-			const isFirstDown = madeFirstDown(possession, playIndex, this.firstDownIndex, autoFirstDown);
-			const isTurnoverOnDowns = turnoverOnDowns(currentDown, isFirstDown, isPenalty);
+				equals(yards, 100) ||
+				isTouchdown(this.possession, this.ballIndex, playYards, isPenalty, isTurnover);
+			const isFirstDown = madeFirstDown(
+				this.possession,
+				playIndex,
+				this.firstDownIndex,
+				autoFirstDown
+			);
+			const isTurnoverOnDowns = turnoverOnDowns(this.currentDown, isFirstDown, isPenalty);
 
 			const playResult = {
 				...DEFAULT_PLAY,
@@ -143,7 +147,7 @@ class GameState {
 
 			if (isTurnover || isTurnoverOnDowns) {
 				const isInterception = INTERCEPTION_ROLLS.includes(diceId);
-				const playIndex = ballPosition(ballIndex, possession, playYards);
+				const playIndex = ballPosition(this.ballIndex, this.possession, playYards);
 				const label = isInterception ? 'Int' : 'Fumble';
 				const description = isTurnoverOnDowns
 					? 'TURNOVER: On downs'
@@ -198,17 +202,17 @@ class GameState {
 						playResult.points = POINTS.SAFETY;
 					} else {
 						this.ballIndex = playIndex;
-						this.currentDown = isPenalty ? currentDown : currentDown + 1;
-						this.yardsToGo = calcYardsToGo(firstDownIndex, firstDownIndex - playIndex);
+						this.currentDown = isPenalty ? this.currentDown : this.currentDown + 1;
+						this.yardsToGo = calcYardsToGo(this.firstDownIndex, this.firstDownIndex - playIndex);
 
 						if (isFirstDown) {
-							const newFirstDown = setFirstDownMarker(playIndex, possession);
+							const newFirstDown = setFirstDownMarker(playIndex, this.possession);
 							playResult.isFirstdown = true;
 							this.currentDown = 1;
 							this.firstDownIndex = newFirstDown;
 							this.yardsToGo = calcYardsToGo(newFirstDown, newFirstDown - playIndex);
 						}
-						this.lastPlay = lastPlayDesc(possession, playIndex, {
+						this.lastPlay = lastPlayDesc(this.possession, playIndex, {
 							...diceRoll,
 							yards: playYards
 						});
@@ -224,9 +228,9 @@ class GameState {
 			}
 			this.playLog = [...this.playLog, playResult];
 		}
-	}
+	};
 
-	doTwoPointPlay(diceId: number) {
+	doTwoPointPlay = (diceId: number) => {
 		const success = twoPointSuccess(sumDigits(diceId));
 		this.action = GAME_ACTION.PLACE_KICKOFF;
 		this.ballIndex = success ? BALL_ENDZONE[this.possession] : this.ballIndex;
@@ -241,15 +245,15 @@ class GameState {
 		};
 		this.playLog = [...this.playLog, playResult];
 		success ? playSound(hornsSfx, settings.volume) : playSound(miss1Sfx, settings.volume);
-	}
+	};
 
-	gameComplete(winner: string) {
+	gameComplete = (winner: string) => {
 		this.action = GAME_ACTION.GAME_OVER;
 		this.lastPlay = `${winner} Wins!!!`;
 		this.restrictDice = true;
-	}
+	};
 
-	kickExtraPoint(diceId: number) {
+	kickExtraPoint = (diceId: number) => {
 		const success = gte(sumDigits(diceId), EXTRA_POINT_SUCCESS);
 		this.action = GAME_ACTION.PLACE_KICKOFF;
 		this.ballIndex = BALL_KICK_GOOD[this.possession];
@@ -265,9 +269,9 @@ class GameState {
 		};
 		this.playLog = [...this.playLog, playResult];
 		success ? playSound(kickSfx, settings.volume) : playSound(missSfx, settings.volume);
-	}
+	};
 
-	kickFieldGoal(diceId: number) {
+	kickFieldGoal = (diceId: number) => {
 		const distanceRequired = fieldGoalYardsFns[this.possession](this.ballIndex);
 		const success = gte(sumDigits(diceId), FIELD_GOAL_ROLL[distanceRequired]);
 		this.action = success ? GAME_ACTION.FIELD_GOAL_MADE : GAME_ACTION.FIELD_GOAL_MISS;
@@ -284,9 +288,9 @@ class GameState {
 		};
 		this.playLog = [...this.playLog, playResult];
 		success ? playSound(kickSfx, settings.volume) : playSound(missSfx, settings.volume);
-	}
+	};
 
-	handleDiceRoll(action: string, diceId: number) {
+	handleDiceRoll = (action: string, diceId: number) => {
 		const executeFns = {
 			[GAME_ACTION.EXTRA_POINT]: this.kickExtraPoint,
 			[GAME_ACTION.FIELD_GOAL]: this.kickFieldGoal,
@@ -296,9 +300,9 @@ class GameState {
 			[GAME_ACTION.TWO_POINT]: this.doTwoPointPlay
 		};
 		executeFns[action](diceId);
-	}
+	};
 
-	handleNextAction(action: string, ballIndex: number, gameOver: boolean) {
+	handleNextAction = (action: string, ballIndex: number, gameOver: boolean) => {
 		if (gameOver) {
 			sleep(1500).then(() => (this.action = GAME_ACTION.GAME_OVER));
 		} else {
@@ -334,9 +338,9 @@ class GameState {
 					break;
 			}
 		}
-	}
+	};
 
-	prepareKickoff() {
+	prepareKickoff = () => {
 		if (this.action !== GAME_ACTION.GAME_OVER) {
 			const newPos = OPPOSITE_TEAM[this.possession];
 			this.action = GAME_ACTION.KICKOFF;
@@ -350,9 +354,9 @@ class GameState {
 			this.yardsToGo = 10;
 			playSound(whooshSfx, settings.volume);
 		}
-	}
+	};
 
-	preparePointOption(action: string) {
+	preparePointOption = (action: string) => {
 		const ballPlacement = {
 			[GAME_ACTION.EXTRA_POINT]: BALL_EXTRA_POINT,
 			[GAME_ACTION.TWO_POINT]: BALL_TWO_POINT
@@ -364,9 +368,9 @@ class GameState {
 		this.lastPlay = `Must Roll ${action === GAME_ACTION.TWO_POINT ? 8 : 4}+ to Convert`;
 		this.modalContent = null;
 		this.restrictDice = false;
-	}
+	};
 
-	resetGame() {
+	resetGame = () => {
 		this.action = DEFAULT_GAME.action;
 		this.ballIndex = DEFAULT_GAME.ballIndex;
 		this.currentDown = DEFAULT_GAME.currentDown;
@@ -380,22 +384,22 @@ class GameState {
 		this.possession = DEFAULT_GAME.possession;
 		this.restrictDice = DEFAULT_GAME.restrictDice;
 		this.yardsToGo = DEFAULT_GAME.yardsToGo;
-	}
+	};
 
-	saveCoinToss(team: string) {
+	saveCoinToss = (team: string) => {
 		this.action = GAME_ACTION.KICKOFF;
 		this.ballIndex = BALL_KICKOFF[team];
 		this.modalContent = null;
 		this.possession = team;
-	}
+	};
 
-	saveFourthDown(action: string) {
+	saveFourthDown = (action: string) => {
 		this.action = action;
 		this.modalContent = null;
 		this.restrictDice = false;
-	}
+	};
 
-	saveKickoff() {
+	saveKickoff = () => {
 		const isTouchback = ![22, 33, 44, 55].includes(this.diceId || 0);
 		const ballIndex = isTouchback
 			? BALL_TOUCHBACK[this.possession]
@@ -414,9 +418,9 @@ class GameState {
 		};
 		this.playLog = [...this.playLog, playResult];
 		playSound(whooshSfx, settings.volume);
-	}
+	};
 
-	saveKickoffOnside() {
+	saveKickoffOnside = () => {
 		const newPos = OPPOSITE_TEAM[this.possession];
 		const playResult: Play = {
 			...DEFAULT_PLAY,
@@ -436,9 +440,9 @@ class GameState {
 		this.restrictDice = false;
 		this.yardsToGo = 10;
 		this.playLog = [...this.playLog, playResult];
-	}
+	};
 
-	savePunt(diceId: number) {
+	savePunt = (diceId: number) => {
 		const distanceIndex = sumDigits(diceId);
 		const puntIndex = forwardFns[this.possession](this.ballIndex, distanceIndex);
 		const newPos = OPPOSITE_TEAM[this.possession];
@@ -458,9 +462,9 @@ class GameState {
 			description: this.lastPlay
 		};
 		this.playLog = [...this.playLog, playResult];
-	}
+	};
 
-	saveSafety() {
+	saveSafety = () => {
 		this.action = GAME_ACTION.PLACE_KICKOFF;
 		this.ballIndex = BALL_SAFETY[this.possession];
 		this.currentDown = 1;
@@ -476,9 +480,9 @@ class GameState {
 			points: POINTS.SAFETY
 		};
 		this.playLog = [...this.playLog, playResult];
-	}
+	};
 
-	saveTouchdown() {
+	saveTouchdown = () => {
 		playSound(touchdownSfx, settings.volume);
 		const playResult: Play = {
 			...DEFAULT_PLAY,
@@ -493,9 +497,9 @@ class GameState {
 		this.firstDownIndex = -1;
 		this.lastPlay = 'TOUCHDOWN!!!';
 		this.playLog = [...this.playLog, playResult];
-	}
+	};
 
-	toggleFieldGoal() {
+	toggleFieldGoal = () => {
 		const distanceRequired = fieldGoalYardsFns[this.possession](this.ballIndex);
 		const diceTotal: number = FIELD_GOAL_ROLL[distanceRequired];
 		const isOffense = [GAME_ACTION.OFFENSE, GAME_ACTION.FOURTH_DOWN_OPTIONS].includes(this.action);
@@ -509,9 +513,9 @@ class GameState {
 		this.modalContent = null;
 		this.restrictDice = false;
 		playSound(chimeSfx, settings.volume);
-	}
+	};
 
-	turnover(ballIndex: number, desc = '') {
+	turnover = (ballIndex: number, desc = '') => {
 		const isOnsideKick = this.action === GAME_ACTION.KICKOFF;
 		const newPos = OPPOSITE_TEAM[this.possession];
 		this.action = GAME_ACTION.OFFENSE;
@@ -524,9 +528,9 @@ class GameState {
 		this.possession = newPos;
 		this.restrictDice = false;
 		this.yardsToGo = 10;
-	}
+	};
 
-	turnoverTouchback() {
+	turnoverTouchback = () => {
 		const newPos = OPPOSITE_TEAM[this.possession];
 		this.action = GAME_ACTION.OFFENSE;
 		this.ballIndex = BALL_PUNT[newPos];
@@ -535,12 +539,12 @@ class GameState {
 		this.lastPlay = 'TURNOVER: Int in the endzone (Touchback)';
 		this.possession = newPos;
 		this.yardsToGo = 10;
-	}
+	};
 
-	updateExtraPoint(team: string) {
+	updateExtraPoint = (team: string) => {
 		this.possession = team;
 		this.ballIndex = BALL_KICKOFF[team];
-	}
+	};
 }
 
 export const game = new GameState();

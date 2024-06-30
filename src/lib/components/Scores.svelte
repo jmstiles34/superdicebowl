@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { TEAM } from '$lib/constants/constants';
 	import type { Team } from '$lib/types';
-	import { game } from '$lib/stores/Game';
+	import { game } from '$lib/state/game.svelte';
 	import { getScoreByTeam } from '$lib/utils/game';
 
 	type ScoresProps = {
@@ -10,8 +10,8 @@
 	};
 
 	let { awayTeam, homeTeam }: ScoresProps = $props();
-	let awayScore = $derived(getScoreByTeam(TEAM.AWAY, $game.playLog));
-	let homeScore = $derived(getScoreByTeam(TEAM.HOME, $game.playLog));
+	let awayScore = $derived(getScoreByTeam(TEAM.AWAY, game.playLog));
+	let homeScore = $derived(getScoreByTeam(TEAM.HOME, game.playLog));
 
 	let awayToRgb = awayTeam.colors.primary.replace('/ 1', '/ 0.5');
 	let homeToRgb = homeTeam.colors.primary.replace('/ 1', '/ 0.5');
@@ -25,7 +25,7 @@
         background-image: linear-gradient(to right, ${homeToRgb} 0 100%), url(/logos/${homeTeam.fieldLogo}.webp)`}
 	>
 		<div class="city-wrapper">
-			{#if $game.possession === TEAM.HOME}
+			{#if game.possession === TEAM.HOME}
 				<div class="possession"></div>
 			{/if}
 			<div class="cityName">{homeTeam.city}</div>
@@ -40,7 +40,7 @@
         background-image: linear-gradient(to right, ${awayToRgb} 0 100%), url(/logos/${awayTeam.fieldLogo}.webp)`}
 	>
 		<div class="city-wrapper">
-			{#if $game.possession === TEAM.AWAY}
+			{#if game.possession === TEAM.AWAY}
 				<div class="possession"></div>
 			{/if}
 			<div class="cityName">{awayTeam.city}</div>

@@ -2,7 +2,7 @@
 	import { onDestroy } from 'svelte';
 	import { Fireworks } from '@fireworks-js/svelte';
 	import type { FireworksOptions } from '@fireworks-js/svelte';
-	import { game } from '$lib/stores/Game';
+	import { game } from '$lib/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import button from '$lib/assets/sfx/button.mp3';
 	import { equals, gt, sleep } from '$lib/utils/common';
@@ -71,12 +71,12 @@
 	};
 	const isGameReady = awayTeam.id.length && homeTeam.id.length;
 	const buttonSfx: Howl = createSound(button);
-	let awayScore = $derived(getScoreByTeam(TEAM.AWAY, $game.playLog));
-	let homeScore = $derived(getScoreByTeam(TEAM.HOME, $game.playLog));
+	let awayScore = $derived(getScoreByTeam(TEAM.AWAY, game.playLog));
+	let homeScore = $derived(getScoreByTeam(TEAM.HOME, game.playLog));
 	let gameOver = $derived(isGameComplete(awayScore, homeScore, winScore));
 
 	onDestroy(() => {
-		game.reset();
+		game.resetGame();
 	});
 
 	$effect(() => {
@@ -87,11 +87,11 @@
 	});
 
 	$effect(() => {
-		game.handleNextAction($game.action, $game.ballIndex, gameOver);
+		game.handleNextAction(game.action, game.ballIndex, gameOver);
 	});
 
 	$effect(() => {
-		if ($game.action === GAME_ACTION.GAME_OVER) {
+		if (game.action === GAME_ACTION.GAME_OVER) {
 			sleep(100).then(() => {
 				const fireworks = fw.fireworksInstance();
 				fireworks.start();
@@ -101,15 +101,15 @@
 	});
 
 	$effect(() => {
-		if (isModalChoice(mode, $game.possession, $game.action)) {
-			if ($game.action === GAME_ACTION.POINT_OPTION) {
+		if (isModalChoice(mode, game.possession, game.action)) {
+			if (game.action === GAME_ACTION.POINT_OPTION) {
 				sleep(1000).then(() => {
 					playSound(buttonSfx, settings.volume);
 					game.preparePointOption(makePointChoice(awayScore, homeScore, winScore));
 				});
 			} else {
 				sleep(1000).then(() => {
-					const choiceAction = makeFourthDownChoice(awayScore, homeScore, $game.ballIndex);
+					const choiceAction = makeFourthDownChoice(awayScore, homeScore, game.ballIndex);
 					playSound(buttonSfx, settings.volume);
 					if (choiceAction === GAME_ACTION.FIELD_GOAL) {
 						game.toggleFieldGoal();
@@ -123,13 +123,13 @@
 
 	function cancelExit() {
 		playSound(buttonSfx, settings.volume);
-		game.setAction(cancelExitAction);
+		game.action = cancelExitAction;
 	}
 
 	function handleExitClick() {
 		playSound(buttonSfx, settings.volume);
-		cancelExitAction = $game.action;
-		game.setAction(GAME_ACTION.EXIT);
+		cancelExitAction = game.action;
+		game.action = GAME_ACTION.EXIT;
 	}
 
 	function toggleGameSummary() {
@@ -168,15 +168,15 @@
 							</button>
 						</div>
 					</div>
-					<div class="last-play">{$game.lastPlay}</div>
+					<div class="last-play">{game.lastPlay}</div>
 				</div>
 				<div class="dice-container">
-					<div class="action">{$game.action}</div>
+					<div class="action">{game.action}</div>
 					<Dice
-						dieColor={primaryColor(settings, $game.possession) || '#FFF'}
-						pipColor={secondaryColor(settings, $game.possession) || '000'}
+						dieColor={primaryColor(settings, game.possession) || '#FFF'}
+						pipColor={secondaryColor(settings, game.possession) || '000'}
 					/>
-					{#if $game.restrictDice || (mode === GAME_MODE.SOLO && $game.possession === TEAM.AWAY)}
+					{#if game.restrictDice || (mode === GAME_MODE.SOLO && game.possession === TEAM.AWAY)}
 						<div class="dice-block"></div>
 					{/if}
 				</div>
@@ -187,18 +187,18 @@
 
 			<Field
 				{awayTeam}
-				ballIndex={$game.ballIndex}
-				downToGo={`${DOWN[$game.currentDown]} & ${$game.yardsToGo}`}
-				firstDownIndex={$game.firstDownIndex}
+				ballIndex={game.ballIndex}
+				downToGo={`${DOWN[game.currentDown]} & ${game.yardsToGo}`}
+				firstDownIndex={game.firstDownIndex}
 				{homeTeam}
-				inFieldGoalRange={inFieldGoalRange($game.action, $game.possession, $game.ballIndex)}
-				missedKick={$game.missedKick}
-				onsideKick={$game.onsideKick}
-				possession={$game.possession}
-				showDownDistance={showDownDistance($game.action) && !$game.restrictDice}
+				inFieldGoalRange={inFieldGoalRange(game.action, game.possession, game.ballIndex)}
+				missedKick={game.missedKick}
+				onsideKick={game.onsideKick}
+				possession={game.possession}
+				showDownDistance={showDownDistance(game.action) && !game.restrictDice}
 				toggleFieldGoal={game.toggleFieldGoal}
 			/>
-			{#if $game.action === GAME_ACTION.GAME_OVER}
+			{#if game.action === GAME_ACTION.GAME_OVER}
 				<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
 			{/if}
 		</div>
@@ -212,13 +212,13 @@
 			<GameSummary
 				{awayTeam}
 				{homeTeam}
-				playLog={$game.playLog}
-				gameIsOver={equals($game.action, GAME_ACTION.GAME_OVER)}
+				playLog={game.playLog}
+				gameIsOver={equals(game.action, GAME_ACTION.GAME_OVER)}
 			/>
 		</Modal>
 
 		<Modal
-			showModal={equals($game.action, GAME_ACTION.EXIT)}
+			showModal={equals(game.action, GAME_ACTION.EXIT)}
 			close={cancelExit}
 			hasClose={true}
 			choiceRequired={false}
@@ -226,22 +226,26 @@
 			<ConfirmExit />
 		</Modal>
 
-		<Modal showModal={modalActions.includes($game.action)} close={NOOP} on:click={game.clearModal}>
+		<Modal
+			showModal={modalActions.includes(game.action)}
+			close={NOOP}
+			on:click={() => (game.modalContent = null)}
+		>
 			<div class="model-content">
-				{#if equals($game.action, GAME_ACTION.COIN_TOSS)}
-					<CoinToss saveCoinToss={game.saveCoinToss} />
+				{#if equals(game.action, GAME_ACTION.COIN_TOSS)}
+					<CoinToss saveCoinToss={(a) => game.saveCoinToss(a)} />
 				{/if}
-				{#if equals($game.action, GAME_ACTION.POINT_OPTION) && !equals($game.action, GAME_ACTION.GAME_OVER)}
-					<PointOption savePointOption={game.preparePointOption} />
+				{#if equals(game.action, GAME_ACTION.POINT_OPTION) && !equals(game.action, GAME_ACTION.GAME_OVER)}
+					<PointOption savePointOption={(a) => game.preparePointOption(a)} />
 				{/if}
-				{#if equals($game.action, GAME_ACTION.FOURTH_DOWN_OPTIONS)}
+				{#if equals(game.action, GAME_ACTION.FOURTH_DOWN_OPTIONS)}
 					<FourthDown
-						inFieldGoalRange={compareFns[$game.possession](
-							$game.ballIndex,
-							BALL_FIELD_GOAL[$game.possession]
+						inFieldGoalRange={compareFns[game.possession](
+							game.ballIndex,
+							BALL_FIELD_GOAL[game.possession]
 						)}
-						saveFourthDown={game.saveFourthDown}
-						toggleFieldGoal={game.toggleFieldGoal}
+						saveFourthDown={(a) => game.saveFourthDown(a)}
+						toggleFieldGoal={() => game.toggleFieldGoal()}
 					/>
 				{/if}
 			</div>
