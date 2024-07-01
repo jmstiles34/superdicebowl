@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { CONVERSION, GAME_ACTION } from '$lib/constants/constants';
 	import button from '$lib/assets/sfx/button.mp3';
-	import { settings } from '$lib/stores/Settings';
+	import { settings } from '$lib/state/settings.svelte';
 	import type { Howl } from 'howler';
 	import { createSound, playSound } from '$lib/utils/sound';
 
@@ -14,7 +14,7 @@
 	<button
 		class="game-button"
 		onclick={() => {
-			playSound(buttonSfx, $settings.volume);
+			playSound(buttonSfx, settings.volume);
 			savePointOption(GAME_ACTION.EXTRA_POINT);
 		}}
 	>
@@ -23,7 +23,7 @@
 	<button
 		class="game-button"
 		onclick={() => {
-			playSound(buttonSfx, $settings.volume);
+			playSound(buttonSfx, settings.volume);
 			savePointOption(GAME_ACTION.TWO_POINT);
 		}}
 	>

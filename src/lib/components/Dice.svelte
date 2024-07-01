@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { game } from '$lib/stores/Game';
-	import { settings } from '$lib/stores/Settings';
+	import { game } from '$lib/state/game.svelte';
+	import { settings } from '$lib/state/settings.svelte';
 	import { elasticInOut } from 'svelte/easing';
 	import { nonZeroRandomNumber, sleep } from '$lib/utils/common';
 	import { isRollAction } from '$lib/utils/game';
@@ -40,12 +40,12 @@
 
 	$effect(() => {
 		if (
-			$settings.mode === GAME_MODE.SOLO &&
-			$game.possession === TEAM.AWAY &&
-			isRollAction($game.action) &&
+			settings.mode === GAME_MODE.SOLO &&
+			game.possession === TEAM.AWAY &&
+			isRollAction(game.action) &&
 			canRoll
 		) {
-			if ($game.ballIndex > 0 || $game.currentDown > 0) {
+			if (game.ballIndex > 0 || game.currentDown > 0) {
 				sleep(2000).then(() => {
 					handleRollDice();
 				});
@@ -56,8 +56,8 @@
 	async function handleRollDice() {
 		if (!canRoll) return;
 
-		game.restrictDice(true);
-		playSound(flickSfx, $settings.volume);
+		game.restrictDice = true;
+		playSound(flickSfx, settings.volume);
 		canRoll = false;
 		let die1: number = nonZeroRandomNumber(pipCount);
 		let die2: number = nonZeroRandomNumber(pipCount);
@@ -68,7 +68,7 @@
 		dice = [Array(die1).fill(0), Array(die2).fill(0)];
 		await sleep(rollDelay);
 		canRoll = true;
-		game.handleDiceRoll($game.action, diceId);
+		game.handleDiceRoll(game.action, diceId);
 	}
 </script>
 
