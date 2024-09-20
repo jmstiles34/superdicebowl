@@ -95,7 +95,12 @@
 				</button>
 			{/each}
 		{:else}
-			<button onclick={() => (showCustomTeam = true)} tabindex="0" class="dice">
+			<button
+				onclick={() => (showCustomTeam = true)}
+				tabindex="0"
+				class="dice"
+				aria-label={`${teamType} Team Placeholder`}
+			>
 				<img
 					class="hover"
 					alt={`${teamType} Team Placeholder`}
@@ -117,6 +122,7 @@
 			class="random"
 			onclick={() => setRandomTeam(allTeamsData, opponentId, saveTeam)}
 			onkeydown={handleRandomizeKeydown}
+			aria-label={`Random ${teamType} Team`}
 		>
 			<picture>
 				<source type="image/avif" srcset="/images/randomize.avif" />

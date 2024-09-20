@@ -30,7 +30,7 @@
 	<div class="menu-wrapper">
 		{#if data.hasOwnProperty('user')}
 			<form method="POST" action="/logout" use:enhance>
-				<button>Log out</button>
+				<button aria-label="Log out">Log out</button>
 			</form>
 		{:else}
 			<a class="link" href="/login">Log in</a>
@@ -42,6 +42,7 @@
 			onclick={toggleVolume}
 			onkeypress={toggleVolume}
 			tabindex="0"
+			aria-label="Sound toggle"
 			title={settings.volume ? 'Mute sounds' : 'Play sounds'}
 		>
 			<img src={settings.volume ? soundOn : soundOff} alt="Sound toggle" />

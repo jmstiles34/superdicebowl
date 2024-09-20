@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 	import { Fireworks } from '@fireworks-js/svelte';
-	import type { FireworksOptions } from '@fireworks-js/svelte';
 	import { game } from '$lib/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import button from '$lib/assets/sfx/button.mp3';
 	import { equals, gt, sleep } from '$lib/utils/common';
+	import { fireworkShow, options } from '$lib/utils/fireworks';
 	import {
 		compareFns,
 		getScoreByTeam,
@@ -49,26 +49,8 @@
 	const { awayTeam, homeTeam, mode, winScore } = settings;
 	let cancelExitAction = '';
 	let showGameSummary = $state(false);
-	let fw: Fireworks;
-	let options: FireworksOptions = {
-		explosion: 3,
-		opacity: 0.5,
-		intensity: 15,
-		sound: {
-			enabled: true,
-			files: [
-				'/sfx/firework1.mp3',
-				'/sfx/firework2.mp3',
-				'/sfx/firework3.mp3',
-				'/sfx/firework4.mp3',
-				'/sfx/firework5.mp3'
-			],
-			volume: {
-				min: 2,
-				max: 4
-			}
-		}
-	};
+	let fw = $state(fireworkShow);
+
 	const isGameReady = awayTeam.id.length && homeTeam.id.length;
 	const buttonSfx: Howl = createSound(button);
 	let awayScore = $derived(getScoreByTeam(TEAM.AWAY, game.playLog));
@@ -83,21 +65,16 @@
 		if (gameOver) {
 			const winner = gt(awayScore, homeScore) ? awayTeam.city : homeTeam.city;
 			game.gameComplete(winner);
-		}
-	});
-
-	$effect(() => {
-		game.handleNextAction(game.action, game.ballIndex, gameOver);
-	});
-
-	$effect(() => {
-		if (game.action === GAME_ACTION.GAME_OVER) {
 			sleep(100).then(() => {
 				const fireworks = fw.fireworksInstance();
 				fireworks.start();
 			});
 			sleep(3000).then(() => (showGameSummary = true));
 		}
+	});
+
+	$effect(() => {
+		game.handleNextAction(game.action, game.ballIndex, gameOver);
 	});
 
 	$effect(() => {

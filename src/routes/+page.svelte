@@ -33,7 +33,7 @@
 	};
 </script>
 
-{#snippet modeButton(mode, text)}
+{#snippet modeButton(mode: string, text: string)}
 	<button
 		class="game-button mode-button"
 		class:mode-selected={settings.mode === mode}
