@@ -545,6 +545,12 @@ class GameState {
 		this.possession = team;
 		this.ballIndex = BALL_KICKOFF[team];
 	};
+
+	updateGameState = (updates: Object) => {
+		for (const [key, value] of Object.entries(updates)) {
+			this[key as keyof typeof updates] = value;
+		}
+	};
 }
 
 export const game = new GameState();
