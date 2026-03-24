@@ -6,7 +6,7 @@
 	import type { Team } from '$lib/types';
 	import { DEFAULT_TEAM } from '$lib/constants/constants';
 	import '@fontsource/bebas-neue';
-	import { hexToHsl, hslToHex } from '$lib/utils/common';
+	import { hexToOklch, oklchToHex } from '$lib/utils/common';
 
 	type CustomTeamProps = {
 		close: (id: string) => void;
@@ -15,12 +15,12 @@
 
 	let { close, customTeamId }: CustomTeamProps = $props();
 
-	let faceMask = $state('hsl(0 0% 85% / 1)');
-	let helmet = $state('hsl(207 44% 49% / 1)');
-	let stripe = $state('hsl(0 100% 100% / 1)');
-	let trim = $state('hsl(210 100% 13% / 1)');
-	let primary = $state('hsl(210 100% 13% / 1)');
-	let secondary = $state('hsl(207 44% 49% / 1)');
+	let faceMask = $state('oklch(0.8845 0 0 / 1)');
+	let helmet = $state('oklch(0.589 0.0989 245.29 / 1)');
+	let stripe = $state('oklch(1 0 0 / 1)');
+	let trim = $state('oklch(0.2469 0.0734 251.79 / 1)');
+	let primary = $state('oklch(0.2469 0.0734 251.79 / 1)');
+	let secondary = $state('oklch(0.589 0.0989 245.29 / 1)');
 	let logo = $state('');
 	let logoTransform = $state('');
 	let city = $state('');
@@ -31,12 +31,12 @@
 
 	onMount(() => {
 		const team: Team = getTeam();
-		faceMask = hslToHex(team.colors.faceMask || faceMask);
-		helmet = hslToHex(team.colors.helmet || helmet);
-		stripe = hslToHex(team.colors.stripe || stripe);
-		trim = hslToHex(team.colors.trim || trim);
-		primary = hslToHex(team.colors.primary || primary);
-		secondary = hslToHex(team.colors.secondary || secondary);
+		faceMask = oklchToHex(team.colors.faceMask || faceMask);
+		helmet = oklchToHex(team.colors.helmet || helmet);
+		stripe = oklchToHex(team.colors.stripe || stripe);
+		trim = oklchToHex(team.colors.trim || trim);
+		primary = oklchToHex(team.colors.primary || primary);
+		secondary = oklchToHex(team.colors.secondary || secondary);
 		logo = team.logo || logo;
 		logoTransform = team.logoTransform || '';
 		city = team.city;
@@ -81,12 +81,12 @@
 				logoTransform,
 				name,
 				colors: {
-					primary: hexToHsl(primary),
-					secondary: hexToHsl(secondary),
-					helmet: hexToHsl(helmet),
-					faceMask: hexToHsl(faceMask),
-					stripe: hexToHsl(stripe),
-					trim: hexToHsl(trim)
+					primary: hexToOklch(primary),
+					secondary: hexToOklch(secondary),
+					helmet: hexToOklch(helmet),
+					faceMask: hexToOklch(faceMask),
+					stripe: hexToOklch(stripe),
+					trim: hexToOklch(trim)
 				}
 			};
 			let teamsToKeep = lsTeams.filter(({ id }) => id !== customTeamId);

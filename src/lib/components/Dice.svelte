@@ -32,12 +32,6 @@
 		};
 	}
 
-	function handleKeyPress(e: KeyboardEvent) {
-		if (e.code === 'Space') {
-			handleRollDice();
-		}
-	}
-
 	$effect(() => {
 		if (
 			settings.mode === GAME_MODE.SOLO &&
@@ -61,7 +55,7 @@
 		canRoll = false;
 		let die1: number = nonZeroRandomNumber(pipCount);
 		let die2: number = nonZeroRandomNumber(pipCount);
-		let diceId = Math.min(parseInt(`${die1}${die2}`), parseInt(`${die2}${die1}`));
+		let diceId = Math.min(die1 * 10 + die2, die2 * 10 + die1);
 
 		dice = [];
 		await sleep(rollDelay);
@@ -72,7 +66,7 @@
 	}
 </script>
 
-<button class="dice-button" onclick={handleRollDice} onkeypress={handleKeyPress}>
+<button class="dice-button" onclick={handleRollDice}>
 	{#each dice as die}
 		<div class="face" style={`background-color: ${dieColor};`} in:diceTransition out:diceTransition>
 			{#each die as pip}

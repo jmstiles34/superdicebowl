@@ -1,8 +1,19 @@
+import type { Howl } from 'howler';
+import chime from '$lib/assets/sfx/chime.mp3';
+import horns from '$lib/assets/sfx/horns.mp3';
+import kick from '$lib/assets/sfx/kick.mp3';
+import miss from '$lib/assets/sfx/miss.mp3';
+import miss1 from '$lib/assets/sfx/miss1.mp3';
+import offense from '$lib/assets/sfx/offense.mp3';
+import shake from '$lib/assets/sfx/shake.mp3';
+import touchdown from '$lib/assets/sfx/touchdown.mp3';
+import whiz from '$lib/assets/sfx/whiz.mp3';
+import whoosh from '$lib/assets/sfx/whoosh.mp3';
 import {
 	BALL_ENDZONE,
 	BALL_EXTRA_POINT,
-	BALL_KICKOFF,
 	BALL_KICK_GOOD,
+	BALL_KICKOFF,
 	BALL_ONSIDE_KICK,
 	BALL_PUNT,
 	BALL_SAFETY,
@@ -19,9 +30,12 @@ import {
 	KICKOFF_RETURN_YARDS,
 	OPPOSITE_TEAM,
 	POINTS,
-	TEAM,
 	TURNOVER_ONSIDE_KICK
 } from '$lib/constants/constants';
+import { diceData } from '$lib/data/data.json';
+import { settings } from '$lib/state/settings.svelte';
+import type { Play } from '$lib/types';
+import { equals, gt, gte, isArray, lt, pickRandom, sleep, sumDigits } from '$lib/utils/common';
 import {
 	ballPosition,
 	calcYardsToGo,
@@ -46,22 +60,7 @@ import {
 	twoPointSuccess,
 	yardsToEndzone
 } from '$lib/utils/game';
-import { equals, gt, gte, isArray, lt, pickRandom, sleep, sumDigits } from '$lib/utils/common';
-import type { Howl } from 'howler';
 import { createSound, playSound } from '$lib/utils/sound';
-import { diceData } from '$lib/data/data.json';
-import chime from '$lib/assets/sfx/chime.mp3';
-import horns from '$lib/assets/sfx/horns.mp3';
-import kick from '$lib/assets/sfx/kick.mp3';
-import miss from '$lib/assets/sfx/miss.mp3';
-import miss1 from '$lib/assets/sfx/miss1.mp3';
-import offense from '$lib/assets/sfx/offense.mp3';
-import shake from '$lib/assets/sfx/shake.mp3';
-import touchdown from '$lib/assets/sfx/touchdown.mp3';
-import whiz from '$lib/assets/sfx/whiz.mp3';
-import whoosh from '$lib/assets/sfx/whoosh.mp3';
-import type { Play } from '$lib/types';
-import { settings } from '$lib/state/settings.svelte';
 
 const chimeSfx: Howl = createSound(chime);
 const hornsSfx: Howl = createSound(horns);
@@ -105,13 +104,17 @@ class GameState {
 	restrictDice = $state(DEFAULT_GAME.restrictDice);
 	yardsToGo: number | string = $state(DEFAULT_GAME.yardsToGo);
 
+	addPlay = (play: Play) => {
+		this.playLog = [...this.playLog, play];
+	};
+
 	doKickoff = (diceId: number) => {
 		const isOnside = isOnsideKick(diceId);
-		game.action =
+		this.action =
 			KICKOFF_RETURN_ACTION[diceId as keyof typeof KICKOFF_RETURN_ACTION] ||
 			GAME_ACTION.KICKOFF_KICK;
-		game.ballIndex = isOnside ? game.ballIndex : BALL_ENDZONE[OPPOSITE_TEAM[game.possession]];
-		game.diceId = diceId;
+		this.ballIndex = isOnside ? this.ballIndex : BALL_ENDZONE[OPPOSITE_TEAM[this.possession]];
+		this.diceId = diceId;
 		isOnside ? playSound(whizSfx, settings.volume) : playSound(kickSfx, settings.volume);
 	};
 
@@ -226,7 +229,7 @@ class GameState {
 					this.restrictDice = false;
 				}
 			}
-			this.playLog = [...this.playLog, playResult];
+			this.addPlay(playResult);
 		}
 	};
 
@@ -243,7 +246,7 @@ class GameState {
 			description: this.lastPlay,
 			points: success ? POINTS.TWO_POINT : 0
 		};
-		this.playLog = [...this.playLog, playResult];
+		this.addPlay(playResult);
 		success ? playSound(hornsSfx, settings.volume) : playSound(miss1Sfx, settings.volume);
 	};
 
@@ -267,7 +270,7 @@ class GameState {
 			description: this.lastPlay,
 			points: success ? POINTS.EXTRA_POINT : 0
 		};
-		this.playLog = [...this.playLog, playResult];
+		this.addPlay(playResult);
 		success ? playSound(kickSfx, settings.volume) : playSound(missSfx, settings.volume);
 	};
 
@@ -286,7 +289,7 @@ class GameState {
 			description: this.lastPlay,
 			points: success ? POINTS.FIELD_GOAL : 0
 		};
-		this.playLog = [...this.playLog, playResult];
+		this.addPlay(playResult);
 		success ? playSound(kickSfx, settings.volume) : playSound(missSfx, settings.volume);
 	};
 
@@ -371,19 +374,9 @@ class GameState {
 	};
 
 	resetGame = () => {
-		this.action = DEFAULT_GAME.action;
-		this.ballIndex = DEFAULT_GAME.ballIndex;
-		this.currentDown = DEFAULT_GAME.currentDown;
-		this.diceId = DEFAULT_GAME.diceId;
-		this.firstDownIndex = DEFAULT_GAME.firstDownIndex;
-		this.lastPlay = DEFAULT_GAME.lastPlay;
-		this.missedKick = DEFAULT_GAME.missedKick;
-		this.modalContent = DEFAULT_GAME.modalContent;
-		this.onsideKick = DEFAULT_GAME.onsideKick;
-		this.playLog = DEFAULT_GAME.playLog;
-		this.possession = DEFAULT_GAME.possession;
-		this.restrictDice = DEFAULT_GAME.restrictDice;
-		this.yardsToGo = DEFAULT_GAME.yardsToGo;
+		for (const [key, value] of Object.entries(DEFAULT_GAME)) {
+			(this as Record<string, unknown>)[key] = value;
+		}
 	};
 
 	saveCoinToss = (team: string) => {
@@ -416,7 +409,7 @@ class GameState {
 			action: GAME_ACTION.KICKOFF_RETURN,
 			description: this.lastPlay
 		};
-		this.playLog = [...this.playLog, playResult];
+		this.addPlay(playResult);
 		playSound(whooshSfx, settings.volume);
 	};
 
@@ -439,47 +432,31 @@ class GameState {
 		this.possession = newPos;
 		this.restrictDice = false;
 		this.yardsToGo = 10;
-		this.playLog = [...this.playLog, playResult];
+		this.addPlay(playResult);
 	};
 
 	savePunt = (diceId: number) => {
+		const puntingTeam = this.possession;
 		const distanceIndex = sumDigits(diceId);
-		const puntIndex = forwardFns[this.possession](this.ballIndex, distanceIndex);
-		const newPos = OPPOSITE_TEAM[this.possession];
+		const puntIndex = forwardFns[puntingTeam](this.ballIndex, distanceIndex);
+		const newPos = OPPOSITE_TEAM[puntingTeam];
 		const newBallIndex = isTouchback(puntIndex) ? BALL_PUNT[newPos] : puntIndex;
 		this.action = GAME_ACTION.OFFENSE;
 		this.ballIndex = newBallIndex;
 		this.currentDown = 1;
-		(this.firstDownIndex = setFirstDownMarker(puntIndex, newPos)), (this.possession = newPos);
+		this.firstDownIndex = setFirstDownMarker(puntIndex, newPos);
 		this.lastPlay = descPunt(isTouchback(puntIndex), indexToYards(distanceIndex));
+		this.possession = newPos;
 		this.restrictDice = false;
 		this.yardsToGo = 10;
 		const playResult: Play = {
 			...DEFAULT_PLAY,
-			team: OPPOSITE_TEAM[this.possession],
+			team: puntingTeam,
 			diceRoll: diceId || 0,
 			action: GAME_ACTION.PUNT,
 			description: this.lastPlay
 		};
-		this.playLog = [...this.playLog, playResult];
-	};
-
-	saveSafety = () => {
-		this.action = GAME_ACTION.PLACE_KICKOFF;
-		this.ballIndex = BALL_SAFETY[this.possession];
-		this.currentDown = 1;
-		this.firstDownIndex = -1;
-		this.lastPlay = descSafety();
-		this.yardsToGo = 10;
-		const playResult: Play = {
-			...DEFAULT_PLAY,
-			team: OPPOSITE_TEAM[this.possession],
-			diceRoll: 0,
-			action: GAME_ACTION.SAFETY,
-			description: this.lastPlay,
-			points: POINTS.SAFETY
-		};
-		this.playLog = [...this.playLog, playResult];
+		this.addPlay(playResult);
 	};
 
 	saveTouchdown = () => {
@@ -496,7 +473,7 @@ class GameState {
 		this.ballIndex = BALL_ENDZONE[this.possession];
 		this.firstDownIndex = -1;
 		this.lastPlay = 'TOUCHDOWN!!!';
-		this.playLog = [...this.playLog, playResult];
+		this.addPlay(playResult);
 	};
 
 	toggleFieldGoal = () => {
@@ -528,28 +505,6 @@ class GameState {
 		this.possession = newPos;
 		this.restrictDice = false;
 		this.yardsToGo = 10;
-	};
-
-	turnoverTouchback = () => {
-		const newPos = OPPOSITE_TEAM[this.possession];
-		this.action = GAME_ACTION.OFFENSE;
-		this.ballIndex = BALL_PUNT[newPos];
-		this.currentDown = 1;
-		this.firstDownIndex = setFirstDownMarker(BALL_PUNT[newPos], newPos);
-		this.lastPlay = 'TURNOVER: Int in the endzone (Touchback)';
-		this.possession = newPos;
-		this.yardsToGo = 10;
-	};
-
-	updateExtraPoint = (team: string) => {
-		this.possession = team;
-		this.ballIndex = BALL_KICKOFF[team];
-	};
-
-	updateGameState = (updates: Object) => {
-		for (const [key, value] of Object.entries(updates)) {
-			this[key as keyof typeof updates] = value;
-		}
 	};
 }
 

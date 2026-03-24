@@ -105,7 +105,7 @@
 
 		<div class="name-container">
 			<div
-				class={`name`}
+				class="name"
 				class:flipName={position === POSITION.RIGHT}
 				style={`color: ${secondary};`}
 			>
@@ -179,8 +179,6 @@
 	.post {
 		width: 0.5rem;
 		height: 0.5rem;
-		-webkit-border-radius: 50%;
-		-moz-border-radius: 50%;
 		border-radius: 50%;
 		background-color: var(--color-yellow);
 	}

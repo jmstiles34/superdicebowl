@@ -27,10 +27,10 @@
 	};
 
 	let {
-		faceMask = 'hsl(0 0% 85% / 1)',
-		helmet = 'hsl(207 44% 49% / 1)',
-		stripe = 'hsl(0 100% 100% / 1)',
-		trim = 'hsl(210 100% 13% / 1)',
+		faceMask = 'oklch(0.8845 0 0 / 1)',
+		helmet = 'oklch(0.589 0.0989 245.29 / 1)',
+		stripe = 'oklch(1 0 0 / 1)',
+		trim = 'oklch(0.2469 0.0734 251.79 / 1)',
 		direction = POSITION.RIGHT,
 		logo = null,
 		logoLeft = null,
@@ -91,7 +91,7 @@
 				</filter>
 				<style>
 					.ear-hole-shadow {
-						filter: drop-shadow(4px 4px 8px hsl(0deg 0% 0% / 0.95));
+						filter: drop-shadow(4px 4px 8px oklch(0 0 0 / 0.95));
 					}
 					.ear-hole {
 						fill: var(--color-gray-900);
@@ -104,19 +104,19 @@
 						fill: var(--color-white);
 					}
 					.snaps {
-						fill: hsl(207 50% 88% / 1);
+						fill: oklch(0.9042 0.0261 242.58 / 1);
 					}
 					.snaps-outline {
-						fill: hsl(207 50% 20% / 1);
+						fill: oklch(0.3207 0.0535 245.25 / 1);
 					}
 					.snap-shadow {
-						filter: drop-shadow(8px 8px 8px hsl(0deg 0% 0% / 0.5));
+						filter: drop-shadow(8px 8px 8px oklch(0 0 0 / 0.5));
 					}
 					.clasp-shadow {
-						filter: drop-shadow(4px 4px 8px hsl(0deg 0% 0% / 0.5));
+						filter: drop-shadow(4px 4px 8px oklch(0 0 0 / 0.5));
 					}
 					.mask-shadow {
-						filter: drop-shadow(2px -2px 4px hsl(0deg 0% 30% / 0.75));
+						filter: drop-shadow(2px -2px 4px oklch(0.4184 0 0 / 0.75));
 					}
 					.stroke {
 						stroke: var(--color-offblack);
@@ -287,11 +287,11 @@ M 641.087 272.197 L 641.11 272.25 C 639.82 280.54 635.28 286.19 629.28 291.09 C 
 	}
 
 	.shadow {
-		filter: drop-shadow(4px 8px 8px hsl(0deg 0% 5% / 0.5));
+		filter: drop-shadow(4px 8px 8px oklch(0.1579 0 0 / 0.5));
 	}
 
 	.end-zone-shadow {
-		filter: drop-shadow(0px 0px 1px hsl(0deg 0% 5% / 0.5));
+		filter: drop-shadow(0px 0px 1px oklch(0.1579 0 0 / 0.5));
 	}
 
 	.small {

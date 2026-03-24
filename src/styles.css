@@ -1,33 +1,33 @@
 :root {
 	/*COLORS*/
-	--color-white: hsl(220deg 23% 97%);
-	--color-offblack: hsl(240deg 5% 6%);
-	--color-blue-100: hsl(210deg 45% 92%);
-	--color-blue-300: hsl(207deg 44% 72%);
-	--color-blue-500: hsl(207deg 44% 49%);
-	--color-blue-600: hsl(207deg 44% 40%);
-	--color-blue-700: hsl(208deg 44% 32%);
-	--color-blue-900: hsl(207deg 44% 12%);
-	--color-gray-50: hsl(210deg, 25%, 96%);
-	--color-gray-100: hsl(210deg, 25%, 88%);
-	--color-gray-200: hsl(210deg, 20%, 77%);
-	--color-gray-300: hsl(210deg, 14%, 66%);
-	--color-gray-400: hsl(210deg, 12%, 55%);
-	--color-gray-500: hsl(210deg, 8%, 50%);
-	--color-gray-600: hsl(210deg, 9%, 45%);
-	--color-gray-700: hsl(210deg, 10%, 40%);
-	--color-gray-800: hsl(210deg, 15%, 25%);
-	--color-gray-900: hsl(210deg, 15%, 20%);
-	--color-gray-1000: hsl(210deg, 19%, 10%);
-	--color-yellow: hsl(51deg 100% 50%);
-	--urgent: hsl(0deg 55% 54%);
-	--urgent-hover: hsl(0deg 54% 88%);
-	--mask: hsl(240deg 5% 6%/ 0.8);
-	--ltmask: hsl(240deg 5% 6% / 0.4);
+	--color-white: oklch(0.9752 0.0034 264.54);
+	--color-offblack: oklch(0.1669 0.0032 286.05);
+	--color-blue-100: oklch(0.9346 0.0159 248);
+	--color-blue-300: oklch(0.7755 0.0552 243.19);
+	--color-blue-500: oklch(0.589 0.0989 245.29);
+	--color-blue-600: oklch(0.5095 0.0839 245.19);
+	--color-blue-700: oklch(0.4331 0.0709 246.72);
+	--color-blue-900: oklch(0.2362 0.0311 244.33);
+	--color-gray-50: oklch(0.9683 0.0044 247.87);
+	--color-gray-100: oklch(0.9043 0.0133 247.97);
+	--color-gray-200: oklch(0.816 0.021 248.09);
+	--color-gray-300: oklch(0.7268 0.0223 248.14);
+	--color-gray-400: oklch(0.6344 0.0262 248.24);
+	--color-gray-500: oklch(0.5932 0.0197 248.16);
+	--color-gray-600: oklch(0.5496 0.0204 248.2);
+	--color-gray-700: oklch(0.5052 0.0205 248.23);
+	--color-gray-800: oklch(0.3657 0.0208 248.4);
+	--color-gray-900: oklch(0.317 0.0173 248.37);
+	--color-gray-1000: oklch(0.2128 0.0121 248.39);
+	--color-yellow: oklch(0.8902 0.1832 96.08);
+	--urgent: oklch(0.5829 0.1645 23.73);
+	--urgent-hover: oklch(0.885 0.0372 17.88);
+	--mask: oklch(0.1669 0.0032 286.05 / 0.8);
+	--ltmask: oklch(0.1669 0.0032 286.05 / 0.4);
 
-	--field-odd: hsl(120deg 61% 40%);
-	--field-even: hsl(120deg 61% 35%);
-	--field: hsl(120deg 61% 34%);
+	--field-odd: oklch(0.6296 0.1925 142.86);
+	--field-even: oklch(0.5713 0.1735 142.88);
+	--field: oklch(0.5594 0.1696 142.89);
 
 	/*FONTS*/
 	--font-size: 1.3rem;
@@ -42,26 +42,18 @@
 	--21px: 1.3125rem;
 	--24px: 1.5rem;
 	font-family:
-		system-ui,
-		-apple-system,
-		BlinkMacSystemFont,
-		'Segoe UI',
-		Roboto,
-		Oxygen,
-		Ubuntu,
-		Cantarell,
-		'Open Sans',
-		'Helvetica Neue',
-		sans-serif;
+		system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+		"Open Sans", "Helvetica Neue", sans-serif;
 
 	/*LAYOUT*/
 	--border-radius: 5px;
 	--side: 1rem;
 	--column: 55rem;
-	--shadow-elevation-medium: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
-		0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
-		2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
-		5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+	--shadow-elevation-medium:
+		0.3px 0.5px 0.7px oklch(var(--shadow-color) / 0.36),
+		0.8px 1.6px 2px -0.8px oklch(var(--shadow-color) / 0.36),
+		2.1px 4.1px 5.2px -1.7px oklch(var(--shadow-color) / 0.36),
+		5px 10px 12.6px -2.5px oklch(var(--shadow-color) / 0.36);
 }
 
 * {
@@ -76,7 +68,7 @@
 }
 
 html {
-	background: radial-gradient(circle at 50% 0%, hsl(0, 0%, 8%) 0%, hsl(0, 0%, 2%) 100%);
+	background: radial-gradient(circle at 50% 0%, oklch(0.193 0 0) 0%, oklch(0.1157 0 0) 100%);
 	background-attachment: fixed;
 	background-size: 100vw 100vh;
 }

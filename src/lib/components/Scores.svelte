@@ -13,8 +13,8 @@
 	let awayScore = $derived(getScoreByTeam(TEAM.AWAY, game.playLog));
 	let homeScore = $derived(getScoreByTeam(TEAM.HOME, game.playLog));
 
-	let awayToRgb = awayTeam.colors.primary.replace('/ 1', '/ 0.5');
-	let homeToRgb = homeTeam.colors.primary.replace('/ 1', '/ 0.5');
+	let awayToRgb = $derived(awayTeam.colors.primary.replace('/ 1', '/ 0.5'));
+	let homeToRgb = $derived(homeTeam.colors.primary.replace('/ 1', '/ 0.5'));
 </script>
 
 <div class="team-scores">

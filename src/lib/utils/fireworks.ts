@@ -1,4 +1,4 @@
-import { Fireworks, type FireworksOptions } from '@fireworks-js/svelte';
+import type { Fireworks, FireworksOptions } from '@fireworks-js/svelte';
 
 export let fireworkShow: Fireworks;
 

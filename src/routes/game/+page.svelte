@@ -4,7 +4,7 @@
 	import { game } from '$lib/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import button from '$lib/assets/sfx/button.mp3';
-	import { equals, gt, sleep } from '$lib/utils/common';
+	import { sleep } from '$lib/utils/common';
 	import { fireworkShow, options } from '$lib/utils/fireworks';
 	import {
 		compareFns,
@@ -63,7 +63,7 @@
 
 	$effect(() => {
 		if (gameOver) {
-			const winner = gt(awayScore, homeScore) ? awayTeam.city : homeTeam.city;
+			const winner = awayScore > homeScore ? awayTeam.city : homeTeam.city;
 			game.gameComplete(winner);
 			sleep(100).then(() => {
 				const fireworks = fw.fireworksInstance();
@@ -125,8 +125,6 @@
 							<button
 								class="toolbarButton flip"
 								onclick={handleExitClick}
-								onkeypress={handleExitClick}
-								tabindex="0"
 								title="Quit Game"
 							>
 								<img src={exit} alt="Quit Game" />
@@ -137,9 +135,7 @@
 							<button
 								class="toolbarButton"
 								onclick={toggleGameSummary}
-								onkeypress={toggleGameSummary}
-								tabindex="0"
-								title={`${showGameSummary ? 'Close' : 'Open'}  Game Summary`}
+								title={`${showGameSummary ? 'Close' : 'Open'} Game Summary`}
 							>
 								<img src={summary} alt="Game Summary" />
 							</button>
@@ -151,7 +147,7 @@
 					<div class="action">{game.action}</div>
 					<Dice
 						dieColor={primaryColor(settings, game.possession) || '#FFF'}
-						pipColor={secondaryColor(settings, game.possession) || '000'}
+						pipColor={secondaryColor(settings, game.possession) || '#000'}
 					/>
 					{#if game.restrictDice || (mode === GAME_MODE.SOLO && game.possession === TEAM.AWAY)}
 						<div class="dice-block"></div>
@@ -190,12 +186,12 @@
 				{awayTeam}
 				{homeTeam}
 				playLog={game.playLog}
-				gameIsOver={equals(game.action, GAME_ACTION.GAME_OVER)}
+				gameIsOver={game.action === GAME_ACTION.GAME_OVER}
 			/>
 		</Modal>
 
 		<Modal
-			showModal={equals(game.action, GAME_ACTION.EXIT)}
+			showModal={game.action === GAME_ACTION.EXIT}
 			close={cancelExit}
 			hasClose={true}
 			choiceRequired={false}
@@ -206,16 +202,13 @@
 		<Modal
 			showModal={modalActions.includes(game.action)}
 			close={NOOP}
-			on:click={() => (game.modalContent = null)}
 		>
-			<div class="model-content">
-				{#if equals(game.action, GAME_ACTION.COIN_TOSS)}
+			<div class="modal-content">
+				{#if game.action === GAME_ACTION.COIN_TOSS}
 					<CoinToss saveCoinToss={(a) => game.saveCoinToss(a)} />
-				{/if}
-				{#if equals(game.action, GAME_ACTION.POINT_OPTION) && !equals(game.action, GAME_ACTION.GAME_OVER)}
+				{:else if game.action === GAME_ACTION.POINT_OPTION}
 					<PointOption savePointOption={(a) => game.preparePointOption(a)} />
-				{/if}
-				{#if equals(game.action, GAME_ACTION.FOURTH_DOWN_OPTIONS)}
+				{:else if game.action === GAME_ACTION.FOURTH_DOWN_OPTIONS}
 					<FourthDown
 						inFieldGoalRange={compareFns[game.possession](
 							game.ballIndex,
@@ -284,7 +277,7 @@
 		border-radius: 1rem;
 		padding: 0.25rem 0.5rem;
 		z-index: 100;
-		filter: drop-shadow(3px 6px 8px hsl(0deg 0% 0% / 0.5));
+		filter: drop-shadow(3px 6px 8px oklch(0 0 0 / 0.5));
 	}
 	.action {
 		color: var(--color-white);

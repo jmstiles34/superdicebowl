@@ -18,11 +18,11 @@
 	const pointAfterMiss = [GAME_ACTION.EXTRA_POINT_MISS, GAME_ACTION.TWO_POINT_MISS];
 	const pointAfterActions = [...pointAfterMade, ...pointAfterMiss];
 
-	const offensePlays = playLog.filter(({ action }) => action === GAME_ACTION.OFFENSE);
-	const penaltyPlays = offensePlays.filter(({ diceRoll }) => [22, 33, 36, 56].includes(diceRoll));
-	const puntPlays = playLog.filter(({ action }) => action === GAME_ACTION.PUNT);
+	let offensePlays = $derived(playLog.filter(({ action }) => action === GAME_ACTION.OFFENSE));
+	let penaltyPlays = $derived(offensePlays.filter(({ diceRoll }) => [22, 33, 36, 56].includes(diceRoll)));
+	let puntPlays = $derived(playLog.filter(({ action }) => action === GAME_ACTION.PUNT));
 
-	const scoringPlays = [...playLog]
+	let scoringPlays = $derived([...playLog]
 		.filter(({ action, points }) => points > 0 || pointAfterMiss.includes(action))
 		.reduce((acc: Play[], play) => {
 			if (pointAfterActions.includes(play.action)) {
@@ -81,75 +81,75 @@
 						play.team === TEAM.AWAY ? play.points + previousPlay.awayScore : previousPlay.awayScore
 				}
 			];
-		}, []);
+		}, []));
 
-	const possessions = playLog.reduce((acc: string[], play) => {
+	let possessions = $derived(playLog.reduce((acc: string[], play) => {
 		if (play.team === acc.at(-1)) return acc;
 		return [...acc, play.team];
-	}, []);
-	const awayDrives = possessions.filter((team) => team === TEAM.AWAY);
-	const homeDrives = possessions.filter((team) => team === TEAM.HOME);
+	}, []));
+	let awayDrives = $derived(possessions.filter((team) => team === TEAM.AWAY));
+	let homeDrives = $derived(possessions.filter((team) => team === TEAM.HOME));
 
-	const awayFirstDowns = offensePlays.filter(
+	let awayFirstDowns = $derived(offensePlays.filter(
 		({ team, isFirstdown }) => team === TEAM.AWAY && isFirstdown
-	);
-	const homeFirstDowns = offensePlays.filter(
+	));
+	let homeFirstDowns = $derived(offensePlays.filter(
 		({ team, isFirstdown }) => team === TEAM.HOME && isFirstdown
-	);
+	));
 
-	const awayFumbles = offensePlays.filter(
+	let awayFumbles = $derived(offensePlays.filter(
 		({ team, diceRoll }) => team === TEAM.AWAY && diceRoll === 23
-	);
-	const homeFumbles = offensePlays.filter(
+	));
+	let homeFumbles = $derived(offensePlays.filter(
 		({ team, diceRoll }) => team === TEAM.HOME && diceRoll === 23
-	);
+	));
 
-	const awayInts = offensePlays.filter(
+	let awayInts = $derived(offensePlays.filter(
 		({ team, diceRoll }) => team === TEAM.AWAY && [12, 45].includes(diceRoll)
-	);
-	const homeInts = offensePlays.filter(
+	));
+	let homeInts = $derived(offensePlays.filter(
 		({ team, diceRoll }) => team === TEAM.HOME && [12, 45].includes(diceRoll)
-	);
+	));
 
-	const awayPenalties = penaltyPlays.filter(
+	let awayPenalties = $derived(penaltyPlays.filter(
 		({ team, diceRoll }) =>
 			(team === TEAM.AWAY && [36, 56].includes(diceRoll)) ||
 			(team === TEAM.HOME && [22, 33].includes(diceRoll))
-	);
-	const homePenalties = penaltyPlays.filter(
+	));
+	let homePenalties = $derived(penaltyPlays.filter(
 		({ team, diceRoll }) =>
 			(team === TEAM.HOME && [36, 56].includes(diceRoll)) ||
 			(team === TEAM.AWAY && [22, 33].includes(diceRoll))
-	);
-	const awayPenaltyYards = awayPenalties.reduce(
+	));
+	let awayPenaltyYards = $derived(awayPenalties.reduce(
 		(total, play) => total + Math.abs(play.penaltyYards),
 		0
-	);
-	const homePenaltyYards = homePenalties.reduce(
+	));
+	let homePenaltyYards = $derived(homePenalties.reduce(
 		(total, play) => total + Math.abs(play.penaltyYards),
 		0
-	);
+	));
 
-	const awayPlays = offensePlays.filter(
+	let awayPlays = $derived(offensePlays.filter(
 		({ team, diceRoll }) => team === TEAM.AWAY && ![22, 33, 36, 56].includes(diceRoll)
-	);
-	const homePlays = offensePlays.filter(
+	));
+	let homePlays = $derived(offensePlays.filter(
 		({ team, diceRoll }) => team === TEAM.HOME && ![22, 33, 36, 56].includes(diceRoll)
-	);
+	));
 
-	const awayPunts = puntPlays.filter(({ team }) => team === TEAM.AWAY);
-	const homePunts = puntPlays.filter(({ team }) => team === TEAM.HOME);
+	let awayPunts = $derived(puntPlays.filter(({ team }) => team === TEAM.AWAY));
+	let homePunts = $derived(puntPlays.filter(({ team }) => team === TEAM.HOME));
 
-	const awayYards = offensePlays
+	let awayYards = $derived(offensePlays
 		.filter(
 			({ team, diceRoll }) => team === TEAM.AWAY && ![12, 23, 45, 22, 33, 36, 56].includes(diceRoll)
 		)
-		.reduce((count, play) => count + play.yards, 0);
-	const homeYards = offensePlays
+		.reduce((count, play) => count + play.yards, 0));
+	let homeYards = $derived(offensePlays
 		.filter(
 			({ team, diceRoll }) => team === TEAM.HOME && ![12, 23, 45, 22, 33, 36, 56].includes(diceRoll)
 		)
-		.reduce((count, play) => count + play.yards, 0);
+		.reduce((count, play) => count + play.yards, 0));
 
 	function toggleTab(idx: number) {
 		activeTab = idx;

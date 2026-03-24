@@ -77,7 +77,6 @@
 					in:fadeScale|global={fadeArgs}
 					class:hover={team.isCustom}
 					onclick={team.isCustom ? () => (showCustomTeam = true) : NOOP}
-					tabindex="0"
 				>
 					<CustomHelmet
 						faceMask={team.colors.faceMask}
@@ -97,7 +96,6 @@
 		{:else}
 			<button
 				onclick={() => (showCustomTeam = true)}
-				tabindex="0"
 				class="dice"
 				aria-label={`${teamType} Team Placeholder`}
 			>
@@ -138,7 +136,7 @@
 	hasClose={true}
 	choiceRequired={false}
 >
-	<div class="model-content">
+	<div class="modal-content">
 		<CustomTeam customTeamId={selected} close={closeCustomTeamModal} />
 	</div>
 </Modal>

@@ -9,12 +9,12 @@
 			"logoTransform": "translate(-24px, -42px) scale(1.21, 1.14)",
 			"id": "0d8ee4cf-1798-4b9f-9d67-b5ce287dda6c",
 			"colors": {
-				"primary": "hsl(346 62% 36% / 1)",
-				"secondary": "hsl(346 75% 0% / 1)",
-				"faceMask": "hsl(197 7% 51% / 1)",
-				"helmet": "hsl(0 0% 96% / 1)",
-				"stripe": "hsl(0 0% 96% / 1)",
-				"trim": "hsl(0 0% 96% / 1)"
+				"primary": "oklch(0.4481 0.149 12.45 / 1)",
+				"secondary": "oklch(0 0 0 / 1)",
+				"faceMask": "oklch(0.6109 0.0165 223.44 / 1)",
+				"helmet": "oklch(0.9696 0 0 / 1)",
+				"stripe": "oklch(0.9696 0 0 / 1)",
+				"trim": "oklch(0.9696 0 0 / 1)"
 			}
 		},
 		{
@@ -26,12 +26,12 @@
 			"logoTransform": "translate(-22px, -38px)",
 			"id": "e3418906-808f-41bc-9797-fb3691d64d72",
 			"colors": {
-				"primary": "hsl(350 74% 38% / 1)",
-				"secondary": "hsl(350 75% 0% / 1)",
-				"faceMask": "hsl(0 0% 8% / 1)",
-				"helmet": "hsl(350 75% 0% / 1)",
-				"stripe": "hsl(0 0% 8% / 1)",
-				"trim": "hsl(0 0% 8% / 1)"
+				"primary": "oklch(0.4753 0.1755 19.48 / 1)",
+				"secondary": "oklch(0 0 0 / 1)",
+				"faceMask": "oklch(0.193 0 0 / 1)",
+				"helmet": "oklch(0 0 0 / 1)",
+				"stripe": "oklch(0.193 0 0 / 1)",
+				"trim": "oklch(0.193 0 0 / 1)"
 			}
 		},
 		{
@@ -45,12 +45,12 @@
 			"logoTransform": "translate(-22px, -42px) scale(1.25, 1.26)",
 			"id": "15aa55fb-bafe-4957-aeb8-ed82ba286f32",
 			"colors": {
-				"primary": "hsl(248 67% 27% / 1)",
-				"secondary": "hsl(46 86% 33% / 1)",
-				"faceMask": "hsl(0 0% 8% / 1)",
-				"helmet": "hsl(0 0% 8% / 1)",
-				"stripe": "hsl(248 67% 27% / 1)",
-				"trim": "hsl(0 0% 8% / 1)"
+				"primary": "oklch(0.2955 0.1473 278.41 / 1)",
+				"secondary": "oklch(0.5981 0.1193 88.74 / 1)",
+				"faceMask": "oklch(0.193 0 0 / 1)",
+				"helmet": "oklch(0.193 0 0 / 1)",
+				"stripe": "oklch(0.2955 0.1473 278.41 / 1)",
+				"trim": "oklch(0.193 0 0 / 1)"
 			}
 		},
 		{
@@ -62,12 +62,12 @@
 			"logoTransform": "translate(-25px, -45px) scale(1.21, 1.21)",
 			"id": "68d32c8e-95db-4dbf-a724-0a8e1f6b3330",
 			"colors": {
-				"primary": "hsl(218 100% 28% / 1)",
-				"secondary": "hsl(348 89% 41% / 1)",
-				"faceMask": "hsl(197 7% 51% / 1)",
-				"helmet": "hsl(0 0% 96% / 1)",
-				"stripe": "hsl(348 89% 41% / 1)",
-				"trim": "hsl(218 100% 28% / 1)"
+				"primary": "oklch(0.3633 0.158 261.1 / 1)",
+				"secondary": "oklch(0.5248 0.2067 21.05 / 1)",
+				"faceMask": "oklch(0.6109 0.0165 223.44 / 1)",
+				"helmet": "oklch(0.9696 0 0 / 1)",
+				"stripe": "oklch(0.5248 0.2067 21.05 / 1)",
+				"trim": "oklch(0.3633 0.158 261.1 / 1)"
 			}
 		},
 		{
@@ -79,12 +79,12 @@
 			"logoTransform": "translate(-26px, -35px) scale(1.21, 1.21)",
 			"id": "6e40d2ca-e183-4236-bdc0-7626e75c8af3",
 			"colors": {
-				"primary": "hsl(200 100% 40% / 1)",
-				"secondary": "hsl(210 33% 9% / 1)",
-				"faceMask": "hsl(0 0% 8% / 1)",
-				"helmet": "hsl(120 1% 75% / 1)",
-				"stripe": "hsl(0 0% 8% / 1)",
-				"trim": "hsl(200 100% 40% / 1)"
+				"primary": "oklch(0.5998 0.1412 241.55 / 1)",
+				"secondary": "oklch(0.2005 0.0191 248.8 / 1)",
+				"faceMask": "oklch(0.193 0 0 / 1)",
+				"helmet": "oklch(0.8061 0.0023 145.56 / 1)",
+				"stripe": "oklch(0.193 0 0 / 1)",
+				"trim": "oklch(0.5998 0.1412 241.55 / 1)"
 			}
 		},
 		{
@@ -97,12 +97,12 @@
 			"logoTransform": "translate(-32px, -45px) scale(1.2, 1.2)",
 			"id": "f2cbeb55-19fd-4a72-a772-fe72e6e2469a",
 			"colors": {
-				"primary": "hsl(219 58% 10% / 1)",
-				"secondary": "hsl(16 97% 40% / 1)",
-				"faceMask": "hsl(219 58% 10% / 1)",
-				"helmet": "hsl(219 58% 10% / 1)",
-				"stripe": "hsl(219 58% 10% / 1)",
-				"trim": "hsl(219 58% 10% / 1)"
+				"primary": "oklch(0.1978 0.0418 261.87 / 1)",
+				"secondary": "oklch(0.5552 0.1888 35.96 / 1)",
+				"faceMask": "oklch(0.1978 0.0418 261.87 / 1)",
+				"helmet": "oklch(0.1978 0.0418 261.87 / 1)",
+				"stripe": "oklch(0.1978 0.0418 261.87 / 1)",
+				"trim": "oklch(0.1978 0.0418 261.87 / 1)"
 			}
 		},
 		{
@@ -114,12 +114,12 @@
 			"logoTransform": "translate(-24px, -35px) scale(1.8, 1.75)",
 			"id": "5a75b4dc-98b2-4f17-94ed-1ddabdd7c995",
 			"colors": {
-				"primary": "hsl(15 97% 53% / 1)",
-				"secondary": "hsl(15 75% 0% / 1)",
-				"faceMask": "hsl(0 0% 8% / 1)",
-				"helmet": "hsl(15 97% 53% / 1)",
-				"stripe": "hsl(15 97% 53% / 1)",
-				"trim": "hsl(15 97% 53% / 1)"
+				"primary": "oklch(0.6622 0.219 36.08 / 1)",
+				"secondary": "oklch(0 0 0 / 1)",
+				"faceMask": "oklch(0.193 0 0 / 1)",
+				"helmet": "oklch(0.6622 0.219 36.08 / 1)",
+				"stripe": "oklch(0.6622 0.219 36.08 / 1)",
+				"trim": "oklch(0.6622 0.219 36.08 / 1)"
 			}
 		},
 		{
@@ -130,12 +130,12 @@
 			"logo": "nfl-browns",
 			"id": "cdeed602-64ef-44c4-91b3-fecd1b489a2a",
 			"colors": {
-				"primary": "hsl(36 100% 10% / 1)",
-				"secondary": "hsl(14 100% 50% / 1)",
-				"faceMask": "hsl(36 100% 10% / 1)",
-				"helmet": "hsl(14 100% 50% / 1)",
-				"stripe": "hsl(0 0% 96% / 1)",
-				"trim": "hsl(36 100% 10% / 1)"
+				"primary": "oklch(0.2577 0.0547 73.58 / 1)",
+				"secondary": "oklch(0.6524 0.2358 33.8 / 1)",
+				"faceMask": "oklch(0.2577 0.0547 73.58 / 1)",
+				"helmet": "oklch(0.6524 0.2358 33.8 / 1)",
+				"stripe": "oklch(0.9696 0 0 / 1)",
+				"trim": "oklch(0.2577 0.0547 73.58 / 1)"
 			}
 		},
 		{
@@ -147,12 +147,12 @@
 			"name": "Cowboys",
 			"id": "f81b352b-ac32-479c-91d2-c27e6853f0a9",
 			"colors": {
-				"primary": "hsl(210 100% 13% / 1)",
-				"secondary": "hsl(194 8% 56% / 1)",
-				"faceMask": "hsl(197 7% 51% / 1)",
-				"helmet": "hsl(194 8% 56% / 1)",
-				"stripe": "hsl(0 0% 96% / 1)",
-				"trim": "hsl(210 100% 13% / 1)"
+				"primary": "oklch(0.2469 0.0734 251.79 / 1)",
+				"secondary": "oklch(0.6555 0.0171 217.93 / 1)",
+				"faceMask": "oklch(0.6109 0.0165 223.44 / 1)",
+				"helmet": "oklch(0.6555 0.0171 217.93 / 1)",
+				"stripe": "oklch(0.9696 0 0 / 1)",
+				"trim": "oklch(0.2469 0.0734 251.79 / 1)"
 			}
 		},
 		{
@@ -164,12 +164,12 @@
 			"logoTransform": "translate(-24px, -39px) scale(1.3, 1.3)",
 			"id": "02bcb997-66a8-4d0f-bd94-b2ff7883d76c",
 			"colors": {
-				"primary": "hsl(15 97% 53% / 1)",
-				"secondary": "hsl(210 100% 13% / 1)",
-				"faceMask": "hsl(210 100% 13% / 1)",
-				"helmet": "hsl(210 100% 13% / 1)",
-				"stripe": "hsl(15 97% 53% / 1)",
-				"trim": "hsl(210 100% 13% / 1)"
+				"primary": "oklch(0.6622 0.219 36.08 / 1)",
+				"secondary": "oklch(0.2469 0.0734 251.79 / 1)",
+				"faceMask": "oklch(0.2469 0.0734 251.79 / 1)",
+				"helmet": "oklch(0.2469 0.0734 251.79 / 1)",
+				"stripe": "oklch(0.6622 0.219 36.08 / 1)",
+				"trim": "oklch(0.2469 0.0734 251.79 / 1)"
 			}
 		},
 		{
@@ -181,12 +181,12 @@
 			"logoTransform": "translate(-35px, -40px) scale(1.18, 1.18)",
 			"id": "a2187c5a-dae2-4560-a89b-0ffa3c810df9",
 			"colors": {
-				"primary": "hsl(201 100% 36% / 1)",
-				"secondary": "hsl(205 8% 71% / 1)",
-				"faceMask": "hsl(197 7% 51% / 1)",
-				"helmet": "hsl(205 8% 71% / 1)",
-				"stripe": "hsl(0 0% 96% / 1)",
-				"trim": "hsl(201 100% 36% / 1)"
+				"primary": "oklch(0.5482 0.1329 243.12 / 1)",
+				"secondary": "oklch(0.7724 0.0105 238.56 / 1)",
+				"faceMask": "oklch(0.6109 0.0165 223.44 / 1)",
+				"helmet": "oklch(0.7724 0.0105 238.56 / 1)",
+				"stripe": "oklch(0.9696 0 0 / 1)",
+				"trim": "oklch(0.5482 0.1329 243.12 / 1)"
 			}
 		},
 		{
@@ -199,12 +199,12 @@
 			"logoTransform": "translate(-25px, -43px) scale(1.13, 1.12)",
 			"id": "0876a61a-d9d0-4cdc-885a-ec5abe1939be",
 			"colors": {
-				"primary": "hsl(164 26% 17% / 1)",
-				"secondary": "hsl(42 100% 54% / 1)",
-				"faceMask": "hsl(164 26% 17% / 1)",
-				"helmet": "hsl(42 100% 54% / 1)",
-				"stripe": "hsl(0 0% 96% / 1)",
-				"trim": "hsl(164 26% 17% / 1)"
+				"primary": "oklch(0.3144 0.0306 175.53 / 1)",
+				"secondary": "oklch(0.8286 0.1684 80.28 / 1)",
+				"faceMask": "oklch(0.3144 0.0306 175.53 / 1)",
+				"helmet": "oklch(0.8286 0.1684 80.28 / 1)",
+				"stripe": "oklch(0.9696 0 0 / 1)",
+				"trim": "oklch(0.3144 0.0306 175.53 / 1)"
 			}
 		},
 		{
@@ -216,12 +216,12 @@
 			"logoTransform": "translate(-25px, -43px) scale(1.12, 1.1)",
 			"id": "0a78aaa7-c1f9-445a-94af-72c671b59a3d",
 			"colors": {
-				"primary": "hsl(200 88% 10% / 1)",
-				"secondary": "hsl(350 74% 38% / 1)",
-				"faceMask": "hsl(200 88% 10% / 1)",
-				"helmet": "hsl(200 88% 10% / 1)",
-				"stripe": "hsl(200 88% 10% / 1)",
-				"trim": "hsl(200 88% 10% / 1)"
+				"primary": "oklch(0.2342 0.0453 234.46 / 1)",
+				"secondary": "oklch(0.4753 0.1755 19.48 / 1)",
+				"faceMask": "oklch(0.2342 0.0453 234.46 / 1)",
+				"helmet": "oklch(0.2342 0.0453 234.46 / 1)",
+				"stripe": "oklch(0.2342 0.0453 234.46 / 1)",
+				"trim": "oklch(0.2342 0.0453 234.46 / 1)"
 			}
 		},
 		{
@@ -233,12 +233,12 @@
 			"logoTransform": "translate(-25px, -45px)",
 			"id": "7a821691-33f7-45fd-b258-96bce4d552d0",
 			"colors": {
-				"primary": "hsl(212 100% 19% / 1)",
-				"secondary": "hsl(196 6% 66% / 1)",
-				"faceMask": "hsl(197 7% 51% / 1)",
-				"helmet": "hsl(0 0% 96% / 1)",
-				"stripe": "hsl(212 100% / 19% / 1)",
-				"trim": "hsl(0 0% 96% / 1)"
+				"primary": "oklch(0.3045 0.1028 255.7 / 1)",
+				"secondary": "oklch(0.7351 0.0095 221.42 / 1)",
+				"faceMask": "oklch(0.6109 0.0165 223.44 / 1)",
+				"helmet": "oklch(0.9696 0 0 / 1)",
+				"stripe": "oklch(0.3045 0.1028 255.7 / 1)",
+				"trim": "oklch(0.9696 0 0 / 1)"
 			}
 		},
 		{
@@ -250,12 +250,12 @@
 			"logoTransform": "translate(-20px, -41px) rotate(-6.55143deg) scale(1.07, 1.07)",
 			"id": "3ff1c454-719a-41f8-b9b0-901b0236af92",
 			"colors": {
-				"primary": "hsl(189 100% 24% / 1)",
-				"secondary": "hsl(210 33% 9% / 1)",
-				"faceMask": "hsl(210 33% 9% / 1)",
-				"helmet": "hsl(210 33% 9% / 1)",
-				"stripe": "hsl(210 33% 9% / 1)",
-				"trim": "hsl(210 33% 9% / 1)"
+				"primary": "oklch(0.4764 0.0843 215.42 / 1)",
+				"secondary": "oklch(0.2005 0.0191 248.8 / 1)",
+				"faceMask": "oklch(0.2005 0.0191 248.8 / 1)",
+				"helmet": "oklch(0.2005 0.0191 248.8 / 1)",
+				"stripe": "oklch(0.2005 0.0191 248.8 / 1)",
+				"trim": "oklch(0.2005 0.0191 248.8 / 1)"
 			}
 		},
 		{
@@ -269,12 +269,12 @@
 			"logoTransform": "translate(-15px, -45px) scale(1.13, 1.08)",
 			"id": "4bc4b950-5d7d-4b47-8f6c-c06e76948df9",
 			"colors": {
-				"primary": "hsl(351 81% 49% / 1)",
-				"secondary": "hsl(41 100% 55% / 1)",
-				"faceMask": "hsl(0 0% 96% / 1)",
-				"helmet": "hsl(351 81% 49% / 1)",
-				"stripe": "hsl(351 81% 49% / 1)",
-				"trim": "hsl(351 81% 49% / 1)"
+				"primary": "oklch(0.5831 0.2259 22.4 / 1)",
+				"secondary": "oklch(0.8245 0.167 78.84 / 1)",
+				"faceMask": "oklch(0.9696 0 0 / 1)",
+				"helmet": "oklch(0.5831 0.2259 22.4 / 1)",
+				"stripe": "oklch(0.5831 0.2259 22.4 / 1)",
+				"trim": "oklch(0.5831 0.2259 22.4 / 1)"
 			}
 		},
 		{
@@ -287,12 +287,12 @@
 			"logoTransform": "translate(-24px, -45px) scale(1, 1)",
 			"id": "f5efbfb5-4919-4abd-8ff6-0982423ed371",
 			"colors": {
-				"primary": "hsl(198 75% 0% / 1)",
-				"secondary": "hsl(198 6% 67% / 1)",
-				"faceMask": "hsl(197 7% 51% / 1)",
-				"helmet": "hsl(198 6% 67% / 1)",
-				"stripe": "hsl(198 75% 0% / 1)",
-				"trim": "hsl(198 6% 67% / 1)"
+				"primary": "oklch(0 0 0 / 1)",
+				"secondary": "oklch(0.7425 0.0091 225.12 / 1)",
+				"faceMask": "oklch(0.6109 0.0165 223.44 / 1)",
+				"helmet": "oklch(0.7425 0.0091 225.12 / 1)",
+				"stripe": "oklch(0 0 0 / 1)",
+				"trim": "oklch(0.7425 0.0091 225.12 / 1)"
 			}
 		},
 		{
@@ -304,12 +304,12 @@
 			"logoTransform": "translate(-20px, -58px) scale(1.76, 1.6)",
 			"id": "459a7109-eac2-482a-a067-ebd5f527c75f",
 			"colors": {
-				"primary": "hsl(201 100% 39% / 1)",
-				"secondary": "hsl(45 100% 53% / 1)",
-				"faceMask": "hsl(45 100% 53% / 1)",
-				"helmet": "hsl(0 0% 96% / 1)",
-				"stripe": "hsl(0 0% 96% / 1)",
-				"trim": "hsl(0 0% 96% / 1)"
+				"primary": "oklch(0.581 0.1414 243.33 / 1)",
+				"secondary": "oklch(0.8482 0.1717 85.79 / 1)",
+				"faceMask": "oklch(0.8482 0.1717 85.79 / 1)",
+				"helmet": "oklch(0.9696 0 0 / 1)",
+				"stripe": "oklch(0.9696 0 0 / 1)",
+				"trim": "oklch(0.9696 0 0 / 1)"
 			}
 		},
 		{
@@ -321,12 +321,12 @@
 			"logoTransform": "translate(-15px, -35px) scale(1.9, 1.9)",
 			"id": "66ecf340-2f75-420a-b219-0275f819b9bd",
 			"colors": {
-				"primary": "hsl(219 100% 29% / 1)",
-				"secondary": "hsl(49 66% 65% / 1)",
-				"faceMask": "hsl(219 100% 29% / 1)",
-				"helmet": "hsl(219 100% 29% / 1)",
-				"stripe": "hsl(219 100% 29% / 1)",
-				"trim": "hsl(219 100% 29% / 1)"
+				"primary": "oklch(0.3671 0.1655 261.64 / 1)",
+				"secondary": "oklch(0.8407 0.1194 96.95 / 1)",
+				"faceMask": "oklch(0.3671 0.1655 261.64 / 1)",
+				"helmet": "oklch(0.3671 0.1655 261.64 / 1)",
+				"stripe": "oklch(0.3671 0.1655 261.64 / 1)",
+				"trim": "oklch(0.3671 0.1655 261.64 / 1)"
 			}
 		},
 		{
@@ -338,12 +338,12 @@
 			"logoTransform": "translate(-30px, -42px)",
 			"id": "36a2f7a8-fe32-457b-8b6e-93d1b3f7b047",
 			"colors": {
-				"primary": "hsl(184 100% 30% / 1)",
-				"secondary": "hsl(18 98% 50% / 1)",
-				"faceMask": "hsl(0 0% 96% / 1)",
-				"helmet": "hsl(0 0% 96% / 1)",
-				"stripe": "hsl(18 98% 50% / 1)",
-				"trim": "hsl(184 100% 30% / 1)"
+				"primary": "oklch(0.5919 0.1009 203.69 / 1)",
+				"secondary": "oklch(0.664 0.2207 37.15 / 1)",
+				"faceMask": "oklch(0.9696 0 0 / 1)",
+				"helmet": "oklch(0.9696 0 0 / 1)",
+				"stripe": "oklch(0.664 0.2207 37.15 / 1)",
+				"trim": "oklch(0.5919 0.1009 203.69 / 1)"
 			}
 		},
 		{
@@ -355,12 +355,12 @@
 			"logoTransform": "translate(-24px, -36px) scale(1.41, 1.44)",
 			"id": "6aa5aec9-3f2a-453b-825e-421745de1f39",
 			"colors": {
-				"primary": "hsl(266 55% 33% / 1)",
-				"secondary": "hsl(44 100% 59% / 1)",
-				"faceMask": "hsl(0 0% 8% / 1)",
-				"helmet": "hsl(266 55% 33% / 1)",
-				"stripe": "hsl(266 55% 33% / 1)",
-				"trim": "hsl(266 55% 33% / 1)"
+				"primary": "oklch(0.3759 0.1472 298.95 / 1)",
+				"secondary": "oklch(0.8572 0.1649 86.55 / 1)",
+				"faceMask": "oklch(0.193 0 0 / 1)",
+				"helmet": "oklch(0.3759 0.1472 298.95 / 1)",
+				"stripe": "oklch(0.3759 0.1472 298.95 / 1)",
+				"trim": "oklch(0.3759 0.1472 298.95 / 1)"
 			}
 		},
 		{
@@ -372,12 +372,12 @@
 			"logoTransform": "translate(-32px, -29px) rotate(-9.48413deg) scale(1.70642, 1.69956)",
 			"id": "b81d790c-0059-40f5-8e08-f5fc10799114",
 			"colors": {
-				"primary": "hsl(210 100% 13% / 1)",
-				"secondary": "hsl(205 8% 71% / 1)",
-				"faceMask": "hsl(348 89% 41% / 1)",
-				"helmet": "hsl(205 8% 71% / 1)",
-				"stripe": "hsl(205 8% 71% / 1)",
-				"trim": "hsl(205 8% 71% / 1)"
+				"primary": "oklch(0.2469 0.0734 251.79 / 1)",
+				"secondary": "oklch(0.7724 0.0105 238.56 / 1)",
+				"faceMask": "oklch(0.5248 0.2067 21.05 / 1)",
+				"helmet": "oklch(0.7724 0.0105 238.56 / 1)",
+				"stripe": "oklch(0.7724 0.0105 238.56 / 1)",
+				"trim": "oklch(0.7724 0.0105 238.56 / 1)"
 			}
 		},
 		{
@@ -389,12 +389,12 @@
 			"logoTransform": "translate(-26px, -46px) ",
 			"id": "29eed103-8298-4d90-ac50-d898a88d47f3",
 			"colors": {
-				"primary": "hsl(40 44% 69% / 1)",
-				"secondary": "hsl(210 33% 9% / 1)",
-				"faceMask": "hsl(210 33% 9% / 1)",
-				"helmet": "hsl(40 44% 69% / 1)",
-				"stripe": "hsl(0 0% 96% / 1)",
-				"trim": "hsl(210 33% 9% / 1)"
+				"primary": "oklch(0.8022 0.0669 84.36 / 1)",
+				"secondary": "oklch(0.2005 0.0191 248.8 / 1)",
+				"faceMask": "oklch(0.2005 0.0191 248.8 / 1)",
+				"helmet": "oklch(0.8022 0.0669 84.36 / 1)",
+				"stripe": "oklch(0.9696 0 0 / 1)",
+				"trim": "oklch(0.2005 0.0191 248.8 / 1)"
 			}
 		},
 		{
@@ -407,12 +407,12 @@
 			"logoTransform": "translate(-28px, -44px) scale(1, 1)",
 			"id": "0c84e360-a04d-4e02-93f5-1f8fd636b05e",
 			"colors": {
-				"primary": "hsl(225 80% 22% / 1)",
-				"secondary": "hsl(350 74% 38% / 1)",
-				"faceMask": "hsl(197 7% 51% / 1)",
-				"helmet": "hsl(225 80% 22% / 1)",
-				"stripe": "hsl(350 74% 38% / 1)",
-				"trim": "hsl(225 80% 22% / 1)"
+				"primary": "oklch(0.2851 0.1217 265.03 / 1)",
+				"secondary": "oklch(0.4753 0.1755 19.48 / 1)",
+				"faceMask": "oklch(0.6109 0.0165 223.44 / 1)",
+				"helmet": "oklch(0.2851 0.1217 265.03 / 1)",
+				"stripe": "oklch(0.4753 0.1755 19.48 / 1)",
+				"trim": "oklch(0.2851 0.1217 265.03 / 1)"
 			}
 		},
 		{
@@ -425,12 +425,12 @@
 			"logoTransform": "translate(-27px, -44px) scale(1.25, 1.17)",
 			"id": "6b736d05-ce38-4a36-9e0d-7ea1b9eb25ac",
 			"colors": {
-				"primary": "hsl(160 66% 21% / 1)",
-				"secondary": "hsl(0 0% 96% / 1)",
-				"faceMask": "hsl(160 66% 21% / 1)",
-				"helmet": "hsl(0 0% 96% / 1)",
-				"stripe": "hsl(0 0% 96% / 1)",
-				"trim": "hsl(160 66% 21% / 1)"
+				"primary": "oklch(0.4147 0.0786 165.65 / 1)",
+				"secondary": "oklch(0.9696 0 0 / 1)",
+				"faceMask": "oklch(0.4147 0.0786 165.65 / 1)",
+				"helmet": "oklch(0.9696 0 0 / 1)",
+				"stripe": "oklch(0.9696 0 0 / 1)",
+				"trim": "oklch(0.4147 0.0786 165.65 / 1)"
 			}
 		},
 		{
@@ -442,12 +442,12 @@
 			"logoTransform": "translate(-3px, -45px) scale(1.9, 1.9)",
 			"id": "68da8e98-ea9c-4fea-9c92-8bf09441e4dc",
 			"colors": {
-				"primary": "hsl(186 100% 16% / 1)",
-				"secondary": "hsl(194 19% 73% / 1)",
-				"faceMask": "hsl(200 3% 35% / 1)",
-				"helmet": "hsl(186 100% 16% / 1)",
-				"stripe": "hsl(186 100% 16% / 1)",
-				"trim": "hsl(186 100% 16% / 1)"
+				"primary": "oklch(0.3721 0.0639 207.48 / 1)",
+				"secondary": "oklch(0.798 0.0236 217.96 / 1)",
+				"faceMask": "oklch(0.4655 0.0054 228.9 / 1)",
+				"helmet": "oklch(0.3721 0.0639 207.48 / 1)",
+				"stripe": "oklch(0.3721 0.0639 207.48 / 1)",
+				"trim": "oklch(0.3721 0.0639 207.48 / 1)"
 			}
 		},
 		{
@@ -460,12 +460,12 @@
 			"logoTransform": "translate(-25px, -44px) scale(1, 1)",
 			"id": "bc2a94eb-79f5-4520-93ce-7b4d69748d65",
 			"colors": {
-				"primary": "hsl(42 100% 54% / 1)",
-				"secondary": "hsl(210 33% 9% / 1)",
-				"faceMask": "hsl(210 33% 9% / 1)",
-				"helmet": "hsl(210 33% 9% / 1)",
-				"stripe": "hsl(42 100% 54% / 1)",
-				"trim": "hsl(210 33% 9% / 1)"
+				"primary": "oklch(0.8286 0.1684 80.28 / 1)",
+				"secondary": "oklch(0.2005 0.0191 248.8 / 1)",
+				"faceMask": "oklch(0.2005 0.0191 248.8 / 1)",
+				"helmet": "oklch(0.2005 0.0191 248.8 / 1)",
+				"stripe": "oklch(0.8286 0.1684 80.28 / 1)",
+				"trim": "oklch(0.2005 0.0191 248.8 / 1)"
 			}
 		},
 		{
@@ -478,12 +478,12 @@
 			"logoTransform": "translate(-30px, -45px) scale(1, 1)",
 			"id": "aa39e173-b594-4646-b1b4-9d3c40b4caee",
 			"colors": {
-				"primary": "hsl(0 100% 33% / 1)",
-				"secondary": "hsl(42 36% 53% / 1)",
-				"faceMask": "hsl(197 7% 51% / 1)",
-				"helmet": "hsl(42 36% 53% / 1)",
-				"stripe": "hsl(0 0% 96% / 1)",
-				"trim": "hsl(0 100% 33% / 1)"
+				"primary": "oklch(0.46 0.1888 29.23 / 1)",
+				"secondary": "oklch(0.6907 0.085 87 / 1)",
+				"faceMask": "oklch(0.6109 0.0165 223.44 / 1)",
+				"helmet": "oklch(0.6907 0.085 87 / 1)",
+				"stripe": "oklch(0.9696 0 0 / 1)",
+				"trim": "oklch(0.46 0.1888 29.23 / 1)"
 			}
 		},
 		{
@@ -495,12 +495,12 @@
 			"logoTransform": "translate(-33px, -39px) rotate(-8.77151deg) scale(1.45, 1.46)",
 			"id": "97836634-f26b-4ed1-a5b6-ba815c946575",
 			"colors": {
-				"primary": "hsl(210 100% 13% / 1)",
-				"secondary": "hsl(94 65% 45% / 1)",
-				"faceMask": "hsl(210 100% 13% / 1)",
-				"helmet": "hsl(210 100% 13% / 1)",
-				"stripe": "hsl(219 32% 23% / 1)",
-				"trim": "hsl(210 100% 13% / 1)"
+				"primary": "oklch(0.2469 0.0734 251.79 / 1)",
+				"secondary": "oklch(0.7184 0.1946 135.24 / 1)",
+				"faceMask": "oklch(0.2469 0.0734 251.79 / 1)",
+				"helmet": "oklch(0.2469 0.0734 251.79 / 1)",
+				"stripe": "oklch(0.3289 0.047 262.32 / 1)",
+				"trim": "oklch(0.2469 0.0734 251.79 / 1)"
 			}
 		},
 		{
@@ -512,12 +512,12 @@
 			"logoTransform": "translate(-28px, -43px)",
 			"id": "70ed9a2c-b047-444b-834e-584d8bcc4b70",
 			"colors": {
-				"primary": "hsl(33 9% 19% / 1)",
-				"secondary": "hsl(28 100% 50% / 1)",
-				"faceMask": "hsl(60 11% 4% / 1)",
-				"helmet": "hsl(33 9% 19% / 1)",
-				"stripe": "hsl(33 9% 19% / 1)",
-				"trim": "hsl(33 9% 19% / 1)"
+				"primary": "oklch(0.3151 0.0101 72.95 / 1)",
+				"secondary": "oklch(0.7187 0.1917 49.38 / 1)",
+				"faceMask": "oklch(0.1502 0.0047 106.96 / 1)",
+				"helmet": "oklch(0.3151 0.0101 72.95 / 1)",
+				"stripe": "oklch(0.3151 0.0101 72.95 / 1)",
+				"trim": "oklch(0.3151 0.0101 72.95 / 1)"
 			}
 		},
 		{
@@ -529,12 +529,12 @@
 			"logoTransform": "translate(-30px, -42px) scale(1.11, 1.09)",
 			"id": "13ea5f58-109b-4979-91af-190ccc8c4f1f",
 			"colors": {
-				"primary": "hsl(213 68% 15% / 1)",
-				"secondary": "hsl(210 67% 58% / 1)",
-				"faceMask": "hsl(213 68% 15% / 1)",
-				"helmet": "hsl(0 0% 96% / 1)",
-				"stripe": "hsl(0 0% 96% / 1)",
-				"trim": "hsl(213 68% 15% / 1)"
+				"primary": "oklch(0.2573 0.0616 254.95 / 1)",
+				"secondary": "oklch(0.652 0.1298 250.47 / 1)",
+				"faceMask": "oklch(0.2573 0.0616 254.95 / 1)",
+				"helmet": "oklch(0.9696 0 0 / 1)",
+				"stripe": "oklch(0.9696 0 0 / 1)",
+				"trim": "oklch(0.2573 0.0616 254.95 / 1)"
 			}
 		},
 		{
@@ -547,12 +547,12 @@
 			"logoTransform": "translate(-30px, -40px) scale(1, 1)",
 			"id": "8d6f51f9-5736-47ba-932f-c69dfba5b10f",
 			"colors": {
-				"primary": "hsl(0 64% 22% / 1)",
-				"secondary": "hsl(42 100% 54% / 1)",
-				"faceMask": "hsl(42 100% 54% / 1)",
-				"helmet": "hsl(0 64% 22% / 1)",
-				"stripe": "hsl(42 100% 54% / 1)",
-				"trim": "hsl(0 0% 96% / 1)"
+				"primary": "oklch(0.3174 0.1038 25.36 / 1)",
+				"secondary": "oklch(0.8286 0.1684 80.28 / 1)",
+				"faceMask": "oklch(0.8286 0.1684 80.28 / 1)",
+				"helmet": "oklch(0.3174 0.1038 25.36 / 1)",
+				"stripe": "oklch(0.8286 0.1684 80.28 / 1)",
+				"trim": "oklch(0.9696 0 0 / 1)"
 			}
 		}
 	],

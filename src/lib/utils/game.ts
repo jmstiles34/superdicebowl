@@ -1,4 +1,3 @@
-import type { DiceRoll, Play, Team } from '$lib/types';
 import {
 	BALL_FIELD_GOAL,
 	DEFAULT_TEAM,
@@ -9,8 +8,9 @@ import {
 	TEAM,
 	YARD_INTERVAL
 } from '$lib/constants/constants';
-import { add, buildTextString, equals, gte, lte, randomNumber, subtract } from '$lib/utils/common';
 import type { Settings } from '$lib/state/settings.svelte';
+import type { DiceRoll, Play, Team } from '$lib/types';
+import { add, buildTextString, equals, gte, lte, randomNumber, subtract } from '$lib/utils/common';
 
 export const backFns = {
 	[TEAM.AWAY]: add,
@@ -108,11 +108,11 @@ export function descTwoPoint(success: boolean) {
 
 export function descYardage(yards: number) {
 	if (yards === 0) return '';
-	return yards > 0 ? `- ${yards} Yd Gain ` : `- ${yards * -1} Yd Loss`;
+	return yards > 0 ? `- ${yards} Yd Gain` : `- ${yards * -1} Yd Loss`;
 }
 
 function forcePositive(index: number) {
-	return index >= 0 ? index : index * -1;
+	return Math.abs(index);
 }
 
 export function getScoreByTeam(teamType: string, playLog: Play[]) {
@@ -147,7 +147,7 @@ export function isFourthDown(down: number) {
 	return down === 4;
 }
 
-export function isGameComplete(homeScore: number, awayScore: number, winScore: number) {
+export function isGameComplete(awayScore: number, homeScore: number, winScore: number) {
 	return gte(awayScore, winScore) || gte(homeScore, winScore);
 }
 
@@ -265,7 +265,7 @@ function showFieldGoalPulse(action: string) {
 
 export function teamById(teams: Team[]) {
 	return function getTeam(id: string) {
-		return teams[parseInt(id)] || DEFAULT_TEAM;
+		return teams[parseInt(id, 10)] || DEFAULT_TEAM;
 	};
 }
 
