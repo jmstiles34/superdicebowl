@@ -7,6 +7,12 @@
 	import { DEFAULT_TEAM } from '$lib/constants/constants';
 	import '@fontsource/bebas-neue';
 	import { hexToOklch, oklchToHex } from '$lib/utils/common';
+	import { auth } from '$lib/auth/authState.svelte';
+	import {
+		createCustomTeam,
+		getCustomTeamByTeamId,
+		updateCustomTeam
+	} from '$lib/db/repositories/customTeamRepository';
 
 	type CustomTeamProps = {
 		close: (id: string) => void;
@@ -15,22 +21,28 @@
 
 	let { close, customTeamId }: CustomTeamProps = $props();
 
-	let faceMask = $state('oklch(0.8845 0 0 / 1)');
-	let helmet = $state('oklch(0.589 0.0989 245.29 / 1)');
-	let stripe = $state('oklch(1 0 0 / 1)');
-	let trim = $state('oklch(0.2469 0.0734 251.79 / 1)');
-	let primary = $state('oklch(0.2469 0.0734 251.79 / 1)');
-	let secondary = $state('oklch(0.589 0.0989 245.29 / 1)');
+	let faceMask = $state(oklchToHex('oklch(0.8845 0 0 / 1)'));
+	let helmet = $state(oklchToHex('oklch(0.589 0.0989 245.29 / 1)'));
+	let stripe = $state(oklchToHex('oklch(1 0 0 / 1)'));
+	let trim = $state(oklchToHex('oklch(0.2469 0.0734 251.79 / 1)'));
+	let primary = $state(oklchToHex('oklch(0.2469 0.0734 251.79 / 1)'));
+	let secondary = $state(oklchToHex('oklch(0.589 0.0989 245.29 / 1)'));
 	let logo = $state('');
 	let logoTransform = $state('');
 	let city = $state('');
 	let name = $state('');
 	let errors: string[] = $state([]);
-	let lsTeams = loadTeams();
+	let dbRecordId: number | null = $state(null);
 	const sortedLogos = logos.sort((a, b) => (a.name > b.name ? 1 : -1));
 
-	onMount(() => {
-		const team: Team = getTeam();
+	onMount(async () => {
+		if (!auth.currentUser?.id || !customTeamId) return;
+
+		const record = await getCustomTeamByTeamId(auth.currentUser.id, customTeamId);
+		if (!record) return;
+
+		dbRecordId = record.id!;
+		const team = record.teamData;
 		faceMask = oklchToHex(team.colors.faceMask || faceMask);
 		helmet = oklchToHex(team.colors.helmet || helmet);
 		stripe = oklchToHex(team.colors.stripe || stripe);
@@ -43,56 +55,43 @@
 		name = team.name;
 	});
 
-	function getTeam() {
-		return lsTeams.find(({ id }) => id === customTeamId) || DEFAULT_TEAM;
-	}
+	async function handleSave() {
+		if (!auth.currentUser?.id) return;
 
-	function loadTeams(): Team[] {
-		const teamJson = localStorage.getItem('customTeams');
-		if (teamJson == null) return [];
-		return JSON.parse(teamJson);
-	}
-
-	function saveTeams(teams: Team[]) {
-		localStorage.setItem('customTeams', JSON.stringify(teams));
-	}
-
-	function deleteTeam() {
-		let teamsToKeep = lsTeams.filter(({ id }) => id !== customTeamId);
-		saveTeams(teamsToKeep);
-		close('');
-	}
-
-	function saveTeam() {
 		errors = [];
-		!city.length && errors.push('city');
-		!name.length && errors.push('name');
-		!logo.length && errors.push('logo');
+		if (!city.length) errors.push('city');
+		if (!name.length) errors.push('name');
+		if (!logo.length) errors.push('logo');
+		if (errors.length) return;
 
-		if (!errors.length) {
-			const newTeamId = customTeamId || uuidv4();
-			const newTeam: Team = {
-				id: newTeamId,
-				city,
-				isCustom: true,
-				cityKey: city.substring(0, 3).toUpperCase(),
-				fieldLogo: logo,
-				logo,
-				logoTransform,
-				name,
-				colors: {
-					primary: hexToOklch(primary),
-					secondary: hexToOklch(secondary),
-					helmet: hexToOklch(helmet),
-					faceMask: hexToOklch(faceMask),
-					stripe: hexToOklch(stripe),
-					trim: hexToOklch(trim)
-				}
-			};
-			let teamsToKeep = lsTeams.filter(({ id }) => id !== customTeamId);
-			saveTeams([...teamsToKeep, newTeam]);
-			close(newTeamId);
+		const teamId = customTeamId || uuidv4();
+		const teamData: Team = {
+			id: teamId,
+			city,
+			isCustom: true,
+			cityKey: city.substring(0, 3).toUpperCase(),
+			fieldLogo: logo,
+			logo,
+			logoFixed: false,
+			logoLeft: '',
+			logoTransform,
+			name,
+			colors: {
+				primary: hexToOklch(primary),
+				secondary: hexToOklch(secondary),
+				helmet: hexToOklch(helmet),
+				faceMask: hexToOklch(faceMask),
+				stripe: hexToOklch(stripe),
+				trim: hexToOklch(trim)
+			}
+		};
+
+		if (dbRecordId) {
+			await updateCustomTeam(dbRecordId, teamData);
+		} else {
+			await createCustomTeam(auth.currentUser.id, teamData);
 		}
+		close(teamId);
 	}
 </script>
 
@@ -173,13 +172,10 @@
 			</div>
 
 			<div class="button-row">
-				{#if customTeamId}
-					<button class="delete-button" onclick={deleteTeam} title="Delete"> X </button>
-				{/if}
 				<button
 					class="save-button"
 					style={`color: ${secondary}; background-color: ${primary}`}
-					onclick={saveTeam}
+					onclick={handleSave}
 				>
 					Save Custom Team
 				</button>
@@ -240,21 +236,5 @@
 		padding: 0.25em;
 		text-align: center;
 		border-radius: var(--border-radius);
-	}
-	.delete-button {
-		margin: 0;
-		width: 1.75em;
-		cursor: pointer;
-		font-family: 'Bebas Neue';
-		background-color: transparent;
-		color: var(--urgent);
-		font-size: 2rem;
-		padding: 0;
-		text-align: center;
-		border: 1px solid var(--urgent);
-		border-radius: var(--border-radius);
-	}
-	.delete-button:hover {
-		background-color: var(--urgent-hover);
 	}
 </style>

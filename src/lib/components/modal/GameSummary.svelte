@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { DEFAULT_PLAY, DEFAULT_PLAY_SUMMARY, GAME_ACTION, TEAM } from '$lib/constants/constants';
 	import type { Play, PlaySummary, Team } from '$lib/types';
 	import '@fontsource/bebas-neue';
@@ -8,10 +7,9 @@
 		awayTeam: Team;
 		homeTeam: Team;
 		playLog: Play[];
-		gameIsOver: boolean;
 	};
 
-	let { awayTeam, homeTeam, playLog, gameIsOver }: SummaryProps = $props();
+	let { awayTeam, homeTeam, playLog }: SummaryProps = $props();
 	let activeTab = $state(0);
 
 	const pointAfterMade = [GAME_ACTION.EXTRA_POINT_MADE, GAME_ACTION.TWO_POINT_MADE];
@@ -294,17 +292,6 @@
 		</div>
 	{/if}
 
-	{#if gameIsOver}
-		<div class="returnButton">
-			<button
-				onclick={() => {
-					goto('/');
-				}}
-			>
-				Return Home
-			</button>
-		</div>
-	{/if}
 </div>
 
 <style>
@@ -419,14 +406,5 @@
 		align-items: center;
 		color: var(--color-gray-900);
 		font-size: var(--16px);
-	}
-	.returnButton {
-		display: flex;
-		flex-direction: column;
-		align-content: flex-end;
-		margin-top: 8px;
-	}
-	button {
-		margin: 0;
 	}
 </style>

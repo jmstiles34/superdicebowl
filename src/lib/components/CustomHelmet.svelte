@@ -10,18 +10,18 @@
 	import { lightenColor } from '$lib/utils/common';
 
 	type CustomHelmetProps = {
-		faceMask: string;
-		helmet: string;
-		stripe: string;
-		trim: string;
-		direction: string;
+		faceMask?: string;
+		helmet?: string;
+		stripe?: string;
+		trim?: string;
+		direction?: string;
 		logo: string | null;
-		logoLeft: string | null;
-		logoFixed: boolean;
+		logoLeft?: string | null;
+		logoFixed?: boolean;
 		title?: string;
-		size: string;
+		size?: string;
 		logoTransform: string;
-		logoWidth: number;
+		logoWidth?: number;
 		setTransform: (t: string) => void;
 		canCustomize?: boolean;
 	};

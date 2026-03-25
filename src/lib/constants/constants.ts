@@ -1,3 +1,5 @@
+import type { Team } from '$lib/types';
+
 export const TEAM = {
 	AWAY: 'Away',
 	HOME: 'Home'
@@ -132,7 +134,7 @@ export const DEFAULT_PLAY_SUMMARY = {
 	awayScore: 0
 };
 
-export const DEFAULT_TEAM = {
+export const DEFAULT_TEAM: Team = {
 	id: '',
 	city: '',
 	cityKey: '',

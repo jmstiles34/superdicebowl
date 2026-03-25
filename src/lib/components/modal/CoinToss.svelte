@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { randomNumber, sleep } from '$lib/utils/common';
-	import { NOOP, TEAM } from '$lib/constants/constants';
+	import { TEAM } from '$lib/constants/constants';
 	import coinSpin from '$lib/assets/sfx/coin-spin.mp3';
 	import { settings } from '$lib/state/settings.svelte';
 	import type { Howl } from 'howler';

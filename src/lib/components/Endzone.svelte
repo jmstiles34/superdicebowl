@@ -4,10 +4,12 @@
 		HELMET_SIZE,
 		HELMET_WIDTH,
 		NOOP,
-		POSITION
+		POSITION,
+		WIDTH_DIVIDER
 	} from '$lib/constants/constants';
 	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
 	import type { Team, Void } from '$lib/types';
+	import { scaleLogoTransform } from '$lib/utils/common';
 	import '@fontsource/bebas-neue';
 
 	type EndZoneProps = {
@@ -48,37 +50,12 @@
 
 		return 64 / 2.6;
 	};
+	const originalWidth = HELMET_WIDTH[HELMET_SIZE.LARGE] / WIDTH_DIVIDER[HELMET_SIZE.LARGE];
 	let screenSize: number | undefined = $state(undefined);
 	let logoWidth: number = $derived(setLogoWidth(screenSize));
-	let scaledTransform = $derived(scaleTranslate(team.logoTransform, logoWidth));
-
-	function scaleTranslate(tf: string = '', logoWidth: number) {
-		/* console.log({ start: tf }); */
-		const translateIndex = tf.indexOf('translate(');
-		if (translateIndex === -1) return tf;
-
-		const originalWidth = HELMET_WIDTH[HELMET_SIZE.LARGE] / 2.5;
-		const scalePercent = (logoWidth / originalWidth).toFixed(2);
-		const closingParenIndex = tf.indexOf(')', translateIndex);
-		const translateNums = tf
-			.substring(translateIndex + 10, closingParenIndex)
-			.replaceAll('px', '')
-			.split(', ');
-
-		const translate = `translate(${parseFloat(translateNums[0]) * parseFloat(scalePercent)}px, ${
-			parseFloat(translateNums[1]) * parseFloat(scalePercent)
-		}px)`;
-		/* console.log({
-			end: (tf.substring(0, translateIndex + 10) + tf.substring(closingParenIndex)).replace(
-				'translate()',
-				translate
-			)
-		}); */
-		return (tf.substring(0, translateIndex + 10) + tf.substring(closingParenIndex)).replace(
-			'translate()',
-			translate
-		);
-	}
+	let scaledTransform = $derived(
+		scaleLogoTransform(team.logoTransform || '', logoWidth, originalWidth)
+	);
 </script>
 
 <svelte:window bind:innerWidth={screenSize} />
@@ -131,19 +108,18 @@
 		</div>
 		<div></div>
 	</div>
-	<div
+	<button
 		class="goalPost"
 		class:right={position === POSITION.RIGHT}
 		class:clickable={allowFieldGoal}
 		onclick={allowFieldGoal ? () => toggleFieldGoal() : NOOP}
-		onkeydown={allowFieldGoal ? () => toggleFieldGoal() : NOOP}
-		role="button"
-		tabindex="0"
+		disabled={!allowFieldGoal}
+		aria-label="Field Goal"
 	>
 		<div class="post" class:pulse={allowFieldGoal}></div>
 		<div class="bar" class:pulse={allowFieldGoal}></div>
 		<div class="post" class:pulse={allowFieldGoal}></div>
-	</div>
+	</button>
 </div>
 
 <style>
@@ -168,6 +144,9 @@
 		align-items: center;
 		height: 25%;
 		width: 0.6rem;
+		background: none;
+		border: none;
+		padding: 0;
 		top: 50%;
 		left: 0;
 		transform: translate(-50%, -50%);

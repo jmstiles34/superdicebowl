@@ -33,6 +33,7 @@ import {
 	TURNOVER_ONSIDE_KICK
 } from '$lib/constants/constants';
 import { diceData } from '$lib/data/data.json';
+import type { GameStateSnapshot } from '$lib/db/database';
 import { settings } from '$lib/state/settings.svelte';
 import type { Play } from '$lib/types';
 import { equals, gt, gte, isArray, lt, pickRandom, sleep, sumDigits } from '$lib/utils/common';
@@ -103,9 +104,33 @@ class GameState {
 	possession = $state(DEFAULT_GAME.possession);
 	restrictDice = $state(DEFAULT_GAME.restrictDice);
 	yardsToGo: number | string = $state(DEFAULT_GAME.yardsToGo);
+	activeGameId: number | null = $state(null);
 
 	addPlay = (play: Play) => {
 		this.playLog = [...this.playLog, play];
+	};
+
+	snapshotState = (): GameStateSnapshot =>
+		$state.snapshot({
+			action: this.action,
+			ballIndex: this.ballIndex,
+			currentDown: this.currentDown,
+			diceId: this.diceId,
+			firstDownIndex: this.firstDownIndex,
+			lastPlay: this.lastPlay,
+			missedKick: this.missedKick,
+			modalContent: this.modalContent,
+			onsideKick: this.onsideKick,
+			playLog: this.playLog,
+			possession: this.possession,
+			restrictDice: this.restrictDice,
+			yardsToGo: this.yardsToGo
+		});
+
+	loadSnapshot = (snapshot: GameStateSnapshot) => {
+		for (const [key, value] of Object.entries(snapshot)) {
+			(this as Record<string, unknown>)[key] = value;
+		}
 	};
 
 	doKickoff = (diceId: number) => {
@@ -306,36 +331,42 @@ class GameState {
 	};
 
 	handleNextAction = (action: string, ballIndex: number, gameOver: boolean) => {
+		const guard = (fn: () => void) => {
+			return () => {
+				if (this.action === action) fn();
+			};
+		};
+
 		if (gameOver) {
-			sleep(1500).then(() => (this.action = GAME_ACTION.GAME_OVER));
+			sleep(1500).then(guard(() => (this.action = GAME_ACTION.GAME_OVER)));
 		} else {
 			switch (action) {
 				case GAME_ACTION.FIELD_GOAL_MADE:
-					sleep(1500).then(() => (this.action = GAME_ACTION.PLACE_KICKOFF));
+					sleep(1500).then(guard(() => (this.action = GAME_ACTION.PLACE_KICKOFF)));
 					break;
 				case GAME_ACTION.FIELD_GOAL_MISS:
-					sleep(1500).then(() => this.turnover(ballIndex));
+					sleep(1500).then(guard(() => this.turnover(ballIndex)));
 					break;
 				case GAME_ACTION.FOURTH_DOWN:
-					sleep(1500).then(() => (this.action = GAME_ACTION.FOURTH_DOWN_OPTIONS));
+					sleep(1500).then(guard(() => (this.action = GAME_ACTION.FOURTH_DOWN_OPTIONS)));
 					break;
 				case GAME_ACTION.KICKOFF_ONSIDE:
-					sleep(100).then(() => this.saveKickoffOnside());
+					sleep(100).then(guard(() => this.saveKickoffOnside()));
 					break;
 				case GAME_ACTION.KICKOFF_KICK:
-					sleep(1000).then(() => this.saveKickoff());
+					sleep(1000).then(guard(() => this.saveKickoff()));
 					break;
 				case GAME_ACTION.KICKOFF_RETURN:
-					sleep(1000).then(() => (this.action = GAME_ACTION.OFFENSE));
+					sleep(1000).then(guard(() => (this.action = GAME_ACTION.OFFENSE)));
 					break;
 				case GAME_ACTION.KICKOFF_TOUCHDOWN:
-					sleep(1000).then(() => this.saveTouchdown());
+					sleep(1000).then(guard(() => this.saveTouchdown()));
 					break;
 				case GAME_ACTION.PLACE_KICKOFF:
-					sleep(1500).then(() => this.prepareKickoff());
+					sleep(1500).then(guard(() => this.prepareKickoff()));
 					break;
 				case GAME_ACTION.TOUCHDOWN:
-					sleep(2000).then(() => (this.action = GAME_ACTION.POINT_OPTION));
+					sleep(2000).then(guard(() => (this.action = GAME_ACTION.POINT_OPTION)));
 					break;
 				default:
 					break;
@@ -377,6 +408,7 @@ class GameState {
 		for (const [key, value] of Object.entries(DEFAULT_GAME)) {
 			(this as Record<string, unknown>)[key] = value;
 		}
+		this.activeGameId = null;
 	};
 
 	saveCoinToss = (team: string) => {

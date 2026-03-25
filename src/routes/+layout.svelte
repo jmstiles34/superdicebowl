@@ -1,6 +1,7 @@
-<script>
-	import { enhance } from '$app/forms';
+<script lang="ts">
+	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import { auth } from '$lib/auth/authState.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import '../styles.css';
 	import '@fontsource/bebas-neue';
@@ -8,8 +9,12 @@
 	import soundOff from '$lib/images/volume-xmark.svg';
 	import { toggleVolume } from '$lib/utils/sound';
 
-	let { children, data } = $props();
+	let { children } = $props();
 	const currentYear = new Date().getFullYear();
+
+	onMount(() => {
+		auth.initialize();
+	});
 </script>
 
 <svelte:head>
@@ -28,20 +33,17 @@
 	</a>
 
 	<div class="menu-wrapper">
-		{#if data.hasOwnProperty('user')}
-			<form method="POST" action="/logout" use:enhance>
-				<button aria-label="Log out">Log out</button>
-			</form>
+		{#if auth.isLoggedIn}
+			<a class="link" href="/teams">My Teams</a>
+			<a class="link" href="/games">My Games</a>
+			<a class="link" href="/account">{auth.currentUser?.username}</a>
 		{:else}
-			<a class="link" href="/login">Log in</a>
-			<a class="link" href="/signup">Sign up</a>
+			<a class="link" href="/login">Sign In</a>
 		{/if}
 
 		<button
 			class="volumeButton"
 			onclick={toggleVolume}
-			onkeypress={toggleVolume}
-			tabindex="0"
 			aria-label="Sound toggle"
 			title={settings.volume ? 'Mute sounds' : 'Play sounds'}
 		>

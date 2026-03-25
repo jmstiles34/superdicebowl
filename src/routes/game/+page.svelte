@@ -1,8 +1,14 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 	import { Fireworks } from '@fireworks-js/svelte';
+	import { auth } from '$lib/auth/authState.svelte';
 	import { game } from '$lib/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
+	import {
+		completeGame,
+		createGame,
+		updateGameState
+	} from '$lib/db/repositories/gameRepository';
 	import button from '$lib/assets/sfx/button.mp3';
 	import { sleep } from '$lib/utils/common';
 	import { fireworkShow, options } from '$lib/utils/fireworks';
@@ -57,6 +63,31 @@
 	let homeScore = $derived(getScoreByTeam(TEAM.HOME, game.playLog));
 	let gameOver = $derived(isGameComplete(awayScore, homeScore, winScore));
 
+	async function saveGame() {
+		if (!auth.isLoggedIn || !auth.currentUser?.id) return;
+
+		try {
+			const snapshot = game.snapshotState();
+			if (game.activeGameId) {
+				await updateGameState(game.activeGameId, snapshot);
+			} else {
+				const record = await createGame(
+					auth.currentUser.id,
+					snapshot,
+					settings.snapshotSettings()
+				);
+				game.activeGameId = record.id!;
+			}
+		} catch (e) {
+			console.error('Failed to save game:', e);
+		}
+	}
+
+	async function markGameComplete() {
+		if (!auth.isLoggedIn || !game.activeGameId) return;
+		await completeGame(game.activeGameId, game.snapshotState());
+	}
+
 	onDestroy(() => {
 		game.resetGame();
 	});
@@ -65,6 +96,7 @@
 		if (gameOver) {
 			const winner = awayScore > homeScore ? awayTeam.city : homeTeam.city;
 			game.gameComplete(winner);
+			markGameComplete();
 			sleep(100).then(() => {
 				const fireworks = fw.fireworksInstance();
 				fireworks.start();
@@ -83,6 +115,7 @@
 				sleep(1000).then(() => {
 					playSound(buttonSfx, settings.volume);
 					game.preparePointOption(makePointChoice(awayScore, homeScore, winScore));
+					saveGame();
 				});
 			} else {
 				sleep(1000).then(() => {
@@ -93,6 +126,7 @@
 					} else {
 						game.saveFourthDown(choiceAction);
 					}
+					saveGame();
 				});
 			}
 		}
@@ -126,6 +160,7 @@
 								class="toolbarButton flip"
 								onclick={handleExitClick}
 								title="Quit Game"
+								aria-label="Quit Game"
 							>
 								<img src={exit} alt="Quit Game" />
 							</button>
@@ -136,6 +171,7 @@
 								class="toolbarButton"
 								onclick={toggleGameSummary}
 								title={`${showGameSummary ? 'Close' : 'Open'} Game Summary`}
+								aria-label="Game Summary"
 							>
 								<img src={summary} alt="Game Summary" />
 							</button>
@@ -148,6 +184,7 @@
 					<Dice
 						dieColor={primaryColor(settings, game.possession) || '#FFF'}
 						pipColor={secondaryColor(settings, game.possession) || '#000'}
+						onRollComplete={saveGame}
 					/>
 					{#if game.restrictDice || (mode === GAME_MODE.SOLO && game.possession === TEAM.AWAY)}
 						<div class="dice-block"></div>
@@ -186,7 +223,6 @@
 				{awayTeam}
 				{homeTeam}
 				playLog={game.playLog}
-				gameIsOver={game.action === GAME_ACTION.GAME_OVER}
 			/>
 		</Modal>
 
@@ -205,17 +241,17 @@
 		>
 			<div class="modal-content">
 				{#if game.action === GAME_ACTION.COIN_TOSS}
-					<CoinToss saveCoinToss={(a) => game.saveCoinToss(a)} />
+					<CoinToss saveCoinToss={(a) => { game.saveCoinToss(a); saveGame(); }} />
 				{:else if game.action === GAME_ACTION.POINT_OPTION}
-					<PointOption savePointOption={(a) => game.preparePointOption(a)} />
+					<PointOption savePointOption={(a) => { game.preparePointOption(a); saveGame(); }} />
 				{:else if game.action === GAME_ACTION.FOURTH_DOWN_OPTIONS}
 					<FourthDown
 						inFieldGoalRange={compareFns[game.possession](
 							game.ballIndex,
 							BALL_FIELD_GOAL[game.possession]
 						)}
-						saveFourthDown={(a) => game.saveFourthDown(a)}
-						toggleFieldGoal={() => game.toggleFieldGoal()}
+						saveFourthDown={(a) => { game.saveFourthDown(a); saveGame(); }}
+						toggleFieldGoal={() => { game.toggleFieldGoal(); saveGame(); }}
 					/>
 				{/if}
 			</div>
