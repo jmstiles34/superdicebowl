@@ -14,6 +14,7 @@
 		homeTeam: Team;
 		inFieldGoalRange: boolean;
 		missedKick: boolean;
+		missedTwoPoint: boolean;
 		onsideKick: boolean;
 		possession: string;
 		showDownDistance: boolean;
@@ -28,6 +29,7 @@
 		homeTeam,
 		inFieldGoalRange,
 		missedKick,
+		missedTwoPoint,
 		onsideKick,
 		possession,
 		showDownDistance,
@@ -90,8 +92,8 @@
 				class:missLeft={missedKick && missDirection === 'left'}
 				class:missRight={missedKick && missDirection === 'right'}
 				style:left={`${ballPosition}%`}
-				style:rotate={onsideKick ? '3turn' : 'initial'}
-				style:transition={onsideKick
+				style:rotate={onsideKick || missedTwoPoint ? '3turn' : 'initial'}
+				style:transition={onsideKick || missedTwoPoint
 					? 'left 0.5s ease-in-out, top 0.5s ease-in-out, rotate 0.5s ease-in-out'
 					: 'left 0.5s ease-in-out, top 0.5s ease-in-out, rotate 0s ease-in-out'}
 			>

@@ -17,9 +17,6 @@
 		getScoreByTeam,
 		inFieldGoalRange,
 		isGameComplete,
-		isModalChoice,
-		makeFourthDownChoice,
-		makePointChoice,
 		primaryColor,
 		secondaryColor,
 		showDownDistance
@@ -53,7 +50,6 @@
 	];
 
 	const { awayTeam, homeTeam, mode, winScore } = settings;
-	let cancelExitAction = '';
 	let showGameSummary = $state(false);
 	let fw = $state(fireworkShow);
 
@@ -88,6 +84,8 @@
 		await completeGame(game.activeGameId, game.snapshotState());
 	}
 
+	game.setSaveGame(saveGame);
+
 	onDestroy(() => {
 		game.resetGame();
 	});
@@ -106,41 +104,17 @@
 	});
 
 	$effect(() => {
-		game.handleNextAction(game.action, game.ballIndex, gameOver);
+		game.continueAfterAction(gameOver);
 	});
-
-	$effect(() => {
-		if (isModalChoice(mode, game.possession, game.action)) {
-			if (game.action === GAME_ACTION.POINT_OPTION) {
-				sleep(1000).then(() => {
-					playSound(buttonSfx, settings.volume);
-					game.preparePointOption(makePointChoice(awayScore, homeScore, winScore));
-					saveGame();
-				});
-			} else {
-				sleep(1000).then(() => {
-					const choiceAction = makeFourthDownChoice(awayScore, homeScore, game.ballIndex);
-					playSound(buttonSfx, settings.volume);
-					if (choiceAction === GAME_ACTION.FIELD_GOAL) {
-						game.toggleFieldGoal();
-					} else {
-						game.saveFourthDown(choiceAction);
-					}
-					saveGame();
-				});
-			}
-		}
-	});
-
-	function cancelExit() {
-		playSound(buttonSfx, settings.volume);
-		game.action = cancelExitAction;
-	}
 
 	function handleExitClick() {
 		playSound(buttonSfx, settings.volume);
-		cancelExitAction = game.action;
-		game.action = GAME_ACTION.EXIT;
+		game.handleExitClick();
+	}
+
+	function cancelExit() {
+		playSound(buttonSfx, settings.volume);
+		game.cancelExit();
 	}
 
 	function toggleGameSummary() {
@@ -203,6 +177,7 @@
 				{homeTeam}
 				inFieldGoalRange={inFieldGoalRange(game.action, game.possession, game.ballIndex)}
 				missedKick={game.missedKick}
+				missedTwoPoint={game.missedTwoPoint}
 				onsideKick={game.onsideKick}
 				possession={game.possession}
 				showDownDistance={showDownDistance(game.action) && !game.restrictDice}
