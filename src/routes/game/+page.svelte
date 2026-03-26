@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { Fireworks } from '@fireworks-js/svelte';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { game } from '$lib/state/game.svelte';
@@ -91,25 +92,31 @@
 	});
 
 	$effect(() => {
-		if (gameOver) {
-			const winner = awayScore > homeScore ? awayTeam.city : homeTeam.city;
-			game.gameComplete(winner);
-			markGameComplete();
-			sleep(100).then(() => {
-				const fireworks = fw.fireworksInstance();
-				fireworks.start();
+		if (gameOver && game.action !== GAME_ACTION.GAME_OVER) {
+			sleep(1500).then(() => {
+				const winner = awayScore > homeScore ? awayTeam.city : homeTeam.city;
+				game.gameComplete(winner);
+				markGameComplete();
+				sleep(100).then(() => {
+					const fireworks = fw.fireworksInstance();
+					fireworks.start();
+				});
+				sleep(3000).then(() => (showGameSummary = true));
 			});
-			sleep(3000).then(() => (showGameSummary = true));
 		}
 	});
 
 	$effect(() => {
-		game.continueAfterAction(gameOver);
+		game.continueAfterAction();
 	});
 
 	function handleExitClick() {
 		playSound(buttonSfx, settings.volume);
-		game.handleExitClick();
+		if (gameOver) {
+			goto('/');
+		} else {
+			game.handleExitClick();
+		}
 	}
 
 	function cancelExit() {

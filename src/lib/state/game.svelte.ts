@@ -371,18 +371,13 @@ class GameState {
 		executeFns[action](diceId);
 	};
 
-	continueAfterAction = (gameOver: boolean) => {
+	continueAfterAction = () => {
 		this.sequenceId++;
 		const seqId = this.sequenceId;
 		const action = this.action;
 		const ballIndex = this.ballIndex;
 
 		this.runChain(async () => {
-			if (gameOver) {
-				await this.delay(1500, seqId);
-				this.action = GAME_ACTION.GAME_OVER;
-				return;
-			}
 			switch (action) {
 				case GAME_ACTION.FIELD_GOAL_MADE:
 					await this.delay(1500, seqId);
