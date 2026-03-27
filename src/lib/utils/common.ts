@@ -107,28 +107,6 @@ export function sumArrays(array: number[][]) {
 	}, []);
 }
 
-export function scaleLogoTransform(
-	transform: string,
-	logoWidth: number,
-	originalWidth: number
-): string {
-	const translateIndex = transform.indexOf('translate(');
-	if (translateIndex === -1) return transform;
-
-	const scalePercent = logoWidth / originalWidth;
-	const closingParenIndex = transform.indexOf(')', translateIndex);
-	const translateNums = transform
-		.substring(translateIndex + 10, closingParenIndex)
-		.replaceAll('px', '')
-		.split(', ');
-
-	const scaledTranslate = `translate(${parseFloat(translateNums[0]) * scalePercent}px, ${parseFloat(translateNums[1]) * scalePercent}px)`;
-
-	return (
-		transform.substring(0, translateIndex + 10) + transform.substring(closingParenIndex)
-	).replace('translate()', scaledTranslate);
-}
-
 export function sumDigits(num: number) {
 	return num
 		.toString()

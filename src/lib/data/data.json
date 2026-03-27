@@ -6,7 +6,6 @@
 			"name": "Cardinals",
 			"fieldLogo": "nfl-cardinals",
 			"logo": "nfl-cardinals",
-			"logoTransform": "translate(-24px, -42px) scale(1.21, 1.14)",
 			"id": "0d8ee4cf-1798-4b9f-9d67-b5ce287dda6c",
 			"colors": {
 				"primary": "oklch(0.4481 0.149 12.45 / 1)",
@@ -15,7 +14,12 @@
 				"helmet": "oklch(0.9696 0 0 / 1)",
 				"stripe": "oklch(0.9696 0 0 / 1)",
 				"trim": "oklch(0.9696 0 0 / 1)"
-			}
+			},
+			"logoX": 100,
+			"logoY": 100,
+			"logoWidth": 418,
+			"logoHeight": 394,
+			"logoRotation": -20
 		},
 		{
 			"city": "Atlanta",
@@ -23,7 +27,6 @@
 			"name": "Falcons",
 			"fieldLogo": "nfl-falcons",
 			"logo": "nfl-falcons",
-			"logoTransform": "translate(-22px, -38px)",
 			"id": "e3418906-808f-41bc-9797-fb3691d64d72",
 			"colors": {
 				"primary": "oklch(0.4753 0.1755 19.48 / 1)",
@@ -32,7 +35,12 @@
 				"helmet": "oklch(0 0 0 / 1)",
 				"stripe": "oklch(0.193 0 0 / 1)",
 				"trim": "oklch(0.193 0 0 / 1)"
-			}
+			},
+			"logoX": 125,
+			"logoY": 125,
+			"logoWidth": 346,
+			"logoHeight": 346,
+			"logoRotation": -20
 		},
 		{
 			"city": "Baltimore",
@@ -42,7 +50,6 @@
 			"logo": "nfl-ravens",
 			"logoFixed": true,
 			"logoLeft": "nfl-ravens-left",
-			"logoTransform": "translate(-22px, -42px) scale(1.25, 1.26)",
 			"id": "15aa55fb-bafe-4957-aeb8-ed82ba286f32",
 			"colors": {
 				"primary": "oklch(0.2955 0.1473 278.41 / 1)",
@@ -51,7 +58,12 @@
 				"helmet": "oklch(0.193 0 0 / 1)",
 				"stripe": "oklch(0.2955 0.1473 278.41 / 1)",
 				"trim": "oklch(0.193 0 0 / 1)"
-			}
+			},
+			"logoX": 90,
+			"logoY": 70,
+			"logoWidth": 432,
+			"logoHeight": 435,
+			"logoRotation": -20
 		},
 		{
 			"city": "Buffalo",
@@ -59,7 +71,6 @@
 			"name": "Bills",
 			"fieldLogo": "nfl-bills",
 			"logo": "nfl-bills",
-			"logoTransform": "translate(-25px, -45px) scale(1.21, 1.21)",
 			"id": "68d32c8e-95db-4dbf-a724-0a8e1f6b3330",
 			"colors": {
 				"primary": "oklch(0.3633 0.158 261.1 / 1)",
@@ -68,7 +79,12 @@
 				"helmet": "oklch(0.9696 0 0 / 1)",
 				"stripe": "oklch(0.5248 0.2067 21.05 / 1)",
 				"trim": "oklch(0.3633 0.158 261.1 / 1)"
-			}
+			},
+			"logoX": 90,
+			"logoY": 80,
+			"logoWidth": 418,
+			"logoHeight": 418,
+			"logoRotation": -20
 		},
 		{
 			"city": "Carolina",
@@ -76,7 +92,6 @@
 			"name": "Panthers",
 			"fieldLogo": "nfl-panthers",
 			"logo": "nfl-panthers",
-			"logoTransform": "translate(-26px, -35px) scale(1.21, 1.21)",
 			"id": "6e40d2ca-e183-4236-bdc0-7626e75c8af3",
 			"colors": {
 				"primary": "oklch(0.5998 0.1412 241.55 / 1)",
@@ -85,7 +100,12 @@
 				"helmet": "oklch(0.8061 0.0023 145.56 / 1)",
 				"stripe": "oklch(0.193 0 0 / 1)",
 				"trim": "oklch(0.5998 0.1412 241.55 / 1)"
-			}
+			},
+			"logoX": 102,
+			"logoY": 122,
+			"logoWidth": 418,
+			"logoHeight": 418,
+			"logoRotation": -20
 		},
 		{
 			"city": "Chicago",
@@ -94,7 +114,6 @@
 			"fieldLogo": "nfl-bears",
 			"logo": "nfl-bears",
 			"logoFixed": true,
-			"logoTransform": "translate(-32px, -45px) scale(1.2, 1.2)",
 			"id": "f2cbeb55-19fd-4a72-a772-fe72e6e2469a",
 			"colors": {
 				"primary": "oklch(0.1978 0.0418 261.87 / 1)",
@@ -103,7 +122,12 @@
 				"helmet": "oklch(0.1978 0.0418 261.87 / 1)",
 				"stripe": "oklch(0.1978 0.0418 261.87 / 1)",
 				"trim": "oklch(0.1978 0.0418 261.87 / 1)"
-			}
+			},
+			"logoX": 102,
+			"logoY": 80,
+			"logoWidth": 415,
+			"logoHeight": 415,
+			"logoRotation": -20
 		},
 		{
 			"city": "Cincinnati",
@@ -111,7 +135,6 @@
 			"name": "Bengals",
 			"fieldLogo": "nfl-bengals-field",
 			"logo": "nfl-bengals",
-			"logoTransform": "translate(-24px, -35px) scale(1.8, 1.75)",
 			"id": "5a75b4dc-98b2-4f17-94ed-1ddabdd7c995",
 			"colors": {
 				"primary": "oklch(0.6622 0.219 36.08 / 1)",
@@ -120,7 +143,12 @@
 				"helmet": "oklch(0.6622 0.219 36.08 / 1)",
 				"stripe": "oklch(0.6622 0.219 36.08 / 1)",
 				"trim": "oklch(0.6622 0.219 36.08 / 1)"
-			}
+			},
+			"logoX": 30,
+			"logoY": 30,
+			"logoWidth": 602,
+			"logoHeight": 585,
+			"logoRotation": -20
 		},
 		{
 			"city": "Cleveland",
@@ -136,14 +164,17 @@
 				"helmet": "oklch(0.6524 0.2358 33.8 / 1)",
 				"stripe": "oklch(0.9696 0 0 / 1)",
 				"trim": "oklch(0.2577 0.0547 73.58 / 1)"
-			}
+			},
+			"logoX": 259,
+			"logoY": 259,
+			"logoWidth": 346,
+			"logoHeight": 346
 		},
 		{
 			"city": "Dallas",
 			"cityKey": "DAL",
 			"fieldLogo": "nfl-cowboys",
 			"logo": "nfl-cowboys",
-			"logoTransform": "translate(-30px, -46px) scale(1.1, 1.1)",
 			"name": "Cowboys",
 			"id": "f81b352b-ac32-479c-91d2-c27e6853f0a9",
 			"colors": {
@@ -153,7 +184,12 @@
 				"helmet": "oklch(0.6555 0.0171 217.93 / 1)",
 				"stripe": "oklch(0.9696 0 0 / 1)",
 				"trim": "oklch(0.2469 0.0734 251.79 / 1)"
-			}
+			},
+			"logoX": 102,
+			"logoY": 90,
+			"logoWidth": 380,
+			"logoHeight": 380,
+			"logoRotation": -20
 		},
 		{
 			"city": "Denver",
@@ -161,7 +197,6 @@
 			"name": "Broncos",
 			"fieldLogo": "nfl-broncos",
 			"logo": "nfl-broncos",
-			"logoTransform": "translate(-24px, -39px) scale(1.3, 1.3)",
 			"id": "02bcb997-66a8-4d0f-bd94-b2ff7883d76c",
 			"colors": {
 				"primary": "oklch(0.6622 0.219 36.08 / 1)",
@@ -170,7 +205,12 @@
 				"helmet": "oklch(0.2469 0.0734 251.79 / 1)",
 				"stripe": "oklch(0.6622 0.219 36.08 / 1)",
 				"trim": "oklch(0.2469 0.0734 251.79 / 1)"
-			}
+			},
+			"logoX": 90,
+			"logoY": 80,
+			"logoWidth": 449,
+			"logoHeight": 449,
+			"logoRotation": -20
 		},
 		{
 			"city": "Detroit",
@@ -178,7 +218,6 @@
 			"name": "Lions",
 			"fieldLogo": "nfl-lions",
 			"logo": "nfl-lions",
-			"logoTransform": "translate(-35px, -40px) scale(1.18, 1.18)",
 			"id": "a2187c5a-dae2-4560-a89b-0ffa3c810df9",
 			"colors": {
 				"primary": "oklch(0.5482 0.1329 243.12 / 1)",
@@ -187,7 +226,12 @@
 				"helmet": "oklch(0.7724 0.0105 238.56 / 1)",
 				"stripe": "oklch(0.9696 0 0 / 1)",
 				"trim": "oklch(0.5482 0.1329 243.12 / 1)"
-			}
+			},
+			"logoX": 80,
+			"logoY": 104,
+			"logoWidth": 408,
+			"logoHeight": 408,
+			"logoRotation": -20
 		},
 		{
 			"city": "Green Bay",
@@ -196,7 +240,6 @@
 			"fieldLogo": "nfl-packers",
 			"logo": "nfl-packers",
 			"logoFixed": true,
-			"logoTransform": "translate(-25px, -43px) scale(1.13, 1.12)",
 			"id": "0876a61a-d9d0-4cdc-885a-ec5abe1939be",
 			"colors": {
 				"primary": "oklch(0.3144 0.0306 175.53 / 1)",
@@ -205,7 +248,12 @@
 				"helmet": "oklch(0.8286 0.1684 80.28 / 1)",
 				"stripe": "oklch(0.9696 0 0 / 1)",
 				"trim": "oklch(0.3144 0.0306 175.53 / 1)"
-			}
+			},
+			"logoX": 122,
+			"logoY": 104,
+			"logoWidth": 391,
+			"logoHeight": 387,
+			"logoRotation": -20
 		},
 		{
 			"city": "Houston",
@@ -213,7 +261,6 @@
 			"name": "Texans",
 			"fieldLogo": "nfl-texans",
 			"logo": "nfl-texans",
-			"logoTransform": "translate(-25px, -43px) scale(1.12, 1.1)",
 			"id": "0a78aaa7-c1f9-445a-94af-72c671b59a3d",
 			"colors": {
 				"primary": "oklch(0.2342 0.0453 234.46 / 1)",
@@ -222,7 +269,12 @@
 				"helmet": "oklch(0.2342 0.0453 234.46 / 1)",
 				"stripe": "oklch(0.2342 0.0453 234.46 / 1)",
 				"trim": "oklch(0.2342 0.0453 234.46 / 1)"
-			}
+			},
+			"logoX": 122,
+			"logoY": 104,
+			"logoWidth": 387,
+			"logoHeight": 380,
+			"logoRotation": -20
 		},
 		{
 			"city": "Indianapolis",
@@ -230,7 +282,6 @@
 			"name": "Colts",
 			"fieldLogo": "nfl-colts",
 			"logo": "nfl-colts",
-			"logoTransform": "translate(-25px, -45px)",
 			"id": "7a821691-33f7-45fd-b258-96bce4d552d0",
 			"colors": {
 				"primary": "oklch(0.3045 0.1028 255.7 / 1)",
@@ -239,7 +290,12 @@
 				"helmet": "oklch(0.9696 0 0 / 1)",
 				"stripe": "oklch(0.3045 0.1028 255.7 / 1)",
 				"trim": "oklch(0.9696 0 0 / 1)"
-			}
+			},
+			"logoX": 122,
+			"logoY": 104,
+			"logoWidth": 346,
+			"logoHeight": 346,
+			"logoRotation": -20
 		},
 		{
 			"city": "Jacksonville",
@@ -247,7 +303,6 @@
 			"name": "Jaguars",
 			"fieldLogo": "nfl-jaguars",
 			"logo": "nfl-jaguars",
-			"logoTransform": "translate(-20px, -41px) rotate(-6.55143deg) scale(1.07, 1.07)",
 			"id": "3ff1c454-719a-41f8-b9b0-901b0236af92",
 			"colors": {
 				"primary": "oklch(0.4764 0.0843 215.42 / 1)",
@@ -256,7 +311,12 @@
 				"helmet": "oklch(0.2005 0.0191 248.8 / 1)",
 				"stripe": "oklch(0.2005 0.0191 248.8 / 1)",
 				"trim": "oklch(0.2005 0.0191 248.8 / 1)"
-			}
+			},
+			"logoX": 122,
+			"logoY": 118,
+			"logoWidth": 370,
+			"logoHeight": 370,
+			"logoRotation": -20
 		},
 		{
 			"city": "Kansas City",
@@ -266,7 +326,6 @@
 			"logo": "nfl-chiefs",
 			"logoFixed": true,
 			"logoLeft": "nfl-chiefs-left",
-			"logoTransform": "translate(-15px, -45px) scale(1.13, 1.08)",
 			"id": "4bc4b950-5d7d-4b47-8f6c-c06e76948df9",
 			"colors": {
 				"primary": "oklch(0.5831 0.2259 22.4 / 1)",
@@ -275,7 +334,12 @@
 				"helmet": "oklch(0.5831 0.2259 22.4 / 1)",
 				"stripe": "oklch(0.5831 0.2259 22.4 / 1)",
 				"trim": "oklch(0.5831 0.2259 22.4 / 1)"
-			}
+			},
+			"logoX": 122,
+			"logoY": 104,
+			"logoWidth": 391,
+			"logoHeight": 373,
+			"logoRotation": -20
 		},
 		{
 			"city": "Las Vegas",
@@ -284,7 +348,6 @@
 			"fieldLogo": "nfl-raiders",
 			"logo": "nfl-raiders",
 			"logoFixed": true,
-			"logoTransform": "translate(-24px, -45px) scale(1, 1)",
 			"id": "f5efbfb5-4919-4abd-8ff6-0982423ed371",
 			"colors": {
 				"primary": "oklch(0 0 0 / 1)",
@@ -293,7 +356,12 @@
 				"helmet": "oklch(0.7425 0.0091 225.12 / 1)",
 				"stripe": "oklch(0 0 0 / 1)",
 				"trim": "oklch(0.7425 0.0091 225.12 / 1)"
-			}
+			},
+			"logoX": 122,
+			"logoY": 104,
+			"logoWidth": 346,
+			"logoHeight": 346,
+			"logoRotation": -20
 		},
 		{
 			"city": "Los Angeles",
@@ -301,7 +369,6 @@
 			"name": "Chargers",
 			"fieldLogo": "nfl-chargers",
 			"logo": "nfl-chargers",
-			"logoTransform": "translate(-20px, -58px) scale(1.76, 1.6)",
 			"id": "459a7109-eac2-482a-a067-ebd5f527c75f",
 			"colors": {
 				"primary": "oklch(0.581 0.1414 243.33 / 1)",
@@ -310,7 +377,12 @@
 				"helmet": "oklch(0.9696 0 0 / 1)",
 				"stripe": "oklch(0.9696 0 0 / 1)",
 				"trim": "oklch(0.9696 0 0 / 1)"
-			}
+			},
+			"logoX": -10,
+			"logoY": -20,
+			"logoWidth": 608,
+			"logoHeight": 553,
+			"logoRotation": -30
 		},
 		{
 			"city": "Los Angeles",
@@ -318,7 +390,6 @@
 			"name": "Rams",
 			"fieldLogo": "nfl-rams-field",
 			"logo": "nfl-rams",
-			"logoTransform": "translate(-15px, -35px) scale(1.9, 1.9)",
 			"id": "66ecf340-2f75-420a-b219-0275f819b9bd",
 			"colors": {
 				"primary": "oklch(0.3671 0.1655 261.64 / 1)",
@@ -327,7 +398,12 @@
 				"helmet": "oklch(0.3671 0.1655 261.64 / 1)",
 				"stripe": "oklch(0.3671 0.1655 261.64 / 1)",
 				"trim": "oklch(0.3671 0.1655 261.64 / 1)"
-			}
+			},
+			"logoX": 20,
+			"logoY": 20,
+			"logoWidth": 627,
+			"logoHeight": 627,
+			"logoRotation": -20
 		},
 		{
 			"city": "Miami",
@@ -335,7 +411,6 @@
 			"name": "Dolphins",
 			"fieldLogo": "nfl-dolphins",
 			"logo": "nfl-dolphins",
-			"logoTransform": "translate(-30px, -42px)",
 			"id": "36a2f7a8-fe32-457b-8b6e-93d1b3f7b047",
 			"colors": {
 				"primary": "oklch(0.5919 0.1009 203.69 / 1)",
@@ -344,7 +419,12 @@
 				"helmet": "oklch(0.9696 0 0 / 1)",
 				"stripe": "oklch(0.664 0.2207 37.15 / 1)",
 				"trim": "oklch(0.5919 0.1009 203.69 / 1)"
-			}
+			},
+			"logoX": 122,
+			"logoY": 114,
+			"logoWidth": 346,
+			"logoHeight": 346,
+			"logoRotation": -20
 		},
 		{
 			"city": "Minnesota",
@@ -352,7 +432,6 @@
 			"name": "Vikings",
 			"fieldLogo": "nfl-vikings-field",
 			"logo": "nfl-vikings",
-			"logoTransform": "translate(-24px, -36px) scale(1.41, 1.44)",
 			"id": "6aa5aec9-3f2a-453b-825e-421745de1f39",
 			"colors": {
 				"primary": "oklch(0.3759 0.1472 298.95 / 1)",
@@ -361,7 +440,12 @@
 				"helmet": "oklch(0.3759 0.1472 298.95 / 1)",
 				"stripe": "oklch(0.3759 0.1472 298.95 / 1)",
 				"trim": "oklch(0.3759 0.1472 298.95 / 1)"
-			}
+			},
+			"logoX": 70,
+			"logoY": 90,
+			"logoWidth": 487,
+			"logoHeight": 498,
+			"logoRotation": -20
 		},
 		{
 			"city": "New England",
@@ -369,7 +453,6 @@
 			"name": "Patriots",
 			"fieldLogo": "nfl-patriots",
 			"logo": "nfl-patriots",
-			"logoTransform": "translate(-32px, -29px) rotate(-9.48413deg) scale(1.70642, 1.69956)",
 			"id": "b81d790c-0059-40f5-8e08-f5fc10799114",
 			"colors": {
 				"primary": "oklch(0.2469 0.0734 251.79 / 1)",
@@ -378,7 +461,12 @@
 				"helmet": "oklch(0.7724 0.0105 238.56 / 1)",
 				"stripe": "oklch(0.7724 0.0105 238.56 / 1)",
 				"trim": "oklch(0.7724 0.0105 238.56 / 1)"
-			}
+			},
+			"logoX": 30,
+			"logoY": 20,
+			"logoWidth": 570,
+			"logoHeight": 570,
+			"logoRotation": -30
 		},
 		{
 			"city": "New Orleans",
@@ -386,7 +474,6 @@
 			"name": "Saints",
 			"fieldLogo": "nfl-saints",
 			"logo": "nfl-saints",
-			"logoTransform": "translate(-26px, -46px) ",
 			"id": "29eed103-8298-4d90-ac50-d898a88d47f3",
 			"colors": {
 				"primary": "oklch(0.8022 0.0669 84.36 / 1)",
@@ -395,7 +482,12 @@
 				"helmet": "oklch(0.8022 0.0669 84.36 / 1)",
 				"stripe": "oklch(0.9696 0 0 / 1)",
 				"trim": "oklch(0.2005 0.0191 248.8 / 1)"
-			}
+			},
+			"logoX": 122,
+			"logoY": 100,
+			"logoWidth": 346,
+			"logoHeight": 346,
+			"logoRotation": -20
 		},
 		{
 			"city": "New York",
@@ -404,7 +496,6 @@
 			"fieldLogo": "nfl-giants-field",
 			"logo": "nfl-giants",
 			"logoFixed": true,
-			"logoTransform": "translate(-28px, -44px) scale(1, 1)",
 			"id": "0c84e360-a04d-4e02-93f5-1f8fd636b05e",
 			"colors": {
 				"primary": "oklch(0.2851 0.1217 265.03 / 1)",
@@ -413,7 +504,12 @@
 				"helmet": "oklch(0.2851 0.1217 265.03 / 1)",
 				"stripe": "oklch(0.4753 0.1755 19.48 / 1)",
 				"trim": "oklch(0.2851 0.1217 265.03 / 1)"
-			}
+			},
+			"logoX": 122,
+			"logoY": 107,
+			"logoWidth": 346,
+			"logoHeight": 346,
+			"logoRotation": -20
 		},
 		{
 			"city": "New York",
@@ -422,7 +518,6 @@
 			"fieldLogo": "nfl-jets",
 			"logo": "nfl-jets",
 			"logoFixed": true,
-			"logoTransform": "translate(-27px, -44px) scale(1.25, 1.17)",
 			"id": "6b736d05-ce38-4a36-9e0d-7ea1b9eb25ac",
 			"colors": {
 				"primary": "oklch(0.4147 0.0786 165.65 / 1)",
@@ -431,7 +526,12 @@
 				"helmet": "oklch(0.9696 0 0 / 1)",
 				"stripe": "oklch(0.9696 0 0 / 1)",
 				"trim": "oklch(0.4147 0.0786 165.65 / 1)"
-			}
+			},
+			"logoX": 100,
+			"logoY": 70,
+			"logoWidth": 432,
+			"logoHeight": 404,
+			"logoRotation": -20
 		},
 		{
 			"city": "Philadelphia",
@@ -439,7 +539,6 @@
 			"name": "Eagles",
 			"fieldLogo": "nfl-eagles-field",
 			"logo": "nfl-eagles",
-			"logoTransform": "translate(-3px, -45px) scale(1.9, 1.9)",
 			"id": "68da8e98-ea9c-4fea-9c92-8bf09441e4dc",
 			"colors": {
 				"primary": "oklch(0.3721 0.0639 207.48 / 1)",
@@ -448,7 +547,12 @@
 				"helmet": "oklch(0.3721 0.0639 207.48 / 1)",
 				"stripe": "oklch(0.3721 0.0639 207.48 / 1)",
 				"trim": "oklch(0.3721 0.0639 207.48 / 1)"
-			}
+			},
+			"logoX": 88,
+			"logoY": -28,
+			"logoWidth": 592,
+			"logoHeight": 592,
+			"logoRotation": -20
 		},
 		{
 			"city": "Pittsburgh",
@@ -457,7 +561,6 @@
 			"fieldLogo": "nfl-steelers",
 			"logo": "nfl-steelers",
 			"logoFixed": true,
-			"logoTransform": "translate(-25px, -44px) scale(1, 1)",
 			"id": "bc2a94eb-79f5-4520-93ce-7b4d69748d65",
 			"colors": {
 				"primary": "oklch(0.8286 0.1684 80.28 / 1)",
@@ -466,7 +569,12 @@
 				"helmet": "oklch(0.2005 0.0191 248.8 / 1)",
 				"stripe": "oklch(0.8286 0.1684 80.28 / 1)",
 				"trim": "oklch(0.2005 0.0191 248.8 / 1)"
-			}
+			},
+			"logoX": 140,
+			"logoY": 107,
+			"logoWidth": 346,
+			"logoHeight": 346,
+			"logoRotation": -20
 		},
 		{
 			"city": "San Francisco",
@@ -475,7 +583,6 @@
 			"fieldLogo": "nfl-49ers",
 			"logo": "nfl-49ers",
 			"logoFixed": true,
-			"logoTransform": "translate(-30px, -45px) scale(1, 1)",
 			"id": "aa39e173-b594-4646-b1b4-9d3c40b4caee",
 			"colors": {
 				"primary": "oklch(0.46 0.1888 29.23 / 1)",
@@ -484,7 +591,12 @@
 				"helmet": "oklch(0.6907 0.085 87 / 1)",
 				"stripe": "oklch(0.9696 0 0 / 1)",
 				"trim": "oklch(0.46 0.1888 29.23 / 1)"
-			}
+			},
+			"logoX": 130,
+			"logoY": 104,
+			"logoWidth": 346,
+			"logoHeight": 346,
+			"logoRotation": -20
 		},
 		{
 			"city": "Seattle",
@@ -492,7 +604,6 @@
 			"name": "Seahawks",
 			"fieldLogo": "nfl-seahawks",
 			"logo": "nfl-seahawks",
-			"logoTransform": "translate(-33px, -39px) rotate(-8.77151deg) scale(1.45, 1.46)",
 			"id": "97836634-f26b-4ed1-a5b6-ba815c946575",
 			"colors": {
 				"primary": "oklch(0.2469 0.0734 251.79 / 1)",
@@ -501,7 +612,12 @@
 				"helmet": "oklch(0.2469 0.0734 251.79 / 1)",
 				"stripe": "oklch(0.3289 0.047 262.32 / 1)",
 				"trim": "oklch(0.2469 0.0734 251.79 / 1)"
-			}
+			},
+			"logoX": 50,
+			"logoY": 40,
+			"logoWidth": 501,
+			"logoHeight": 505,
+			"logoRotation": -35
 		},
 		{
 			"city": "Tampa Bay",
@@ -509,7 +625,6 @@
 			"name": "Buccaneers",
 			"fieldLogo": "nfl-buccaneers",
 			"logo": "nfl-buccaneers",
-			"logoTransform": "translate(-28px, -43px)",
 			"id": "70ed9a2c-b047-444b-834e-584d8bcc4b70",
 			"colors": {
 				"primary": "oklch(0.3151 0.0101 72.95 / 1)",
@@ -518,7 +633,12 @@
 				"helmet": "oklch(0.3151 0.0101 72.95 / 1)",
 				"stripe": "oklch(0.3151 0.0101 72.95 / 1)",
 				"trim": "oklch(0.3151 0.0101 72.95 / 1)"
-			}
+			},
+			"logoX": 120,
+			"logoY": 111,
+			"logoWidth": 346,
+			"logoHeight": 346,
+			"logoRotation": -20
 		},
 		{
 			"city": "Tennessee",
@@ -526,7 +646,6 @@
 			"name": "Titans",
 			"fieldLogo": "nfl-titans",
 			"logo": "nfl-titans",
-			"logoTransform": "translate(-30px, -42px) scale(1.11, 1.09)",
 			"id": "13ea5f58-109b-4979-91af-190ccc8c4f1f",
 			"colors": {
 				"primary": "oklch(0.2573 0.0616 254.95 / 1)",
@@ -535,7 +654,12 @@
 				"helmet": "oklch(0.9696 0 0 / 1)",
 				"stripe": "oklch(0.9696 0 0 / 1)",
 				"trim": "oklch(0.2573 0.0616 254.95 / 1)"
-			}
+			},
+			"logoX": 110,
+			"logoY": 105,
+			"logoWidth": 384,
+			"logoHeight": 377,
+			"logoRotation": -20
 		},
 		{
 			"city": "Washington",
@@ -544,7 +668,6 @@
 			"fieldLogo": "nfl-commanders-field",
 			"logo": "nfl-commanders",
 			"logoFixed": true,
-			"logoTransform": "translate(-30px, -40px) scale(1, 1)",
 			"id": "8d6f51f9-5736-47ba-932f-c69dfba5b10f",
 			"colors": {
 				"primary": "oklch(0.3174 0.1038 25.36 / 1)",
@@ -553,20 +676,38 @@
 				"helmet": "oklch(0.3174 0.1038 25.36 / 1)",
 				"stripe": "oklch(0.8286 0.1684 80.28 / 1)",
 				"trim": "oklch(0.9696 0 0 / 1)"
-			}
+			},
+			"logoX": 150,
+			"logoY": 121,
+			"logoWidth": 346,
+			"logoHeight": 346,
+			"logoRotation": -20
 		}
 	],
 	"diceData": [
 		{
 			"id": 11,
 			"yards": 100,
-			"description": ["Touchdown Pass to RB", "Touchdown Pass to TE", "Touchdown Pass to WR"]
+			"description": [
+				"Touchdown Pass to RB",
+				"Touchdown Pass to TE",
+				"Touchdown Pass to WR",
+				"Touchdown Pass to Slot Receiver",
+				"Touchdown on a Fade Route",
+				"Touchdown on a Seam Route",
+				"Touchdown Pass on Play Action"
+			]
 		},
 		{
 			"id": 12,
 			"isTurnover": true,
 			"yards": 10,
-			"description": ["Interception"]
+			"description": [
+				"Interception",
+				"Tipped Ball Interception",
+				"Picked Off at the Line",
+				"Read Like a Book"
+			]
 		},
 		{
 			"id": 13,
@@ -579,13 +720,24 @@
 				"Quarterback Scramble",
 				"Reverse Play",
 				"Run Up the Middle",
-				"Seam Pass"
+				"Seam Pass",
+				"Bootleg Pass",
+				"Post-Corner Route",
+				"Stretch Run",
+				"Swing Pass to RB"
 			]
 		},
 		{
 			"id": 14,
 			"yards": -5,
-			"description": ["Fumble (Recovered)", "Quarterback Sack", "Tackle in Backfield"]
+			"description": [
+				"Fumble (Recovered)",
+				"Quarterback Sack",
+				"Tackle in Backfield",
+				"Stuffed at the Line",
+				"Strip Sack (Recovered)",
+				"Run Blown Up by Blitz"
+			]
 		},
 		{
 			"id": 15,
@@ -595,7 +747,12 @@
 				"Draw Play",
 				"Option Right",
 				"Quarterback Sneak",
-				"Wheel Route"
+				"Wheel Route",
+				"Tush Push",
+				"Jet Sweep",
+				"Flat Route",
+				"Slant and Slide",
+				"Quick Out"
 			]
 		},
 		{
@@ -606,20 +763,35 @@
 				"Incomplete Pass",
 				"Pass Batted Down",
 				"Pass Dropped",
-				"Throw Away"
+				"Throw Away",
+				"Dropped at the Line of Scrimmage",
+				"Miscommunication on Route",
+				"Overthrown Deep",
+				"Spiked Ball"
 			]
 		},
 		{
 			"id": 22,
 			"isPenalty": true,
 			"yards": 5,
-			"description": ["Too Many Men On Field", "Offside Defense"]
+			"description": [
+				"Too Many Men On Field",
+				"Offside Defense",
+				"Neutral Zone Infraction",
+				"Encroachment",
+				"Illegal Contact"
+			]
 		},
 		{
 			"id": 23,
 			"isTurnover": true,
 			"yards": 0,
-			"description": ["Fumble"]
+			"description": [
+				"Fumble",
+				"Strip Sack Fumble",
+				"Botched Handoff",
+				"Hit While Throwing"
+			]
 		},
 		{
 			"id": 24,
@@ -630,20 +802,42 @@
 				"Left Power Left",
 				"Left Power Sweep",
 				"Pass Down the Sideline",
+				"Philly Special",
 				"Reverse Play",
 				"Right Power Right",
-				"Right Power Sweep"
+				"Right Power Sweep",
+				"Wheel Route to RB",
+				"Corner Route",
+				"Off Tackle Burst",
+				"Scramble and Throw"
 			]
 		},
 		{
 			"id": 25,
 			"yards": -5,
-			"description": ["Busted Play", "Quarterback Sack", "Tackle in backfield"]
+			"description": [
+				"Busted Play",
+				"Quarterback Sack",
+				"Tackle in backfield",
+				"Blown Blocking Assignment",
+				"Run Stuffed at the Line",
+				"Delay and Sack"
+			]
 		},
 		{
 			"id": 26,
 			"yards": 5,
-			"description": ["Button Hook", "Quick Hitch", "Screen Pass", "Shallow Cross", "Shovel Pass"]
+			"description": [
+				"Button Hook",
+				"Quick Hitch",
+				"Screen Pass",
+				"Shallow Cross",
+				"Shovel Pass",
+				"Drag Route",
+				"Quick Slant",
+				"Pitch Play",
+				"Dumpoff Pass"
+			]
 		},
 		{
 			"id": 33,
@@ -654,13 +848,23 @@
 				"Pass Interference",
 				"Roughing the Passer",
 				"Taunting",
-				"Unnecessary Roughness"
+				"Unnecessary Roughness",
+				"Facemask",
+				"Helmet-to-Helmet",
+				"Late Hit Out of Bounds",
+				"Defenseless Receiver Hit"
 			]
 		},
 		{
 			"id": 34,
 			"yards": 0,
-			"description": ["Incomplete Pass"]
+			"description": [
+				"Incomplete Pass",
+				"Pass Broken Up",
+				"Overthrown",
+				"Dropped in the End Zone",
+				"Batted at the Line"
+			]
 		},
 		{
 			"id": 35,
@@ -670,18 +874,40 @@
 				"Fullback Dive",
 				"Halfback Run",
 				"Off Tackle Run",
-				"Pass to Flat"
+				"Pass to Flat",
+				"Zone Read",
+				"Trap Run",
+				"Swing Pass",
+				"Gut Run"
 			]
 		},
 		{
 			"id": 36,
 			"isPenalty": true,
 			"yards": -5,
-			"description": ["Delay of Game", "False Start", "Illegal Formation", "Illegal Shift"]
+			"description": [
+				"Delay of Game",
+				"False Start",
+				"Illegal Formation",
+				"Illegal Shift",
+				"Ineligible Receiver Downfield",
+				"Intentional Grounding",
+				"Illegal Motion"
+			]
 		},
 		{
 			"id": 44,
-			"yards": [30, 35, 40, 45, 50, 55, 60, 65, 70],
+			"yards": [
+				30,
+				35,
+				40,
+				45,
+				50,
+				55,
+				60,
+				65,
+				70
+			],
 			"description": [
 				"Fake Reverse Pass",
 				"Flea Flicker",
@@ -689,19 +915,40 @@
 				"Halfback Pass",
 				"Hook and Lateral",
 				"Stiles Special",
-				"Wide Receiver Screen"
+				"Wide Receiver Screen",
+				"Double Reverse",
+				"Scramble Drill",
+				"Busted Coverage Deep Ball",
+				"Trick Play"
 			]
 		},
 		{
 			"id": 45,
 			"isTurnover": true,
-			"yards": [20, 25, 30, 35, 40],
-			"description": ["Interception"]
+			"yards": [
+				20,
+				25,
+				30,
+				35,
+				40
+			],
+			"description": [
+				"Interception",
+				"Pick Six Attempt",
+				"Tipped Ball Picked Off",
+				"Jumped the Route"
+			]
 		},
 		{
 			"id": 46,
 			"yards": 10,
-			"description": ["Fumblerooski"]
+			"description": [
+				"Fumblerooski",
+				"End Around",
+				"Misdirection Run",
+				"Play Action Rollout",
+				"TE Across the Middle"
+			]
 		},
 		{
 			"id": 55,
@@ -711,19 +958,35 @@
 				"Drag Route",
 				"Pass Complete",
 				"Play Action Pass",
-				"Wide Receiver Slant"
+				"Wide Receiver Slant",
+				"Comeback Route",
+				"Dig Route",
+				"Zone Read Option",
+				"Pitch and Catch"
 			]
 		},
 		{
 			"id": 56,
 			"isPenalty": true,
 			"yards": -10,
-			"description": ["Illegal Use of Hands", "Offensive Holding", "Offensive Pass Interference"]
+			"description": [
+				"Illegal Use of Hands",
+				"Offensive Holding",
+				"Offensive Pass Interference",
+				"Chop Block",
+				"Tripping"
+			]
 		},
 		{
 			"id": 66,
 			"yards": 100,
-			"description": ["Touchdown Run"]
+			"description": [
+				"Touchdown Run",
+				"Touchdown on a Breakaway Run",
+				"Touchdown on a QB Keeper",
+				"Touchdown Sweep to the Outside",
+				"Touchdown Dive Over the Pile"
+			]
 		}
 	],
 	"fieldData": [

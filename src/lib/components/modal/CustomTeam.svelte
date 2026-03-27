@@ -4,7 +4,6 @@
 	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
 	import { logos } from '$lib/data/logos.json';
 	import type { Team } from '$lib/types';
-	import { DEFAULT_TEAM } from '$lib/constants/constants';
 	import '@fontsource/bebas-neue';
 	import { hexToOklch, oklchToHex } from '$lib/utils/common';
 	import { auth } from '$lib/auth/authState.svelte';
@@ -28,7 +27,11 @@
 	let primary = $state(oklchToHex('oklch(0.2469 0.0734 251.79 / 1)'));
 	let secondary = $state(oklchToHex('oklch(0.589 0.0989 245.29 / 1)'));
 	let logo = $state('');
-	let logoTransform = $state('');
+	let logoX = $state(176);
+	let logoY = $state(114);
+	let logoW = $state(346);
+	let logoH = $state(346);
+	let logoRot = $state(0);
 	let city = $state('');
 	let name = $state('');
 	let errors: string[] = $state([]);
@@ -50,7 +53,11 @@
 		primary = oklchToHex(team.colors.primary || primary);
 		secondary = oklchToHex(team.colors.secondary || secondary);
 		logo = team.logo || logo;
-		logoTransform = team.logoTransform || '';
+		logoX = team.logoX ?? logoX;
+		logoY = team.logoY ?? logoY;
+		logoW = team.logoWidth ?? logoW;
+		logoH = team.logoHeight ?? logoH;
+		logoRot = team.logoRotation ?? logoRot;
 		city = team.city;
 		name = team.name;
 	});
@@ -74,7 +81,11 @@
 			logo,
 			logoFixed: false,
 			logoLeft: '',
-			logoTransform,
+			logoX,
+			logoY,
+			logoWidth: logoW,
+			logoHeight: logoH,
+			logoRotation: logoRot,
 			name,
 			colors: {
 				primary: hexToOklch(primary),
@@ -106,13 +117,28 @@
 				{trim}
 				{logo}
 				logoFixed={false}
-				{logoTransform}
-				setTransform={(t) => (logoTransform = t)}
+				{logoX}
+				{logoY}
+				logoWidth={logoW}
+				logoHeight={logoH}
+				logoRotation={logoRot}
+				setLogoPosition={(x, y, w, h) => { logoX = x; logoY = y; logoW = w; logoH = h; }}
 				canCustomize={true}
 			/>
 			{#if logo}
 				<div class="notes">
-					Click the logo to alter size, shape and position. Double-click when done.
+					Drag to move. Scroll to resize.
+				</div>
+				<div class="rotate-controls">
+					<button class="rotate-btn" onclick={() => (logoRot -= 5)} aria-label="Rotate left">
+						&#x21B6;
+					</button>
+					<button class="rotate-btn reset-btn" onclick={() => (logoRot = 0)} aria-label="Reset rotation">
+						{logoRot}°
+					</button>
+					<button class="rotate-btn" onclick={() => (logoRot += 5)} aria-label="Rotate right">
+						&#x21B7;
+					</button>
 				</div>
 			{/if}
 		</div>
@@ -227,6 +253,26 @@
 		font-size: 0.75rem;
 		font-style: italic;
 		padding: 4px;
+		text-align: center;
+	}
+	.rotate-controls {
+		display: flex;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 4px 0;
+	}
+	.rotate-btn {
+		cursor: pointer;
+		font-size: 1.25rem;
+		padding: 0.1rem 0.5rem;
+		border-radius: var(--border-radius);
+		background: var(--color-gray-900);
+		color: var(--color-white);
+		border: 1px solid var(--color-gray-700);
+	}
+	.reset-btn {
+		font-size: 0.85rem;
+		min-width: 3rem;
 	}
 	.save-button {
 		margin: 0 4px;

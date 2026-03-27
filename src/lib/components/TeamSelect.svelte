@@ -95,8 +95,11 @@
 						logo={team.logo}
 						logoFixed={teamType === TEAM.AWAY && team.logoFixed}
 						logoLeft={team.logoLeft}
-						logoTransform={team.logoTransform || ''}
-						setTransform={NOOP}
+						logoX={team.logoX}
+						logoY={team.logoY}
+						logoWidth={team.logoWidth}
+						logoHeight={team.logoHeight}
+						logoRotation={team.logoRotation}
 						title={team.isCustom ? `EDIT: ${team.city} ${team.name}` : `${team.city} ${team.name}`}
 					/>
 				</button>

@@ -143,7 +143,6 @@ export const DEFAULT_TEAM: Team = {
 	logo: '',
 	logoFixed: false,
 	logoLeft: '',
-	logoTransform: '',
 	colors: {
 		primary: '#FFFFFF',
 		secondary: ''
@@ -192,21 +191,6 @@ export const DEFAULT_SETTINGS = {
 	mode: GAME_MODE.HEAD_TO_HEAD,
 	winScore: 30,
 	volume: true
-};
-
-export const HELMET_SIZE = {
-	SMALL: 'small',
-	LARGE: 'large'
-};
-
-export const HELMET_WIDTH = {
-	[HELMET_SIZE.SMALL]: 48,
-	[HELMET_SIZE.LARGE]: 250
-};
-
-export const WIDTH_DIVIDER = {
-	[HELMET_SIZE.SMALL]: 3,
-	[HELMET_SIZE.LARGE]: 2.5
 };
 
 export const INTERCEPTION_ROLLS = [12, 45];

@@ -43,8 +43,12 @@ export interface Team {
 	fieldLogo: string;
 	logo: string;
 	logoFixed?: boolean;
+	logoHeight?: number;
 	logoLeft?: string;
-	logoTransform?: string;
+	logoRotation?: number;
+	logoWidth?: number;
+	logoX?: number;
+	logoY?: number;
 	name: string;
 }
 

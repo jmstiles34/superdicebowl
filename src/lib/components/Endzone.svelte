@@ -1,15 +1,11 @@
 <script lang="ts">
 	import {
 		DEFAULT_TEAM,
-		HELMET_SIZE,
-		HELMET_WIDTH,
 		NOOP,
-		POSITION,
-		WIDTH_DIVIDER
+		POSITION
 	} from '$lib/constants/constants';
 	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
 	import type { Team, Void } from '$lib/types';
-	import { scaleLogoTransform } from '$lib/utils/common';
 	import '@fontsource/bebas-neue';
 
 	type EndZoneProps = {
@@ -37,28 +33,7 @@
 	} = team.colors;
 
 	let allowFieldGoal = $derived(hasBall && inFieldGoalRange);
-
-	const setLogoWidth = (ss: number | undefined) => {
-		if (ss) {
-			if (ss <= 640) {
-				return 48 / 4.2;
-			}
-			if (ss > 640 && ss < 900) {
-				return 48 / 2.8;
-			}
-		}
-
-		return 64 / 2.6;
-	};
-	const originalWidth = HELMET_WIDTH[HELMET_SIZE.LARGE] / WIDTH_DIVIDER[HELMET_SIZE.LARGE];
-	let screenSize: number | undefined = $state(undefined);
-	let logoWidth: number = $derived(setLogoWidth(screenSize));
-	let scaledTransform = $derived(
-		scaleLogoTransform(team.logoTransform || '', logoWidth, originalWidth)
-	);
 </script>
-
-<svelte:window bind:innerWidth={screenSize} />
 
 <div class="endZone" style={`background-color: ${primary};`}>
 	<div class="endZoneElements">
@@ -73,10 +48,11 @@
 				logo={team.logo || ''}
 				logoLeft={team.logoLeft || ''}
 				logoFixed={(position === POSITION.LEFT && team.logoFixed) || false}
-				logoTransform={scaledTransform || ''}
-				{logoWidth}
-				setTransform={NOOP}
-				size={HELMET_SIZE.SMALL}
+				logoX={team.logoX}
+				logoY={team.logoY}
+				logoWidth={team.logoWidth}
+				logoHeight={team.logoHeight}
+				logoRotation={team.logoRotation}
 			/>
 		</div>
 
@@ -100,10 +76,11 @@
 				logo={team.logo || ''}
 				logoLeft={team.logoLeft || ''}
 				logoFixed={(position === POSITION.RIGHT && team.logoFixed) || false}
-				logoTransform={scaledTransform || ''}
-				{logoWidth}
-				setTransform={NOOP}
-				size={HELMET_SIZE.SMALL}
+				logoX={team.logoX}
+				logoY={team.logoY}
+				logoWidth={team.logoWidth}
+				logoHeight={team.logoHeight}
+				logoRotation={team.logoRotation}
 			/>
 		</div>
 		<div></div>
@@ -133,7 +110,7 @@
 	.endZoneElements {
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: 0.5em 3em auto 3em 0.5em;
+		grid-template-rows: 0.5em auto 1fr auto 0.5em;
 		gap: 0.25em;
 		height: 100%;
 	}
@@ -170,8 +147,8 @@
 		display: flex;
 		justify-content: center;
 		margin: auto;
-		height: 3rem;
-		width: 3rem;
+		height: clamp(2rem, 1rem + 4vw, 7rem);
+		width: clamp(2rem, 1rem + 4vw, 7rem);
 	}
 	.name-container {
 		display: flex;
@@ -213,24 +190,4 @@
 		}
 	}
 
-	@media (max-width: 40rem) {
-		.endZoneElements {
-			grid-template-rows: 0.25em 2em auto 2em 0.25em;
-			gap: 0.15em;
-		}
-		.helmetLogo {
-			height: 2rem;
-			width: 2rem;
-		}
-	}
-	@media (min-width: 60rem) {
-		.endZoneElements {
-			grid-template-rows: 0.25em 4em auto 4em 0.25em;
-			gap: 0.15em;
-		}
-		.helmetLogo {
-			height: 4rem;
-			width: 4rem;
-		}
-	}
 </style>

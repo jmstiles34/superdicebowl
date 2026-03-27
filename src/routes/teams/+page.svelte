@@ -10,12 +10,7 @@
 	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
-	import { HELMET_SIZE, HELMET_WIDTH, POSITION, WIDTH_DIVIDER } from '$lib/constants/constants';
-	import { scaleLogoTransform } from '$lib/utils/common';
-
-	// Match the Endzone's desktop logo size for correct transform scaling
-	const previewLogoWidth = 64 / 2.6;
-	const editorLogoWidth = HELMET_WIDTH[HELMET_SIZE.LARGE] / WIDTH_DIVIDER[HELMET_SIZE.LARGE];
+	import { POSITION } from '$lib/constants/constants';
 
 	let teams: CustomTeamRecord[] = $state([]);
 	let records: Map<string, TeamRecord> = $state(new Map());
@@ -92,10 +87,11 @@
 									logo={record.teamData.logo}
 									logoFixed={false}
 									logoLeft={record.teamData.logoLeft || ''}
-									logoTransform={scaleLogoTransform(record.teamData.logoTransform || '', previewLogoWidth, editorLogoWidth)}
-									logoWidth={previewLogoWidth}
-									setTransform={() => {}}
-									size={HELMET_SIZE.SMALL}
+									logoX={record.teamData.logoX}
+									logoY={record.teamData.logoY}
+									logoWidth={record.teamData.logoWidth}
+									logoHeight={record.teamData.logoHeight}
+									logoRotation={record.teamData.logoRotation}
 									direction={POSITION.RIGHT}
 								/>
 							</div>

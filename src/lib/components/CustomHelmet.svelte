@@ -1,13 +1,10 @@
 <script lang="ts">
-	import Moveable from 'svelte-moveable';
-	import {
-		HELMET_SIZE,
-		HELMET_WIDTH,
-		NOOP,
-		POSITION,
-		WIDTH_DIVIDER
-	} from '$lib/constants/constants';
+	import { POSITION } from '$lib/constants/constants';
 	import { lightenColor } from '$lib/utils/common';
+
+	const DEFAULT_LOGO_X = 176;
+	const DEFAULT_LOGO_Y = 114;
+	const DEFAULT_LOGO_SIZE = 346;
 
 	type CustomHelmetProps = {
 		faceMask?: string;
@@ -18,11 +15,13 @@
 		logo: string | null;
 		logoLeft?: string | null;
 		logoFixed?: boolean;
-		title?: string;
-		size?: string;
-		logoTransform: string;
+		logoX?: number;
+		logoY?: number;
 		logoWidth?: number;
-		setTransform: (t: string) => void;
+		logoHeight?: number;
+		logoRotation?: number;
+		title?: string;
+		setLogoPosition?: (x: number, y: number, w: number, h: number) => void;
 		canCustomize?: boolean;
 	};
 
@@ -35,44 +34,78 @@
 		logo = null,
 		logoLeft = null,
 		logoFixed = false,
+		logoX = DEFAULT_LOGO_X,
+		logoY = DEFAULT_LOGO_Y,
+		logoWidth = DEFAULT_LOGO_SIZE,
+		logoHeight = logoWidth,
+		logoRotation = 0,
 		title = 'Custom Football Helmet',
-		size = HELMET_SIZE.LARGE,
-		logoTransform,
-		logoWidth = HELMET_WIDTH[size] / WIDTH_DIVIDER[size],
-		setTransform,
+		setLogoPosition,
 		canCustomize = false
 	}: CustomHelmetProps = $props();
 
-	let moveable: HTMLElement | null = $state(null);
-	let target: HTMLElement | null = $state(null);
 	let earOutline = $derived(lightenColor(helmet));
+	let svgEl: SVGSVGElement | undefined = $state(undefined);
+	let dragging = $state(false);
+	let dragStart = $state({ x: 0, y: 0, logoX: 0, logoY: 0 });
 
-	/* function onResize({ target, width, height, delta }) {
-		delta[0] && (target.style.width = `${width}px`);
-		delta[1] && (target.style.height = `${height}px`);
-	} */
-
-	function onTransform(transform: string) {
-		setTransform(transform);
-		//console.log(transform);
+	function screenToSvg(clientX: number, clientY: number) {
+		if (!svgEl) return { x: 0, y: 0 };
+		const ctm = svgEl.getScreenCTM();
+		if (!ctm) return { x: 0, y: 0 };
+		const inv = ctm.inverse();
+		return {
+			x: clientX * inv.a + clientY * inv.c + inv.e,
+			y: clientX * inv.b + clientY * inv.d + inv.f
+		};
 	}
 
-	function toggleMoveableTarget() {
-		moveable ? (moveable = null) : (moveable = target);
+	function onPointerDown(e: PointerEvent) {
+		if (!canCustomize || !setLogoPosition) return;
+		dragging = true;
+		const svgPt = screenToSvg(e.clientX, e.clientY);
+		dragStart = { x: svgPt.x, y: svgPt.y, logoX, logoY };
+		(e.currentTarget as SVGElement).setPointerCapture(e.pointerId);
 	}
+
+	function onPointerMove(e: PointerEvent) {
+		if (!dragging || !setLogoPosition) return;
+		const svgPt = screenToSvg(e.clientX, e.clientY);
+		const newX = Math.round(dragStart.logoX + (svgPt.x - dragStart.x));
+		const newY = Math.round(dragStart.logoY + (svgPt.y - dragStart.y));
+		setLogoPosition(newX, newY, logoWidth, logoHeight);
+	}
+
+	function onPointerUp() {
+		dragging = false;
+	}
+
+	function onWheel(e: WheelEvent) {
+		if (!canCustomize || !setLogoPosition) return;
+		e.preventDefault();
+		const scaleDelta = e.deltaY > 0 ? -20 : 20;
+		const newW = Math.max(100, logoWidth + scaleDelta);
+		const newH = Math.max(100, logoHeight + scaleDelta);
+		setLogoPosition(logoX, logoY, newW, newH);
+	}
+
+	$effect(() => {
+		if (!canCustomize || !svgEl) return;
+		const el = svgEl;
+		const handler = (e: WheelEvent) => onWheel(e);
+		el.addEventListener('wheel', handler, { passive: false });
+		return () => el.removeEventListener('wheel', handler);
+	});
 </script>
 
 <div class="helmet-wrapper" {title}>
-	<div
-		class="helmet-rotate"
-		class:small={size === HELMET_SIZE.SMALL}
-		class:large={size === HELMET_SIZE.LARGE}
-	>
+	<div class="helmet-rotate">
 		<svg
-			class:shadow={size === HELMET_SIZE.LARGE}
-			class:end-zone-shadow={size === HELMET_SIZE.SMALL}
+			bind:this={svgEl}
+			class="helmet-svg"
 			version="1.2"
 			xmlns="http://www.w3.org/2000/svg"
+			xmlns:xlink="http://www.w3.org/1999/xlink"
 			viewBox="0 0 864 864"
 		>
 			<defs>
@@ -226,54 +259,38 @@ M 641.087 272.197 L 641.11 272.25 C 639.82 280.54 635.28 286.19 629.28 291.09 C 
 				class="snaps snap-shadow stroke"
 				d="M 508.46 470 C 510.46 469.86 511.46 470.2 512.46 472.14 C 515.46 477.8 522.91 479.88 528.74 477.03 A 13 13 0 0 0 535.14 461.65 C 533.3 455.84 526.85 452.17 520.41 453.41 C 518.8 453.72 517.69 453.99 516.5 452.32 A 10.29 10.29 0 0 0 503.4 448.95 C 498.13 451.44 495.98 456.1 497.4 462.01 A 10.91 10.91 0 0 0 508.46 470 Z M 519.25 456.84 C 523.72 454.73 529.79 457.03 532.05 461.69 S 532.19 472.01 527.39 474.45 C 522.88 476.74 516.91 474.65 514.57 469.96 S 514.57 459.08 519.25 456.88 Z M 502.25 453.31 A 8.56 8.56 0 0 1 512.9 452.73 C 514.9 454.06 515.9 455.49 513.72 457.65 C 511.29 460.01 510.72 463.16 510.65 466.57 C 505.72 467.78 502.78 466.57 500.79 462.72 A 8.24 8.24 0 0 1 502.22 453.35 Z M 364.67 571.45 A 10.3 10.3 0 0 0 373.73 589.94 A 10.3 10.3 0 1 0 364.67 571.45 Z M 372.29 587.32 A 7.4 7.4 0 0 1 362.58 583.65 A 7.14 7.14 0 0 1 366.03 574.19 A 7.27 7.27 0 0 1 375.84 577.41 A 7.14 7.14 0 0 1 372.29 587.29 Z M 371.88 567.08 A 14.06 14.06 0 0 0 357.09 573.98 C 354.21 579.26 355.03 586.27 359 590.18 C 359.85 591.02 360.7 592.04 362.35 590.43 C 357.42 585.72 355.9 580.43 359.35 574.43 A 11.47 11.47 0 0 1 371.51 569 C 377.03 570 380.04 573.72 381.43 581.23 C 383.43 581.43 383.11 580.15 383.01 578.9 C 382.52 573.22 377.94 568.32 371.88 567.05 Z M 502.5 535.08 A 10.4 10.4 0 0 0 497.5 548.73 A 10.33 10.33 0 1 0 516.07 539.68 A 10.54 10.54 0 0 0 502.5 535.06 Z M 510.16 550.93 A 7.23 7.23 0 0 1 500.16 547.44 A 7 7 0 0 1 503.41 537.96 A 7.52 7.52 0 0 1 513.34 541.09 A 7.27 7.27 0 0 1 510.16 550.91 Z M 516.46 534.42 A 13.78 13.78 0 0 0 497.19 534.22 C 491.64 539.75 491.3 548.51 496.42 553.69 C 497.34 554.63 498.14 555.76 499.98 554.19 C 496.98 551.47 494.87 548.41 495.06 544.26 A 11.93 11.93 0 0 1 509.78 532.91 C 516.05 534.53 518.29 539.38 518.95 545.37 C 520.71 544.75 520.69 543.84 520.55 542.81 A 14.1 14.1 0 0 0 516.46 534.4 Z M 522.4 470.52 C 523.4 469.86 523.16 468.39 524.4 467.85 L 529.08 469.72 C 530.08 467.57 530.08 467.57 525.37 465.01 C 524.69 463.71 526.47 462.7 525.88 461.35 C 523.16 459.83 524.18 463.51 522.68 463.65 C 517.38 461.96 517.38 461.96 516.68 464.15 L 521.22 466.39 C 521.71 467.81 518.66 470.19 522.4 470.5 Z M 368.59 578.16 C 365.82 579.53 364.38 582.23 365.38 584.16 S 369.21 586.71 371.8 585.45 S 375.88 581.36 374.98 579.33 S 371.23 576.9 368.61 578.21 Z M 506 542 C 503.37 543.32 501.83 546.26 502.82 548.09 S 506.67 550.53 509.29 549.26 C 512.06 547.93 513.35 545.35 512.35 543.19 S 508.76 540.64 506 542 Z"
 			/>
+
+			{#if logo}
+				<image
+					href={`/logos/${direction === POSITION.LEFT && logoLeft ? logoLeft : logo}.webp`}
+					x={logoX}
+					y={logoY}
+					width={logoWidth}
+					height={logoHeight}
+					preserveAspectRatio="xMidYMid meet"
+					transform={(() => {
+						let t = '';
+						if (logoFixed) {
+							const cx = logoX + logoWidth / 2;
+							t += `translate(${cx}, 0) scale(-1, 1) translate(${-cx}, 0)`;
+						}
+						if (logoRotation) {
+							const cx = logoX + logoWidth / 2;
+							const cy = logoY + logoHeight / 2;
+							const angle = logoFixed ? -logoRotation : logoRotation;
+							t += ` rotate(${angle}, ${cx}, ${cy})`;
+						}
+						return t || undefined;
+					})()}
+					role={canCustomize ? 'slider' : undefined}
+					class:customizable={canCustomize}
+					onpointerdown={onPointerDown}
+					onpointermove={onPointerMove}
+					onpointerup={onPointerUp}
+				/>
+			{/if}
 		</svg>
 	</div>
-	{#if logo}
-		<div
-			class="logo-container"
-			class:small={size === HELMET_SIZE.SMALL}
-			class:large={size === HELMET_SIZE.LARGE}
-			onclick={canCustomize ? toggleMoveableTarget : NOOP}
-			onkeydown={canCustomize ? toggleMoveableTarget : NOOP}
-			ondblclick={canCustomize ? toggleMoveableTarget : NOOP}
-			role="button"
-			tabindex="0"
-		>
-			<img
-				alt={`${logo} Logo`}
-				bind:this={target}
-				class="target"
-				src={`/logos/${direction === POSITION.LEFT && logoLeft ? logoLeft : logo}.webp`}
-				style={`
-				width: ${logoWidth}px; 
-				transform: ${logoFixed ? logoTransform.replace('scale(', 'scale(-') : logoTransform}
-			`}
-				class:flipRight={logoFixed}
-			/>
-		</div>
-		{#if canCustomize}
-			<Moveable
-				target={moveable}
-				origin={true}
-				edge={false}
-				draggable={true}
-				on:drag={({ detail }) => onTransform(detail.transform)}
-				throttleDrag={0}
-				keepRatio={false}
-				renderDirections={['nw', 'ne', 'sw', 'se', 'n', 'w', 's', 'e']}
-				throttleScale={0}
-				rotatable={true}
-				scalable={true}
-				snappable={true}
-				bounds={{ left: 0, top: 0, right: 0, bottom: 0, position: 'css' }}
-				on:scale={({ detail }) => onTransform(detail.transform)}
-				throttleRotate={0}
-				on:rotate={({ detail }) => onTransform(detail.transform)}
-				warpable={false}
-				on:warp={({ detail }) => onTransform(detail.transform)}
-			/>
-		{/if}
-	{/if}
 </div>
 
 <style>
@@ -286,44 +303,17 @@ M 641.087 272.197 L 641.11 272.25 C 639.82 280.54 635.28 286.19 629.28 291.09 C 
 		transform: rotate(20deg);
 	}
 
-	.shadow {
+	.helmet-svg {
+		width: 100%;
+		height: auto;
 		filter: drop-shadow(4px 8px 8px oklch(0.1579 0 0 / 0.5));
 	}
 
-	.end-zone-shadow {
-		filter: drop-shadow(0px 0px 1px oklch(0.1579 0 0 / 0.5));
+	.customizable {
+		cursor: grab;
 	}
 
-	.small {
-		width: 3rem;
-		height: 3rem;
-	}
-	.large {
-		width: 275px;
-		height: 250px;
-	}
-	.logo-container {
-		position: absolute;
-		top: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.flipRight {
-		transform: scale(-1, 1);
-	}
-
-	@media (max-width: 40rem) {
-		.small {
-			width: 2rem;
-			height: 2rem;
-		}
-	}
-	@media (min-width: 60rem) {
-		.small {
-			width: 4rem;
-			height: 4rem;
-		}
+	.customizable:active {
+		cursor: grabbing;
 	}
 </style>

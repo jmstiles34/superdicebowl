@@ -49,7 +49,6 @@
 		"dexie": "^4.3.0",
 		"dexie-observable": "^4.0.1-beta.13",
 		"howler": "^2.2.4",
-		"svelte-moveable": "^0.45.0",
 		"uuid": "^13.0.0"
 	},
 	"husky": {
