@@ -190,7 +190,7 @@ export const DEFAULT_SETTINGS = {
 	awayTeam: DEFAULT_TEAM,
 	mode: GAME_MODE.HEAD_TO_HEAD,
 	winScore: 30,
-	volume: true
+	volume: 75
 };
 
 export const INTERCEPTION_ROLLS = [12, 45];

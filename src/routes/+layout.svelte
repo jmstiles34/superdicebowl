@@ -3,16 +3,29 @@
 	import { page } from '$app/stores';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { settings } from '$lib/state/settings.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import Settings from '$lib/components/modal/Settings.svelte';
+	import { getGuestPreferences } from '$lib/db/repositories/preferencesRepository';
 	import '../styles.css';
 	import '@fontsource/bebas-neue';
-	import soundOn from '$lib/images/volume-high.svg';
-	import soundOff from '$lib/images/volume-xmark.svg';
-	import { toggleVolume } from '$lib/utils/sound';
+	import gear from '$lib/images/gear.svg';
 
 	let { children } = $props();
 	const currentYear = new Date().getFullYear();
+	let isGamePage = $derived($page.url.pathname === '/game');
+	let showSettings = $state(false);
+
+	function toggleSettings() {
+		showSettings = !showSettings;
+	}
+
+	$effect(() => {
+		document.documentElement.setAttribute('data-theme', settings.theme);
+	});
 
 	onMount(() => {
+		const guestPrefs = getGuestPreferences();
+		settings.loadPreferences(guestPrefs);
 		auth.initialize();
 	});
 </script>
@@ -22,45 +35,52 @@
 	<meta name="description" content="Football at the Roll of the Dice" />
 </svelte:head>
 
-<nav>
-	<a class="logo-wrapper" href="/">
-		<picture>
-			<source type="image/avif" srcset="/sdb-logo.avif" />
-			<source type="image/webp" srcset="/sdb-logo.webp" />
-			<img alt="SuperDiceBowl" src="/sdb-logo.png" />
-		</picture>
-		<h1>Super&middot;Dice&middot;Bowl</h1>
-	</a>
+{#if !isGamePage}
+	<nav>
+		<a class="logo-wrapper" href="/">
+			<picture>
+				<source type="image/avif" srcset="/sdb-logo.avif" />
+				<source type="image/webp" srcset="/sdb-logo.webp" />
+				<img alt="SuperDiceBowl" src="/sdb-logo.png" />
+			</picture>
+			<h1>Super&middot;Dice&middot;Bowl</h1>
+		</a>
 
-	<div class="menu-wrapper">
-		{#if auth.isLoggedIn}
-			<a class="link" href="/teams">My Teams</a>
-			<a class="link" href="/games">My Games</a>
-			<a class="link" href="/account">{auth.currentUser?.username}</a>
-		{:else}
-			<a class="link" href="/login">Sign In</a>
-		{/if}
+		<div class="menu-wrapper">
+			{#if auth.isLoggedIn}
+				<a class="link" href="/teams">My Teams</a>
+				<a class="link" href="/games">My Games</a>
+				<a class="link" href="/account">{auth.currentUser?.username}</a>
+			{:else}
+				<a class="link" href="/login">Sign In</a>
+			{/if}
 
-		<button
-			class="volumeButton"
-			onclick={toggleVolume}
-			aria-label="Sound toggle"
-			title={settings.volume ? 'Mute sounds' : 'Play sounds'}
-		>
-			<img src={settings.volume ? soundOn : soundOff} alt="Sound toggle" />
-		</button>
-	</div>
-</nav>
+			<button
+				class="settingsButton"
+				onclick={toggleSettings}
+				aria-label="Settings"
+				title="Settings"
+			>
+				<img src={gear} alt="Settings" />
+			</button>
+		</div>
+	</nav>
+{/if}
 
 <main>
 	{@render children()}
 </main>
 
-<footer>
-	<p>
-		&copy;{currentYear} SuperDiceBowl.com v0.2.2
-	</p>
-</footer>
+{#if !isGamePage}
+	<footer>
+		<p>&copy;{currentYear} SuperDiceBowl.com v0.2.2</p>
+		<a class="footer-link" href="/contact">Contact</a>
+	</footer>
+{/if}
+
+<Modal showModal={showSettings} close={toggleSettings} hasClose={true} choiceRequired={false}>
+	<Settings />
+</Modal>
 
 <style>
 	nav,
@@ -102,8 +122,18 @@
 		display: flex;
 		height: 2rem;
 		align-items: center;
+		gap: 1rem;
 		color: var(--color-gray-300);
 		font-size: var(--12px);
+	}
+
+	.footer-link {
+		color: var(--color-gray-400);
+		font-size: var(--12px);
+	}
+
+	.footer-link:hover {
+		color: var(--color-white);
 	}
 
 	.logo-wrapper {
@@ -120,15 +150,15 @@
 		display: flex;
 		gap: 16px;
 		justify-content: end;
+		align-items: center;
 	}
 
-	.volumeButton {
+	.settingsButton {
 		padding: 0;
 		background: none;
-		margin-top: -2px;
 	}
 
-	.volumeButton img {
+	.settingsButton img {
 		height: 1.5rem;
 		width: 1.5rem;
 	}

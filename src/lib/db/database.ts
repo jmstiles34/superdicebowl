@@ -58,11 +58,20 @@ export interface CustomTeamRecord {
 	updatedAt: number;
 }
 
+export interface UserPreferencesRecord {
+	id?: number;
+	userId: number;
+	volume: number;
+	theme: 'dark' | 'light';
+	defaultWinScore: number;
+}
+
 class AppDatabase extends Dexie {
 	users!: Table<UserRecord, number>;
 	sessions!: Table<SessionRecord, number>;
 	games!: Table<GameRecord, number>;
 	customTeams!: Table<CustomTeamRecord, number>;
+	userPreferences!: Table<UserPreferencesRecord, number>;
 
 	constructor() {
 		super('superdicebowl');
@@ -89,6 +98,14 @@ class AppDatabase extends Dexie {
 			sessions: '++id, userId, &token',
 			games: '++id, userId',
 			customTeams: '++id, userId'
+		});
+
+		this.version(5).stores({
+			users: '++id, &usernameLower',
+			sessions: '++id, userId, &token',
+			games: '++id, userId',
+			customTeams: '++id, userId',
+			userPreferences: '++id, &userId'
 		});
 	}
 }

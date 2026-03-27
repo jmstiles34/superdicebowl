@@ -171,7 +171,9 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: center;
 		min-width: 18.75rem;
+		height: 18.75rem;
 		margin: 0 0 16px 0;
 	}
 
@@ -183,7 +185,6 @@
 		display: flex;
 		justify-content: center;
 		min-width: 18.75rem;
-		margin: 2.75rem 0;
 	}
 	.dice img {
 		max-width: 55%;

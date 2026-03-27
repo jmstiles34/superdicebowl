@@ -32,6 +32,7 @@
 	} from '$lib/constants/constants';
 	import Dice from '$lib/components/Dice.svelte';
 	import CoinToss from '$lib/components/modal/CoinToss.svelte';
+	import EventAnnouncement from '$lib/components/EventAnnouncement.svelte';
 	import Field from '$lib/components/Field.svelte';
 	import FourthDown from '$lib/components/modal/FourthDown.svelte';
 	import Modal from '$lib/components/Modal.svelte';
@@ -59,6 +60,41 @@
 	let awayScore = $derived(getScoreByTeam(TEAM.AWAY, game.playLog));
 	let homeScore = $derived(getScoreByTeam(TEAM.HOME, game.playLog));
 	let gameOver = $derived(isGameComplete(awayScore, homeScore, winScore));
+
+	let announcementText = $state('');
+	let announcementType: 'touchdown' | 'turnover' | 'fieldgoal' | 'safety' = $state('touchdown');
+	let announcementKey = $state(0);
+
+	$effect(() => {
+		const action = game.action;
+		const lastPlay = game.lastPlay;
+
+		if (action === GAME_ACTION.TOUCHDOWN) {
+			announcementText = 'TOUCHDOWN!';
+			announcementType = 'touchdown';
+			announcementKey = Date.now();
+		} else if (action === GAME_ACTION.FIELD_GOAL_MADE) {
+			announcementText = 'FIELD GOAL!';
+			announcementType = 'fieldgoal';
+			announcementKey = Date.now();
+		} else if (lastPlay.includes('TURNOVER') && lastPlay.includes('Int')) {
+			announcementText = 'INTERCEPTION!';
+			announcementType = 'turnover';
+			announcementKey = Date.now();
+		} else if (lastPlay.includes('TURNOVER') && lastPlay.includes('Fumble')) {
+			announcementText = 'FUMBLE!';
+			announcementType = 'turnover';
+			announcementKey = Date.now();
+		} else if (lastPlay.includes('TURNOVER') && lastPlay.includes('On downs')) {
+			announcementText = 'TURNOVER ON DOWNS!';
+			announcementType = 'turnover';
+			announcementKey = Date.now();
+		} else if (lastPlay.includes('Safety')) {
+			announcementText = 'SAFETY!';
+			announcementType = 'safety';
+			announcementKey = Date.now();
+		}
+	});
 
 	async function saveGame() {
 		if (!auth.isLoggedIn || !auth.currentUser?.id) return;
@@ -176,20 +212,23 @@
 				</div>
 			</div>
 
-			<Field
-				{awayTeam}
-				ballIndex={game.ballIndex}
-				downToGo={`${DOWN[game.currentDown]} & ${game.yardsToGo}`}
-				firstDownIndex={game.firstDownIndex}
-				{homeTeam}
-				inFieldGoalRange={inFieldGoalRange(game.action, game.possession, game.ballIndex)}
-				missedKick={game.missedKick}
-				missedTwoPoint={game.missedTwoPoint}
-				onsideKick={game.onsideKick}
-				possession={game.possession}
-				showDownDistance={showDownDistance(game.action) && !game.restrictDice}
-				toggleFieldGoal={game.toggleFieldGoal}
-			/>
+			<div class="field-container">
+				<Field
+					{awayTeam}
+					ballIndex={game.ballIndex}
+					downToGo={`${DOWN[game.currentDown]} & ${game.yardsToGo}`}
+					firstDownIndex={game.firstDownIndex}
+					{homeTeam}
+					inFieldGoalRange={inFieldGoalRange(game.action, game.possession, game.ballIndex)}
+					missedKick={game.missedKick}
+					missedTwoPoint={game.missedTwoPoint}
+					onsideKick={game.onsideKick}
+					possession={game.possession}
+					showDownDistance={showDownDistance(game.action) && !game.restrictDice}
+					toggleFieldGoal={game.toggleFieldGoal}
+				/>
+				<EventAnnouncement text={announcementText} type={announcementType} key={announcementKey} />
+			</div>
 			{#if game.action === GAME_ACTION.GAME_OVER}
 				<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
 			{/if}
@@ -330,6 +369,10 @@
 		width: 100%;
 	}
 
+	.field-container {
+		position: relative;
+		overflow: hidden;
+	}
 	:global(.fireworks) {
 		top: 0;
 		left: 0;

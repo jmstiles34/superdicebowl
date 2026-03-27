@@ -1,12 +1,14 @@
 import { validatePassword, validateUsername, verifyPassword } from '$lib/auth/passwordUtils';
 import type { UserRecord } from '$lib/db/database';
 import { migrateFromLocalStorage } from '$lib/db/repositories/customTeamRepository';
+import { deletePreferences, getPreferences } from '$lib/db/repositories/preferencesRepository';
 import {
 	createSession,
 	deleteSession,
 	getValidSession
 } from '$lib/db/repositories/sessionRepository';
 import { createUser, deleteUser, findUserByUsername } from '$lib/db/repositories/userRepository';
+import { settings } from '$lib/state/settings.svelte';
 
 type AuthResult = { success: true } | { success: false; error: string };
 
@@ -22,6 +24,8 @@ class AuthState {
 			this.currentUser = result.user;
 			this.sessionToken = result.session.token;
 			await migrateFromLocalStorage(result.user.id!);
+			const prefs = await getPreferences(result.user.id!);
+			settings.loadPreferences(prefs);
 		}
 		this.initialized = true;
 	};
@@ -41,6 +45,8 @@ class AuthState {
 		this.currentUser = user;
 		this.sessionToken = session.token;
 		await migrateFromLocalStorage(user.id!);
+		const prefs = await getPreferences(user.id!);
+		settings.loadPreferences(prefs);
 		return { success: true };
 	};
 
@@ -64,6 +70,8 @@ class AuthState {
 		this.currentUser = result.user;
 		this.sessionToken = session.token;
 		await migrateFromLocalStorage(result.user.id!);
+		const prefs = await getPreferences(result.user.id!);
+		settings.loadPreferences(prefs);
 		return { success: true };
 	};
 
@@ -80,6 +88,7 @@ class AuthState {
 			return { success: false, error: 'No account to delete' };
 		}
 
+		await deletePreferences(this.currentUser.id);
 		const result = await deleteUser(this.currentUser.id);
 		if (!result.success) {
 			return { success: false, error: result.error ?? 'Failed to delete account' };
