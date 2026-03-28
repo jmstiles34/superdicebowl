@@ -16,6 +16,7 @@
 	import {
 		compareFns,
 		getScoreByTeam,
+		isAutoPlay,
 		inFieldGoalRange,
 		isGameComplete,
 		primaryColor,
@@ -40,8 +41,10 @@
 	import Scores from '$lib/components/Scores.svelte';
 	import GameSummary from '$lib/components/modal/GameSummary.svelte';
 	import exit from '$lib/images/exit.svg';
+	import gear from '$lib/images/gear.svg';
 	import summary from '$lib/images/summary.svg';
 	import ConfirmExit from '$lib/components/modal/ConfirmExit.svelte';
+	import Settings from '$lib/components/modal/Settings.svelte';
 	import type { Howl } from 'howler';
 	import { createSound, playSound } from '$lib/utils/sound';
 
@@ -53,6 +56,7 @@
 
 	const { awayTeam, homeTeam, mode, winScore } = settings;
 	let showGameSummary = $state(false);
+	let showSettings = $state(false);
 	let fw = $state(fireworkShow);
 
 	const isGameReady = awayTeam.id.length && homeTeam.id.length;
@@ -146,6 +150,29 @@
 		game.continueAfterAction();
 	});
 
+	$effect(() => {
+		if (mode === GAME_MODE.SIMULATION && game.action === GAME_ACTION.COIN_TOSS) {
+			game.restrictDice = true;
+			game.lastPlay = 'Coin Toss...';
+			sleep(500 * settings.speed).then(() => {
+				const winner = Math.random() < 0.5 ? TEAM.HOME : TEAM.AWAY;
+				game.saveCoinToss(winner);
+				saveGame();
+			});
+		}
+	});
+
+	function toggleSettings() {
+		playSound(buttonSfx, settings.volume);
+		if (showSettings) {
+			showSettings = false;
+			game.resume();
+		} else {
+			showSettings = true;
+			game.pause();
+		}
+	}
+
 	function handleExitClick() {
 		playSound(buttonSfx, settings.volume);
 		if (gameOver) {
@@ -193,6 +220,17 @@
 								<img src={summary} alt="Game Summary" />
 							</button>
 						</div>
+						<div class="divider">|</div>
+						<div>
+							<button
+								class="toolbarButton"
+								onclick={toggleSettings}
+								title="Settings"
+								aria-label="Settings"
+							>
+								<img src={gear} alt="Settings" />
+							</button>
+						</div>
 					</div>
 					<div class="last-play">{game.lastPlay}</div>
 				</div>
@@ -203,7 +241,7 @@
 						pipColor={secondaryColor(settings, game.possession) || '#000'}
 						onRollComplete={saveGame}
 					/>
-					{#if game.restrictDice || (mode === GAME_MODE.SOLO && game.possession === TEAM.AWAY)}
+					{#if game.restrictDice || isAutoPlay(mode, game.possession)}
 						<div class="dice-block"></div>
 					{/if}
 				</div>
@@ -228,6 +266,26 @@
 					toggleFieldGoal={game.toggleFieldGoal}
 				/>
 				<EventAnnouncement text={announcementText} type={announcementType} key={announcementKey} />
+				{#if modalActions.includes(game.action) && !isAutoPlay(mode, game.possession)}
+					<div class="field-modal-overlay">
+						<div class="field-modal">
+							{#if game.action === GAME_ACTION.COIN_TOSS}
+								<CoinToss saveCoinToss={(a) => { game.saveCoinToss(a); saveGame(); }} />
+							{:else if game.action === GAME_ACTION.POINT_OPTION}
+								<PointOption savePointOption={(a) => { game.preparePointOption(a); saveGame(); }} />
+							{:else if game.action === GAME_ACTION.FOURTH_DOWN_OPTIONS}
+								<FourthDown
+									inFieldGoalRange={compareFns[game.possession](
+										game.ballIndex,
+										BALL_FIELD_GOAL[game.possession]
+									)}
+									saveFourthDown={(a) => { game.saveFourthDown(a); saveGame(); }}
+									toggleFieldGoal={() => { game.toggleFieldGoal(); saveGame(); }}
+								/>
+							{/if}
+						</div>
+					</div>
+				{/if}
 			</div>
 			{#if game.action === GAME_ACTION.GAME_OVER}
 				<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
@@ -257,26 +315,14 @@
 		</Modal>
 
 		<Modal
-			showModal={modalActions.includes(game.action)}
-			close={NOOP}
+			showModal={showSettings}
+			close={toggleSettings}
+			hasClose={true}
+			choiceRequired={false}
 		>
-			<div class="modal-content">
-				{#if game.action === GAME_ACTION.COIN_TOSS}
-					<CoinToss saveCoinToss={(a) => { game.saveCoinToss(a); saveGame(); }} />
-				{:else if game.action === GAME_ACTION.POINT_OPTION}
-					<PointOption savePointOption={(a) => { game.preparePointOption(a); saveGame(); }} />
-				{:else if game.action === GAME_ACTION.FOURTH_DOWN_OPTIONS}
-					<FourthDown
-						inFieldGoalRange={compareFns[game.possession](
-							game.ballIndex,
-							BALL_FIELD_GOAL[game.possession]
-						)}
-						saveFourthDown={(a) => { game.saveFourthDown(a); saveGame(); }}
-						toggleFieldGoal={() => { game.toggleFieldGoal(); saveGame(); }}
-					/>
-				{/if}
-			</div>
+			<Settings />
 		</Modal>
+
 	</main>
 {/if}
 
@@ -300,11 +346,13 @@
 	.scoreboard {
 		display: grid;
 		grid-template-columns: 1fr auto 1fr;
+		align-items: start;
 		column-gap: 0.25rem;
 		top: 2.5rem;
 	}
 	.toolbar {
 		display: flex;
+		align-items: center;
 		gap: 8px;
 		margin-top: 14px;
 		z-index: 100;
@@ -316,6 +364,8 @@
 	.toolbarButton img {
 		height: 1.5em;
 		width: 1.5em;
+		min-height: 20px;
+		min-width: 20px;
 	}
 	.flip {
 		transform: scale(-1, 1);
@@ -373,6 +423,20 @@
 		position: relative;
 		overflow: hidden;
 	}
+	.field-modal-overlay {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--ltmask);
+		z-index: 200;
+	}
+	.field-modal {
+		background: var(--color-white);
+		border-radius: 8px;
+		padding: 12px;
+	}
 	:global(.fireworks) {
 		top: 0;
 		left: 0;
@@ -405,7 +469,7 @@
 		.divider {
 			font-size: 0.85rem;
 		}
-		.last-play {
+.last-play {
 			margin-top: 8px;
 		}
 	}

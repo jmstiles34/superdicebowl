@@ -19,6 +19,7 @@ class SettingsState {
 	mode = $state(GAME_MODE.HEAD_TO_HEAD);
 	winScore = $state(30);
 	volume = $state(75);
+	speed = $state(1);
 	theme: Theme = $state('dark');
 
 	snapshotSettings = (): GameSettingsSnapshot =>

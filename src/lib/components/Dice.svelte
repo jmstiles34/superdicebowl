@@ -2,7 +2,7 @@
 	import { game } from '$lib/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import { nonZeroRandomNumber, sleep } from '$lib/utils/common';
-	import { isRollAction } from '$lib/utils/game';
+	import { isAutoPlay, isRollAction } from '$lib/utils/game';
 	import { GAME_MODE, TEAM } from '$lib/constants/constants';
 	import flick from '$lib/assets/sfx/flick.mp3';
 	import type { Howl } from 'howler';
@@ -26,14 +26,14 @@
 
 	$effect(() => {
 		if (
-			settings.mode === GAME_MODE.SOLO &&
-			game.possession === TEAM.AWAY &&
+			isAutoPlay(settings.mode, game.possession) &&
 			isRollAction(game.action) &&
-			canRoll
+			canRoll &&
+			!game.paused
 		) {
 			if (game.ballIndex > 0 || game.currentDown > 0) {
-				sleep(2000).then(() => {
-					handleRollDice();
+				sleep(2000 * settings.speed).then(() => {
+					if (!game.paused) handleRollDice();
 				});
 			}
 		}

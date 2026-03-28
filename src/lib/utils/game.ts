@@ -155,10 +155,13 @@ export function isOnsideKick(index: number) {
 	return index === 11;
 }
 
+export function isAutoPlay(mode: string, possession: string): boolean {
+	return mode === GAME_MODE.SIMULATION || (mode === GAME_MODE.SOLO && possession === TEAM.AWAY);
+}
+
 export function isModalChoice(mode: string, possession: string, action: string) {
 	return (
-		mode === GAME_MODE.SOLO &&
-		possession === TEAM.AWAY &&
+		isAutoPlay(mode, possession) &&
 		[GAME_ACTION.FOURTH_DOWN_OPTIONS, GAME_ACTION.POINT_OPTION].includes(action)
 	);
 }
@@ -219,16 +222,22 @@ export function madeFirstDown(
 }
 
 //TODO: Use winScore and factor in how close opponent is to winning
-export function makeFourthDownChoice(awayScore: number, homeScore: number, ballIndex: number) {
-	if (ballIndex >= 10 && homeScore - awayScore <= 16) return GAME_ACTION.PUNT;
-	if (ballIndex <= 9 && homeScore - awayScore <= 16) return GAME_ACTION.FIELD_GOAL;
+export function makeFourthDownChoice(
+	myScore: number,
+	oppScore: number,
+	ballIndex: number,
+	possession: string
+) {
+	const canKickFieldGoal = compareFns[possession](ballIndex, BALL_FIELD_GOAL[possession]);
+	if (canKickFieldGoal && oppScore - myScore <= 16) return GAME_ACTION.FIELD_GOAL;
+	if (!canKickFieldGoal && oppScore - myScore <= 16) return GAME_ACTION.PUNT;
 
 	return GAME_ACTION.OFFENSE;
 }
 
-export function makePointChoice(awayScore: number, homeScore: number, winScore: number) {
-	if (winScore - awayScore <= 2) return GAME_ACTION.TWO_POINT;
-	if (homeScore - awayScore >= 10) return GAME_ACTION.TWO_POINT;
+export function makePointChoice(myScore: number, oppScore: number, winScore: number) {
+	if (winScore - myScore <= 2) return GAME_ACTION.TWO_POINT;
+	if (oppScore - myScore >= 10) return GAME_ACTION.TWO_POINT;
 	return GAME_ACTION.EXTRA_POINT;
 }
 

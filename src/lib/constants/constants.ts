@@ -182,7 +182,8 @@ export const FOURTH_DOWN = {
 
 export const GAME_MODE = {
 	SOLO: 'Solo',
-	HEAD_TO_HEAD: 'Head-to-Head'
+	HEAD_TO_HEAD: 'Head-to-Head',
+	SIMULATION: 'Simulation'
 };
 
 export const DEFAULT_SETTINGS = {

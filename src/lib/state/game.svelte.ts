@@ -31,7 +31,6 @@ import {
 	KICKOFF_RETURN_YARDS,
 	OPPOSITE_TEAM,
 	POINTS,
-	TEAM,
 	TURNOVER_ONSIDE_KICK
 } from '$lib/constants/constants';
 import { diceData } from '$lib/data/data.json';
@@ -120,10 +119,12 @@ class GameState {
 	restrictDice = $state(DEFAULT_GAME.restrictDice);
 	yardsToGo: number | string = $state(DEFAULT_GAME.yardsToGo);
 	activeGameId: number | null = $state(null);
+	paused = $state(false);
 
 	private sequenceId = 0;
 	private cancelExitAction = '';
 	private _saveGame: (() => Promise<void>) | null = null;
+	private _resumeResolve: (() => void) | null = null;
 
 	setSaveGame = (fn: () => Promise<void>) => {
 		this._saveGame = fn;
@@ -133,8 +134,27 @@ class GameState {
 		await this._saveGame?.();
 	};
 
+	private waitForResume = (): Promise<void> => {
+		if (!this.paused) return Promise.resolve();
+		return new Promise((resolve) => {
+			this._resumeResolve = resolve;
+		});
+	};
+
+	pause = () => {
+		this.paused = true;
+	};
+
+	resume = () => {
+		this.paused = false;
+		this._resumeResolve?.();
+		this._resumeResolve = null;
+	};
+
 	private delay = async (ms: number, seqId: number): Promise<void> => {
-		await sleep(ms);
+		await this.waitForResume();
+		await sleep(ms * settings.speed);
+		await this.waitForResume();
 		if (this.sequenceId !== seqId) {
 			throw new CancelledError();
 		}
@@ -390,7 +410,7 @@ class GameState {
 				case GAME_ACTION.FOURTH_DOWN:
 					await this.delay(1500, seqId);
 					this.action = GAME_ACTION.FOURTH_DOWN_OPTIONS;
-					this.handleSoloDecision(seqId);
+					this.handleSoloDecision();
 					break;
 				case GAME_ACTION.KICKOFF_ONSIDE:
 					await this.delay(100, seqId);
@@ -415,7 +435,7 @@ class GameState {
 				case GAME_ACTION.TOUCHDOWN:
 					await this.delay(2000, seqId);
 					this.action = GAME_ACTION.POINT_OPTION;
-					this.handleSoloDecision(seqId);
+					this.handleSoloDecision();
 					break;
 				default:
 					break;
@@ -423,21 +443,27 @@ class GameState {
 		});
 	};
 
-	handleSoloDecision = (seqId: number) => {
+	handleSoloDecision = () => {
 		if (!isModalChoice(settings.mode, this.possession, this.action)) return;
 
+		const expectedAction = this.action;
 		this.runChain(async () => {
-			await this.delay(1000, seqId);
+			await sleep(1000 * settings.speed);
+			if (this.action !== expectedAction) return;
 			playSound(buttonSound, settings.volume);
 
+			const myScore = getScoreByTeam(this.possession, this.playLog);
+			const oppScore = getScoreByTeam(OPPOSITE_TEAM[this.possession], this.playLog);
+
 			if (this.action === GAME_ACTION.POINT_OPTION) {
-				const awayScore = getScoreByTeam(TEAM.AWAY, this.playLog);
-				const homeScore = getScoreByTeam(TEAM.HOME, this.playLog);
-				this.preparePointOption(makePointChoice(awayScore, homeScore, settings.winScore));
+				this.preparePointOption(makePointChoice(myScore, oppScore, settings.winScore));
 			} else if (this.action === GAME_ACTION.FOURTH_DOWN_OPTIONS) {
-				const awayScore = getScoreByTeam(TEAM.AWAY, this.playLog);
-				const homeScore = getScoreByTeam(TEAM.HOME, this.playLog);
-				const choiceAction = makeFourthDownChoice(awayScore, homeScore, this.ballIndex);
+				const choiceAction = makeFourthDownChoice(
+					myScore,
+					oppScore,
+					this.ballIndex,
+					this.possession
+				);
 				if (choiceAction === GAME_ACTION.FIELD_GOAL) {
 					this.toggleFieldGoal();
 				} else {
