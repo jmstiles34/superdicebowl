@@ -1,15 +1,10 @@
 <script lang="ts">
 	import { auth } from '$lib/auth/authState.svelte';
 	import { settings } from '$lib/state/settings.svelte';
-	import { GAME_MODE } from '$lib/constants/constants';
 	import { savePreferences, saveGuestPreferences } from '$lib/db/repositories/preferencesRepository';
 	import soundOn from '$lib/images/volume-high.svg';
 	import soundLow from '$lib/images/volume-low.svg';
 	import soundOff from '$lib/images/volume-off.svg';
-
-	let showSpeed = $derived(
-		settings.mode === GAME_MODE.SIMULATION || settings.mode === GAME_MODE.SOLO
-	);
 
 	let volumeIcon = $derived(
 		settings.volume === 0 ? soundOff : settings.volume <= 40 ? soundLow : soundOn
@@ -18,6 +13,7 @@
 	function persist() {
 		const prefs = {
 			volume: settings.volume,
+			speed: settings.speed,
 			theme: settings.theme,
 			defaultWinScore: settings.winScore
 		};
@@ -52,6 +48,7 @@
 	function handleSpeedChange(e: Event) {
 		const { value } = e.currentTarget as HTMLSelectElement;
 		settings.speed = parseFloat(value);
+		persist();
 	}
 </script>
 
@@ -99,22 +96,20 @@
 		</select>
 	</div>
 
-	{#if showSpeed}
-		<div class="setting-row">
-			<label class="label" for="simSpeed">Play Speed</label>
-			<select
-				id="simSpeed"
-				class="score-select"
-				value={settings.speed}
-				onchange={handleSpeedChange}
-			>
-				<option value={2}>.5x</option>
-				<option value={1}>1x</option>
-				<option value={0.5}>2x</option>
-				<option value={0.25}>3x</option>
-			</select>
-		</div>
-	{/if}
+	<div class="setting-row">
+		<label class="label" for="simSpeed">Play Speed</label>
+		<select
+			id="simSpeed"
+			class="score-select"
+			value={settings.speed}
+			onchange={handleSpeedChange}
+		>
+			<option value={2}>.5x</option>
+			<option value={1}>1x</option>
+			<option value={0.5}>2x</option>
+			<option value={0.25}>3x</option>
+		</select>
+	</div>
 </div>
 
 <style>

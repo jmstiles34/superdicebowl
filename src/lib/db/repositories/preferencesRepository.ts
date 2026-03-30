@@ -2,6 +2,7 @@ import { db, type UserPreferencesRecord } from '$lib/db/database';
 
 const DEFAULTS: Omit<UserPreferencesRecord, 'id' | 'userId'> = {
 	volume: 75,
+	speed: 1,
 	theme: 'dark',
 	defaultWinScore: 30
 };
@@ -15,7 +16,7 @@ export async function getPreferences(userId: number): Promise<UserPreferencesRec
 
 export async function savePreferences(
 	userId: number,
-	prefs: Partial<Pick<UserPreferencesRecord, 'volume' | 'theme' | 'defaultWinScore'>>
+	prefs: Partial<Pick<UserPreferencesRecord, 'volume' | 'speed' | 'theme' | 'defaultWinScore'>>
 ): Promise<void> {
 	const existing = await db.userPreferences.where('userId').equals(userId).first();
 	if (existing) {
@@ -42,7 +43,7 @@ export function getGuestPreferences(): Omit<UserPreferencesRecord, 'id' | 'userI
 }
 
 export function saveGuestPreferences(
-	prefs: Partial<Pick<UserPreferencesRecord, 'volume' | 'theme' | 'defaultWinScore'>>
+	prefs: Partial<Pick<UserPreferencesRecord, 'volume' | 'speed' | 'theme' | 'defaultWinScore'>>
 ): void {
 	try {
 		const current = getGuestPreferences();

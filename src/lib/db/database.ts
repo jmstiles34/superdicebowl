@@ -62,8 +62,47 @@ export interface UserPreferencesRecord {
 	id?: number;
 	userId: number;
 	volume: number;
+	speed: number;
 	theme: 'dark' | 'light';
 	defaultWinScore: number;
+}
+
+export interface SeasonMatchup {
+	homeTeamId: string;
+	awayTeamId: string;
+	status: 'pending' | 'in_progress' | 'completed';
+	homeScore: number;
+	awayScore: number;
+	isUserGame: boolean;
+	gameRecordId?: number;
+}
+
+export interface SeasonWeek {
+	weekNumber: number;
+	matchups: SeasonMatchup[];
+}
+
+export interface StandingsEntry {
+	teamId: string;
+	wins: number;
+	losses: number;
+	pointsFor: number;
+	pointsAgainst: number;
+}
+
+export interface SeasonRecord {
+	id?: number;
+	userId: number;
+	status: 'in_progress' | 'completed';
+	userTeamId: string;
+	teams: Team[];
+	schedule: SeasonWeek[];
+	standings: StandingsEntry[];
+	currentWeek: number;
+	totalWeeks: number;
+	winScore: number;
+	createdAt: number;
+	updatedAt: number;
 }
 
 class AppDatabase extends Dexie {
@@ -72,6 +111,7 @@ class AppDatabase extends Dexie {
 	games!: Table<GameRecord, number>;
 	customTeams!: Table<CustomTeamRecord, number>;
 	userPreferences!: Table<UserPreferencesRecord, number>;
+	seasons!: Table<SeasonRecord, number>;
 
 	constructor() {
 		super('superdicebowl');
@@ -106,6 +146,15 @@ class AppDatabase extends Dexie {
 			games: '++id, userId',
 			customTeams: '++id, userId',
 			userPreferences: '++id, &userId'
+		});
+
+		this.version(6).stores({
+			users: '++id, &usernameLower',
+			sessions: '++id, userId, &token',
+			games: '++id, userId',
+			customTeams: '++id, userId',
+			userPreferences: '++id, &userId',
+			seasons: '++id, userId'
 		});
 	}
 }

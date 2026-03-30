@@ -4,12 +4,14 @@
 	import { Fireworks } from '@fireworks-js/svelte';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { game } from '$lib/state/game.svelte';
+	import { season } from '$lib/state/season.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import {
 		completeGame,
 		createGame,
 		updateGameState
 	} from '$lib/db/repositories/gameRepository';
+	import { updateSeason } from '$lib/db/repositories/seasonRepository';
 	import button from '$lib/assets/sfx/button.mp3';
 	import { sleep } from '$lib/utils/common';
 	import { fireworkShow, options } from '$lib/utils/fireworks';
@@ -54,7 +56,7 @@
 		GAME_ACTION.POINT_OPTION
 	];
 
-	const { awayTeam, homeTeam, mode, winScore } = settings;
+	const { awayTeam, homeTeam, mode, userTeam, winScore } = settings;
 	let showGameSummary = $state(false);
 	let showSettings = $state(false);
 	let fw = $state(fireworkShow);
@@ -114,6 +116,14 @@
 					settings.snapshotSettings()
 				);
 				game.activeGameId = record.id!;
+
+				// Link game record to season matchup
+				if (season.isSeasonGame && season.activeWeek !== null && season.activeMatchupIndex !== null) {
+					season.setMatchupGameRecordId(season.activeWeek, season.activeMatchupIndex, record.id!);
+					if (season.activeSeasonId) {
+						await updateSeason(season.activeSeasonId, season.snapshotSeason());
+					}
+				}
 			}
 		} catch (e) {
 			console.error('Failed to save game:', e);
@@ -129,6 +139,11 @@
 
 	onDestroy(() => {
 		game.resetGame();
+		if (season.isSeasonGame) {
+			season.isSeasonGame = false;
+			season.activeWeek = null;
+			season.activeMatchupIndex = null;
+		}
 	});
 
 	$effect(() => {
@@ -137,6 +152,14 @@
 				const winner = awayScore > homeScore ? awayTeam.city : homeTeam.city;
 				game.gameComplete(winner);
 				markGameComplete();
+
+				if (season.isSeasonGame && season.activeWeek !== null && season.activeMatchupIndex !== null) {
+					season.recordGameResult(season.activeWeek, season.activeMatchupIndex, homeScore, awayScore);
+					if (season.activeSeasonId) {
+						updateSeason(season.activeSeasonId, season.snapshotSeason());
+					}
+				}
+
 				sleep(100).then(() => {
 					const fireworks = fw.fireworksInstance();
 					fireworks.start();
@@ -176,7 +199,11 @@
 	function handleExitClick() {
 		playSound(buttonSfx, settings.volume);
 		if (gameOver) {
-			goto('/');
+			const dest = season.isSeasonGame ? '/season/play' : '/';
+			season.isSeasonGame = false;
+			season.activeWeek = null;
+			season.activeMatchupIndex = null;
+			goto(dest);
 		} else {
 			game.handleExitClick();
 		}
@@ -241,7 +268,7 @@
 						pipColor={secondaryColor(settings, game.possession) || '#000'}
 						onRollComplete={saveGame}
 					/>
-					{#if game.restrictDice || isAutoPlay(mode, game.possession)}
+					{#if game.restrictDice || isAutoPlay(mode, game.possession, userTeam)}
 						<div class="dice-block"></div>
 					{/if}
 				</div>
@@ -266,7 +293,7 @@
 					toggleFieldGoal={game.toggleFieldGoal}
 				/>
 				<EventAnnouncement text={announcementText} type={announcementType} key={announcementKey} />
-				{#if modalActions.includes(game.action) && !isAutoPlay(mode, game.possession)}
+				{#if modalActions.includes(game.action) && (game.action === GAME_ACTION.COIN_TOSS || !isAutoPlay(mode, game.possession, userTeam))}
 					<div class="field-modal-overlay">
 						<div class="field-modal">
 							{#if game.action === GAME_ACTION.COIN_TOSS}

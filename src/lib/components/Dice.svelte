@@ -26,7 +26,7 @@
 
 	$effect(() => {
 		if (
-			isAutoPlay(settings.mode, game.possession) &&
+			isAutoPlay(settings.mode, game.possession, settings.userTeam) &&
 			isRollAction(game.action) &&
 			canRoll &&
 			!game.paused

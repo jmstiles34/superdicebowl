@@ -1,4 +1,4 @@
-import { DEFAULT_SETTINGS, DEFAULT_TEAM, GAME_MODE } from '$lib/constants/constants';
+import { DEFAULT_SETTINGS, DEFAULT_TEAM, GAME_MODE, TEAM } from '$lib/constants/constants';
 import type { GameSettingsSnapshot } from '$lib/db/database';
 import type { Team } from '$lib/types';
 
@@ -17,6 +17,7 @@ class SettingsState {
 	awayTeam = $state(DEFAULT_TEAM);
 	homeTeam = $state(DEFAULT_TEAM);
 	mode = $state(GAME_MODE.HEAD_TO_HEAD);
+	userTeam = $state(TEAM.HOME);
 	winScore = $state(30);
 	volume = $state(75);
 	speed = $state(1);
@@ -41,10 +42,17 @@ class SettingsState {
 		this.awayTeam = DEFAULT_SETTINGS.awayTeam;
 		this.homeTeam = DEFAULT_SETTINGS.homeTeam;
 		this.mode = DEFAULT_SETTINGS.mode;
+		this.userTeam = TEAM.HOME;
 	};
 
-	loadPreferences = (prefs: { volume: number; theme: Theme; defaultWinScore: number }) => {
+	loadPreferences = (prefs: {
+		volume: number;
+		speed?: number;
+		theme: Theme;
+		defaultWinScore: number;
+	}) => {
 		this.volume = prefs.volume;
+		this.speed = prefs.speed ?? 1;
 		this.theme = prefs.theme;
 		this.winScore = prefs.defaultWinScore;
 	};

@@ -106,6 +106,7 @@
 	.endZone {
 		border: 0.125rem solid var(--color-white);
 		background-color: var(--color-yellow);
+		container-type: size;
 	}
 	.endZoneElements {
 		display: grid;
@@ -133,13 +134,13 @@
 		right: -11px;
 	}
 	.post {
-		width: 0.5rem;
-		height: 0.5rem;
+		width: 0.75rem;
+		height: 0.75rem;
 		border-radius: 50%;
 		background-color: var(--color-yellow);
 	}
 	.bar {
-		width: 0.25rem;
+		width: 0.5rem;
 		height: 100%;
 		background-color: var(--color-yellow);
 	}
@@ -147,21 +148,22 @@
 		display: flex;
 		justify-content: center;
 		margin: auto;
-		height: clamp(2rem, 1rem + 4vw, 7rem);
-		width: clamp(2rem, 1rem + 4vw, 7rem);
+		height: clamp(2rem, 60cqi, 7rem);
+		width: clamp(2rem, 60cqi, 7rem);
 	}
 	.name-container {
 		display: flex;
 		justify-content: center;
+		overflow: hidden;
 	}
 	.name {
 		font-weight: 700;
 		font-family: 'Bebas Neue';
-		font-size: clamp(1.5rem, -0.0909rem + 6.3636vw, 5rem);
+		font-size: clamp(1rem, 55cqb, 5rem);
 		transform: rotate(180deg);
 		writing-mode: vertical-lr;
 		margin: auto 0;
-		letter-spacing: 0.25rem;
+		letter-spacing: 0.15em;
 	}
 	.rotateLeft {
 		transform: rotate(-90deg);

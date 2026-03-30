@@ -6,6 +6,7 @@
 	import { TEAM } from '$lib/constants/constants';
 	import type { GameRecord } from '$lib/db/database';
 	import { deleteGame, getGamesByUser } from '$lib/db/repositories/gameRepository';
+	import { getSeasonsByUser } from '$lib/db/repositories/seasonRepository';
 	import { getScoreByTeam } from '$lib/utils/game';
 	import Modal from '$lib/components/Modal.svelte';
 	import GameSummary from '$lib/components/modal/GameSummary.svelte';
@@ -15,6 +16,7 @@
 	let completedGames: GameRecord[] = $state([]);
 	let confirmDeleteId: number | null = $state(null);
 	let viewStatsRecord: GameRecord | null = $state(null);
+	let seasonGameIds: Set<number> = $state(new Set());
 
 	$effect(() => {
 		if (auth.initialized && !auth.isLoggedIn) goto('/login');
@@ -28,6 +30,17 @@
 		if (!auth.currentUser?.id) return;
 		inProgressGames = await getGamesByUser(auth.currentUser.id, 'in_progress');
 		completedGames = await getGamesByUser(auth.currentUser.id, 'completed');
+
+		const seasons = await getSeasonsByUser(auth.currentUser.id);
+		const ids = new Set<number>();
+		for (const s of seasons) {
+			for (const week of s.schedule) {
+				for (const m of week.matchups) {
+					if (m.gameRecordId) ids.add(m.gameRecordId);
+				}
+			}
+		}
+		seasonGameIds = ids;
 	}
 
 	function resumeGame(record: GameRecord) {
@@ -89,6 +102,9 @@
 				<div class="game-list">
 					{#each inProgressGames as record (record.id)}
 						<div class="game-card">
+							{#if record.id && seasonGameIds.has(record.id)}
+								<span class="season-badge">Season</span>
+							{/if}
 							<div class="teams-row">
 								<span
 									class="team-badge"
@@ -140,6 +156,9 @@
 				<div class="game-list">
 					{#each completedGames as record (record.id)}
 						<div class="game-card">
+							{#if record.id && seasonGameIds.has(record.id)}
+								<span class="season-badge">Season</span>
+							{/if}
 							<div class="teams-row">
 								<span
 									class="team-badge"
@@ -246,10 +265,24 @@
 		gap: 0.75rem;
 	}
 	.game-card {
+		position: relative;
 		background: var(--color-gray-900);
 		border: 1px solid var(--color-gray-700);
 		border-radius: var(--border-radius);
 		padding: 0.75rem;
+	}
+	.season-badge {
+		position: absolute;
+		top: 0.4rem;
+		right: 0.5rem;
+		font-size: 0.6rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--color-blue-300);
+		border: 1px solid var(--color-blue-500);
+		border-radius: 3px;
+		padding: 1px 5px;
 	}
 	.teams-row {
 		display: flex;

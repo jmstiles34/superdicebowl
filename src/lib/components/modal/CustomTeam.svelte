@@ -157,7 +157,7 @@
 				<div class="form-label">Name:</div>
 				<input
 					type="text"
-					maxlength="10"
+					maxlength="12"
 					id="name"
 					bind:value={name}
 					class:error={errors.includes('name')}

@@ -1,16 +1,20 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { season } from '$lib/state/season.svelte';
+
+	function exitGame() {
+		const dest = season.isSeasonGame ? '/season/play' : '/';
+		season.isSeasonGame = false;
+		season.activeWeek = null;
+		season.activeMatchupIndex = null;
+		goto(dest);
+	}
 </script>
 
 <div class="container">
 	<h3>Are you sure you want to exit?</h3>
 
-	<button
-		class="game-button"
-		onclick={() => {
-			goto('/');
-		}}
-	>
+	<button class="game-button" onclick={exitGame}>
 		Exit Game
 	</button>
 </div>

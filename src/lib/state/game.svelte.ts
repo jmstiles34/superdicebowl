@@ -444,7 +444,7 @@ class GameState {
 	};
 
 	handleSoloDecision = () => {
-		if (!isModalChoice(settings.mode, this.possession, this.action)) return;
+		if (!isModalChoice(settings.mode, this.possession, this.action, settings.userTeam)) return;
 
 		const expectedAction = this.action;
 		this.runChain(async () => {

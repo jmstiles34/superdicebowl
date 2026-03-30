@@ -155,13 +155,22 @@ export function isOnsideKick(index: number) {
 	return index === 11;
 }
 
-export function isAutoPlay(mode: string, possession: string): boolean {
-	return mode === GAME_MODE.SIMULATION || (mode === GAME_MODE.SOLO && possession === TEAM.AWAY);
+export function isAutoPlay(
+	mode: string,
+	possession: string,
+	userTeam: string = TEAM.HOME
+): boolean {
+	return mode === GAME_MODE.SIMULATION || (mode === GAME_MODE.SOLO && possession !== userTeam);
 }
 
-export function isModalChoice(mode: string, possession: string, action: string) {
+export function isModalChoice(
+	mode: string,
+	possession: string,
+	action: string,
+	userTeam: string = TEAM.HOME
+) {
 	return (
-		isAutoPlay(mode, possession) &&
+		isAutoPlay(mode, possession, userTeam) &&
 		[GAME_ACTION.FOURTH_DOWN_OPTIONS, GAME_ACTION.POINT_OPTION].includes(action)
 	);
 }

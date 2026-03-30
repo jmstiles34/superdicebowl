@@ -92,12 +92,12 @@
 		background-color: var(--color-white);
 	}
 	.score {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		width: 10%;
-		height: 100%;
 		background-color: var(--color-white);
 		color: var(--color-offblack);
-		padding-top: 0.25rem;
-		text-align: center;
 	}
 	@media (min-width: 52rem) {
 		.team {

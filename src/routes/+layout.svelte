@@ -48,6 +48,7 @@
 
 		<div class="menu-wrapper">
 			{#if auth.isLoggedIn}
+				<a class="link" href="/season">Season</a>
 				<a class="link" href="/teams">My Teams</a>
 				<a class="link" href="/games">My Games</a>
 				<a class="link" href="/account">{auth.currentUser?.username}</a>
