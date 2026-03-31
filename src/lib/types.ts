@@ -42,9 +42,13 @@ export interface Team {
 	isCustom?: boolean;
 	fieldLogo: string;
 	logo: string;
-	logoFixed: boolean;
-	logoLeft: string;
-	logoTransform: string;
+	logoFixed?: boolean;
+	logoHeight?: number;
+	logoLeft?: string;
+	logoRotation?: number;
+	logoWidth?: number;
+	logoX?: number;
+	logoY?: number;
 	name: string;
 }
 

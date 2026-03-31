@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { game } from '$lib/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
-	import { elasticInOut } from 'svelte/easing';
 	import { nonZeroRandomNumber, sleep } from '$lib/utils/common';
-	import { isRollAction } from '$lib/utils/game';
+	import { isAutoPlay, isRollAction } from '$lib/utils/game';
 	import { GAME_MODE, TEAM } from '$lib/constants/constants';
 	import flick from '$lib/assets/sfx/flick.mp3';
 	import type { Howl } from 'howler';
@@ -14,40 +13,27 @@
 		pipColor: string;
 		pipCount?: number;
 		rollDelay?: number;
+		onRollComplete?: () => void;
 	};
 
-	let { dieColor, pipColor, pipCount = 6, rollDelay = 1000 }: DiceProps = $props();
+	let { dieColor, pipColor, pipCount = 6, rollDelay = 1000, onRollComplete }: DiceProps = $props();
 
 	const flickSfx: Howl = createSound(flick);
-	let dice: number[][] = $state([Array(1).fill(0), Array(1).fill(0)]);
+	let die1Pips: number = $state(1);
+	let die2Pips: number = $state(1);
+	let rolling: boolean = $state(false);
 	let canRoll: boolean = $state(true);
-
-	function diceTransition(e: HTMLDivElement) {
-		return {
-			css: (t: number) => {
-				return `transform: scale(${t});`;
-			},
-			easing: elasticInOut,
-			duration: 1000
-		};
-	}
-
-	function handleKeyPress(e: KeyboardEvent) {
-		if (e.code === 'Space') {
-			handleRollDice();
-		}
-	}
 
 	$effect(() => {
 		if (
-			settings.mode === GAME_MODE.SOLO &&
-			game.possession === TEAM.AWAY &&
+			isAutoPlay(settings.mode, game.possession, settings.userTeam) &&
 			isRollAction(game.action) &&
-			canRoll
+			canRoll &&
+			!game.paused
 		) {
 			if (game.ballIndex > 0 || game.currentDown > 0) {
-				sleep(2000).then(() => {
-					handleRollDice();
+				sleep(2000 * settings.speed).then(() => {
+					if (!game.paused) handleRollDice();
 				});
 			}
 		}
@@ -61,25 +47,31 @@
 		canRoll = false;
 		let die1: number = nonZeroRandomNumber(pipCount);
 		let die2: number = nonZeroRandomNumber(pipCount);
-		let diceId = Math.min(parseInt(`${die1}${die2}`), parseInt(`${die2}${die1}`));
+		let diceId = Math.min(die1 * 10 + die2, die2 * 10 + die1);
 
-		dice = [];
+		rolling = true;
 		await sleep(rollDelay);
-		dice = [Array(die1).fill(0), Array(die2).fill(0)];
+		die1Pips = die1;
+		die2Pips = die2;
+		rolling = false;
 		await sleep(rollDelay);
 		canRoll = true;
 		game.handleDiceRoll(game.action, diceId);
+		onRollComplete?.();
 	}
 </script>
 
-<button class="dice-button" onclick={handleRollDice} onkeypress={handleKeyPress}>
-	{#each dice as die}
-		<div class="face" style={`background-color: ${dieColor};`} in:diceTransition out:diceTransition>
-			{#each die as pip}
-				<span class="pip" style={`background-color: ${pipColor};`}></span>
-			{/each}
-		</div>
-	{/each}
+<button class="dice-button" onclick={handleRollDice}>
+	<div class="face" class:rolling style={`background-color: ${dieColor};`}>
+		{#each Array(die1Pips) as _}
+			<span class="pip" style={`background-color: ${pipColor};`}></span>
+		{/each}
+	</div>
+	<div class="face" class:rolling style={`background-color: ${dieColor};`}>
+		{#each Array(die2Pips) as _}
+			<span class="pip" style={`background-color: ${pipColor};`}></span>
+		{/each}
+	</div>
 </button>
 
 <style>
@@ -112,6 +104,10 @@
 			inset -4px 0 #d7d7d7;
 		border-radius: 10%;
 		cursor: pointer;
+		transition: transform 0.3s ease-out;
+	}
+	.rolling {
+		transform: scale(0);
 	}
 
 	.pip {

@@ -39,7 +39,7 @@
 	};
 </script>
 
-<svelte:window on:keydown={keydown} />
+<svelte:window onkeydown={keydown} />
 
 {#if showModal}
 	<ModalPortal>

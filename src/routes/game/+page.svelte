@@ -1,19 +1,26 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { Fireworks } from '@fireworks-js/svelte';
+	import { auth } from '$lib/auth/authState.svelte';
 	import { game } from '$lib/state/game.svelte';
+	import { season } from '$lib/state/season.svelte';
 	import { settings } from '$lib/state/settings.svelte';
+	import {
+		completeGame,
+		createGame,
+		updateGameState
+	} from '$lib/db/repositories/gameRepository';
+	import { updateSeason } from '$lib/db/repositories/seasonRepository';
 	import button from '$lib/assets/sfx/button.mp3';
-	import { equals, gt, sleep } from '$lib/utils/common';
+	import { sleep } from '$lib/utils/common';
 	import { fireworkShow, options } from '$lib/utils/fireworks';
 	import {
 		compareFns,
 		getScoreByTeam,
+		isAutoPlay,
 		inFieldGoalRange,
 		isGameComplete,
-		isModalChoice,
-		makeFourthDownChoice,
-		makePointChoice,
 		primaryColor,
 		secondaryColor,
 		showDownDistance
@@ -28,6 +35,7 @@
 	} from '$lib/constants/constants';
 	import Dice from '$lib/components/Dice.svelte';
 	import CoinToss from '$lib/components/modal/CoinToss.svelte';
+	import EventAnnouncement from '$lib/components/EventAnnouncement.svelte';
 	import Field from '$lib/components/Field.svelte';
 	import FourthDown from '$lib/components/modal/FourthDown.svelte';
 	import Modal from '$lib/components/Modal.svelte';
@@ -35,8 +43,10 @@
 	import Scores from '$lib/components/Scores.svelte';
 	import GameSummary from '$lib/components/modal/GameSummary.svelte';
 	import exit from '$lib/images/exit.svg';
+	import gear from '$lib/images/gear.svg';
 	import summary from '$lib/images/summary.svg';
 	import ConfirmExit from '$lib/components/modal/ConfirmExit.svelte';
+	import Settings from '$lib/components/modal/Settings.svelte';
 	import type { Howl } from 'howler';
 	import { createSound, playSound } from '$lib/utils/sound';
 
@@ -46,9 +56,9 @@
 		GAME_ACTION.POINT_OPTION
 	];
 
-	const { awayTeam, homeTeam, mode, winScore } = settings;
-	let cancelExitAction = '';
+	const { awayTeam, homeTeam, mode, userTeam, winScore } = settings;
 	let showGameSummary = $state(false);
+	let showSettings = $state(false);
 	let fw = $state(fireworkShow);
 
 	const isGameReady = awayTeam.id.length && homeTeam.id.length;
@@ -57,56 +67,151 @@
 	let homeScore = $derived(getScoreByTeam(TEAM.HOME, game.playLog));
 	let gameOver = $derived(isGameComplete(awayScore, homeScore, winScore));
 
+	let announcementText = $state('');
+	let announcementType: 'touchdown' | 'turnover' | 'fieldgoal' | 'safety' = $state('touchdown');
+	let announcementKey = $state(0);
+
+	$effect(() => {
+		const action = game.action;
+		const lastPlay = game.lastPlay;
+
+		if (action === GAME_ACTION.TOUCHDOWN) {
+			announcementText = 'TOUCHDOWN!';
+			announcementType = 'touchdown';
+			announcementKey = Date.now();
+		} else if (action === GAME_ACTION.FIELD_GOAL_MADE) {
+			announcementText = 'FIELD GOAL!';
+			announcementType = 'fieldgoal';
+			announcementKey = Date.now();
+		} else if (lastPlay.includes('TURNOVER') && lastPlay.includes('Int')) {
+			announcementText = 'INTERCEPTION!';
+			announcementType = 'turnover';
+			announcementKey = Date.now();
+		} else if (lastPlay.includes('TURNOVER') && lastPlay.includes('Fumble')) {
+			announcementText = 'FUMBLE!';
+			announcementType = 'turnover';
+			announcementKey = Date.now();
+		} else if (lastPlay.includes('TURNOVER') && lastPlay.includes('On downs')) {
+			announcementText = 'TURNOVER ON DOWNS!';
+			announcementType = 'turnover';
+			announcementKey = Date.now();
+		} else if (lastPlay.includes('Safety')) {
+			announcementText = 'SAFETY!';
+			announcementType = 'safety';
+			announcementKey = Date.now();
+		}
+	});
+
+	async function saveGame() {
+		if (!auth.isLoggedIn || !auth.currentUser?.id) return;
+
+		try {
+			const snapshot = game.snapshotState();
+			if (game.activeGameId) {
+				await updateGameState(game.activeGameId, snapshot);
+			} else {
+				const record = await createGame(
+					auth.currentUser.id,
+					snapshot,
+					settings.snapshotSettings()
+				);
+				game.activeGameId = record.id!;
+
+				// Link game record to season matchup
+				if (season.isSeasonGame && season.activeWeek !== null && season.activeMatchupIndex !== null) {
+					season.setMatchupGameRecordId(season.activeWeek, season.activeMatchupIndex, record.id!);
+					if (season.activeSeasonId) {
+						await updateSeason(season.activeSeasonId, season.snapshotSeason());
+					}
+				}
+			}
+		} catch (e) {
+			console.error('Failed to save game:', e);
+		}
+	}
+
+	async function markGameComplete() {
+		if (!auth.isLoggedIn || !game.activeGameId) return;
+		await completeGame(game.activeGameId, game.snapshotState());
+	}
+
+	game.setSaveGame(saveGame);
+
 	onDestroy(() => {
 		game.resetGame();
-	});
-
-	$effect(() => {
-		if (gameOver) {
-			const winner = gt(awayScore, homeScore) ? awayTeam.city : homeTeam.city;
-			game.gameComplete(winner);
-			sleep(100).then(() => {
-				const fireworks = fw.fireworksInstance();
-				fireworks.start();
-			});
-			sleep(3000).then(() => (showGameSummary = true));
+		if (season.isSeasonGame) {
+			season.isSeasonGame = false;
+			season.activeWeek = null;
+			season.activeMatchupIndex = null;
 		}
 	});
 
 	$effect(() => {
-		game.handleNextAction(game.action, game.ballIndex, gameOver);
-	});
+		if (gameOver && game.action !== GAME_ACTION.GAME_OVER) {
+			sleep(1500).then(() => {
+				const winner = awayScore > homeScore ? awayTeam.city : homeTeam.city;
+				game.gameComplete(winner);
+				markGameComplete();
 
-	$effect(() => {
-		if (isModalChoice(mode, game.possession, game.action)) {
-			if (game.action === GAME_ACTION.POINT_OPTION) {
-				sleep(1000).then(() => {
-					playSound(buttonSfx, settings.volume);
-					game.preparePointOption(makePointChoice(awayScore, homeScore, winScore));
-				});
-			} else {
-				sleep(1000).then(() => {
-					const choiceAction = makeFourthDownChoice(awayScore, homeScore, game.ballIndex);
-					playSound(buttonSfx, settings.volume);
-					if (choiceAction === GAME_ACTION.FIELD_GOAL) {
-						game.toggleFieldGoal();
-					} else {
-						game.saveFourthDown(choiceAction);
+				if (season.isSeasonGame && season.activeWeek !== null && season.activeMatchupIndex !== null) {
+					season.recordGameResult(season.activeWeek, season.activeMatchupIndex, homeScore, awayScore);
+					if (season.activeSeasonId) {
+						updateSeason(season.activeSeasonId, season.snapshotSeason());
 					}
+				}
+
+				sleep(100).then(() => {
+					const fireworks = fw.fireworksInstance();
+					fireworks.start();
 				});
-			}
+				sleep(3000).then(() => (showGameSummary = true));
+			});
 		}
 	});
 
-	function cancelExit() {
+	$effect(() => {
+		game.continueAfterAction();
+	});
+
+	$effect(() => {
+		if (mode === GAME_MODE.SIMULATION && game.action === GAME_ACTION.COIN_TOSS) {
+			game.restrictDice = true;
+			game.lastPlay = 'Coin Toss...';
+			sleep(500 * settings.speed).then(() => {
+				const winner = Math.random() < 0.5 ? TEAM.HOME : TEAM.AWAY;
+				game.saveCoinToss(winner);
+				saveGame();
+			});
+		}
+	});
+
+	function toggleSettings() {
 		playSound(buttonSfx, settings.volume);
-		game.action = cancelExitAction;
+		if (showSettings) {
+			showSettings = false;
+			game.resume();
+		} else {
+			showSettings = true;
+			game.pause();
+		}
 	}
 
 	function handleExitClick() {
 		playSound(buttonSfx, settings.volume);
-		cancelExitAction = game.action;
-		game.action = GAME_ACTION.EXIT;
+		if (gameOver) {
+			const dest = season.isSeasonGame ? '/season/play' : '/';
+			season.isSeasonGame = false;
+			season.activeWeek = null;
+			season.activeMatchupIndex = null;
+			goto(dest);
+		} else {
+			game.handleExitClick();
+		}
+	}
+
+	function cancelExit() {
+		playSound(buttonSfx, settings.volume);
+		game.cancelExit();
 	}
 
 	function toggleGameSummary() {
@@ -125,9 +230,8 @@
 							<button
 								class="toolbarButton flip"
 								onclick={handleExitClick}
-								onkeypress={handleExitClick}
-								tabindex="0"
 								title="Quit Game"
+								aria-label="Quit Game"
 							>
 								<img src={exit} alt="Quit Game" />
 							</button>
@@ -137,11 +241,21 @@
 							<button
 								class="toolbarButton"
 								onclick={toggleGameSummary}
-								onkeypress={toggleGameSummary}
-								tabindex="0"
-								title={`${showGameSummary ? 'Close' : 'Open'}  Game Summary`}
+								title={`${showGameSummary ? 'Close' : 'Open'} Game Summary`}
+								aria-label="Game Summary"
 							>
 								<img src={summary} alt="Game Summary" />
+							</button>
+						</div>
+						<div class="divider">|</div>
+						<div>
+							<button
+								class="toolbarButton"
+								onclick={toggleSettings}
+								title="Settings"
+								aria-label="Settings"
+							>
+								<img src={gear} alt="Settings" />
 							</button>
 						</div>
 					</div>
@@ -151,9 +265,10 @@
 					<div class="action">{game.action}</div>
 					<Dice
 						dieColor={primaryColor(settings, game.possession) || '#FFF'}
-						pipColor={secondaryColor(settings, game.possession) || '000'}
+						pipColor={secondaryColor(settings, game.possession) || '#000'}
+						onRollComplete={saveGame}
 					/>
-					{#if game.restrictDice || (mode === GAME_MODE.SOLO && game.possession === TEAM.AWAY)}
+					{#if game.restrictDice || isAutoPlay(mode, game.possession, userTeam)}
 						<div class="dice-block"></div>
 					{/if}
 				</div>
@@ -162,19 +277,43 @@
 				</div>
 			</div>
 
-			<Field
-				{awayTeam}
-				ballIndex={game.ballIndex}
-				downToGo={`${DOWN[game.currentDown]} & ${game.yardsToGo}`}
-				firstDownIndex={game.firstDownIndex}
-				{homeTeam}
-				inFieldGoalRange={inFieldGoalRange(game.action, game.possession, game.ballIndex)}
-				missedKick={game.missedKick}
-				onsideKick={game.onsideKick}
-				possession={game.possession}
-				showDownDistance={showDownDistance(game.action) && !game.restrictDice}
-				toggleFieldGoal={game.toggleFieldGoal}
-			/>
+			<div class="field-container">
+				<Field
+					{awayTeam}
+					ballIndex={game.ballIndex}
+					downToGo={`${DOWN[game.currentDown]} & ${game.yardsToGo}`}
+					firstDownIndex={game.firstDownIndex}
+					{homeTeam}
+					inFieldGoalRange={inFieldGoalRange(game.action, game.possession, game.ballIndex)}
+					missedKick={game.missedKick}
+					missedTwoPoint={game.missedTwoPoint}
+					onsideKick={game.onsideKick}
+					possession={game.possession}
+					showDownDistance={showDownDistance(game.action) && !game.restrictDice}
+					toggleFieldGoal={game.toggleFieldGoal}
+				/>
+				<EventAnnouncement text={announcementText} type={announcementType} key={announcementKey} />
+				{#if modalActions.includes(game.action) && (game.action === GAME_ACTION.COIN_TOSS || !isAutoPlay(mode, game.possession, userTeam))}
+					<div class="field-modal-overlay">
+						<div class="field-modal">
+							{#if game.action === GAME_ACTION.COIN_TOSS}
+								<CoinToss saveCoinToss={(a) => { game.saveCoinToss(a); saveGame(); }} />
+							{:else if game.action === GAME_ACTION.POINT_OPTION}
+								<PointOption savePointOption={(a) => { game.preparePointOption(a); saveGame(); }} />
+							{:else if game.action === GAME_ACTION.FOURTH_DOWN_OPTIONS}
+								<FourthDown
+									inFieldGoalRange={compareFns[game.possession](
+										game.ballIndex,
+										BALL_FIELD_GOAL[game.possession]
+									)}
+									saveFourthDown={(a) => { game.saveFourthDown(a); saveGame(); }}
+									toggleFieldGoal={() => { game.toggleFieldGoal(); saveGame(); }}
+								/>
+							{/if}
+						</div>
+					</div>
+				{/if}
+			</div>
 			{#if game.action === GAME_ACTION.GAME_OVER}
 				<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
 			{/if}
@@ -190,12 +329,11 @@
 				{awayTeam}
 				{homeTeam}
 				playLog={game.playLog}
-				gameIsOver={equals(game.action, GAME_ACTION.GAME_OVER)}
 			/>
 		</Modal>
 
 		<Modal
-			showModal={equals(game.action, GAME_ACTION.EXIT)}
+			showModal={game.action === GAME_ACTION.EXIT}
 			close={cancelExit}
 			hasClose={true}
 			choiceRequired={false}
@@ -204,29 +342,14 @@
 		</Modal>
 
 		<Modal
-			showModal={modalActions.includes(game.action)}
-			close={NOOP}
-			on:click={() => (game.modalContent = null)}
+			showModal={showSettings}
+			close={toggleSettings}
+			hasClose={true}
+			choiceRequired={false}
 		>
-			<div class="model-content">
-				{#if equals(game.action, GAME_ACTION.COIN_TOSS)}
-					<CoinToss saveCoinToss={(a) => game.saveCoinToss(a)} />
-				{/if}
-				{#if equals(game.action, GAME_ACTION.POINT_OPTION) && !equals(game.action, GAME_ACTION.GAME_OVER)}
-					<PointOption savePointOption={(a) => game.preparePointOption(a)} />
-				{/if}
-				{#if equals(game.action, GAME_ACTION.FOURTH_DOWN_OPTIONS)}
-					<FourthDown
-						inFieldGoalRange={compareFns[game.possession](
-							game.ballIndex,
-							BALL_FIELD_GOAL[game.possession]
-						)}
-						saveFourthDown={(a) => game.saveFourthDown(a)}
-						toggleFieldGoal={() => game.toggleFieldGoal()}
-					/>
-				{/if}
-			</div>
+			<Settings />
 		</Modal>
+
 	</main>
 {/if}
 
@@ -250,11 +373,13 @@
 	.scoreboard {
 		display: grid;
 		grid-template-columns: 1fr auto 1fr;
+		align-items: start;
 		column-gap: 0.25rem;
 		top: 2.5rem;
 	}
 	.toolbar {
 		display: flex;
+		align-items: center;
 		gap: 8px;
 		margin-top: 14px;
 		z-index: 100;
@@ -266,6 +391,8 @@
 	.toolbarButton img {
 		height: 1.5em;
 		width: 1.5em;
+		min-height: 20px;
+		min-width: 20px;
 	}
 	.flip {
 		transform: scale(-1, 1);
@@ -284,7 +411,7 @@
 		border-radius: 1rem;
 		padding: 0.25rem 0.5rem;
 		z-index: 100;
-		filter: drop-shadow(3px 6px 8px hsl(0deg 0% 0% / 0.5));
+		filter: drop-shadow(3px 6px 8px oklch(0 0 0 / 0.5));
 	}
 	.action {
 		color: var(--color-white);
@@ -319,6 +446,24 @@
 		width: 100%;
 	}
 
+	.field-container {
+		position: relative;
+		overflow: hidden;
+	}
+	.field-modal-overlay {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--ltmask);
+		z-index: 200;
+	}
+	.field-modal {
+		background: var(--color-white);
+		border-radius: 8px;
+		padding: 12px;
+	}
 	:global(.fireworks) {
 		top: 0;
 		left: 0;
@@ -351,7 +496,7 @@
 		.divider {
 			font-size: 0.85rem;
 		}
-		.last-play {
+.last-play {
 			margin-top: 8px;
 		}
 	}

@@ -1,4 +1,3 @@
-import type { DiceRoll, Play, Team } from '$lib/types';
 import {
 	BALL_FIELD_GOAL,
 	DEFAULT_TEAM,
@@ -9,8 +8,9 @@ import {
 	TEAM,
 	YARD_INTERVAL
 } from '$lib/constants/constants';
-import { add, buildTextString, equals, gte, lte, randomNumber, subtract } from '$lib/utils/common';
 import type { Settings } from '$lib/state/settings.svelte';
+import type { DiceRoll, Play, Team } from '$lib/types';
+import { add, buildTextString, equals, gte, lte, randomNumber, subtract } from '$lib/utils/common';
 
 export const backFns = {
 	[TEAM.AWAY]: add,
@@ -108,11 +108,11 @@ export function descTwoPoint(success: boolean) {
 
 export function descYardage(yards: number) {
 	if (yards === 0) return '';
-	return yards > 0 ? `- ${yards} Yd Gain ` : `- ${yards * -1} Yd Loss`;
+	return yards > 0 ? `- ${yards} Yd Gain` : `- ${yards * -1} Yd Loss`;
 }
 
 function forcePositive(index: number) {
-	return index >= 0 ? index : index * -1;
+	return Math.abs(index);
 }
 
 export function getScoreByTeam(teamType: string, playLog: Play[]) {
@@ -147,7 +147,7 @@ export function isFourthDown(down: number) {
 	return down === 4;
 }
 
-export function isGameComplete(homeScore: number, awayScore: number, winScore: number) {
+export function isGameComplete(awayScore: number, homeScore: number, winScore: number) {
 	return gte(awayScore, winScore) || gte(homeScore, winScore);
 }
 
@@ -155,10 +155,22 @@ export function isOnsideKick(index: number) {
 	return index === 11;
 }
 
-export function isModalChoice(mode: string, possession: string, action: string) {
+export function isAutoPlay(
+	mode: string,
+	possession: string,
+	userTeam: string = TEAM.HOME
+): boolean {
+	return mode === GAME_MODE.SIMULATION || (mode === GAME_MODE.SOLO && possession !== userTeam);
+}
+
+export function isModalChoice(
+	mode: string,
+	possession: string,
+	action: string,
+	userTeam: string = TEAM.HOME
+) {
 	return (
-		mode === GAME_MODE.SOLO &&
-		possession === TEAM.AWAY &&
+		isAutoPlay(mode, possession, userTeam) &&
 		[GAME_ACTION.FOURTH_DOWN_OPTIONS, GAME_ACTION.POINT_OPTION].includes(action)
 	);
 }
@@ -219,16 +231,22 @@ export function madeFirstDown(
 }
 
 //TODO: Use winScore and factor in how close opponent is to winning
-export function makeFourthDownChoice(awayScore: number, homeScore: number, ballIndex: number) {
-	if (ballIndex >= 10 && homeScore - awayScore <= 16) return GAME_ACTION.PUNT;
-	if (ballIndex <= 9 && homeScore - awayScore <= 16) return GAME_ACTION.FIELD_GOAL;
+export function makeFourthDownChoice(
+	myScore: number,
+	oppScore: number,
+	ballIndex: number,
+	possession: string
+) {
+	const canKickFieldGoal = compareFns[possession](ballIndex, BALL_FIELD_GOAL[possession]);
+	if (canKickFieldGoal && oppScore - myScore <= 16) return GAME_ACTION.FIELD_GOAL;
+	if (!canKickFieldGoal && oppScore - myScore <= 16) return GAME_ACTION.PUNT;
 
 	return GAME_ACTION.OFFENSE;
 }
 
-export function makePointChoice(awayScore: number, homeScore: number, winScore: number) {
-	if (winScore - awayScore <= 2) return GAME_ACTION.TWO_POINT;
-	if (homeScore - awayScore >= 10) return GAME_ACTION.TWO_POINT;
+export function makePointChoice(myScore: number, oppScore: number, winScore: number) {
+	if (winScore - myScore <= 2) return GAME_ACTION.TWO_POINT;
+	if (oppScore - myScore >= 10) return GAME_ACTION.TWO_POINT;
 	return GAME_ACTION.EXTRA_POINT;
 }
 
@@ -265,7 +283,7 @@ function showFieldGoalPulse(action: string) {
 
 export function teamById(teams: Team[]) {
 	return function getTeam(id: string) {
-		return teams[parseInt(id)] || DEFAULT_TEAM;
+		return teams[parseInt(id, 10)] || DEFAULT_TEAM;
 	};
 }
 

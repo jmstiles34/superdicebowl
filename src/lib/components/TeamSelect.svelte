@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { onMount, tick } from 'svelte';
-	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 	import { DEFAULT_TEAM, DICE_COLORS, NOOP, POSITION, TEAM } from '$lib/constants/constants';
 	import { teamsData } from '$lib/data/data.json';
 	import type { SaveTeam, Team } from '$lib/types';
@@ -11,6 +10,8 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
 	import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
+	import { auth } from '$lib/auth/authState.svelte';
+	import { getCustomTeamsByUser } from '$lib/db/repositories/customTeamRepository';
 
 	type TeamSelectProps = {
 		opponentId: string;
@@ -34,7 +35,7 @@
 	let allTeamsData: Team[] = $state([]);
 
 	onMount(() => {
-		setTeamData();
+		loadTeamData();
 	});
 
 	function handleTeamSelect(e: Event) {
@@ -47,16 +48,21 @@
 	}
 
 	async function closeCustomTeamModal(id: string) {
-		setTeamData();
-		tick();
+		await loadTeamData();
 		showCustomTeam = false;
-		saveTeam(teamByUUId(allTeamsData)(id));
-		if (!id) saveTeam(DEFAULT_TEAM);
+		if (id) {
+			saveTeam(teamByUUId(allTeamsData)(id));
+		} else {
+			saveTeam(DEFAULT_TEAM);
+		}
 	}
 
-	function setTeamData() {
-		let lsTeamData = browser && localStorage.getItem('customTeams');
-		let customTeamData: Team[] = lsTeamData ? JSON.parse(lsTeamData) : [];
+	async function loadTeamData() {
+		let customTeamData: Team[] = [];
+		if (auth.isLoggedIn && auth.currentUser?.id) {
+			const records = await getCustomTeamsByUser(auth.currentUser.id);
+			customTeamData = records.map((r) => r.teamData);
+		}
 		allTeamsData = [...customTeamData, ...teamsData];
 	}
 
@@ -66,6 +72,8 @@
 			setRandomTeam(allTeamsData, opponentId, saveTeam);
 		}
 	}
+
+	let canCreateCustom = $derived(auth.isLoggedIn);
 </script>
 
 <div class="team-card">
@@ -75,9 +83,8 @@
 			{#each [team.id] as c (c)}
 				<button
 					in:fadeScale|global={fadeArgs}
-					class:hover={team.isCustom}
-					onclick={team.isCustom ? () => (showCustomTeam = true) : NOOP}
-					tabindex="0"
+					class:hover={team.isCustom && canCreateCustom}
+					onclick={team.isCustom && canCreateCustom ? () => (showCustomTeam = true) : NOOP}
 				>
 					<CustomHelmet
 						faceMask={team.colors.faceMask}
@@ -88,21 +95,23 @@
 						logo={team.logo}
 						logoFixed={teamType === TEAM.AWAY && team.logoFixed}
 						logoLeft={team.logoLeft}
-						logoTransform={team.logoTransform || ''}
-						setTransform={NOOP}
+						logoX={team.logoX}
+						logoY={team.logoY}
+						logoWidth={team.logoWidth}
+						logoHeight={team.logoHeight}
+						logoRotation={team.logoRotation}
 						title={team.isCustom ? `EDIT: ${team.city} ${team.name}` : `${team.city} ${team.name}`}
 					/>
 				</button>
 			{/each}
 		{:else}
 			<button
-				onclick={() => (showCustomTeam = true)}
-				tabindex="0"
+				onclick={canCreateCustom ? () => (showCustomTeam = true) : NOOP}
 				class="dice"
 				aria-label={`${teamType} Team Placeholder`}
 			>
 				<img
-					class="hover"
+					class:hover={canCreateCustom}
 					alt={`${teamType} Team Placeholder`}
 					src={`/images/${diceColor}_dice.png`}
 				/>
@@ -132,16 +141,18 @@
 	</div>
 </div>
 
-<Modal
-	showModal={showCustomTeam}
-	close={() => (showCustomTeam = false)}
-	hasClose={true}
-	choiceRequired={false}
->
-	<div class="model-content">
-		<CustomTeam customTeamId={selected} close={closeCustomTeamModal} />
-	</div>
-</Modal>
+{#if canCreateCustom}
+	<Modal
+		showModal={showCustomTeam}
+		close={() => (showCustomTeam = false)}
+		hasClose={true}
+		choiceRequired={false}
+	>
+		<div class="modal-content">
+			<CustomTeam customTeamId={selected} close={closeCustomTeamModal} />
+		</div>
+	</Modal>
+{/if}
 
 <style>
 	.team-card {
@@ -160,7 +171,9 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: center;
 		min-width: 18.75rem;
+		height: 18.75rem;
 		margin: 0 0 16px 0;
 	}
 
@@ -172,7 +185,6 @@
 		display: flex;
 		justify-content: center;
 		min-width: 18.75rem;
-		margin: 2.75rem 0;
 	}
 	.dice img {
 		max-width: 55%;

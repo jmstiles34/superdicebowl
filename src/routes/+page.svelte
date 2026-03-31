@@ -31,6 +31,7 @@
 		const { value } = e.currentTarget as HTMLSelectElement;
 		settings.winScore = parseInt(value);
 	};
+
 </script>
 
 {#snippet modeButton(mode: string, text: string)}
@@ -50,6 +51,7 @@
 	<div class="mode-row">
 		{@render modeButton(GAME_MODE.SOLO, 'Solo Play')}
 		{@render modeButton(GAME_MODE.HEAD_TO_HEAD, 'Head-to-Head')}
+		{@render modeButton(GAME_MODE.SIMULATION, 'Simulation')}
 	</div>
 
 	<div class="team-select">

@@ -1,3 +1,5 @@
+import type { Team } from '$lib/types';
+
 export const TEAM = {
 	AWAY: 'Away',
 	HOME: 'Home'
@@ -132,7 +134,7 @@ export const DEFAULT_PLAY_SUMMARY = {
 	awayScore: 0
 };
 
-export const DEFAULT_TEAM = {
+export const DEFAULT_TEAM: Team = {
 	id: '',
 	city: '',
 	cityKey: '',
@@ -141,7 +143,6 @@ export const DEFAULT_TEAM = {
 	logo: '',
 	logoFixed: false,
 	logoLeft: '',
-	logoTransform: '',
 	colors: {
 		primary: '#FFFFFF',
 		secondary: ''
@@ -181,7 +182,8 @@ export const FOURTH_DOWN = {
 
 export const GAME_MODE = {
 	SOLO: 'Solo',
-	HEAD_TO_HEAD: 'Head-to-Head'
+	HEAD_TO_HEAD: 'Head-to-Head',
+	SIMULATION: 'Simulation'
 };
 
 export const DEFAULT_SETTINGS = {
@@ -189,22 +191,7 @@ export const DEFAULT_SETTINGS = {
 	awayTeam: DEFAULT_TEAM,
 	mode: GAME_MODE.HEAD_TO_HEAD,
 	winScore: 30,
-	volume: true
-};
-
-export const HELMET_SIZE = {
-	SMALL: 'small',
-	LARGE: 'large'
-};
-
-export const HELMET_WIDTH = {
-	[HELMET_SIZE.SMALL]: 48,
-	[HELMET_SIZE.LARGE]: 250
-};
-
-export const WIDTH_DIVIDER = {
-	[HELMET_SIZE.SMALL]: 3,
-	[HELMET_SIZE.LARGE]: 2.5
+	volume: 75
 };
 
 export const INTERCEPTION_ROLLS = [12, 45];

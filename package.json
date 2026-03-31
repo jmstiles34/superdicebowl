@@ -6,52 +6,50 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"test": "playwright test",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:unit": "vitest",
-		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write .",
+		"lint": "biome check . && eslint .",
+		"format": "biome check --write .",
 		"prepare": "husky i --force"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.47.1",
+		"@biomejs/biome": "2.4.8",
+		"@eslint/js": "^10.0.1",
 		"@rollup/plugin-json": "^6.1.0",
 		"@sveltejs/adapter-static": "^3.0.5",
 		"@sveltejs/kit": "^2.5.28",
-		"@sveltejs/vite-plugin-svelte": "^4.0.0-next.7",
-		"@types/color-convert": "^2.0.3",
+		"@sveltejs/vite-plugin-svelte": "^7.0.0",
+		"@types/culori": "^4.0.1",
 		"@types/howler": "^2.2.11",
-		"@types/node": "^22.5.5",
+		"@types/node": "^25.5.0",
 		"@types/uuid": "^10.0.0",
-		"@typescript-eslint/eslint-plugin": "^8.6.0",
-		"@typescript-eslint/parser": "^8.6.0",
 		"autoprefixer": "^10.4.20",
-		"eslint": "^9.10.0",
-		"eslint-config-prettier": "^9.1.0",
+		"eslint": "^10.1.0",
+		"eslint-plugin-svelte": "^3.16.0",
 		"husky": "^9.1.6",
-		"lint-staged": "^15.2.10",
+		"lint-staged": "^16.4.0",
 		"postcss": "^8.4.47",
 		"postcss-load-config": "^6.0.1",
-		"prettier": "^3.3.3",
-		"prettier-plugin-svelte": "^3.2.6",
 		"svelte": "^5.0.0-next.255",
 		"svelte-check": "^4.0.2",
+		"svelte-eslint-parser": "^1.6.0",
 		"tslib": "^2.7.0",
-		"typescript": "^5.6.2",
-		"vite": "^5.4.6",
-		"vitest": "^2.1.1"
+		"typescript": "~5.9",
+		"typescript-eslint": "^8.57.2",
+		"vite": "^8.0.2",
+		"vitest": "^4.1.1"
 	},
 	"type": "module",
 	"dependencies": {
 		"@fireworks-js/svelte": "^2.10.8",
 		"@fontsource/abril-fatface": "^5.1.0",
 		"@fontsource/bebas-neue": "^5.1.0",
-		"color-convert": "^2.0.1",
-		"eslint-plugin-svelte": "^2.44.0",
+		"culori": "^4.0.2",
+		"dexie": "^4.3.0",
+		"dexie-observable": "^4.0.1-beta.13",
 		"howler": "^2.2.4",
-		"svelte-moveable": "^0.45.0",
-		"uuid": "^10.0.0"
+		"uuid": "^13.0.0"
 	},
 	"husky": {
 		"hooks": {
@@ -60,7 +58,7 @@
 	},
 	"lint-staged": {
 		"*.{js,css,ts,svelte}": [
-			"prettier --plugin-search-dir . --write ."
+			"biome check --write --no-errors-on-unmatched"
 		]
 	}
 }

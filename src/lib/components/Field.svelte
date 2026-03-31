@@ -14,6 +14,7 @@
 		homeTeam: Team;
 		inFieldGoalRange: boolean;
 		missedKick: boolean;
+		missedTwoPoint: boolean;
 		onsideKick: boolean;
 		possession: string;
 		showDownDistance: boolean;
@@ -28,6 +29,7 @@
 		homeTeam,
 		inFieldGoalRange,
 		missedKick,
+		missedTwoPoint,
 		onsideKick,
 		possession,
 		showDownDistance,
@@ -90,12 +92,12 @@
 				class:missLeft={missedKick && missDirection === 'left'}
 				class:missRight={missedKick && missDirection === 'right'}
 				style:left={`${ballPosition}%`}
-				style:rotate={onsideKick ? '3turn' : 'initial'}
-				style:transition={onsideKick
+				style:rotate={onsideKick || missedTwoPoint ? '3turn' : 'initial'}
+				style:transition={onsideKick || missedTwoPoint
 					? 'left 0.5s ease-in-out, top 0.5s ease-in-out, rotate 0.5s ease-in-out'
 					: 'left 0.5s ease-in-out, top 0.5s ease-in-out, rotate 0s ease-in-out'}
 			>
-				<img alt="Football" src={`/images/football.webp`} />
+				<img alt="Football" src="/images/football.webp" />
 			</div>
 			<div class="downToGo" class:showDownDistance style:left={`${ballPosition}%`}>
 				{downToGo}
@@ -194,7 +196,7 @@
 		& img {
 			width: 100%;
 			transition: all 0.5s ease-in-out;
-			filter: drop-shadow(3px 6px 8px hsl(0deg 0% 0% / 0.5));
+			filter: drop-shadow(3px 6px 8px oklch(0 0 0 / 0.5));
 		}
 	}
 	.yardsAway {
@@ -237,10 +239,6 @@
 	}
 	.flipV {
 		transform: scale(-1, -1);
-		-moz-transform: scale(-1, -1);
-		-webkit-transform: scale(-1, -1);
-		-o-transform: scale(-1 -1);
-		-ms-transform: scale(-1, -1);
 	}
 	.downToGo {
 		position: absolute;
@@ -252,7 +250,7 @@
 		font-size: 1rem;
 		font-family: inherit;
 		top: 53%;
-		filter: drop-shadow(2px 4px 4px hsl(0deg 0% 0% / 0.5));
+		filter: drop-shadow(2px 4px 4px oklch(0 0 0 / 0.5));
 	}
 	.showDownDistance {
 		opacity: 1;
@@ -271,7 +269,7 @@
 		left: 15%;
 		right: 0;
 		height: 3%;
-		background: -webkit-linear-gradient(left, var(--color-white) 25%, transparent 25%);
+		background: linear-gradient(to right, var(--color-white) 25%, transparent 25%);
 		background-size: 25% 100%;
 	}
 	.first-mid.hashes {

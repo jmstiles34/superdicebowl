@@ -1,10 +1,10 @@
-import convert from 'color-convert';
+import { converter, formatHex, parse } from 'culori';
 
 export function add(a: number, b: number) {
 	return a + b;
 }
 
-export function buildTextString(fns: { (): string }[]) {
+export function buildTextString(fns: (() => string)[]) {
 	return fns.reduce((acc, fn) => {
 		return joinText(acc, fn());
 	}, '');
@@ -14,8 +14,17 @@ export function equals(a: unknown, b: unknown) {
 	return a === b;
 }
 
-export function formatHsl(code: number[]) {
-	return `hsl(${code[0]} ${code[1]}% ${code[2]}% / 1)`;
+const toOklch = converter('oklch');
+
+const round4 = (n: number) => Math.round(n * 10000) / 10000;
+const round2 = (n: number) => Math.round(n * 100) / 100;
+
+function toOklchComponents(color: NonNullable<ReturnType<typeof toOklch>>) {
+	return {
+		L: round4(color.l),
+		C: round4(color.c || 0),
+		H: round2(color.h || 0)
+	};
 }
 
 export function gt(a: number, b: number) {
@@ -26,26 +35,17 @@ export function gte(a: number, b: number) {
 	return a >= b;
 }
 
-export function hexToHsl(hex: string) {
-	return formatHsl(convert.hex.hsl(hex));
+export function hexToOklch(hex: string) {
+	const color = parse(hex);
+	if (!color) return 'oklch(0 0 0 / 1)';
+	const { L, C, H } = toOklchComponents(toOklch(color));
+	return `oklch(${L} ${C} ${H} / 1)`;
 }
 
-export function hexToRGB(hex: string) {
-	const m: string[] = hex.match(/^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i) || [];
-	return {
-		r: parseInt(m[1], 16),
-		g: parseInt(m[2], 16),
-		b: parseInt(m[3], 16)
-	};
-}
-
-export function hslToHex(hsl: string) {
-	const parts = hsl.replace('hsl(', '').split(' ');
-	const degree = parseInt(parts[0]);
-	const saturation = parseInt(parts[1]);
-	const lightness = parseInt(parts[2]);
-
-	return `#${convert.hsl.hex([degree, saturation, lightness])}`;
+export function oklchToHex(oklch: string) {
+	const color = parse(oklch);
+	if (!color) return '#000000';
+	return formatHex(color);
 }
 
 export const isArray = (x: unknown[]) => Array.isArray(x);
@@ -54,15 +54,17 @@ export function joinText(a: string, b: string) {
 	return `${a}${a.length ? ' ' : ''}${b}`;
 }
 
-export function lightenColor(color: string, num = 15) {
-	const firstPercentIndex = color.indexOf('%') + 2;
-	const nextPercentIndex = color.indexOf('%', firstPercentIndex);
-
-	const lightness = parseInt(color.substring(firstPercentIndex, nextPercentIndex));
-
-	return (
-		color.substring(0, firstPercentIndex) + (lightness + num) + color.substring(nextPercentIndex)
-	);
+export function lightenColor(color: string, num = 0.05) {
+	const parsed = parse(color);
+	if (!parsed) return color;
+	const oklchColor = toOklch(parsed);
+	const { C, H } = toOklchComponents(oklchColor);
+	const L = Math.min(1, round4(oklchColor.l + num));
+	const alpha = oklchColor.alpha;
+	if (alpha !== undefined && alpha !== 1) {
+		return `oklch(${L} ${C} ${H} / ${alpha})`;
+	}
+	return `oklch(${L} ${C} ${H})`;
 }
 
 export function lt(a: number, b: number) {
@@ -84,14 +86,6 @@ export function pickRandom(array: unknown[]): unknown {
 
 export function randomNumber(max = 2) {
 	return Math.floor(Math.random() * max);
-}
-
-export function removeSpaces(text: string) {
-	return text.replaceAll(' ', '');
-}
-
-export function shuffle(array: []) {
-	return array.sort(() => Math.random() - 0.5);
 }
 
 export function sleep(ms: number) {
@@ -118,6 +112,6 @@ export function sumDigits(num: number) {
 		.toString()
 		.split('')
 		.reduce((acc, n) => {
-			return acc + parseInt(n);
+			return acc + parseInt(n, 10);
 		}, 0);
 }
