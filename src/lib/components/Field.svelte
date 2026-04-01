@@ -212,7 +212,7 @@
 	.fieldNumber {
 		position: absolute;
 		color: var(--color-white);
-		font-size: clamp(0.5rem, 0.225rem + 2.4vw, 1.5rem);
+		font-size: clamp(0.625rem, 0.3rem + 3vw, 1.85rem);
 		font-family: 'Abril Fatface', sans-serif;
 		opacity: 0.95;
 	}
@@ -247,8 +247,11 @@
 		transform: translate(-50%);
 		z-index: 10;
 		color: var(--color-yellow);
-		font-size: 1rem;
-		font-family: inherit;
+		font-size: clamp(1rem, 0.75rem + 1.5vw, 1.35rem);
+		font-family: var(--font-body);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-wide);
+		text-shadow: 1px 1px 0 oklch(0 0 0 / 0.7);
 		top: 53%;
 		filter: drop-shadow(2px 4px 4px oklch(0 0 0 / 0.5));
 	}

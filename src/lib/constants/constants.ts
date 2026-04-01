@@ -149,7 +149,7 @@ export const DEFAULT_TEAM: Team = {
 	}
 };
 
-export const DICE_COLORS = ['blue', 'red', 'orange', 'purple', 'green'];
+export const DICE_COLORS = ['blue', 'red', 'orange', 'purple', 'green', 'gold'];
 
 export const DOWN: { [key: number]: string } = {
 	1: '1st',

@@ -45,7 +45,7 @@
 	}
 
 	.announcement-text {
-		font-family: 'Bebas Neue', sans-serif;
+		font-family: var(--font-display);
 		font-size: clamp(2rem, 1rem + 6vw, 5rem);
 		font-weight: bold;
 		text-transform: uppercase;

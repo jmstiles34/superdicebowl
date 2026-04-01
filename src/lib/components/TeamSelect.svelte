@@ -31,10 +31,11 @@
 
 	let showCustomTeam: boolean = $state(false);
 	let selected: string = $derived(team.id);
-	let diceColor = pickRandom(DICE_COLORS);
+	let diceColor: string | unknown = $state('');
 	let allTeamsData: Team[] = $state([]);
 
 	onMount(() => {
+		diceColor = pickRandom(DICE_COLORS);
 		loadTeamData();
 	});
 
@@ -110,11 +111,13 @@
 				class="dice"
 				aria-label={`${teamType} Team Placeholder`}
 			>
-				<img
-					class:hover={canCreateCustom}
-					alt={`${teamType} Team Placeholder`}
-					src={`/images/${diceColor}_dice.png`}
-				/>
+				{#if diceColor}
+					<img
+						class:hover={canCreateCustom}
+						alt={`${teamType} Team Placeholder`}
+						src={`/images/dice-${diceColor}.svg`}
+					/>
+				{/if}
 			</button>
 		{/if}
 	</div>
@@ -156,25 +159,49 @@
 
 <style>
 	.team-card {
-		align-items: center;
-		background-color: var(--color-gray-900);
-		border-radius: 0.5rem;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 		justify-content: space-between;
-		padding: 13px;
+		background-color: var(--card-bg);
+		border: 2px solid var(--card-border);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--card-shadow);
+		padding: var(--space-5);
+		transition:
+			border-color var(--dur-base) var(--ease-snes),
+			box-shadow var(--dur-base) var(--ease-snes);
+	}
+
+	.team-card:has(.hover:hover) {
+		border-color: var(--card-border-hover);
+		box-shadow: var(--card-shadow-hover);
+	}
+
+	h1 {
+		font-family: var(--font-display);
+		font-weight: var(--weight-extrabold);
+		font-style: italic;
+		font-size: var(--text-display-sm);
+		letter-spacing: var(--tracking-display);
+		color: var(--color-text-primary);
+		text-shadow: var(--text-shadow-display);
+		text-transform: uppercase;
+		margin: 0 0 var(--space-4) 0;
+		align-self: flex-start;
 	}
 	.hover {
 		cursor: pointer;
 	}
+
 	.helmet {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		min-width: 18.75rem;
-		height: 18.75rem;
-		margin: 0 0 16px 0;
+		height: 16rem;
+		margin: 0 0 var(--space-4) 0;
 	}
 
 	.flipLeft {
@@ -186,26 +213,85 @@
 		justify-content: center;
 		min-width: 18.75rem;
 	}
+
 	.dice img {
-		max-width: 55%;
+		transition: transform var(--dur-base) var(--ease-snes);
 	}
+
 	.select-row {
 		display: flex;
-		gap: 1rem;
+		gap: var(--space-3);
+		width: 100%;
+	}
+
+	/* ── Team select dropdown ─────────────────────────────────── */
+	.team-select {
+		flex: 1;
+		font-family: var(--font-body);
+		font-size: var(--text-base);
+		font-weight: var(--weight-semibold);
+		background-color: var(--input-bg);
+		border: 2px solid var(--input-border);
+		border-radius: var(--radius-sm);
+		box-shadow: var(--input-shadow);
+		color: var(--input-text);
+		margin: 0;
+		padding: var(--space-2) var(--space-3);
+		appearance: none;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237080F0' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: right var(--space-3) center;
+		padding-right: var(--space-8);
+		cursor: pointer;
+		transition:
+			border-color var(--dur-fast) var(--ease-snes),
+			box-shadow var(--dur-fast) var(--ease-snes);
+	}
+
+	.team-select:hover {
+		border-color: var(--input-border-hover);
+	}
+
+	.team-select:focus-visible {
+		outline: none;
+		border-color: var(--input-border-focus);
+		box-shadow: var(--input-shadow-focus);
+	}
+
+	.team-select option {
+		background-color: var(--color-bg-elevated);
+		color: var(--color-text-primary);
+	}
+
+	/* ── Randomize button ─────────────────────────────────────── */
+	.random {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: var(--btn-secondary-bg);
+		border: 2px solid var(--btn-secondary-border);
+		border-radius: var(--radius-sm);
+		box-shadow: var(--btn-secondary-shadow);
+		padding: var(--space-2) var(--space-3);
+		cursor: pointer;
+		transition:
+			background-color var(--dur-fast) var(--ease-snes),
+			box-shadow var(--dur-fast) var(--ease-snes);
+	}
+
+	.random:hover {
+		background-color: var(--btn-secondary-bg-hover);
+		box-shadow: var(--btn-secondary-shadow-hover);
+	}
+
+	.random:focus-visible {
+		outline: none;
+		box-shadow: var(--focus-ring);
 	}
 
 	.random img {
-		height: 2.5rem;
-	}
-
-	.team-select {
-		font-family: inherit;
-		font-size: 1rem;
-		background-color: var(--color-blue-300);
-		border: none;
-		border-radius: var(--border-radius);
-		color: var(--color-offblack);
-		margin: 0;
-		padding: 0.25em;
+		height: 1.5rem;
+		width: 1.5rem;
+		display: block;
 	}
 </style>

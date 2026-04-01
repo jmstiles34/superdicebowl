@@ -127,14 +127,14 @@
 						filter: drop-shadow(4px 4px 8px oklch(0 0 0 / 0.95));
 					}
 					.ear-hole {
-						fill: var(--color-gray-900);
+						fill: var(--slate-900);
 						filter: url(#inset-shadow);
 					}
 					.outline {
-						fill: var(--color-offblack);
+						fill: var(--slate-950);
 					}
 					.white {
-						fill: var(--color-white);
+						fill: var(--slate-0);
 					}
 					.snaps {
 						fill: oklch(0.9042 0.0261 242.58 / 1);
@@ -152,7 +152,7 @@
 						filter: drop-shadow(2px -2px 4px oklch(0.4184 0 0 / 0.75));
 					}
 					.stroke {
-						stroke: var(--color-offblack);
+						stroke: var(--slate-950);
 						stroke-linecap: round;
 						stroke-linejoin: round;
 						stroke-width: 0;
@@ -297,6 +297,7 @@ M 641.087 272.197 L 641.11 272.25 C 639.82 280.54 635.28 286.19 629.28 291.09 C 
 	.helmet-wrapper {
 		display: flex;
 		position: relative;
+		height: 16rem;
 	}
 
 	.helmet-rotate {

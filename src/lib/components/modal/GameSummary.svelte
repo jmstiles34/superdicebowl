@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { DEFAULT_PLAY, DEFAULT_PLAY_SUMMARY, GAME_ACTION, TEAM } from '$lib/constants/constants';
 	import type { Play, PlaySummary, Team } from '$lib/types';
-	import '@fontsource/bebas-neue';
+
 
 	type SummaryProps = {
 		awayTeam: Team;
@@ -363,12 +363,12 @@
 	}
 	.team {
 		font-weight: 700;
-		font-family: 'Bebas Neue';
+		font-family: var(--font-display);
 		font-size: var(--24px);
 		transform: translateY(1.5px);
 	}
 	.city-key {
-		font-family: 'Bebas Neue';
+		font-family: var(--font-display);
 		font-size: 1.35rem;
 		transform: translateY(1.5px);
 	}

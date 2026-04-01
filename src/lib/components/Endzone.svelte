@@ -158,7 +158,7 @@
 	}
 	.name {
 		font-weight: 700;
-		font-family: 'Bebas Neue';
+		font-family: 'Bebas Neue', sans-serif;
 		font-size: clamp(1rem, 55cqb, 5rem);
 		transform: rotate(180deg);
 		writing-mode: vertical-lr;

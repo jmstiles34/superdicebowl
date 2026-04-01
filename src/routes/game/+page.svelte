@@ -293,27 +293,26 @@
 					toggleFieldGoal={game.toggleFieldGoal}
 				/>
 				<EventAnnouncement text={announcementText} type={announcementType} key={announcementKey} />
-				{#if modalActions.includes(game.action) && (game.action === GAME_ACTION.COIN_TOSS || !isAutoPlay(mode, game.possession, userTeam))}
-					<div class="field-modal-overlay">
-						<div class="field-modal">
-							{#if game.action === GAME_ACTION.COIN_TOSS}
-								<CoinToss saveCoinToss={(a) => { game.saveCoinToss(a); saveGame(); }} />
-							{:else if game.action === GAME_ACTION.POINT_OPTION}
-								<PointOption savePointOption={(a) => { game.preparePointOption(a); saveGame(); }} />
-							{:else if game.action === GAME_ACTION.FOURTH_DOWN_OPTIONS}
-								<FourthDown
-									inFieldGoalRange={compareFns[game.possession](
-										game.ballIndex,
-										BALL_FIELD_GOAL[game.possession]
-									)}
-									saveFourthDown={(a) => { game.saveFourthDown(a); saveGame(); }}
-									toggleFieldGoal={() => { game.toggleFieldGoal(); saveGame(); }}
-								/>
-							{/if}
-						</div>
-					</div>
-				{/if}
 			</div>
+
+		{#if modalActions.includes(game.action) && (game.action === GAME_ACTION.COIN_TOSS || !isAutoPlay(mode, game.possession, userTeam))}
+			<Modal showModal={true} close={NOOP} hasClose={false} choiceRequired={true}>
+				{#if game.action === GAME_ACTION.COIN_TOSS}
+					<CoinToss saveCoinToss={(a) => { game.saveCoinToss(a); saveGame(); }} />
+				{:else if game.action === GAME_ACTION.POINT_OPTION}
+					<PointOption savePointOption={(a) => { game.preparePointOption(a); saveGame(); }} />
+				{:else if game.action === GAME_ACTION.FOURTH_DOWN_OPTIONS}
+					<FourthDown
+						inFieldGoalRange={compareFns[game.possession](
+							game.ballIndex,
+							BALL_FIELD_GOAL[game.possession]
+						)}
+						saveFourthDown={(a) => { game.saveFourthDown(a); saveGame(); }}
+						toggleFieldGoal={() => { game.toggleFieldGoal(); saveGame(); }}
+					/>
+				{/if}
+			</Modal>
+		{/if}
 			{#if game.action === GAME_ACTION.GAME_OVER}
 				<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
 			{/if}
@@ -450,21 +449,7 @@
 		position: relative;
 		overflow: hidden;
 	}
-	.field-modal-overlay {
-		position: absolute;
-		inset: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: var(--ltmask);
-		z-index: 200;
-	}
-	.field-modal {
-		background: var(--color-white);
-		border-radius: 8px;
-		padding: 12px;
-	}
-	:global(.fireworks) {
+:global(.fireworks) {
 		top: 0;
 		left: 0;
 		width: 100%;

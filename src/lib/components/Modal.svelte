@@ -49,22 +49,29 @@
 			onkeydown={self(stopPropagation(choiceRequired ? NOOP : keydown))}
 			role="button"
 			tabindex="-1"
-			transition:fade
+			transition:fade={{ duration: 150 }}
 		>
-			<div class="modal" aria-modal="true" role="dialog" tabindex="-1" transition:scale>
+			<div
+				class="modal"
+				aria-modal="true"
+				role="dialog"
+				tabindex="-1"
+				transition:scale={{ duration: 180, start: 0.92 }}
+			>
+				{#if hasClose}
+					<div
+						class="close-button"
+						onclick={doClose}
+						onkeydown={keydown}
+						role="button"
+						tabindex="0"
+						title="Close"
+						aria-label="Close"
+					>
+						<img src={closeIcon} alt="Close Window" />
+					</div>
+				{/if}
 				<TrapFocus {initialFocusElement} {returnFocusElement} {hasClose}>
-					{#if hasClose}
-						<div
-							class="closeButton"
-							onclick={doClose}
-							onkeydown={keydown}
-							role="button"
-							tabindex="0"
-							title="Close"
-						>
-							<img src={closeIcon} alt="Close Window" />
-						</div>
-					{/if}
 					<div>
 						{@render children()}
 					</div>
@@ -75,39 +82,66 @@
 {/if}
 
 <style>
+	/* ── Backdrop ─────────────────────────────────────────────── */
 	.backdrop {
-		width: 100%;
-		height: 100%;
 		position: fixed;
 		top: 0;
 		left: 0;
-		background: var(--ltmask);
+		width: 100vw;
+		height: 100vh;
+		background: var(--modal-backdrop);
 		z-index: 999;
 		display: flex;
 		justify-content: center;
+		align-items: center;
 	}
 
+	/* ── Modal panel ──────────────────────────────────────────── */
 	.modal {
-		padding: 12px;
-		border-radius: 8px;
-		background: var(--color-white);
+		position: relative;
+		padding: var(--space-6);
+		border-radius: var(--modal-radius);
+		background: var(--modal-bg);
+		border: 2px solid var(--modal-border);
+		box-shadow: var(--modal-shadow);
 		height: fit-content;
-		margin: auto 0;
+		max-height: 90vh;
+		overflow-y: auto;
+		/* Prevent backdrop clicks from passing through */
+		pointer-events: all;
 	}
 
-	.closeButton {
-		cursor: pointer;
+	/* ── Close button ─────────────────────────────────────────── */
+	.close-button {
 		position: absolute;
-		right: 0;
-		top: 0;
-		margin-top: -30px;
-		margin-right: -30px;
+		top: var(--space-3);
+		right: var(--space-3);
+		cursor: pointer;
+		z-index: 1;
+		padding: var(--space-1);
+		transition: opacity var(--dur-fast) var(--ease-snes);
+		opacity: 0.7;
 	}
 
-	.closeButton img {
-		height: 32px;
-		width: 32px;
-		background-color: var(--color-white);
-		border-radius: 50%;
+	.close-button:hover {
+		opacity: 1;
+	}
+
+	.close-button:focus-visible {
+		outline: none;
+		box-shadow: var(--focus-ring);
+		border-radius: var(--radius-sm);
+	}
+
+	.close-button img {
+		height: 20px;
+		width: 20px;
+		display: block;
+		filter: var(--icon-filter-default);
+		transition: filter var(--dur-fast) var(--ease-snes);
+	}
+
+	.close-button:hover img {
+		filter: var(--icon-filter-hover);
 	}
 </style>

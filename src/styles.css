@@ -1,113 +1,880 @@
+/* ============================================================
+  SUPER DICE BOWL — Design Token System v2
+  16-bit SNES Era · Electric Blue Brand · Dark-Primary
+  ============================================================
+
+  TABLE OF CONTENTS
+  ─────────────────
+  1.  Google Fonts
+  2.  Root – Shared / Mode-Agnostic Tokens
+      2a. Brand Blue Scale
+      2b. Gold / Scoreboard Scale
+      2c. Field Green Scale
+      2d. Penalty Red Scale (semantic only)
+      2e. Neutral / Slate Scale
+      2f. Typography
+      2g. Spacing
+      2h. Border Radius
+      2i. Border Widths & SNES Window Chrome
+      2j. Transitions & Easing
+      2k. Z-Index
+      2l. Grid & Layout
+  3.  Dark Mode Tokens (primary)
+  4.  Light Mode Tokens (secondary / accessibility)
+  5.  Backward-Compat Aliases
+  6.  Base Utility Styles
+   ============================================================ */
+
+/* ─── 1. GOOGLE FONTS ──────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&display=swap");
+
+/*
+  Font Roles – SNES Era Hierarchy
+  ────────────────────────────────
+  --font-display: Exo 2 Black Italic
+  --font-numeric: Orbitron Bold/Black
+  --font-body   : Rajdhani Medium/SemiBold
+*/
+
+/* ─── 2. ROOT – SHARED TOKENS ──────────────────────────────── */
 :root {
-	/*COLORS*/
-	--color-white: oklch(0.9752 0.0034 264.54);
-	--color-offblack: oklch(0.1669 0.0032 286.05);
-	--color-blue-100: oklch(0.9346 0.0159 248);
-	--color-blue-300: oklch(0.7755 0.0552 243.19);
-	--color-blue-500: oklch(0.589 0.0989 245.29);
-	--color-blue-600: oklch(0.5095 0.0839 245.19);
-	--color-blue-700: oklch(0.4331 0.0709 246.72);
-	--color-blue-900: oklch(0.2362 0.0311 244.33);
-	--color-gray-50: oklch(0.9683 0.0044 247.87);
-	--color-gray-100: oklch(0.9043 0.0133 247.97);
-	--color-gray-200: oklch(0.816 0.021 248.09);
-	--color-gray-300: oklch(0.7268 0.0223 248.14);
-	--color-gray-400: oklch(0.6344 0.0262 248.24);
-	--color-gray-500: oklch(0.5932 0.0197 248.16);
-	--color-gray-600: oklch(0.5496 0.0204 248.2);
-	--color-gray-700: oklch(0.5052 0.0205 248.23);
-	--color-gray-800: oklch(0.3657 0.0208 248.4);
-	--color-gray-900: oklch(0.317 0.0173 248.37);
-	--color-gray-1000: oklch(0.2128 0.0121 248.39);
-	--color-yellow: oklch(0.8902 0.1832 96.08);
-	--urgent: oklch(0.5829 0.1645 23.73);
-	--urgent-hover: oklch(0.885 0.0372 17.88);
-	--mask: oklch(0.1669 0.0032 286.05 / 0.8);
-	--ltmask: oklch(0.1669 0.0032 286.05 / 0.4);
+	/* ── 2a. Brand Blue Scale ───────────────────────────────── */
+	--brand-50: oklch(0.958 0.0202 279.94);
+	--brand-100: oklch(0.8886 0.0544 276.11);
+	--brand-200: oklch(0.7927 0.1051 275.4);
+	--brand-300: oklch(0.641 0.1668 274.59);
+	--brand-400: oklch(0.5543 0.2186 268.51);
+	--brand-500: oklch(0.395 0.2636 264.16);
+	--brand-600: oklch(0.3427 0.225 264.19);
+	--brand-700: oklch(0.2938 0.1892 264.21);
+	--brand-800: oklch(0.2465 0.1535 264.19);
+	--brand-900: oklch(0.3077 0.1962 264.21);
+	--brand-950: oklch(0.1829 0.1063 264.01);
 
-	--field-odd: oklch(0.6296 0.1925 142.86);
-	--field-even: oklch(0.5713 0.1735 142.88);
-	--field: oklch(0.5594 0.1696 142.89);
+	/* ── 2b. Gold / Scoreboard Scale ───────────────────────── */
+	--gold-50: oklch(0.9842 0.0242 94.06);
+	--gold-100: oklch(0.9443 0.1056 98.16);
+	--gold-200: oklch(0.9022 0.1548 94.96);
+	--gold-300: oklch(0.8618 0.1721 88.89);
+	--gold-400: oklch(0.8272 0.1711 80.53);
+	--gold-500: oklch(0.7508 0.1576 76.2);
+	--gold-600: oklch(0.6717 0.1444 71.27);
+	--gold-700: oklch(0.5392 0.117 69.73);
+	--gold-800: oklch(0.4062 0.0871 71.65);
+	--gold-900: oklch(0.2719 0.0601 67.02);
+	--gold-950: oklch(0.1882 0.0401 72.98);
 
-	/*FONTS*/
-	--font-size: 1.3rem;
-	--12px: 0.75rem;
-	--14px: 0.875rem;
+	/* ── 2c. Field Green Scale ──────────────────────────────── */
+	--green-50: oklch(0.9613 0.0461 172.62);
+	--green-100: oklch(0.92 0.1074 167.3);
+	--green-200: oklch(0.8829 0.17 159.5);
+	--green-300: oklch(0.818 0.2059 153.12);
+	--green-400: oklch(0.7582 0.15 147.44);
+	--green-500: oklch(0.6599 0.13 147.34);
+	--green-600: oklch(0.5577 0.11 147.18);
+	--green-700: oklch(0.4509 0.09 147.42);
+	--green-800: oklch(0.3375 0.096 148.68);
+	--green-900: oklch(0.2206 0.0583 151.81);
+
+	/* ── 2d. Penalty Red Scale (semantic only) ──────────────── */
+	--red-50: oklch(0.9506 0.0256 5.65);
+	--red-100: oklch(0.8517 0.0835 7.8);
+	--red-200: oklch(0.7443 0.1588 11.62);
+	--red-300: oklch(0.6603 0.2273 19.88);
+	--red-400: oklch(0.637 0.2486 23.64);
+	--red-500: oklch(0.5723 0.2308 22.59);
+	--red-600: oklch(0.4997 0.2018 23.24);
+	--red-700: oklch(0.4123 0.1664 23);
+	--red-800: oklch(0.3264 0.1317 22.94);
+	--red-900: oklch(0.23 0.0925 20.98);
+
+	/* ── 2e. Neutral / Slate (blue-tinted) ─────────────────── */
+	--slate-0: oklch(1 0 0);
+	--slate-50: oklch(0.9595 0.02 286.02);
+	--slate-100: oklch(0.914 0.0325 285.74);
+	--slate-200: oklch(0.8334 0.0557 285.13);
+	--slate-300: oklch(0.7245 0.0751 284.37);
+	--slate-400: oklch(0.5992 0.0967 283.09);
+	--slate-500: oklch(0.474 0.0957 282.12);
+	--slate-600: oklch(0.3755 0.0875 281.34);
+	--slate-700: oklch(0.2976 0.0678 281.47);
+	--slate-800: oklch(0.2288 0.0605 280.5);
+	--slate-900: oklch(0.1708 0.0486 279.94);
+	--slate-950: oklch(0.1328 0.0467 277.95);
+	--slate-975: oklch(0.1011 0.0397 276.62);
+
+	/* ── 2f. Typography ─────────────────────────────────────── */
+	--font-display: "Exo 2", sans-serif;
+	--font-numeric: "Orbitron", monospace;
+	--font-body: "Rajdhani", sans-serif;
+
+	--text-2xs: 0.6875rem;
+	--text-xs: 0.75rem;
+	--text-sm: 0.875rem;
+	--text-base: 1rem;
+	--text-md: 1.125rem;
+	--text-lg: 1.25rem;
+	--text-xl: 1.5rem;
+	--text-2xl: 2rem;
+	--text-3xl: 2.5rem;
+
+	--text-display-sm: 1.25rem;
+	--text-display-md: 1.75rem;
+	--text-display-lg: 2.5rem;
+	--text-display-xl: 3.5rem;
+
+	--text-score-xs: 0.875rem;
+	--text-score-sm: 1.25rem;
+	--text-score-md: 2rem;
+	--text-score-lg: 3rem;
+	--text-score-xl: 4rem;
+	--text-score-2xl: 5.5rem;
+
+	--weight-light: 300;
+	--weight-regular: 400;
+	--weight-medium: 500;
+	--weight-semibold: 600;
+	--weight-bold: 700;
+	--weight-extrabold: 800;
+	--weight-black: 900;
+
+	--leading-none: 1;
+	--leading-tight: 1.1;
+	--leading-snug: 1.25;
+	--leading-base: 1.5;
+	--leading-loose: 1.7;
+
+	--tracking-tight: -0.02em;
+	--tracking-normal: 0;
+	--tracking-wide: 0.04em;
+	--tracking-wider: 0.08em;
+	--tracking-widest: 0.15em;
+	--tracking-display: 0.06em;
+
+	--text-shadow-display: 2px 2px 0 oklch(0.1868 0.1037 263.78), -1px -1px 0 rgba(0, 0, 0, 0.4);
+	--text-shadow-score: 2px 2px 0 rgba(100, 60, 0, 0.8);
+	--text-shadow-hero: 3px 3px 0 oklch(0.1829 0.1063 264.01);
+
+	/* ── 2g. Spacing ────────────────────────────────────────── */
+	--space-1: 0.25rem;
+	--space-1-5: 0.375rem;
+	--space-2: 0.5rem;
+	--space-2-5: 0.625rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-5: 1.25rem;
+	--space-6: 1.5rem;
+	--space-7: 1.75rem;
+	--space-8: 2rem;
+	--space-10: 2.5rem;
+	--space-12: 3rem;
+	--space-16: 4rem;
+	--space-20: 5rem;
+	--space-24: 6rem;
+
+	/* ── 2h. Border Radius ──────────────────────────────────── */
+	--radius-none: 0;
+	--radius-xs: 2px;
+	--radius-sm: 4px;
+	--radius-md: 6px;
+	--radius-lg: 8px;
+	--radius-xl: 12px;
+	--radius-pill: 9999px;
+
+	/* ── 2i. Borders & SNES Window Chrome ───────────────────── */
+	--border-thin: 1px;
+	--border-base: 2px;
+	--border-thick: 3px;
+	--border-heavy: 4px;
+
+	--shadow-pixel-xs: 2px 2px 0px;
+	--shadow-pixel-sm: 3px 3px 0px;
+	--shadow-pixel-md: 4px 4px 0px;
+	--shadow-pixel-lg: 6px 6px 0px;
+	--shadow-pixel-xl: 8px 8px 0px;
+
+	--progress-h: 8px;
+	--progress-radius: var(--radius-xs);
+
+	/* ── 2j. Transitions ────────────────────────────────────── */
+	--ease-out: cubic-bezier(0, 0, 0.2, 1);
+	--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+	--ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+	--ease-snes: cubic-bezier(0, 0, 0.15, 1);
+
+	--dur-instant: 50ms;
+	--dur-fast: 100ms;
+	--dur-base: 180ms;
+	--dur-slow: 320ms;
+	--dur-slower: 500ms;
+
+	/* ── 2k. Z-Index ────────────────────────────────────────── */
+	--z-below: -1;
+	--z-base: 0;
+	--z-raised: 10;
+	--z-dropdown: 100;
+	--z-sticky: 200;
+	--z-overlay: 300;
+	--z-modal: 400;
+	--z-toast: 500;
+	--z-tooltip: 600;
+
+	/* ── 2l. Grid & Layout ──────────────────────────────────── */
+	--max-w-sm: 640px;
+	--max-w-md: 768px;
+	--max-w-lg: 1024px;
+	--max-w-xl: 1280px;
+	--max-w-2xl: 1536px;
+	--header-h: 60px;
+	--sidebar-w: 260px;
+	--card-gap: 12px;
+}
+
+/* ════════════════════════════════════════════════════════════
+   3. DARK MODE TOKENS (primary)
+   ════════════════════════════════════════════════════════════ */
+:root,
+[data-theme="dark"] {
+	--color-bg-void: oklch(0.1011 0.0397 276.62);
+	--color-bg-base: oklch(0.1328 0.0467 277.95);
+	--color-bg-surface: oklch(0.1634 0.0673 275.96);
+	--color-bg-elevated: oklch(0.1994 0.0825 275.9);
+	--color-bg-overlay: oklch(0.2343 0.0925 276.55);
+	--color-bg-inset: oklch(0.1188 0.05 275.67);
+	--color-bg-sunken: oklch(0.1011 0.0397 276.62);
+
+	--color-header-bg: oklch(0.1274 0.0499 276.64);
+	--color-header-border: rgba(0, 16, 208, 0.45);
+	--color-header-shadow: 0 2px 0 rgba(0, 16, 208, 0.3);
+	--color-header-text: var(--slate-50);
+	--color-header-text-muted: rgba(160, 180, 255, 0.65);
+	--color-header-logo-glow: 0 0 20px rgba(64, 96, 240, 0.5);
+
+	--color-text-primary: oklch(0.9595 0.02 286.02);
+	--color-text-secondary: rgba(180, 196, 255, 0.88);
+	--color-text-tertiary: rgba(128, 148, 228, 0.65);
+	--color-text-disabled: rgba(80, 100, 180, 0.38);
+	--color-text-inverse: oklch(0.1164 0.0463 276.43);
+	--color-text-brand: var(--brand-400);
+	--color-text-gold: var(--gold-400);
+	--color-text-success: var(--green-400);
+	--color-text-danger: var(--red-300);
+	--color-text-warning: var(--gold-300);
+	--color-text-muted: rgba(128, 148, 228, 0.65);
+
+	--color-border-subtle: rgba(64, 96, 240, 0.12);
+	--color-border-default: rgba(64, 96, 240, 0.25);
+	--color-border-strong: rgba(64, 96, 240, 0.5);
+	--color-border-brand: var(--brand-500);
+	--color-border-gold: rgba(255, 184, 0, 0.55);
+	--color-border-success: rgba(0, 212, 82, 0.45);
+	--color-border-danger: rgba(255, 26, 56, 0.45);
+	--color-border-focus: var(--brand-400);
+
+	--snes-window-sm: inset 0 1px 0 rgba(112, 128, 240, 0.45), 0 0 0 2px rgba(0, 7, 64, 0.95);
+	--snes-window-md: inset 0 1px 0 rgba(112, 128, 240, 0.45), 0 0 0 3px rgba(0, 7, 64, 0.95);
+	--snes-window-lg: inset 0 1px 0 rgba(112, 128, 240, 0.45), 0 0 0 4px rgba(0, 7, 64, 0.95);
+
+	--shadow-pixel-brand: var(--shadow-pixel-md) var(--brand-950);
+	--shadow-pixel-gold: var(--shadow-pixel-md) var(--gold-950);
+	--shadow-pixel-dark: var(--shadow-pixel-md) rgba(0, 0, 0, 0.9);
+
+	--shadow-card: 4px 4px 0 var(--brand-950), var(--snes-window-sm);
+	--shadow-card-hover:
+		6px 6px 0 var(--brand-900), inset 0 1px 0 rgba(112, 128, 240, 0.5),
+		0 0 0 2px rgba(0, 16, 208, 0.7);
+	--shadow-modal: 8px 8px 0 rgba(0, 0, 0, 0.95), var(--snes-window-lg);
+
+	--glow-brand-sm: 0 0 10px rgba(0, 16, 208, 0.65);
+	--glow-brand-md: 0 0 18px rgba(0, 16, 208, 0.55), 0 0 36px rgba(64, 96, 240, 0.25);
+	--glow-gold-sm: 0 0 10px rgba(255, 184, 0, 0.65);
+	--glow-gold-md: 0 0 20px rgba(255, 184, 0, 0.5), 0 0 40px rgba(255, 200, 80, 0.2);
+	--glow-green-sm: 0 0 10px rgba(0, 212, 82, 0.55);
+	--glow-red-sm: 0 0 10px rgba(255, 26, 56, 0.6);
+
+	--color-surface-brand: rgba(0, 16, 208, 0.14);
+	--color-surface-gold: rgba(255, 184, 0, 0.11);
+	--color-surface-success: rgba(0, 212, 82, 0.1);
+	--color-surface-danger: rgba(255, 26, 56, 0.1);
+	--color-surface-warning: rgba(255, 200, 80, 0.1);
+
+	--btn-primary-bg: var(--brand-500);
+	--btn-primary-bg-hover: var(--brand-400);
+	--btn-primary-bg-active: var(--brand-600);
+	--btn-primary-text: var(--slate-0);
+	--btn-primary-border: var(--brand-300);
+	--btn-primary-shadow: 4px 4px 0 var(--brand-950), var(--snes-window-sm);
+	--btn-primary-shadow-hover:
+		4px 4px 0 var(--brand-900), inset 0 1px 0 rgba(160, 180, 255, 0.5),
+		0 0 0 2px rgba(0, 16, 208, 0.8), var(--glow-brand-sm);
+
+	--btn-secondary-bg: transparent;
+	--btn-secondary-bg-hover: rgba(0, 16, 208, 0.15);
+	--btn-secondary-bg-active: rgba(0, 16, 208, 0.25);
+	--btn-secondary-text: var(--brand-300);
+	--btn-secondary-border: var(--brand-500);
+	--btn-secondary-shadow: 4px 4px 0 var(--brand-950), var(--snes-window-sm);
+	--btn-secondary-shadow-hover:
+		4px 4px 0 var(--brand-900), inset 0 1px 0 rgba(112, 128, 240, 0.45),
+		0 0 0 2px rgba(0, 16, 208, 0.6);
+
+	--btn-tertiary-bg: transparent;
+	--btn-tertiary-bg-hover: rgba(64, 96, 240, 0.1);
+	--btn-tertiary-bg-active: rgba(64, 96, 240, 0.18);
+	--btn-tertiary-text: var(--color-text-secondary);
+	--btn-tertiary-border: var(--color-border-subtle);
+	--btn-tertiary-border-hover: var(--color-border-default);
+
+	--btn-gold-bg: var(--gold-400);
+	--btn-gold-bg-hover: var(--gold-300);
+	--btn-gold-bg-active: var(--gold-500);
+	--btn-gold-text: oklch(0.136 0.0279 94.15);
+	--btn-gold-border: var(--gold-200);
+	--btn-gold-shadow:
+		4px 4px 0 var(--gold-950), inset 0 1px 0 rgba(255, 240, 120, 0.6), 0 0 0 2px var(--gold-800);
+	--btn-gold-shadow-hover:
+		4px 4px 0 var(--gold-800), inset 0 1px 0 rgba(255, 248, 150, 0.7), 0 0 0 2px var(--gold-700),
+		var(--glow-gold-sm);
+
+	--btn-danger-bg: var(--red-400);
+	--btn-danger-bg-hover: var(--red-300);
+	--btn-danger-text: var(--slate-0);
+	--btn-danger-border: var(--red-200);
+	--btn-danger-shadow:
+		4px 4px 0 var(--red-900), inset 0 1px 0 rgba(255, 160, 160, 0.4), 0 0 0 2px var(--red-800);
+
+	/* Disabled button — themed */
+	--btn-disabled-bg: var(--slate-800);
+	--btn-disabled-border: var(--slate-700);
+	--btn-disabled-text: var(--color-text-disabled);
+
+	--input-bg: var(--color-bg-inset);
+	--input-bg-focus: oklch(0.1348 0.0604 274.67);
+	--input-border: var(--color-border-default);
+	--input-border-hover: var(--color-border-strong);
+	--input-border-focus: var(--brand-400);
+	--input-text: var(--color-text-primary);
+	--input-placeholder: var(--color-text-tertiary);
+	--input-shadow: var(--snes-window-sm);
+	--input-shadow-focus:
+		0 0 0 1px rgba(112, 128, 240, 0.35), 0 0 0 3px rgba(64, 96, 240, 0.2), var(--glow-brand-sm);
+	--input-radius: var(--radius-sm);
+	--label-color: var(--color-text-secondary);
+	--label-required: var(--red-300);
+	--helper-color: var(--color-text-tertiary);
+
+	--card-bg: var(--color-bg-surface);
+	--card-bg-hover: var(--color-bg-elevated);
+	--card-border: var(--color-border-default);
+	--card-border-hover: var(--color-border-strong);
+	--card-border-active: var(--brand-500);
+	--card-radius: var(--radius-md);
+	--card-shadow: var(--shadow-card);
+	--card-shadow-hover: var(--shadow-card-hover);
+	--card-padding: var(--space-6);
+	--card-accent-brand: var(--brand-500);
+	--card-accent-gold: var(--gold-400);
+	--card-accent-success: var(--green-400);
+	--card-stat-bg: rgba(0, 16, 208, 0.12);
+	--card-stat-border: var(--brand-500);
+	--card-stat-value: var(--color-text-gold);
+	--card-stat-label: var(--color-text-tertiary);
+
+	--modal-bg: var(--color-bg-elevated);
+	--modal-backdrop: rgba(2, 2, 16, 0.9);
+	--modal-border: var(--color-border-strong);
+	--modal-radius: var(--radius-lg);
+	--modal-shadow: var(--shadow-modal);
+	--modal-header-bg: oklch(0.1705 0.0771 274.53);
+	--modal-header-border: var(--color-border-default);
+	--modal-header-text: var(--brand-300);
+
+	--table-bg: var(--color-bg-surface);
+	--table-header-bg: oklch(0.1673 0.0791 273.77);
+	--table-header-text: var(--brand-300);
+	--table-header-border-b: 2px solid var(--brand-500);
+	--table-row-bg: var(--color-bg-surface);
+	--table-row-bg-alt: rgba(8, 8, 42, 0.7);
+	--table-row-bg-hover: rgba(64, 96, 240, 0.08);
+	--table-row-bg-selected: rgba(0, 16, 208, 0.18);
+	--table-row-border: var(--color-border-subtle);
+	--table-cell-text: var(--color-text-primary);
+	--table-cell-muted: var(--color-text-secondary);
+	--table-rank-color: var(--color-text-tertiary);
+	--table-row-win: rgba(0, 212, 82, 0.08);
+	--table-row-loss: rgba(255, 26, 56, 0.08);
+	--table-row-tie: rgba(255, 184, 0, 0.06);
+
+	--nav-bg: var(--color-bg-surface);
+	--nav-border: var(--color-border-subtle);
+	--nav-text: var(--color-text-secondary);
+	--nav-text-hover: var(--color-text-primary);
+	--nav-text-active: var(--brand-300);
+	--nav-border-active: var(--brand-500);
+	--nav-bg-active: rgba(0, 16, 208, 0.12);
+
+	--badge-brand-bg: rgba(0, 16, 208, 0.2);
+	--badge-brand-text: var(--brand-300);
+	--badge-brand-border: rgba(64, 96, 240, 0.42);
+	--badge-gold-bg: rgba(255, 184, 0, 0.14);
+	--badge-gold-text: var(--gold-300);
+	--badge-gold-border: rgba(255, 184, 0, 0.38);
+	--badge-win-bg: rgba(0, 212, 82, 0.12);
+	--badge-win-text: var(--green-300);
+	--badge-win-border: rgba(0, 212, 82, 0.32);
+	--badge-loss-bg: rgba(255, 26, 56, 0.12);
+	--badge-loss-text: var(--red-300);
+	--badge-loss-border: rgba(255, 26, 56, 0.32);
+	--badge-neutral-bg: rgba(80, 100, 180, 0.16);
+	--badge-neutral-text: var(--slate-300);
+	--badge-neutral-border: rgba(100, 120, 200, 0.28);
+
+	--progress-track: rgba(64, 96, 240, 0.15);
+	--progress-fill: var(--brand-500);
+	--progress-fill-gold: var(--gold-400);
+	--progress-fill-success: var(--green-400);
+
+	--scoreboard-bg: oklch(0.1166 0.0305 280.57);
+	--scoreboard-border: var(--gold-600);
+	--scoreboard-text: var(--gold-400);
+	--scoreboard-glow: var(--glow-gold-md);
+	--scoreboard-shadow: var(--snes-window-lg);
+	--scoreboard-dim: rgba(180, 120, 0, 0.45);
+
+	--dice-bg: var(--color-bg-elevated);
+	--dice-border: var(--brand-400);
+	--dice-dot: var(--slate-0);
+	--dice-dot-glow: 0 0 3px rgba(255, 255, 255, 0.5);
+	--dice-shadow: var(--shadow-card);
+	--dice-glow-active: var(--glow-brand-md);
+
+	--scrollbar-track: var(--color-bg-void);
+	--scrollbar-thumb: rgba(64, 96, 240, 0.28);
+	--scrollbar-thumb-hover: rgba(64, 96, 240, 0.52);
+
+	--focus-ring: 0 0 0 2px var(--color-bg-base), 0 0 0 4px var(--brand-400);
+
+	--text-shadow-display: 2px 2px 0 oklch(0.1868 0.1037 263.78), -1px -1px 0 rgba(0, 0, 0, 0.4);
+	--text-shadow-score: 2px 2px 0 rgba(100, 60, 0, 0.8);
+	--text-shadow-hero: 3px 3px 0 oklch(0.1829 0.1063 264.01);
+
+	/* ── SVG icon filters ───────────────────────────────────────
+     SVG assets are black by default. In dark mode we invert
+     them to white. Used by Settings, Modal close button, etc.
+  ────────────────────────────────────────────────────────────── */
+	--icon-filter-default: invert(1) opacity(0.6);
+	--icon-filter-hover: invert(1) opacity(1);
+}
+
+/* ════════════════════════════════════════════════════════════
+   4. LIGHT MODE TOKENS (secondary — accessibility only)
+   ════════════════════════════════════════════════════════════ */
+[data-theme="light"] {
+	--color-bg-void: oklch(0.9024 0.048 280.23);
+	--color-bg-base: oklch(0.9457 0.0259 276.4);
+	--color-bg-surface: oklch(1 0 0);
+	--color-bg-elevated: oklch(1 0 0);
+	--color-bg-overlay: oklch(0.9634 0.0175 279.06);
+	--color-bg-inset: oklch(0.9723 0.0133 281.57);
+	--color-bg-sunken: oklch(0.9472 0.0256 281.1);
+
+	--color-header-bg: var(--brand-500);
+	--color-header-border: var(--brand-700);
+	--color-header-shadow: 0 2px 0 var(--brand-700);
+	--color-header-text: var(--slate-0);
+	--color-header-text-muted: rgba(200, 212, 255, 0.85);
+	--color-header-logo-glow: none;
+
+	--color-text-primary: oklch(0.1188 0.05 275.67);
+	--color-text-secondary: oklch(0.3699 0.1948 267.67);
+	--color-text-tertiary: oklch(0.5056 0.1627 272.62);
+	--color-text-disabled: oklch(0.6763 0.0881 283.79);
+	--color-text-inverse: var(--slate-0);
+	--color-text-brand: var(--brand-500);
+	--color-text-gold: var(--gold-700);
+	--color-text-success: var(--green-700);
+	--color-text-danger: var(--red-600);
+	--color-text-warning: var(--gold-600);
+	--color-text-muted: oklch(0.5056 0.1627 272.62);
+
+	--color-border-subtle: rgba(0, 16, 208, 0.1);
+	--color-border-default: rgba(0, 16, 208, 0.22);
+	--color-border-strong: rgba(0, 16, 208, 0.46);
+	--color-border-brand: var(--brand-500);
+	--color-border-gold: var(--gold-600);
+	--color-border-success: var(--green-600);
+	--color-border-danger: var(--red-500);
+	--color-border-focus: var(--brand-500);
+
+	--snes-window-sm: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 0 0 2px rgba(0, 10, 120, 0.22);
+	--snes-window-md: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 0 0 3px rgba(0, 10, 120, 0.22);
+	--snes-window-lg: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 0 0 4px rgba(0, 10, 120, 0.22);
+
+	--shadow-pixel-brand: var(--shadow-pixel-md) rgba(0, 10, 120, 0.22);
+	--shadow-pixel-gold: var(--shadow-pixel-md) rgba(100, 60, 0, 0.25);
+	--shadow-pixel-dark: var(--shadow-pixel-md) rgba(0, 0, 0, 0.18);
+	--shadow-card: 4px 4px 0 rgba(0, 10, 120, 0.15), var(--snes-window-sm);
+	--shadow-card-hover:
+		6px 6px 0 rgba(0, 10, 120, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.9),
+		0 0 0 2px rgba(0, 16, 208, 0.35);
+	--shadow-modal: 8px 8px 0 rgba(0, 0, 0, 0.18), var(--snes-window-lg);
+
+	--glow-brand-sm: none;
+	--glow-brand-md: none;
+	--glow-gold-sm: none;
+	--glow-gold-md: none;
+	--glow-green-sm: none;
+	--glow-red-sm: none;
+
+	--color-surface-brand: rgba(0, 16, 208, 0.05);
+	--color-surface-gold: rgba(204, 132, 0, 0.07);
+	--color-surface-success: rgba(0, 140, 50, 0.07);
+	--color-surface-danger: rgba(224, 0, 48, 0.07);
+	--color-surface-warning: rgba(204, 132, 0, 0.07);
+
+	--btn-primary-bg: var(--brand-500);
+	--btn-primary-bg-hover: var(--brand-600);
+	--btn-primary-bg-active: var(--brand-700);
+	--btn-primary-text: var(--slate-0);
+	--btn-primary-border: var(--brand-700);
+	--btn-primary-shadow: 4px 4px 0 rgba(0, 8, 100, 0.28), var(--snes-window-sm);
+	--btn-primary-shadow-hover:
+		5px 5px 0 rgba(0, 8, 100, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2),
+		0 0 0 2px rgba(0, 13, 168, 0.5);
+
+	--btn-secondary-bg: transparent;
+	--btn-secondary-bg-hover: rgba(0, 16, 208, 0.06);
+	--btn-secondary-bg-active: rgba(0, 16, 208, 0.12);
+	--btn-secondary-text: var(--brand-500);
+	--btn-secondary-border: var(--brand-500);
+	--btn-secondary-shadow: 4px 4px 0 rgba(0, 8, 100, 0.15), var(--snes-window-sm);
+	--btn-secondary-shadow-hover:
+		5px 5px 0 rgba(0, 8, 100, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.7),
+		0 0 0 2px rgba(0, 16, 208, 0.28);
+
+	--btn-tertiary-bg: transparent;
+	--btn-tertiary-bg-hover: rgba(0, 16, 208, 0.06);
+	--btn-tertiary-bg-active: rgba(0, 16, 208, 0.11);
+	--btn-tertiary-text: var(--color-text-secondary);
+	--btn-tertiary-border: var(--color-border-subtle);
+	--btn-tertiary-border-hover: var(--color-border-default);
+
+	--btn-gold-bg: var(--gold-400);
+	--btn-gold-bg-hover: var(--gold-300);
+	--btn-gold-bg-active: var(--gold-500);
+	--btn-gold-text: oklch(0.173 0.0358 80.65);
+	--btn-gold-border: var(--gold-700);
+	--btn-gold-shadow:
+		4px 4px 0 rgba(100, 60, 0, 0.22), inset 0 1px 0 rgba(255, 248, 180, 0.7),
+		0 0 0 2px rgba(150, 90, 0, 0.3);
+	--btn-gold-shadow-hover:
+		5px 5px 0 rgba(100, 60, 0, 0.3), inset 0 1px 0 rgba(255, 252, 200, 0.8),
+		0 0 0 2px rgba(150, 90, 0, 0.45);
+
+	--btn-danger-bg: var(--red-400);
+	--btn-danger-bg-hover: var(--red-500);
+	--btn-danger-text: var(--slate-0);
+	--btn-danger-border: var(--red-700);
+	--btn-danger-shadow:
+		4px 4px 0 rgba(80, 0, 0, 0.28), inset 0 1px 0 rgba(255, 200, 200, 0.35),
+		0 0 0 2px rgba(130, 0, 0, 0.35);
+
+	/* Disabled button — themed */
+	--btn-disabled-bg: var(--slate-200);
+	--btn-disabled-border: var(--slate-300);
+	--btn-disabled-text: var(--color-text-disabled);
+
+	--input-bg: var(--slate-0);
+	--input-bg-focus: var(--slate-0);
+	--input-border: var(--color-border-default);
+	--input-border-hover: var(--color-border-strong);
+	--input-border-focus: var(--brand-500);
+	--input-text: var(--color-text-primary);
+	--input-placeholder: var(--color-text-tertiary);
+	--input-shadow: var(--snes-window-sm);
+	--input-shadow-focus: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 0 3px rgba(0, 16, 208, 0.2);
+	--label-color: var(--color-text-secondary);
+	--label-required: var(--red-500);
+	--helper-color: var(--color-text-tertiary);
+
+	--card-bg: var(--color-bg-surface);
+	--card-bg-hover: var(--color-bg-surface);
+	--card-border: var(--color-border-subtle);
+	--card-border-hover: var(--color-border-default);
+	--card-border-active: var(--brand-500);
+	--card-shadow: var(--shadow-card);
+	--card-shadow-hover: var(--shadow-card-hover);
+	--card-stat-bg: rgba(0, 16, 208, 0.05);
+	--card-stat-border: var(--brand-500);
+	--card-stat-value: var(--gold-700);
+	--card-stat-label: var(--color-text-tertiary);
+
+	--modal-bg: var(--color-bg-surface);
+	--modal-backdrop: rgba(2, 2, 24, 0.65);
+	--modal-border: var(--color-border-default);
+	--modal-header-bg: var(--color-bg-inset);
+	--modal-header-border: var(--color-border-subtle);
+	--modal-header-text: var(--brand-500);
+
+	--table-bg: var(--color-bg-surface);
+	--table-header-bg: var(--color-bg-inset);
+	--table-header-text: var(--brand-500);
+	--table-header-border-b: 2px solid var(--brand-500);
+	--table-row-bg: var(--color-bg-surface);
+	--table-row-bg-alt: var(--color-bg-inset);
+	--table-row-bg-hover: rgba(0, 16, 208, 0.04);
+	--table-row-bg-selected: rgba(0, 16, 208, 0.08);
+	--table-row-border: var(--color-border-subtle);
+	--table-rank-color: var(--color-text-tertiary);
+	--table-row-win: rgba(0, 140, 50, 0.06);
+	--table-row-loss: rgba(224, 0, 48, 0.06);
+	--table-row-tie: rgba(204, 132, 0, 0.05);
+
+	--nav-bg: var(--color-bg-surface);
+	--nav-border: var(--color-border-subtle);
+	--nav-text: var(--color-text-secondary);
+	--nav-text-hover: var(--color-text-primary);
+	--nav-text-active: var(--brand-500);
+	--nav-border-active: var(--brand-500);
+	--nav-bg-active: rgba(0, 16, 208, 0.06);
+
+	--badge-brand-bg: rgba(0, 16, 208, 0.07);
+	--badge-brand-text: var(--brand-600);
+	--badge-brand-border: rgba(0, 16, 208, 0.2);
+	--badge-gold-bg: rgba(204, 132, 0, 0.08);
+	--badge-gold-text: var(--gold-700);
+	--badge-gold-border: rgba(204, 132, 0, 0.22);
+	--badge-win-bg: rgba(0, 140, 50, 0.07);
+	--badge-win-text: var(--green-700);
+	--badge-win-border: rgba(0, 140, 50, 0.2);
+	--badge-loss-bg: rgba(224, 0, 48, 0.07);
+	--badge-loss-text: var(--red-600);
+	--badge-loss-border: rgba(224, 0, 48, 0.2);
+	--badge-neutral-bg: rgba(80, 100, 180, 0.07);
+	--badge-neutral-text: var(--slate-600);
+	--badge-neutral-border: rgba(80, 100, 180, 0.2);
+
+	--progress-track: rgba(0, 16, 208, 0.12);
+	--progress-fill: var(--brand-500);
+	--progress-fill-gold: var(--gold-500);
+	--progress-fill-success: var(--green-500);
+
+	/* Scoreboard always dark */
+	--scoreboard-bg: oklch(0.1166 0.0305 280.57);
+	--scoreboard-border: var(--gold-700);
+	--scoreboard-text: var(--gold-400);
+	--scoreboard-glow: none;
+	--scoreboard-shadow: var(--snes-window-md);
+	--scoreboard-dim: rgba(120, 80, 0, 0.4);
+
+	--dice-bg: var(--color-bg-surface);
+	--dice-border: var(--brand-500);
+	--dice-dot: var(--brand-500);
+	--dice-dot-glow: none;
+	--dice-shadow: var(--shadow-card);
+	--dice-glow-active: none;
+
+	--scrollbar-track: var(--color-bg-inset);
+	--scrollbar-thumb: rgba(0, 16, 208, 0.18);
+	--scrollbar-thumb-hover: rgba(0, 16, 208, 0.38);
+
+	--focus-ring: 0 0 0 2px var(--color-bg-base), 0 0 0 4px var(--brand-500);
+
+	/* Text shadows — suppress hard drop on light backgrounds */
+	--text-shadow-display: 1px 1px 0 rgba(0, 8, 100, 0.2);
+	--text-shadow-score: 1px 1px 0 rgba(0, 0, 0, 0.12);
+	--text-shadow-hero: none;
+
+	/* ── SVG icon filters ───────────────────────────────────────
+     In light mode, SVG assets are already dark — no invert.
+  ────────────────────────────────────────────────────────────── */
+	--icon-filter-default: opacity(0.55);
+	--icon-filter-hover: opacity(0.9);
+}
+
+/* ════════════════════════════════════════════════════════════
+   5. BACKWARD-COMPAT ALIASES
+   Maps old variable names to new semantic tokens.
+   ════════════════════════════════════════════════════════════
+
+   FIX: --color-white and --color-offblack must stay on their
+   correct sides of the light/dark divide in BOTH modes.
+
+   Old usage patterns:
+     --color-white    → light text on dark bg, or light surfaces
+     --color-offblack → dark text on lighter blue/gray elements
+
+   Both must be stable (light stays light, dark stays dark)
+   regardless of theme. The semantic tokens already handle
+   context-dependent color; these aliases are only for legacy
+   components that haven't migrated yet.
+   ════════════════════════════════════════════════════════════ */
+
+:root,
+[data-theme="dark"] {
+	/* Always near-white — safe for light text on dark bg */
+	--color-white: var(--slate-50);
+	/* Always near-black — safe for dark text on lighter surfaces */
+	--color-offblack: var(--slate-950);
+
+	/* Brand scale */
+	--color-blue-100: var(--brand-100);
+	--color-blue-300: var(--brand-300);
+	--color-blue-500: var(--brand-500);
+	--color-blue-600: var(--brand-600);
+	--color-blue-700: var(--brand-700);
+	--color-blue-900: var(--brand-900);
+
+	/* Gray scale: in dark mode, gray-N maps to slate-N (dark = large number) */
+	--color-gray-50: var(--slate-50);
+	--color-gray-100: var(--slate-100);
+	--color-gray-200: var(--slate-200);
+	--color-gray-300: var(--slate-300);
+	--color-gray-400: var(--slate-400);
+	--color-gray-500: var(--slate-500);
+	--color-gray-600: var(--slate-600);
+	--color-gray-700: var(--slate-700);
+	--color-gray-800: var(--slate-800);
+	--color-gray-900: var(--slate-900);
+	--color-gray-1000: var(--slate-950);
+
+	/* Semantic */
+	--color-yellow: var(--gold-400);
+	--urgent: var(--red-400);
+	--urgent-hover: var(--red-200);
+	--mask: rgba(2, 2, 16, 0.9);
+	--ltmask: rgba(2, 2, 16, 0.45);
+
+	/* Field */
+	--field-odd: var(--green-500);
+	--field-even: var(--green-600);
+	--field: var(--green-700);
+
+	/* Legacy font sizes */
+	--font-size: var(--text-base);
+	--12px: var(--text-xs);
+	--14px: var(--text-sm);
 	--15px: 0.9375rem;
-	--16px: 1rem;
+	--16px: var(--text-base);
 	--17px: 1.0625rem;
-	--18px: 1.125rem;
+	--18px: var(--text-md);
 	--19px: 1.1875rem;
-	--20px: 1.25rem;
+	--20px: var(--text-lg);
 	--21px: 1.3125rem;
-	--24px: 1.5rem;
-	font-family:
-		system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
-		"Open Sans", "Helvetica Neue", sans-serif;
+	--24px: var(--text-xl);
 
-	/*LAYOUT*/
-	--border-radius: 5px;
-	--side: 1rem;
-	--column: 55rem;
-	--shadow-elevation-medium:
-		0.3px 0.5px 0.7px oklch(var(--shadow-color) / 0.36),
-		0.8px 1.6px 2px -0.8px oklch(var(--shadow-color) / 0.36),
-		2.1px 4.1px 5.2px -1.7px oklch(var(--shadow-color) / 0.36),
-		5px 10px 12.6px -2.5px oklch(var(--shadow-color) / 0.36);
+	/* Layout */
+	--border-radius: var(--radius-sm);
+	--side: var(--space-4);
+	--column: var(--max-w-xl);
+	--shadow-elevation-medium: var(--shadow-card);
 }
 
 [data-theme="light"] {
-	--color-white: oklch(0.1669 0.0032 286.05);
-	--color-offblack: oklch(0.9752 0.0034 264.54);
-	--color-gray-50: oklch(0.2128 0.0121 248.39);
-	--color-gray-100: oklch(0.317 0.0173 248.37);
-	--color-gray-200: oklch(0.3657 0.0208 248.4);
-	--color-gray-300: oklch(0.5052 0.0205 248.23);
-	--color-gray-400: oklch(0.5496 0.0204 248.2);
-	--color-gray-500: oklch(0.5932 0.0197 248.16);
-	--color-gray-600: oklch(0.6344 0.0262 248.24);
-	--color-gray-700: oklch(0.7268 0.0223 248.14);
-	--color-gray-800: oklch(0.816 0.021 248.09);
-	--color-gray-900: oklch(0.9043 0.0133 247.97);
-	--color-gray-1000: oklch(0.9683 0.0044 247.87);
-	--mask: oklch(0.9752 0.0034 264.54 / 0.8);
-	--ltmask: oklch(0.9752 0.0034 264.54 / 0.4);
+	/* Light mode: white is still white, offblack is still dark */
+	--color-white: var(--slate-0);
+	--color-offblack: var(--slate-900);
+
+	/* Gray scale: in light mode, invert so gray-900 = light surface
+     (components using gray-900 as a "dark card" bg get a light card in light mode) */
+	--color-gray-50: var(--slate-900);
+	--color-gray-100: var(--slate-800);
+	--color-gray-200: var(--slate-700);
+	--color-gray-300: var(--slate-600);
+	--color-gray-400: var(--slate-500);
+	--color-gray-500: var(--slate-400);
+	--color-gray-600: var(--slate-300);
+	--color-gray-700: var(--slate-200);
+	--color-gray-800: var(--slate-100);
+	--color-gray-900: var(--color-bg-surface);
+	--color-gray-1000: var(--color-bg-base);
+
+	--mask: rgba(2, 2, 24, 0.65);
+	--ltmask: rgba(2, 2, 24, 0.3);
+
+	--border-radius: var(--radius-sm);
+	--side: var(--space-4);
+	--column: var(--max-w-xl);
 }
 
-[data-theme="light"] html,
-html[data-theme="light"] {
-	background: radial-gradient(circle at 50% 0%, oklch(0.95 0 0) 0%, oklch(0.88 0 0) 100%);
-	background-attachment: fixed;
-	background-size: 100vw 100vh;
+/* ════════════════════════════════════════════════════════════
+   6. BASE UTILITY STYLES
+   ════════════════════════════════════════════════════════════ */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 * {
-	box-sizing: border-box;
-	margin: 0;
 	position: relative;
 }
 
-*::before,
-*::after {
-	box-sizing: inherit;
+html {
+	font-size: 16px;
+	background: var(--color-bg-void);
 }
 
-html {
-	background: radial-gradient(circle at 50% 0%, oklch(0.193 0 0) 0%, oklch(0.1157 0 0) 100%);
-	background-attachment: fixed;
-	background-size: 100vw 100vh;
+/* Portal containers appended to <body> (flex container) */
+[modal-portal] {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 0;
+	overflow: visible;
+	z-index: var(--z-modal);
 }
 
 body {
+	font-family: var(--font-body);
+	font-size: var(--text-base);
+	font-weight: var(--weight-medium);
+	line-height: var(--leading-base);
+	color: var(--color-text-primary);
+	background-color: var(--color-bg-base);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
 	height: 100dvh;
-	-webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+	background: var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+	background: var(--scrollbar-thumb);
+	border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	background: var(--scrollbar-thumb-hover);
+}
+
+:focus-visible {
+	outline: none;
+	box-shadow: var(--focus-ring);
 }
 
 p {
-	line-height: 1.5;
+	line-height: var(--leading-base);
 }
 
 a {
@@ -125,15 +892,21 @@ button {
 	text-align: left;
 	font: inherit;
 	color: inherit;
-	transition: all 0.2s ease-in-out;
+	transition: all var(--dur-base) var(--ease-snes);
 }
 
 button:not(:disabled):active {
-	transform: translateY(1px);
+	transform: translateY(2px);
+	box-shadow: none !important;
 }
 
+/* Disabled state uses themed tokens — not a hardcoded dark color */
 button:disabled {
-	background-color: var(--color-gray-700);
+	background-color: var(--btn-disabled-bg);
+	border-color: var(--btn-disabled-border) !important;
+	color: var(--btn-disabled-text);
+	box-shadow: none !important;
+	cursor: default;
 }
 
 h1,
@@ -142,15 +915,15 @@ h3,
 h4,
 h5,
 h6 {
-	font-weight: 400;
-	font-family: inherit;
-	color: var(--color-white);
+	font-weight: var(--weight-semibold);
+	font-family: var(--font-body);
+	color: var(--color-text-primary);
 	margin: 0 0 0.5em 0;
-	line-height: 1.1;
+	line-height: var(--leading-tight);
 }
 
 h1 {
-	font-size: 1.75rem;
+	font-size: var(--text-2xl);
 }
 
 input,
@@ -185,6 +958,127 @@ h6 {
 	isolation: isolate;
 }
 
+/* Font utilities */
+.font-display {
+	font-family: var(--font-display);
+}
+
+.font-numeric {
+	font-family: var(--font-numeric);
+}
+
+.font-body {
+	font-family: var(--font-body);
+}
+
+.display-title {
+	font-family: var(--font-display);
+	font-weight: var(--weight-black);
+	font-style: italic;
+	letter-spacing: var(--tracking-display);
+	text-shadow: var(--text-shadow-display);
+}
+
+.score-display {
+	font-family: var(--font-numeric);
+	font-weight: var(--weight-black);
+	color: var(--color-text-gold);
+	text-shadow: var(--text-shadow-score);
+	letter-spacing: var(--tracking-widest);
+}
+
+/* Color utilities */
+.text-primary {
+	color: var(--color-text-primary);
+}
+
+.text-secondary {
+	color: var(--color-text-secondary);
+}
+
+.text-muted {
+	color: var(--color-text-muted);
+}
+
+.text-brand {
+	color: var(--color-text-brand);
+}
+
+.text-gold {
+	color: var(--color-text-gold);
+}
+
+.text-success {
+	color: var(--color-text-success);
+}
+
+.text-danger {
+	color: var(--color-text-danger);
+}
+
+/* SNES Window Chrome utilities */
+.snes-window-sm {
+	box-shadow: var(--snes-window-sm);
+}
+
+.snes-window-md {
+	box-shadow: var(--snes-window-md);
+}
+
+.snes-window-lg {
+	box-shadow: var(--snes-window-lg);
+}
+
+/* Pixel shadow utilities */
+.shadow-px-brand {
+	box-shadow: var(--shadow-pixel-brand);
+}
+
+.shadow-px-gold {
+	box-shadow: var(--shadow-pixel-gold);
+}
+
+/* Glow utilities (dark mode; no-op in light) */
+.glow-brand {
+	box-shadow: var(--glow-brand-md);
+}
+
+.glow-gold {
+	box-shadow: var(--glow-gold-md);
+}
+
+/* Progress bar */
+.progress-bar {
+	height: var(--progress-h);
+	border-radius: var(--progress-radius);
+	background: var(--progress-track);
+	overflow: hidden;
+	box-shadow: var(--snes-window-sm);
+}
+
+.progress-bar__fill {
+	height: 100%;
+	border-radius: var(--progress-radius);
+	background: var(--progress-fill);
+	transition: width var(--dur-base) var(--ease-snes);
+}
+
+.progress-bar__fill--gold {
+	background: var(--progress-fill-gold);
+}
+
+.progress-bar__fill--success {
+	background: var(--progress-fill-success);
+}
+
+/* Scoreboard always-dark override */
+.scoreboard-panel {
+	background: var(--scoreboard-bg) !important;
+	border-color: var(--scoreboard-border) !important;
+	color: var(--scoreboard-text) !important;
+}
+
+/* Layout utilities */
 .column {
 	padding-left: var(--side);
 	padding-right: var(--side);
@@ -197,31 +1091,49 @@ h6 {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	gap: 1rem;
+	gap: var(--space-4);
 }
 
+/* ── Global game button ─────────────────────────────────────── */
+/* Defined here as a global utility so any component can use it.
+   +page.svelte also adds scoped .game-button overrides on top. */
 .game-button {
-	background-color: var(--color-blue-300);
-	border: 1px solid var(--color-blue-500);
-	border-radius: var(--border-radius);
-	padding: 0.5em;
+	background-color: var(--btn-primary-bg);
+	color: var(--btn-primary-text);
+	border: var(--border-base) solid var(--btn-primary-border);
+	border-radius: var(--radius-sm);
+	padding: var(--space-2) var(--space-4);
 	text-align: center;
+	font-family: var(--font-body);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-wide);
+	box-shadow: var(--btn-primary-shadow);
+	transition: all var(--dur-base) var(--ease-snes);
 
 	&:disabled,
 	&:disabled:hover {
-		background-color: var(--color-gray-700);
-		border: 1px solid var(--color-gray-700);
+		background-color: var(--btn-disabled-bg);
+		border-color: var(--btn-disabled-border);
+		color: var(--btn-disabled-text);
+		box-shadow: none;
 		cursor: default;
 	}
-	&:hover {
-		background-color: var(--color-blue-100);
-		border: 1px solid var(--color-blue-500);
+
+	&:not(:disabled):hover {
+		background-color: var(--btn-primary-bg-hover);
+		box-shadow: var(--btn-primary-shadow-hover);
+	}
+
+	&:not(:disabled):active {
+		background-color: var(--btn-primary-bg-active);
+		transform: translateY(2px);
+		box-shadow: none;
 	}
 }
 
 @media (min-width: 40rem) {
 	:root {
-		--side: 4rem;
+		--side: var(--space-16);
 	}
 }
 
