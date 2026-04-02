@@ -77,7 +77,10 @@
 			<div class="team-list">
 				{#each teams as record (record.id)}
 					<div class="team-card">
-						<div class="team-header">
+						<div
+							class="team-header"
+							style:background-color={record.teamData.colors.primary}
+						>
 							<div class="helmet-preview">
 								<CustomHelmet
 									faceMask={record.teamData.colors.faceMask || ''}
@@ -102,13 +105,13 @@
 								>
 									{record.teamData.city} {record.teamData.name}
 								</div>
-								<div class="team-record">{formatRecord(record.teamData.id)}</div>
 							</div>
 						</div>
 						<div class="card-actions">
 							<button class="game-button" onclick={() => openEditor(record.teamData.id)}>
 								Edit
 							</button>
+							<div class="team-record">{formatRecord(record.teamData.id)}</div>
 							{#if confirmDeleteId === record.id}
 								<div class="confirm-row">
 									<button class="delete-btn" onclick={() => handleDelete(record.id!)}>
@@ -181,24 +184,29 @@
 		align-items: center;
 		gap: 0.75rem;
 		margin-bottom: 0.75rem;
+		padding: 0.5rem 0.75rem;
+		border-radius: var(--radius-sm);
 	}
 	.helmet-preview {
 		width: 4rem;
 		height: 4rem;
 		flex-shrink: 0;
-		overflow: visible;
+	}
+	.helmet-preview :global(.helmet-wrapper) {
+		height: 4rem;
 	}
 	.team-info {
 		flex: 1;
 	}
 	.team-name {
-		font-weight: 600;
-		font-size: var(--16px);
+		font-family: var(--font-endzone);
+		font-weight: 700;
+		font-size: var(--text-display-sm);
+		letter-spacing: 0.15em;
 	}
 	.team-record {
-		color: var(--color-gray-400);
-		font-size: var(--14px);
-		margin-top: 0.125rem;
+		color: var(--color-text-gold);
+		font-size: var(--text-base);
 	}
 	.card-actions {
 		display: flex;

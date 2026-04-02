@@ -6,7 +6,6 @@
 	} from '$lib/constants/constants';
 	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
 	import type { Team, Void } from '$lib/types';
-	import '@fontsource/bebas-neue';
 
 	type EndZoneProps = {
 		hasBall: boolean;
@@ -37,7 +36,6 @@
 
 <div class="endZone" style={`background-color: ${primary};`}>
 	<div class="endZoneElements">
-		<div></div>
 		<div class={`helmetLogo rotate${position}`} class:flipLeft={position === POSITION.LEFT}>
 			<CustomHelmet
 				{faceMask}
@@ -83,7 +81,6 @@
 				logoRotation={team.logoRotation}
 			/>
 		</div>
-		<div></div>
 	</div>
 	<button
 		class="goalPost"
@@ -111,9 +108,10 @@
 	.endZoneElements {
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: 0.5em auto 1fr auto 0.5em;
+		grid-template-rows: auto 1fr auto;
 		gap: 0.25em;
 		height: 100%;
+		padding: 0.75em 0;
 	}
 	.goalPost {
 		display: flex;
@@ -127,6 +125,10 @@
 		padding: 0;
 		top: 50%;
 		left: 0;
+		transform: translate(-50%, -50%);
+		transition: none;
+	}
+	.goalPost:active {
 		transform: translate(-50%, -50%);
 	}
 	.goalPost.right {
@@ -151,14 +153,18 @@
 		height: clamp(2rem, 60cqi, 7rem);
 		width: clamp(2rem, 60cqi, 7rem);
 	}
+	.helmetLogo :global(.helmet-wrapper) {
+		height: 100%;
+	}
 	.name-container {
 		display: flex;
 		justify-content: center;
 		overflow: hidden;
+		min-height: 0;
 	}
 	.name {
 		font-weight: 700;
-		font-family: 'Bebas Neue', sans-serif;
+		font-family: var(--font-endzone);
 		font-size: clamp(1rem, 55cqb, 5rem);
 		transform: rotate(180deg);
 		writing-mode: vertical-lr;

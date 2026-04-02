@@ -263,7 +263,7 @@
 	}
 
 	/* ── Mobile ───────────────────────────────────────────────── */
-	@media (max-width: 40rem) {
+	@media (max-width: 780px) {
 		main {
 			padding: var(--space-6) var(--space-4);
 			gap: var(--space-6);

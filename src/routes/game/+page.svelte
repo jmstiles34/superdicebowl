@@ -334,10 +334,10 @@
 		<Modal
 			showModal={game.action === GAME_ACTION.EXIT}
 			close={cancelExit}
-			hasClose={true}
-			choiceRequired={false}
+			hasClose={false}
+			choiceRequired={true}
 		>
-			<ConfirmExit />
+			<ConfirmExit cancel={cancelExit} />
 		</Modal>
 
 		<Modal
@@ -392,12 +392,16 @@
 		width: 1.5em;
 		min-height: 20px;
 		min-width: 20px;
+		transition: filter var(--dur-fast) var(--ease-snes);
+	}
+	.toolbarButton:hover img {
+		filter: brightness(1.5);
 	}
 	.flip {
 		transform: scale(-1, 1);
 	}
 	.divider {
-		color: var(--color-blue-500);
+		color: var(--brand-300);
 		font-weight: bold;
 		font-size: 1.25rem;
 	}

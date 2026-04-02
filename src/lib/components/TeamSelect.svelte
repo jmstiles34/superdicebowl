@@ -122,6 +122,31 @@
 		{/if}
 	</div>
 	<div class="select-row">
+		<div class="mini-helmet">
+			{#if team.id.length}
+				<CustomHelmet
+					faceMask={team.colors.faceMask}
+					helmet={team.colors.helmet}
+					stripe={team.colors.stripe}
+					trim={team.colors.trim}
+					direction={POSITION.RIGHT}
+					logo={team.logo}
+					logoFixed={false}
+					logoLeft={team.logoLeft}
+					logoX={team.logoX}
+					logoY={team.logoY}
+					logoWidth={team.logoWidth}
+					logoHeight={team.logoHeight}
+					logoRotation={team.logoRotation}
+				/>
+			{:else if diceColor}
+				<img
+					class="mini-dice"
+					alt={`${teamType} Team Placeholder`}
+					src={`/images/dice-${diceColor}.svg`}
+				/>
+			{/if}
+		</div>
 		<select name="teamSelect" onchange={handleTeamSelect} value={selected} class="team-select">
 			<option value="">Choose {teamType} Team</option>
 			{#each allTeamsData as team}
@@ -293,5 +318,48 @@
 		height: 1.5rem;
 		width: 1.5rem;
 		display: block;
+	}
+
+	/* ── Mini helmet (mobile only) ────────────────────────────── */
+	.mini-helmet {
+		display: none;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		flex-shrink: 0;
+	}
+
+	.mini-helmet :global(.helmet-wrapper) {
+		height: 2.5rem;
+	}
+
+	.mini-dice {
+		width: 2rem;
+		height: 2rem;
+	}
+
+	/* ── Small screens ───────────────────────────────────────── */
+	@media (max-width: 780px) {
+		.team-card {
+			padding: var(--space-3);
+		}
+
+		h1 {
+			font-size: var(--text-sm);
+			margin: 0 0 var(--space-2) 0;
+		}
+
+		.helmet {
+			display: none;
+		}
+
+		.mini-helmet {
+			display: flex;
+		}
+
+		.select-row {
+			align-items: center;
+		}
 	}
 </style>

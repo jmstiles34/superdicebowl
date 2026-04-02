@@ -35,7 +35,7 @@
 {#if auth.currentUser}
 	<div class="account-page">
 		<div class="account-card">
-			<h2>Account</h2>
+			<h2>My Account</h2>
 
 			<div class="info-row">
 				<span class="label">Username</span>

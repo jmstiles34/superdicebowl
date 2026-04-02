@@ -310,14 +310,14 @@
 		font-size: var(--14px);
 	}
 	.meta {
-		color: var(--color-gray-400);
+		color: var(--color-text-gold);
 		font-size: var(--12px);
 		text-align: center;
 		margin-bottom: 0.75rem;
 	}
 	.date {
 		display: block;
-		color: var(--color-gray-500);
+		color: var(--color-text-secondary);
 		margin-top: 0.25rem;
 	}
 	.card-actions {

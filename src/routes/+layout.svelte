@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import Modal from '$lib/components/Modal.svelte';
@@ -13,10 +14,37 @@
 	const currentYear = new Date().getFullYear();
 	let isGamePage = $derived($page.url.pathname === '/game');
 	let showSettings = $state(false);
+	let showMobileMenu = $state(false);
+	let kebabButton = $state<HTMLButtonElement>();
+	let dropdown = $state<HTMLDivElement>();
 
 	function toggleSettings() {
 		showSettings = !showSettings;
 	}
+
+	function toggleMobileMenu() {
+		showMobileMenu = !showMobileMenu;
+	}
+
+	async function handleSignOut() {
+		showMobileMenu = false;
+		await auth.logout();
+		goto('/');
+	}
+
+	$effect(() => {
+		if (!showMobileMenu) return;
+
+		function handleClickOutside(e: MouseEvent) {
+			const target = e.target as Node;
+			if (!kebabButton?.contains(target) && !dropdown?.contains(target)) {
+				showMobileMenu = false;
+			}
+		}
+
+		document.addEventListener('click', handleClickOutside, true);
+		return () => document.removeEventListener('click', handleClickOutside, true);
+	});
 
 	$effect(() => {
 		document.documentElement.setAttribute('data-theme', settings.theme);
@@ -47,12 +75,12 @@
 
 		<div class="menu-wrapper">
 			{#if auth.isLoggedIn}
-				<a class="link" href="/season">Season</a>
-				<a class="link" href="/teams">My Teams</a>
-				<a class="link" href="/games">My Games</a>
-				<a class="link" href="/account">{auth.currentUser?.username}</a>
+				<a class="link desktop-link" href="/season">Season</a>
+				<a class="link desktop-link" href="/teams">My Teams</a>
+				<a class="link desktop-link" href="/games">My Games</a>
+				<a class="link desktop-link" href="/account">My Account</a>
 			{:else}
-				<a class="link" href="/login">Sign In</a>
+				<a class="link desktop-link" href="/login">Sign In</a>
 			{/if}
 
 			<button
@@ -63,6 +91,35 @@
 			>
 				<img src={gear} alt="Settings" />
 			</button>
+
+			<button
+				class="kebab-button"
+				onclick={toggleMobileMenu}
+				bind:this={kebabButton}
+				aria-label="Menu"
+				aria-expanded={showMobileMenu}
+				title="Menu"
+			>
+				<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+					<circle cx="10" cy="4" r="1.75" />
+					<circle cx="10" cy="10" r="1.75" />
+					<circle cx="10" cy="16" r="1.75" />
+				</svg>
+			</button>
+
+			{#if showMobileMenu}
+				<div class="kebab-dropdown" bind:this={dropdown}>
+					{#if auth.isLoggedIn}
+						<a class="kebab-item" href="/season" onclick={() => showMobileMenu = false}>Season</a>
+						<a class="kebab-item" href="/teams" onclick={() => showMobileMenu = false}>My Teams</a>
+						<a class="kebab-item" href="/games" onclick={() => showMobileMenu = false}>My Games</a>
+						<a class="kebab-item" href="/account" onclick={() => showMobileMenu = false}>My Account</a>
+						<button class="kebab-item" onclick={handleSignOut}>Sign Out</button>
+					{:else}
+						<a class="kebab-item" href="/login" onclick={() => showMobileMenu = false}>Sign In</a>
+					{/if}
+				</div>
+			{/if}
 		</div>
 	</nav>
 {/if}
@@ -137,6 +194,7 @@
 		gap: var(--space-2);
 		justify-content: flex-end;
 		align-items: center;
+		position: relative;
 	}
 
 	.link {
@@ -237,13 +295,100 @@
 		color: var(--color-text-brand);
 	}
 
-	/* ── Compact screens ──────────────────────────────────────── */
-	@media (max-height: 30rem) {
-		footer,
+	/* ── Kebab / Mobile menu ─────────────────────────────────── */
+	.kebab-button {
+		display: none;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-2);
+		background: transparent;
+		border: 1px solid transparent;
+		border-radius: var(--radius-sm);
+		cursor: pointer;
+		color: var(--brand-200);
+		transition:
+			background-color var(--dur-fast) var(--ease-snes),
+			border-color var(--dur-fast) var(--ease-snes),
+			color var(--dur-fast) var(--ease-snes);
+	}
+
+	.kebab-button:hover {
+		background-color: var(--nav-bg-active);
+		border-color: rgba(64, 96, 240, 0.25);
+		color: var(--color-header-text);
+	}
+
+	.kebab-button:focus-visible {
+		outline: none;
+		box-shadow: var(--focus-ring);
+	}
+
+	.kebab-dropdown {
+		position: absolute;
+		top: 100%;
+		right: 0;
+		margin-top: var(--space-2);
+		min-width: 10rem;
+		background-color: var(--color-bg-elevated);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-md);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+		z-index: var(--z-dropdown);
+		display: flex;
+		flex-direction: column;
+		padding: var(--space-1) 0;
+	}
+
+	.kebab-item {
+		display: block;
+		width: 100%;
+		padding: var(--space-2) var(--space-4);
+		font-family: var(--font-body);
+		font-size: var(--text-base);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-wide);
+		color: var(--brand-200);
+		text-decoration: none;
+		text-align: left;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		transition:
+			color var(--dur-fast) var(--ease-snes),
+			background-color var(--dur-fast) var(--ease-snes);
+	}
+
+	.kebab-item:hover {
+		color: var(--color-header-text);
+		background-color: var(--nav-bg-active);
+	}
+
+	.kebab-item:focus-visible {
+		outline: none;
+		box-shadow: var(--focus-ring);
+	}
+
+	/* ── Small screens ───────────────────────────────────────── */
+	@media (max-width: 780px) {
 		nav {
-			height: 0;
-			padding: 4px var(--space-5);
-			visibility: collapse;
+			padding: 0 var(--space-2);
+		}
+
+		.desktop-link {
+			display: none;
+		}
+
+		.menu-wrapper {
+			gap: var(--space-1);
+		}
+
+		.kebab-button {
+			display: flex;
+			padding: var(--space-1);
+		}
+
+		.settings-button {
+			padding: var(--space-1);
 		}
 	}
 </style>

@@ -25,8 +25,9 @@
   6.  Base Utility Styles
    ============================================================ */
 
-/* ─── 1. GOOGLE FONTS ──────────────────────────────────────── */
+/* ─── 1. FONTS ─────────────────────────────────────────────── */
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&display=swap");
+@import "@fontsource/bebas-neue";
 
 /*
   Font Roles – SNES Era Hierarchy
@@ -34,6 +35,7 @@
   --font-display: Exo 2 Black Italic
   --font-numeric: Orbitron Bold/Black
   --font-body   : Rajdhani Medium/SemiBold
+  --font-endzone: Bebas Neue
 */
 
 /* ─── 2. ROOT – SHARED TOKENS ──────────────────────────────── */
@@ -107,6 +109,7 @@
 	--font-display: "Exo 2", sans-serif;
 	--font-numeric: "Orbitron", monospace;
 	--font-body: "Rajdhani", sans-serif;
+	--font-endzone: "Bebas Neue", sans-serif;
 
 	--text-2xs: 0.6875rem;
 	--text-xs: 0.75rem;
@@ -381,7 +384,7 @@
 	--card-stat-label: var(--color-text-tertiary);
 
 	--modal-bg: var(--color-bg-elevated);
-	--modal-backdrop: rgba(2, 2, 16, 0.9);
+	--modal-backdrop: rgba(2, 2, 16, 0.6);
 	--modal-border: var(--color-border-strong);
 	--modal-radius: var(--radius-lg);
 	--modal-shadow: var(--shadow-modal);

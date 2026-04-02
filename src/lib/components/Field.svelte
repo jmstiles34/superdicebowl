@@ -284,4 +284,19 @@
 	.lower.hashes {
 		bottom: 0;
 	}
+
+	/* ── Mobile landscape ────────────────────────────────────── */
+	@media (max-height: 500px) and (orientation: landscape) {
+		.fieldNumber {
+			font-size: clamp(0.5rem, 0.3rem + 2vw, 1.25rem);
+		}
+
+		.upper.fieldNumber {
+			top: 1.5rem;
+		}
+
+		.lower.fieldNumber {
+			bottom: 1.5rem;
+		}
+	}
 </style>

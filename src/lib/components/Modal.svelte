@@ -99,7 +99,7 @@
 	/* ── Modal panel ──────────────────────────────────────────── */
 	.modal {
 		position: relative;
-		padding: var(--space-6);
+		padding: var(--space-4);
 		border-radius: var(--modal-radius);
 		background: var(--modal-bg);
 		border: 2px solid var(--modal-border);
@@ -113,12 +113,14 @@
 
 	/* ── Close button ─────────────────────────────────────────── */
 	.close-button {
-		position: absolute;
-		top: var(--space-3);
-		right: var(--space-3);
+		position: sticky;
+		top: 0;
+		float: right;
+		margin-top: calc(-1 * var(--space-6));
+		margin-right: calc(-1 * var(--space-4));
 		cursor: pointer;
 		z-index: 1;
-		padding: var(--space-1);
+		padding-right: var(--space-2);
 		transition: opacity var(--dur-fast) var(--ease-snes);
 		opacity: 0.7;
 	}
