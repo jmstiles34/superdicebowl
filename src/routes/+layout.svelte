@@ -7,6 +7,7 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import Settings from '$lib/components/modal/Settings.svelte';
 	import { getGuestPreferences } from '$lib/db/repositories/preferencesRepository';
+	import { preloadCoreLogos } from '$lib/utils/logoPreloader';
 	import '../styles.css';
 	import gear from '$lib/images/gear.svg';
 
@@ -54,6 +55,7 @@
 		const guestPrefs = getGuestPreferences();
 		settings.loadPreferences(guestPrefs);
 		auth.initialize();
+		preloadCoreLogos();
 	});
 </script>
 

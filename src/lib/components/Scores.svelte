@@ -3,6 +3,7 @@
 	import type { Team } from '$lib/types';
 	import { game } from '$lib/state/game.svelte';
 	import { getScoreByTeam } from '$lib/utils/game';
+	import { getLogoUrl } from '$lib/utils/logoPreloader';
 
 	type ScoresProps = {
 		awayTeam: Team;
@@ -22,7 +23,7 @@
 		class="team"
 		style={`
         background-color: ${homeTeam.colors.primary};
-        background-image: linear-gradient(to right, ${homeToRgb} 0 100%), url(/logos/${homeTeam.fieldLogo}.webp)`}
+        background-image: linear-gradient(to right, ${homeToRgb} 0 100%), url(${getLogoUrl(homeTeam.fieldLogo)})`}
 	>
 		<div class="city-wrapper">
 			{#if game.possession === TEAM.HOME}
@@ -37,7 +38,7 @@
 		class="team"
 		style={`
         background-color: ${awayTeam.colors.primary};
-        background-image: linear-gradient(to right, ${awayToRgb} 0 100%), url(/logos/${awayTeam.fieldLogo}.webp)`}
+        background-image: linear-gradient(to right, ${awayToRgb} 0 100%), url(${getLogoUrl(awayTeam.fieldLogo)})`}
 	>
 		<div class="city-wrapper">
 			{#if game.possession === TEAM.AWAY}

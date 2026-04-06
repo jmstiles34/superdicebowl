@@ -21,14 +21,9 @@
 			challengeAnswer.trim().length > 0
 	);
 
-	function handleSubmit(e: SubmitEvent) {
+	async function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		error = '';
-
-		if (honeypot) {
-			success = true;
-			return;
-		}
 
 		if (parseInt(challengeAnswer.trim()) !== correctAnswer) {
 			error = 'Incorrect answer. Please try again.';
@@ -37,11 +32,29 @@
 
 		submitting = true;
 
-		// Simulate send — replace with real endpoint when available
-		setTimeout(() => {
+		try {
+			const res = await fetch('/contact.php', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					name: name.trim(),
+					email: email.trim(),
+					message: message.trim(),
+					hp: honeypot
+				})
+			});
+
+			if (!res.ok) {
+				const data = await res.json().catch(() => null);
+				error = data?.error || 'Something went wrong. Please try again.';
+			} else {
+				success = true;
+			}
+		} catch {
+			error = 'Could not reach the server. Please try again later.';
+		} finally {
 			submitting = false;
-			success = true;
-		}, 600);
+		}
 	}
 </script>
 

@@ -4,6 +4,7 @@
 	import { BALL_KICK_GOOD, POSITION, TEAM, YARD_INTERVAL } from '$lib/constants/constants';
 	import EndZone from '$lib/components/Endzone.svelte';
 	import { randomNumber } from '$lib/utils/common';
+	import { getLogoUrl } from '$lib/utils/logoPreloader';
 	import type { Team, Void } from '$lib/types';
 
 	type FieldProps = {
@@ -49,13 +50,10 @@
 
 <div class="field-wrapper">
 	<div class="fieldLogo">
-		<picture>
-			<!-- <source type="image/avif" srcset={`/logos/${homeTeam.fieldLogo}.avif`} /> -->
-			<img
-				alt={`${homeTeam.city} ${homeTeam.name} Logo`}
-				src={`/logos/${homeTeam.fieldLogo}.webp`}
-			/>
-		</picture>
+		<img
+			alt={`${homeTeam.city} ${homeTeam.name} Logo`}
+			src={getLogoUrl(homeTeam.fieldLogo)}
+		/>
 	</div>
 	<div class="field-grid">
 		<EndZone

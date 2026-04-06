@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { DEFAULT_PLAY, DEFAULT_PLAY_SUMMARY, GAME_ACTION, TEAM } from '$lib/constants/constants';
+	import { getLogoUrl } from '$lib/utils/logoPreloader';
 	import type { Play, PlaySummary, Team } from '$lib/types';
 
 	type SummaryProps = {
@@ -205,7 +206,7 @@
 					>
 						<img
 							alt="Team Logo"
-							src={`/logos/${play.team === TEAM.HOME ? homeTeam.logo : awayTeam.logo}.webp`}
+							src={getLogoUrl(play.team === TEAM.HOME ? homeTeam.logo : awayTeam.logo)}
 						/>
 					</div>
 					<div class="play-description">{play.description}</div>

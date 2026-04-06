@@ -20,6 +20,6 @@ export const PASSWORD_RULES = [
 export const REGISTER_BENEFITS = [
 	'Save game history and statistics',
 	'Pause and resume games',
-	'Compete in tournaments',
-	'Play remote games with friends'
+	'Complete a season',
+	'Play remote games with friends **COMING SOON**'
 ];

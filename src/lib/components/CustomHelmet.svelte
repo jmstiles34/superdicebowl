@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { POSITION } from '$lib/constants/constants';
 	import { lightenColor } from '$lib/utils/common';
+	import { getLogoUrl } from '$lib/utils/logoPreloader';
 
 	const DEFAULT_LOGO_X = 176;
 	const DEFAULT_LOGO_Y = 114;
@@ -45,6 +46,21 @@
 	}: CustomHelmetProps = $props();
 
 	let earOutline = $derived(lightenColor(helmet));
+	let logoFile = $derived(direction === POSITION.LEFT && logoLeft ? logoLeft : logo);
+	let logoReady = $state(false);
+
+	$effect(() => {
+		if (!logoFile) {
+			logoReady = true;
+			return;
+		}
+		logoReady = false;
+		const img = new Image();
+		img.onload = () => (logoReady = true);
+		img.onerror = () => (logoReady = true);
+		img.src = getLogoUrl(logoFile);
+	});
+
 	let svgEl: SVGSVGElement | undefined = $state(undefined);
 	let dragging = $state(false);
 	let dragStart = $state({ x: 0, y: 0, logoX: 0, logoY: 0 });
@@ -98,7 +114,7 @@
 	});
 </script>
 
-<div class="helmet-wrapper" {title}>
+<div class="helmet-wrapper" class:helmet-visible={logoReady} {title}>
 	<div class="helmet-rotate">
 		<svg
 			bind:this={svgEl}
@@ -262,7 +278,7 @@ M 641.087 272.197 L 641.11 272.25 C 639.82 280.54 635.28 286.19 629.28 291.09 C 
 
 			{#if logo}
 				<image
-					href={`/logos/${direction === POSITION.LEFT && logoLeft ? logoLeft : logo}.webp`}
+					href={getLogoUrl(logoFile!)}
 					x={logoX}
 					y={logoY}
 					width={logoWidth}
@@ -297,6 +313,12 @@ M 641.087 272.197 L 641.11 272.25 C 639.82 280.54 635.28 286.19 629.28 291.09 C 
 	.helmet-wrapper {
 		display: flex;
 		position: relative;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.helmet-visible {
+		opacity: 1;
 	}
 
 	.helmet-rotate {
