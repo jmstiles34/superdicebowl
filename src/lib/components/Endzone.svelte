@@ -136,13 +136,15 @@
 		right: -11px;
 	}
 	.post {
-		width: 0.75rem;
-		height: 0.75rem;
+		width: 0.7rem;
+		height: 0.7rem;
 		border-radius: 50%;
 		background-color: var(--color-yellow);
+		margin-block: -0.1rem;
+		z-index: 1;
 	}
 	.bar {
-		width: 0.5rem;
+		width: 0.4rem;
 		height: 100%;
 		background-color: var(--color-yellow);
 	}

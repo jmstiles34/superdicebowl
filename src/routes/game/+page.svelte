@@ -417,7 +417,7 @@
 		filter: drop-shadow(3px 6px 8px oklch(0 0 0 / 0.5));
 	}
 	.action {
-		color: var(--color-white);
+		color: var(--color-text-gold);
 		font-family: inherit;
 		font-size: 0.9rem;
 		white-space: nowrap;
@@ -428,8 +428,7 @@
 		top: 0;
 		height: 100%;
 		width: 100%;
-		background-color: var(--color-offblack);
-		opacity: 0.2;
+		border-radius: var(--radius-md);
 	}
 	.scores {
 		display: flex;
@@ -444,14 +443,14 @@
 		font-size: clamp(0.5rem, 0.3182rem + 0.7273vw, 0.9rem);
 		font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial,
 			sans-serif;
-		color: gold;
+		color: var(--color-text-gold);
 		margin-top: 18px;
 		width: 100%;
 	}
 
 	.field-container {
 		position: relative;
-		overflow: hidden;
+		clip-path: inset(0 -1rem);
 	}
 :global(.fireworks) {
 		top: 0;

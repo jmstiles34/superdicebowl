@@ -6,6 +6,8 @@
 	import type { Team } from '$lib/types';
 	import { hexToOklch, oklchToHex } from '$lib/utils/common';
 	import { auth } from '$lib/auth/authState.svelte';
+	import rotateLeft from '$lib/images/rotate-left.svg';
+	import rotateRight from '$lib/images/rotate-right.svg';
 	import {
 		createCustomTeam,
 		getCustomTeamByTeamId,
@@ -30,12 +32,30 @@
 	let logoY   = $state(114);
 	let logoW   = $state(346);
 	let logoH   = $state(346);
-	let logoRot = $state(0);
+	let logoRot = $state(-20);
 	let city    = $state('');
 	let name    = $state('');
 	let errors: string[] = $state([]);
 	let dbRecordId: number | null = $state(null);
+	let currentStep = $state(1);
+	const totalSteps = 3;
 	const sortedLogos = logos.sort((a, b) => (a.name > b.name ? 1 : -1));
+
+	function validateStep1(): boolean {
+		errors = [];
+		if (!city.length) errors.push('city');
+		if (!name.length) errors.push('name');
+		return errors.length === 0;
+	}
+
+	function nextStep() {
+		if (currentStep === 1 && !validateStep1()) return;
+		if (currentStep < totalSteps) currentStep++;
+	}
+
+	function prevStep() {
+		if (currentStep > 1) currentStep--;
+	}
 
 	onMount(async () => {
 		if (!auth.currentUser?.id || !customTeamId) return;
@@ -108,102 +128,108 @@
 <h3>{customTeamId ? 'Edit' : 'Add'} Custom Team</h3>
 
 <div class="container">
-	<div class="form-row">
+	<div class="form-row" data-active-step={currentStep}>
 
-		<!-- ── Helmet preview ────────────────────────────────── -->
-		<div class="helmet-panel">
-			<CustomHelmet
-				{faceMask}
-				{helmet}
-				{stripe}
-				{trim}
-				{logo}
-				logoFixed={false}
-				{logoX}
-				{logoY}
-				logoWidth={logoW}
-				logoHeight={logoH}
-				logoRotation={logoRot}
-				setLogoPosition={(x, y, w, h) => { logoX = x; logoY = y; logoW = w; logoH = h; }}
-				canCustomize={true}
-			/>
-			{#if logo}
-				<p class="notes">Drag to move · Scroll to resize</p>
-				<div class="rotate-controls">
-					<button class="rotate-btn" onclick={() => (logoRot -= 5)} aria-label="Rotate left">
-						&#x21B6;
-					</button>
-					<button class="rotate-btn reset-btn" onclick={() => (logoRot = 0)} aria-label="Reset rotation">
-						{logoRot}°
-					</button>
-					<button class="rotate-btn" onclick={() => (logoRot += 5)} aria-label="Rotate right">
-						&#x21B7;
-					</button>
+		<!-- ── Step 1: Location & Name ──────────────────────── -->
+		<div class="step step-1">
+			<div class="fields">
+				<div class="field-row">
+					<label class="field-label" for="city">Location</label>
+					<input
+						type="text"
+						id="city"
+						maxlength="15"
+						bind:value={city}
+						class:error={errors.includes('city')}
+					/>
 				</div>
-			{/if}
+				<div class="field-row">
+					<label class="field-label" for="name">Name</label>
+					<input
+						type="text"
+						id="name"
+						maxlength="12"
+						bind:value={name}
+						class:error={errors.includes('name')}
+					/>
+				</div>
+			</div>
 		</div>
 
-		<!-- ── Fields ────────────────────────────────────────── -->
-		<div class="fields">
-
-			<div class="field-row">
-				<label class="field-label" for="city">Location</label>
-				<input
-					type="text"
-					id="city"
-					maxlength="15"
-					bind:value={city}
-					class:error={errors.includes('city')}
+		<!-- ── Step 2: Helmet + Logo + Colors ───────────────── -->
+		<div class="step step-2">
+			<div class="helmet-panel">
+				<CustomHelmet
+					{faceMask}
+					{helmet}
+					{stripe}
+					{trim}
+					{logo}
+					logoFixed={false}
+					{logoX}
+					{logoY}
+					logoWidth={logoW}
+					logoHeight={logoH}
+					logoRotation={logoRot}
+					setLogoPosition={(x, y, w, h) => { logoX = x; logoY = y; logoW = w; logoH = h; }}
+					canCustomize={true}
 				/>
+				{#if logo}
+					<p class="notes">Drag to move · Scroll to resize</p>
+					<div class="rotate-controls">
+						<button class="rotate-btn" onclick={() => (logoRot -= 5)} aria-label="Rotate left">
+							<img src={rotateLeft} alt="Rotate left" />
+						</button>
+						<button class="rotate-btn reset-btn" onclick={() => (logoRot = -20)} aria-label="Reset rotation">
+							{logoRot + 20}°
+						</button>
+						<button class="rotate-btn" onclick={() => (logoRot += 5)} aria-label="Rotate right">
+							<img src={rotateRight} alt="Rotate right" />
+						</button>
+					</div>
+				{/if}
 			</div>
+			<div class="fields">
+				<div class="field-row">
+					<label class="field-label" for="logo">Logo</label>
+					<select id="logo" bind:value={logo} class:error={errors.includes('logo')}>
+						<option value="">Choose...</option>
+						{#each sortedLogos as l}
+							<option value={l.file}>{l.name}</option>
+						{/each}
+					</select>
+				</div>
+				<div class="color-grid">
+					<label class="field-label" for="helmet">Helmet</label>
+					<input type="color" id="helmet" bind:value={helmet} />
+					<label class="field-label" for="stripe">Stripe 1</label>
+					<input type="color" id="stripe" bind:value={stripe} />
 
-			<div class="field-row">
-				<label class="field-label" for="name">Name</label>
-				<input
-					type="text"
-					id="name"
-					maxlength="12"
-					bind:value={name}
-					class:error={errors.includes('name')}
-				/>
+					<label class="field-label" for="faceMask">Mask</label>
+					<input type="color" id="faceMask" bind:value={faceMask} />
+					<label class="field-label" for="trim">Stripe 2</label>
+					<input type="color" id="trim" bind:value={trim} />
+
+					<label class="field-label" for="primary">Endzone</label>
+					<input type="color" id="primary" bind:value={primary} />
+					<label class="field-label" for="secondary">Text</label>
+					<input type="color" id="secondary" bind:value={secondary} />
+				</div>
+				<div class="save-row">
+					<button
+						class="save-button"
+						style="color: {secondary}; background-color: {primary};"
+						onclick={handleSave}
+					>
+						Save Team
+					</button>
+				</div>
 			</div>
+		</div>
 
-			<div class="divider"></div>
-
-			<div class="field-row">
-				<label class="field-label" for="logo">Logo</label>
-				<select id="logo" bind:value={logo} class:error={errors.includes('logo')}>
-					<option value="">Choose...</option>
-					{#each sortedLogos as l}
-						<option value={l.file}>{l.name}</option>
-					{/each}
-				</select>
-			</div>
-
-			<div class="field-row">
-				<label class="field-label" for="helmet">Helmet</label>
-				<input type="color" id="helmet" bind:value={helmet} />
-				<label class="field-label swatch-label" for="stripe">Stripe 1</label>
-				<input type="color" id="stripe" bind:value={stripe} />
-			</div>
-
-			<div class="field-row">
-				<label class="field-label" for="faceMask">Mask</label>
-				<input type="color" id="faceMask" bind:value={faceMask} />
-				<label class="field-label swatch-label" for="trim">Stripe 2</label>
-				<input type="color" id="trim" bind:value={trim} />
-			</div>
-
-			<div class="divider"></div>
-
-			<div class="field-row">
-				<label class="field-label" for="primary">Endzone</label>
-				<input type="color" id="primary" bind:value={primary} />
-				<label class="field-label swatch-label" for="secondary">Text</label>
-				<input type="color" id="secondary" bind:value={secondary} />
-			</div>
-
-			<div class="button-row">
+		<!-- ── Step 3: Save (mobile only) ───────────────────── -->
+		<div class="step step-3">
+			<div class="save-row">
 				<button
 					class="save-button"
 					style="color: {secondary}; background-color: {primary};"
@@ -212,8 +238,23 @@
 					Save Team
 				</button>
 			</div>
-
 		</div>
+
+	</div>
+
+	<!-- ── Mobile step navigation ──────────────────────────── -->
+	<div class="step-nav">
+		<button class="step-nav-btn" onclick={prevStep} disabled={currentStep === 1}>
+			&#x25C0; Back
+		</button>
+		<div class="step-indicators">
+			{#each Array(totalSteps) as _, i}
+				<span class="step-dot" class:active={currentStep === i + 1}></span>
+			{/each}
+		</div>
+		<button class="step-nav-btn" onclick={nextStep} disabled={currentStep === totalSteps}>
+			Next &#x25B6;
+		</button>
 	</div>
 </div>
 
@@ -239,37 +280,65 @@
 
 	.form-row {
 		display: flex;
-		gap: var(--space-5);
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.step-1 .fields {
+		flex-direction: row;
+		gap: var(--space-4);
+	}
+
+	.step-2 {
+		display: flex;
+		gap: var(--space-4);
 		align-items: flex-start;
+	}
+
+	.step-3 {
+		display: none;
+	}
+
+	.step-nav {
+		display: none;
 	}
 
 	/* ── Helmet panel ─────────────────────────────────────────── */
 	.helmet-panel {
 		flex-shrink: 0;
-		width: 275px;
-		margin-top: -20px;
+		width: 200px;
+	}
+
+	.helmet-panel :global(.helmet-wrapper) {
+		height: 10rem;
 	}
 
 	.notes {
 		font-family: var(--font-body);
 		font-size: var(--text-xs);
 		font-style: italic;
-		color: var(--color-text-tertiary);
+		color: var(--color-text-secondary);
 		text-align: center;
-		padding: var(--space-2) 0 var(--space-1);
+		padding: var(--space-2) 0 0;
+		margin: 0;
 	}
 
 	.rotate-controls {
 		display: flex;
 		justify-content: center;
+		align-items: center;
 		gap: var(--space-2);
 		padding: var(--space-1) 0;
 	}
 
+
+
+
 	.rotate-btn {
 		cursor: pointer;
-		font-size: var(--text-lg);
+		font-size: var(--text-base);
 		padding: var(--space-1) var(--space-2-5);
+		height: 2rem;
 		border-radius: var(--radius-sm);
 		background: var(--card-bg);
 		color: var(--color-text-primary);
@@ -278,6 +347,13 @@
 		transition:
 			background-color var(--dur-fast) var(--ease-snes),
 			box-shadow var(--dur-fast) var(--ease-snes);
+	}
+
+	.rotate-btn img {
+		width: 1rem;
+		height: 1rem;
+		display: block;
+		filter: var(--icon-filter-default);
 	}
 
 	.rotate-btn:hover {
@@ -323,10 +399,16 @@
 		flex-shrink: 0;
 	}
 
-	/* Second label in a two-swatch row — no fixed width, just gap */
-	.swatch-label {
+	/* ── Color grid ──────────────────────────────────────────── */
+	.color-grid {
+		display: grid;
+		grid-template-columns: auto auto auto auto;
+		gap: var(--space-1) var(--space-2);
+		align-items: center;
+	}
+
+	.color-grid .field-label {
 		width: auto;
-		padding-left: var(--space-2);
 	}
 
 	/* ── Text inputs & select ─────────────────────────────────── */
@@ -397,29 +479,21 @@
 		box-shadow: 0 0 0 1px var(--color-border-danger), var(--glow-red-sm) !important;
 	}
 
-	/* ── Section divider ──────────────────────────────────────── */
-	.divider {
-		width: 100%;
-		margin: var(--space-2) 0;
-		border: none;
-		border-bottom: 2px dotted var(--color-border-default);
-	}
-
-	/* ── Save button ──────────────────────────────────────────── */
-	.button-row {
+	/* ── Save row ─────────────────────────────────────────────── */
+	.save-row {
 		display: flex;
+		align-items: center;
 		justify-content: flex-end;
-		padding-top: var(--space-4);
+		gap: var(--space-4);
 	}
 
 	.save-button {
 		/* Uses team's own primary/secondary colors — set via inline style.
 		   We supply structure, border, shadow, and typography. */
-		font-family: var(--font-display);
-		font-weight: var(--weight-extrabold);
-		font-style: italic;
+		font-family: var(--font-endzone);
+		font-weight: 700;
 		font-size: var(--text-display-sm);
-		letter-spacing: var(--tracking-display);
+		letter-spacing: 0.15em;
 		padding: var(--space-2) var(--space-6);
 		border-radius: var(--radius-sm);
 		border: 2px solid rgba(0, 0, 0, 0.25);
@@ -435,11 +509,109 @@
 	.save-button:hover {
 		filter: brightness(1.1);
 		box-shadow: var(--shadow-pixel-lg) rgba(0, 0, 0, 0.5),
-		            inset 0 1px 0 rgba(255, 255, 255, 0.25);
+		inset 0 1px 0 rgba(255, 255, 255, 0.25);
 	}
 
 	.save-button:active {
 		transform: translateY(2px);
 		box-shadow: none;
+	}
+
+	/* ── Step navigation (mobile only) ────────────────────────── */
+	.step-nav-btn {
+		font-family: var(--font-body);
+		font-size: var(--text-sm);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-wider);
+		text-transform: uppercase;
+		color: var(--color-text-secondary);
+		background: var(--btn-secondary-bg);
+		border: 2px solid var(--btn-secondary-border);
+		border-radius: var(--radius-sm);
+		box-shadow: var(--snes-window-sm);
+		padding: var(--space-1-5) var(--space-3);
+		cursor: pointer;
+		transition:
+			background-color var(--dur-fast) var(--ease-snes),
+			box-shadow var(--dur-fast) var(--ease-snes);
+	}
+
+	.step-nav-btn:hover:not(:disabled) {
+		background: var(--btn-secondary-bg-hover);
+		box-shadow: var(--btn-secondary-shadow-hover);
+	}
+
+	.step-nav-btn:disabled {
+		opacity: 0.35;
+		cursor: not-allowed;
+	}
+
+	.step-indicators {
+		display: flex;
+		gap: var(--space-2);
+	}
+
+	.step-dot {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background: var(--color-border-default);
+		transition: background-color var(--dur-fast) var(--ease-snes);
+	}
+
+	.step-dot.active {
+		background: var(--brand-400);
+		box-shadow: 0 0 6px var(--brand-400);
+	}
+
+	/* ── Mobile wizard ───────────────────────────────────────── */
+	@media (max-width: 780px) {
+		.form-row {
+			display: block;
+		}
+
+		.step {
+			display: none;
+		}
+
+		.form-row[data-active-step='1'] .step-1,
+		.form-row[data-active-step='2'] .step-2,
+		.form-row[data-active-step='3'] .step-3 {
+			display: block;
+		}
+
+		.step-1 .fields {
+			flex-direction: column;
+			gap: var(--space-1);
+		}
+
+		.step-2 {
+			display: block;
+		}
+
+		.step-2 .save-row {
+			display: none;
+		}
+
+		.helmet-panel {
+			max-width: 280px;
+			margin: 0 auto;
+		}
+
+		.step-2 .fields {
+			margin-top: var(--space-4);
+		}
+
+		.save-row {
+			flex-direction: column;
+			gap: var(--space-3);
+		}
+
+		.step-nav {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: var(--space-4) 0 0;
+		}
 	}
 </style>

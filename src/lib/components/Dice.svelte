@@ -122,7 +122,7 @@
 
 	/* Locked out while game is processing the roll result */
 	.dice-button.restricted {
-		opacity: 0.65;
+		opacity: 0.75;
 		cursor: not-allowed;
 		pointer-events: none;
 	}

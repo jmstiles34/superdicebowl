@@ -297,7 +297,6 @@ M 641.087 272.197 L 641.11 272.25 C 639.82 280.54 635.28 286.19 629.28 291.09 C 
 	.helmet-wrapper {
 		display: flex;
 		position: relative;
-		height: 16rem;
 	}
 
 	.helmet-rotate {
