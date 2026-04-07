@@ -285,16 +285,33 @@
 
 	/* ── Mobile landscape ────────────────────────────────────── */
 	@media (max-height: 500px) and (orientation: landscape) {
+		.field-wrapper {
+			height: 100%;
+		}
+
+		.field-grid {
+			min-height: unset;
+			height: 100%;
+		}
+
 		.fieldNumber {
 			font-size: clamp(0.5rem, 0.3rem + 2vw, 1.25rem);
 		}
 
 		.upper.fieldNumber {
-			top: 1.5rem;
+			top: 0.75rem;
 		}
 
 		.lower.fieldNumber {
-			bottom: 1.5rem;
+			bottom: 0.75rem;
+		}
+
+		.football {
+			width: 3.5%;
+		}
+
+		.downToGo {
+			font-size: clamp(0.7rem, 0.5rem + 1vw, 1rem);
 		}
 	}
 </style>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { Fireworks } from '@fireworks-js/svelte';
 	import { auth } from '$lib/auth/authState.svelte';
@@ -136,6 +136,21 @@
 	}
 
 	game.setSaveGame(saveGame);
+
+	onMount(() => {
+		const orientation = screen.orientation as ScreenOrientation & {
+			lock?(type: string): Promise<void>;
+			unlock?(): void;
+		};
+		try {
+			orientation.lock?.('landscape')?.catch(() => {});
+		} catch {}
+		return () => {
+			try {
+				orientation.unlock?.();
+			} catch {}
+		};
+	});
 
 	onDestroy(() => {
 		game.resetGame();
@@ -350,12 +365,22 @@
 		</Modal>
 
 	</main>
+
+	<div class="portrait-overlay">
+		<div class="portrait-message">
+			<span class="rotate-icon">📱</span>
+			<p>Rotate your device to landscape for the best experience</p>
+		</div>
+	</div>
 {/if}
 
 <style>
 	main {
 		position: relative;
 		padding: 1rem;
+	}
+	.portrait-overlay {
+		display: none;
 	}
 	button {
 		background: none;
@@ -486,6 +511,70 @@
 		}
 .last-play {
 			margin-top: 8px;
+		}
+	}
+
+	/* ── Mobile portrait: force-landscape overlay ──────────── */
+	@media (max-width: 600px) and (orientation: portrait) {
+		.portrait-overlay {
+			display: flex;
+			position: fixed;
+			inset: 0;
+			z-index: 9999;
+			background-color: var(--color-bg-base, #111);
+			align-items: center;
+			justify-content: center;
+		}
+		.portrait-message {
+			text-align: center;
+			color: var(--color-text-primary, #fff);
+			font-family: var(--font-body, sans-serif);
+			padding: 2rem;
+		}
+		.rotate-icon {
+			font-size: 3rem;
+			display: inline-block;
+			animation: rock 1.5s ease-in-out infinite;
+		}
+		.portrait-message p {
+			margin-top: 1rem;
+			font-size: 1.25rem;
+			line-height: 1.4;
+		}
+		@keyframes rock {
+			0%, 100% { transform: rotate(0deg); }
+			25% { transform: rotate(90deg); }
+			75% { transform: rotate(90deg); }
+		}
+	}
+
+	/* ── Mobile landscape: fit everything in viewport ─────── */
+	@media (max-height: 500px) and (orientation: landscape) {
+		main {
+			padding: 0.25rem 0.5rem;
+			height: 100vh;
+			height: 100dvh;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+		}
+		.game {
+			width: 100%;
+			max-width: 100%;
+			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			min-height: 0;
+		}
+		.scoreboard {
+			top: 0;
+			flex-shrink: 0;
+		}
+		.field-container {
+			flex: 1;
+			min-height: 0;
+			margin-top: -2.75rem;
 		}
 	}
 </style>
