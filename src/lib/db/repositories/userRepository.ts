@@ -34,6 +34,23 @@ export async function findUserByUsername(username: string): Promise<UserRecord |
 	return db.users.where('usernameLower').equals(username.trim().toLowerCase()).first();
 }
 
+export async function linkOnlineAccount(
+	userId: number,
+	onlineAccountId: string,
+	onlineEmail: string,
+	onlinePassword: string
+): Promise<void> {
+	await db.users.update(userId, { onlineAccountId, onlineEmail, onlinePassword });
+}
+
+export async function unlinkOnlineAccount(userId: number): Promise<void> {
+	await db.users.update(userId, {
+		onlineAccountId: undefined,
+		onlineEmail: undefined,
+		onlinePassword: undefined
+	});
+}
+
 export async function deleteUser(userId: number): Promise<{ success: boolean; error?: string }> {
 	try {
 		await db.sessions.where('userId').equals(userId).delete();

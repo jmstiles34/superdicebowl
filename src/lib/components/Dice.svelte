@@ -39,6 +39,16 @@
 		}
 	});
 
+	export async function showOpponentRoll(die1: number, die2: number): Promise<void> {
+		playSound(flickSfx, settings.volume);
+		rolling = true;
+		await sleep(rollDelay);
+		die1Pips = die1;
+		die2Pips = die2;
+		rolling = false;
+		await sleep(rollDelay);
+	}
+
 	async function handleRollDice() {
 		if (!canRoll) return;
 
