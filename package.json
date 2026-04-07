@@ -45,6 +45,7 @@
 		"@fireworks-js/svelte": "^2.10.8",
 		"@fontsource/abril-fatface": "^5.1.0",
 		"@fontsource/bebas-neue": "^5.1.0",
+		"@supabase/supabase-js": "^2.102.1",
 		"culori": "^4.0.2",
 		"dexie": "^4.3.0",
 		"dexie-observable": "^4.0.1-beta.13",

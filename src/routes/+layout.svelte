@@ -8,12 +8,15 @@
 	import Settings from '$lib/components/modal/Settings.svelte';
 	import { getGuestPreferences } from '$lib/db/repositories/preferencesRepository';
 	import { preloadCoreLogos } from '$lib/utils/logoPreloader';
+	import { onlineState } from '$lib/state/onlineState.svelte';
 	import '../styles.css';
 	import gear from '$lib/images/gear.svg';
 
 	let { children } = $props();
 	const currentYear = new Date().getFullYear();
-	let isGamePage = $derived($page.url.pathname === '/game');
+	let isGamePage = $derived(
+		$page.url.pathname === '/game' || $page.url.pathname.startsWith('/online/game/')
+	);
 	let showSettings = $state(false);
 	let showMobileMenu = $state(false);
 	let kebabButton = $state<HTMLButtonElement>();
@@ -55,6 +58,7 @@
 		const guestPrefs = getGuestPreferences();
 		settings.loadPreferences(guestPrefs);
 		auth.initialize();
+		onlineState.initialize();
 		preloadCoreLogos();
 	});
 </script>
@@ -80,6 +84,14 @@
 				<a class="link desktop-link" href="/season">Season</a>
 				<a class="link desktop-link" href="/teams">My Teams</a>
 				<a class="link desktop-link" href="/games">My Games</a>
+				{#if onlineState.isOnline}
+					<a class="link desktop-link nav-account" href="/online">
+						Online
+						{#if onlineState.unreadCount > 0}
+							<span class="badge">{onlineState.unreadCount}</span>
+						{/if}
+					</a>
+				{/if}
 				<a class="link desktop-link" href="/account">My Account</a>
 			{:else}
 				<a class="link desktop-link" href="/login">Sign In</a>
@@ -115,6 +127,14 @@
 						<a class="kebab-item" href="/season" onclick={() => showMobileMenu = false}>Season</a>
 						<a class="kebab-item" href="/teams" onclick={() => showMobileMenu = false}>My Teams</a>
 						<a class="kebab-item" href="/games" onclick={() => showMobileMenu = false}>My Games</a>
+						{#if onlineState.isOnline}
+							<a class="kebab-item kebab-account" href="/online" onclick={() => showMobileMenu = false}>
+								Online
+								{#if onlineState.unreadCount > 0}
+									<span class="badge">{onlineState.unreadCount}</span>
+								{/if}
+							</a>
+						{/if}
 						<a class="kebab-item" href="/account" onclick={() => showMobileMenu = false}>My Account</a>
 						<button class="kebab-item" onclick={handleSignOut}>Sign Out</button>
 					{:else}
@@ -368,6 +388,29 @@
 	.kebab-item:focus-visible {
 		outline: none;
 		box-shadow: var(--focus-ring);
+	}
+
+	/* ── Notification badge ──────────────────────────────────── */
+	.nav-account,
+	.kebab-account {
+		position: relative;
+	}
+
+	.badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 1.1rem;
+		height: 1.1rem;
+		padding: 0 0.25rem;
+		background: var(--urgent);
+		color: var(--color-white);
+		font-size: 0.65rem;
+		font-weight: var(--weight-bold);
+		border-radius: 9999px;
+		line-height: 1;
+		margin-left: var(--space-1);
+		vertical-align: middle;
 	}
 
 	/* ── Small screens ───────────────────────────────────────── */

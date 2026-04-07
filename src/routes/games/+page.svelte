@@ -10,8 +10,11 @@
 	import { getScoreByTeam } from '$lib/utils/game';
 	import Modal from '$lib/components/Modal.svelte';
 	import GameSummary from '$lib/components/modal/GameSummary.svelte';
+	import { onlineState } from '$lib/state/onlineState.svelte';
+	import { getRemoteGames, type RemoteGame } from '$lib/online/remoteGames';
 
-	let activeTab: 'in_progress' | 'completed' = $state('in_progress');
+	let activeTab: 'in_progress' | 'completed' | 'online' = $state('in_progress');
+	let remoteGames = $state<RemoteGame[]>([]);
 	let inProgressGames: GameRecord[] = $state([]);
 	let completedGames: GameRecord[] = $state([]);
 	let confirmDeleteId: number | null = $state(null);
@@ -24,6 +27,10 @@
 
 	$effect(() => {
 		if (auth.currentUser?.id) loadGames();
+	});
+
+	$effect(() => {
+		if (onlineState.isOnline && onlineState.profile) loadRemoteGames();
 	});
 
 	async function loadGames() {
@@ -42,6 +49,40 @@
 		}
 		seasonGameIds = ids;
 	}
+
+	async function loadRemoteGames() {
+		if (!onlineState.profile) return;
+		remoteGames = await getRemoteGames(onlineState.profile.id);
+	}
+
+	function remoteGameStatus(rg: RemoteGame): 'your_turn' | 'waiting' | 'pending' | 'completed' {
+		if (rg.status === 'completed') return 'completed';
+		if (rg.status === 'pending_team_select') return 'pending';
+		const myRole = rg.homeUserId === onlineState.profile?.id ? 'home' : 'away';
+		return rg.currentTurn === myRole ? 'your_turn' : 'waiting';
+	}
+
+	function remoteOpponent(rg: RemoteGame): string {
+		return rg.homeUserId === onlineState.profile?.id
+			? rg.awayProfile.username
+			: rg.homeProfile.username;
+	}
+
+	function remoteHomeScore(rg: RemoteGame): number {
+		if (!rg.gameState) return 0;
+		return getScoreByTeam(TEAM.HOME, rg.gameState.playLog);
+	}
+
+	function remoteAwayScore(rg: RemoteGame): number {
+		if (!rg.gameState) return 0;
+		return getScoreByTeam(TEAM.AWAY, rg.gameState.playLog);
+	}
+
+	let activeRemoteGames = $derived(
+		remoteGames.filter((rg) => rg.status === 'in_progress' || rg.status === 'pending_team_select')
+	);
+	let completedRemoteGames = $derived(remoteGames.filter((rg) => rg.status === 'completed'));
+	let showCompletedRemote = $state(false);
 
 	function resumeGame(record: GameRecord) {
 		game.loadSnapshot(record.gameState);
@@ -93,6 +134,18 @@
 			>
 				Completed ({completedGames.length})
 			</button>
+			{#if onlineState.isOnline}
+				<button
+					class="tab"
+					class:tab-selected={activeTab === 'online'}
+					onclick={() => (activeTab = 'online')}
+				>
+					Online
+					{#if activeRemoteGames.length > 0}
+						<span class="tab-badge">{activeRemoteGames.length}</span>
+					{/if}
+				</button>
+			{/if}
 		</div>
 
 		{#if activeTab === 'in_progress'}
@@ -149,7 +202,7 @@
 					{/each}
 				</div>
 			{/if}
-		{:else}
+		{:else if activeTab === 'completed'}
 			{#if completedGames.length === 0}
 				<p class="empty">No completed games yet.</p>
 			{:else}
@@ -204,6 +257,102 @@
 				</div>
 			{/if}
 		{/if}
+
+		<!-- ── Online tab ──────────────────────────────────────── -->
+		{#if activeTab === 'online'}
+			{#if remoteGames.length === 0}
+				<p class="empty">No online games yet. Challenge a friend from the Online page.</p>
+			{:else}
+				{#if activeRemoteGames.length === 0}
+					<p class="empty">No active online games.</p>
+				{:else}
+				<div class="game-list">
+					{#each activeRemoteGames as rg (rg.id)}
+						{@const status = remoteGameStatus(rg)}
+						{@const opponent = remoteOpponent(rg)}
+						<button
+							class="game-card online-card"
+							onclick={() => goto(`/online/game/${rg.id}`)}
+						>
+							<span
+								class="online-status-badge"
+								class:your-turn={status === 'your_turn'}
+								class:waiting={status === 'waiting'}
+								class:pending={status === 'pending'}
+								class:completed={status === 'completed'}
+							>
+								{#if status === 'your_turn'}Your Turn
+								{:else if status === 'waiting'}Waiting
+								{:else if status === 'pending'}Pending
+								{:else}Final{/if}
+							</span>
+							<div class="teams-row">
+								{#if rg.homeTeam && rg.awayTeam}
+									<span
+										class="team-badge"
+										style:background-color={rg.homeTeam.colors.primary}
+									>
+										{rg.homeTeam.cityKey}
+									</span>
+									<span class="score">{remoteHomeScore(rg)}</span>
+									<span class="vs">-</span>
+									<span class="score">{remoteAwayScore(rg)}</span>
+									<span
+										class="team-badge"
+										style:background-color={rg.awayTeam.colors.primary}
+									>
+										{rg.awayTeam.cityKey}
+									</span>
+								{:else}
+									<span class="pending-teams">Team selection in progress</span>
+								{/if}
+							</div>
+							<div class="meta">
+								vs @{opponent}
+								<span class="date">{formatDate(new Date(rg.updatedAt).getTime())}</span>
+							</div>
+						</button>
+					{/each}
+				</div>
+				{/if}
+
+				{#if completedRemoteGames.length > 0}
+					<button class="show-completed-toggle" onclick={() => (showCompletedRemote = !showCompletedRemote)}>
+						{showCompletedRemote ? 'Hide' : 'Show'} completed ({completedRemoteGames.length})
+					</button>
+					{#if showCompletedRemote}
+						<div class="game-list">
+							{#each completedRemoteGames as rg (rg.id)}
+								{@const opponent = remoteOpponent(rg)}
+								<button
+									class="game-card online-card"
+									onclick={() => goto(`/online/game/${rg.id}`)}
+								>
+									<span class="online-status-badge completed">Final</span>
+									<div class="teams-row">
+										{#if rg.homeTeam && rg.awayTeam}
+											<span class="team-badge" style:background-color={rg.homeTeam.colors.primary}>
+												{rg.homeTeam.cityKey}
+											</span>
+											<span class="score">{remoteHomeScore(rg)}</span>
+											<span class="vs">-</span>
+											<span class="score">{remoteAwayScore(rg)}</span>
+											<span class="team-badge" style:background-color={rg.awayTeam.colors.primary}>
+												{rg.awayTeam.cityKey}
+											</span>
+										{/if}
+									</div>
+									<div class="meta">
+										vs @{opponent}
+										<span class="date">{formatDate(new Date(rg.updatedAt).getTime())}</span>
+									</div>
+								</button>
+							{/each}
+						</div>
+					{/if}
+				{/if}
+			{/if}
+		{/if}
 	</div>
 {/if}
 
@@ -244,6 +393,9 @@
 		color: var(--color-gray-300);
 		background-color: var(--color-gray-900);
 		border-bottom: 2px solid var(--color-gray-700);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 	}
 	.tab:hover {
 		color: var(--color-white);
@@ -346,5 +498,71 @@
 	.cancel-btn {
 		color: var(--color-gray-300);
 		font-size: var(--12px);
+	}
+	/* Online tab */
+	.tab-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 1.1rem;
+		height: 1.1rem;
+		padding: 0 0.25rem;
+		background: var(--urgent);
+		color: var(--color-white);
+		font-size: 0.65rem;
+		font-weight: var(--weight-bold);
+		border-radius: 9999px;
+		margin-left: 0.3rem;
+	}
+	.online-card {
+		cursor: pointer;
+		text-align: left;
+		width: 100%;
+		transition: background-color var(--dur-fast) var(--ease-snes);
+	}
+	.online-card:hover {
+		background: var(--color-gray-800);
+	}
+	.online-status-badge {
+		position: absolute;
+		top: 0.4rem;
+		right: 0.5rem;
+		font-size: 0.6rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		border-radius: 3px;
+		padding: 1px 5px;
+		border: 1px solid currentColor;
+	}
+	.online-status-badge.your-turn {
+		color: var(--color-green-400, #4ade80);
+		border-color: var(--color-green-400, #4ade80);
+	}
+	.online-status-badge.waiting {
+		color: var(--color-gray-400);
+		border-color: var(--color-gray-600);
+	}
+	.online-status-badge.pending {
+		color: var(--color-text-gold);
+		border-color: var(--color-text-gold);
+	}
+	.online-status-badge.completed {
+		color: var(--color-blue-300);
+		border-color: var(--color-blue-500);
+	}
+	.pending-teams {
+		font-size: var(--12px);
+		color: var(--color-gray-400);
+		font-style: italic;
+	}
+	.show-completed-toggle {
+		margin-top: 1rem;
+		font-size: var(--text-sm);
+		color: var(--brand-300);
+		display: block;
+	}
+	.show-completed-toggle:hover {
+		color: var(--brand-200);
 	}
 </style>

@@ -33,10 +33,6 @@
 			"file": "bowling"
 		},
 		{
-			"name": "Bowling (stars)",
-			"file": "bowling-stars"
-		},
-		{
 			"name": "Cute Animal",
 			"file": "cute-animal"
 		},
@@ -175,10 +171,6 @@
 		{
 			"name": "Mermaid",
 			"file": "mermaid"
-		},
-		{
-			"name": "Monkey",
-			"file": "monkey"
 		},
 		{
 			"name": "Monster",

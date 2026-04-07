@@ -8,6 +8,9 @@ export interface UserRecord {
 	passwordHash: string;
 	salt: string;
 	createdAt: number;
+	onlineAccountId?: string;
+	onlineEmail?: string;
+	onlinePassword?: string;
 }
 
 export interface SessionRecord {
@@ -149,6 +152,15 @@ class AppDatabase extends Dexie {
 		});
 
 		this.version(6).stores({
+			users: '++id, &usernameLower',
+			sessions: '++id, userId, &token',
+			games: '++id, userId',
+			customTeams: '++id, userId',
+			userPreferences: '++id, &userId',
+			seasons: '++id, userId'
+		});
+
+		this.version(7).stores({
 			users: '++id, &usernameLower',
 			sessions: '++id, userId, &token',
 			games: '++id, userId',

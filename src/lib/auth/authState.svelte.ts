@@ -8,6 +8,8 @@ import {
 	getValidSession
 } from '$lib/db/repositories/sessionRepository';
 import { createUser, deleteUser, findUserByUsername } from '$lib/db/repositories/userRepository';
+import { autoSignIn, deleteOnlineAccount } from '$lib/online/onlineAuth';
+import { onlineState } from '$lib/state/onlineState.svelte';
 import { settings } from '$lib/state/settings.svelte';
 
 type AuthResult = { success: true } | { success: false; error: string };
@@ -26,6 +28,7 @@ class AuthState {
 			await migrateFromLocalStorage(result.user.id!);
 			const prefs = await getPreferences(result.user.id!);
 			settings.loadPreferences(prefs);
+			await this.tryOnlineSignIn(result.user);
 		}
 		this.initialized = true;
 	};
@@ -47,6 +50,7 @@ class AuthState {
 		await migrateFromLocalStorage(user.id!);
 		const prefs = await getPreferences(user.id!);
 		settings.loadPreferences(prefs);
+		await this.tryOnlineSignIn(user);
 		return { success: true };
 	};
 
@@ -75,10 +79,20 @@ class AuthState {
 		return { success: true };
 	};
 
+	tryOnlineSignIn = async (user: UserRecord) => {
+		if (!user.onlineEmail || !user.onlinePassword) return;
+		const session = await autoSignIn(user.onlineEmail, user.onlinePassword);
+		if (session) {
+			onlineState.setProfile({ id: session.userId, username: session.username });
+			onlineState.refreshUnreadCount();
+		}
+	};
+
 	logout = async () => {
 		if (this.sessionToken) {
 			await deleteSession(this.sessionToken);
 		}
+		await onlineState.signOut();
 		this.currentUser = null;
 		this.sessionToken = null;
 	};
@@ -86,6 +100,10 @@ class AuthState {
 	deleteAccount = async (): Promise<AuthResult> => {
 		if (!this.currentUser?.id) {
 			return { success: false, error: 'No account to delete' };
+		}
+
+		if (this.currentUser.onlineAccountId) {
+			await deleteOnlineAccount(this.currentUser.onlineAccountId);
 		}
 
 		await deletePreferences(this.currentUser.id);

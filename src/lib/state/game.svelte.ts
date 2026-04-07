@@ -380,6 +380,7 @@ class GameState {
 	};
 
 	handleDiceRoll = (action: string, diceId: number) => {
+		this.diceId = diceId;
 		const executeFns = {
 			[GAME_ACTION.EXTRA_POINT]: this.kickExtraPoint,
 			[GAME_ACTION.FIELD_GOAL]: this.kickFieldGoal,
