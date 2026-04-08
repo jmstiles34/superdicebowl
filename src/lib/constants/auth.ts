@@ -18,8 +18,10 @@ export const PASSWORD_RULES = [
 ];
 
 export const REGISTER_BENEFITS = [
+	'Create and manage your own teams',
 	'Save game history and statistics',
 	'Pause and resume games',
 	'Complete a season',
-	'Play remote games with friends **COMING SOON**'
+	'Works 100% offline',
+	'Online optional for playing against friends'
 ];

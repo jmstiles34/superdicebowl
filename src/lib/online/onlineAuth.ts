@@ -78,11 +78,7 @@ export async function deleteOnlineAccount(userId: string): Promise<void> {
 		for (const game of games) {
 			const opponentId = game.home_user_id === userId ? game.away_user_id : game.home_user_id;
 
-			await supabase
-				.from('remote_games')
-				.update({ status: 'completed', updated_at: new Date().toISOString() })
-				.eq('id', game.id)
-				.eq('status', 'in_progress');
+			await supabase.rpc('forfeit_game', { game_id: game.id });
 
 			await supabase.from('notifications').insert({
 				user_id: opponentId,
