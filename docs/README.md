@@ -16,7 +16,8 @@ Supabase on top for asynchronous head-to-head multiplayer with friends.
 - [features/online-multiplayer.md](features/online-multiplayer.md) — challenges, turns, forfeits
 - [features/teams.md](features/teams.md) — team data, custom teams, logos, colors
 - [features/settings-and-preferences.md](features/settings-and-preferences.md) — per-user prefs, theme, volume, speed
-- [coding-practices.md](coding-practices.md) — conventions, linting, testing, commit hygiene
+- [coding-practices.md](coding-practices.md) — conventions, linting, commit hygiene
+- [testing.md](testing.md) — test layering, Vitest patterns, CI, how to add tests
 
 ## Quick entry points for developers
 

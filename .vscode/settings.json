@@ -1,11 +1,5 @@
 {
-	"cSpell.words": [
-		"facemask",
-		"ltmask",
-		"offblack",
-		"Seahawks",
-		"SNES"
-	],
+	"cSpell.words": ["facemask", "ltmask", "offblack", "Seahawks", "SNES"],
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
 	"editor.formatOnPaste": false

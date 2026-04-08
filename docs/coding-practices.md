@@ -64,10 +64,17 @@ what lets `instantGame.ts` reuse it for fast-forward simulation.
 
 ## Tests
 
-- **Vitest** for unit tests. Prefer testing pure helpers in `lib/utils/` and
-  `lib/auth/passwordUtils.ts`.
-- Avoid testing `*.svelte.ts` state classes directly unless the rune harness
-  is set up; test the pure helpers they delegate to instead.
+See [testing.md](testing.md) for the full testing guide — layers, patterns,
+seeded RNG, CI config, and where to add new tests. Short version:
+
+- **Vitest** for unit tests, co-located with source (`foo.ts` → `foo.test.ts`).
+- **Test pure helpers**, not state classes. If you need to cover branch logic
+  inside a `*.svelte.ts` state file, extract the branch to `lib/utils/` first.
+- **Seed `Math.random` with Mulberry32** (see
+  [`src/lib/utils/instantGame.test.ts`](../src/lib/utils/instantGame.test.ts))
+  when exercising the engine.
+- Run locally with `npm run test:unit` (watch) or `npm run test:run` (single
+  pass, same as CI).
 
 ## Commits
 

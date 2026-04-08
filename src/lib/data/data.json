@@ -786,12 +786,7 @@
 			"id": 23,
 			"isTurnover": true,
 			"yards": 0,
-			"description": [
-				"Fumble",
-				"Strip Sack Fumble",
-				"Botched Handoff",
-				"Hit While Throwing"
-			]
+			"description": ["Fumble", "Strip Sack Fumble", "Botched Handoff", "Hit While Throwing"]
 		},
 		{
 			"id": 24,
@@ -897,17 +892,7 @@
 		},
 		{
 			"id": 44,
-			"yards": [
-				30,
-				35,
-				40,
-				45,
-				50,
-				55,
-				60,
-				65,
-				70
-			],
+			"yards": [30, 35, 40, 45, 50, 55, 60, 65, 70],
 			"description": [
 				"Fake Reverse Pass",
 				"Flea Flicker",
@@ -925,13 +910,7 @@
 		{
 			"id": 45,
 			"isTurnover": true,
-			"yards": [
-				20,
-				25,
-				30,
-				35,
-				40
-			],
+			"yards": [20, 25, 30, 35, 40],
 			"description": [
 				"Interception",
 				"Pick Six Attempt",

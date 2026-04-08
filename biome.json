@@ -34,6 +34,16 @@
 		}
 	},
 	"files": {
-		"includes": ["**/*.ts", "**/*.js", "**/*.json", "**/*.css"]
+		"includes": [
+			"**/*.ts",
+			"**/*.js",
+			"**/*.json",
+			"**/*.css",
+			"!.svelte-kit",
+			"!build",
+			"!node_modules",
+			"!static",
+			"!package-lock.json"
+		]
 	}
 }

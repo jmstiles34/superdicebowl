@@ -80,7 +80,26 @@ files and docs you'll need.
 ## Run verification
 
 ```bash
-npm run check && npm run lint && npm run test:unit
+npm run check       # svelte-check (types)
+npm run lint        # biome + eslint (full local lint)
+npm run lint:ci     # biome only — matches what CI runs
+npm run test:run    # vitest single-run — matches what CI runs
 ```
 
+CI runs `lint:ci + check + test:run + build`. See
+[../../docs/testing.md](../../docs/testing.md) for the testing guide and
+ESLint backlog note.
+
 If pre-commit fails, fix the cause. Never `--no-verify`.
+
+## Add a test
+
+See [../../docs/testing.md](../../docs/testing.md) for the full layered
+testing guide. Short version:
+
+1. Create `foo.test.ts` next to `foo.ts`.
+2. Test pure helpers in `lib/utils/` — not `*.svelte.ts` state classes.
+3. If exercising the engine, seed `Math.random` with Mulberry32 (copy from
+   [`src/lib/utils/instantGame.test.ts`](../../src/lib/utils/instantGame.test.ts)).
+4. Prefer `it.each` for table-driven tests.
+5. Verify with `npm run test:run && npx biome check --write <file> && npx eslint <file>`.

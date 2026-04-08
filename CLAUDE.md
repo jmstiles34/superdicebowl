@@ -21,6 +21,7 @@ layer for async head-to-head multiplayer.
 | Season schedule / standings | [docs/features/season-mode.md](docs/features/season-mode.md) |
 | Big picture | [docs/architecture.md](docs/architecture.md) |
 | Conventions / style | [docs/coding-practices.md](docs/coding-practices.md) |
+| Adding tests, testing patterns, CI | [docs/testing.md](docs/testing.md) |
 
 ## Non-negotiables
 
