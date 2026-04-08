@@ -22,14 +22,12 @@
 		toggleFieldGoal
 	}: EndZoneProps = $props();
 
-	const {
-		primary = '',
-		secondary = '',
-		faceMask = '',
-		helmet = '',
-		stripe = '',
-		trim = ''
-	} = team.colors;
+	const primary = $derived(team.colors.primary ?? '');
+	const secondary = $derived(team.colors.secondary ?? '');
+	const faceMask = $derived(team.colors.faceMask ?? '');
+	const helmet = $derived(team.colors.helmet ?? '');
+	const stripe = $derived(team.colors.stripe ?? '');
+	const trim = $derived(team.colors.trim ?? '');
 
 	let allowFieldGoal = $derived(hasBall && inFieldGoalRange);
 </script>

@@ -47,7 +47,7 @@
 	import gear from '$lib/images/gear.svg';
 	import summary from '$lib/images/summary.svg';
 
-	const gameId = $derived($page.params.id);
+	const gameId = $derived($page.params.id as string);
 	const buttonSfx = createSound(button);
 
 	let remoteGame = $state<RemoteGame | null>(null);

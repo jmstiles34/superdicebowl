@@ -119,7 +119,7 @@ export function getScoreByTeam(teamType: string, playLog: Play[]) {
 	return playLog
 		.filter(
 			({ description, points, team }) =>
-				(points > 0 && team === teamType) ||
+				(points > 0 && team === teamType && !description.includes('Safety')) ||
 				(points === 2 && team === OPPOSITE_TEAM[teamType] && description.includes('Safety'))
 		)
 		.reduce((total, play) => total + play.points, 0);

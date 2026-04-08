@@ -12,12 +12,20 @@ const staticAssets = new Set(to_cache);
 
 worker.addEventListener('install', (event) => {
 	event.waitUntil(
-		caches
-			.open(FILES)
-			.then((cache) => cache.addAll(to_cache))
-			.then(() => {
-				worker.skipWaiting();
-			})
+		(async () => {
+			const cache = await caches.open(FILES);
+			// Use individual cache.add calls so a single bad URL (404, encoding
+			// issue, etc.) can't abort the whole install the way cache.addAll does.
+			// If install ever fails, the old SW stays active and serves a stale
+			// index.html that references dead chunks — breaking the site.
+			const results = await Promise.allSettled(to_cache.map((url) => cache.add(url)));
+			for (const [i, result] of results.entries()) {
+				if (result.status === 'rejected') {
+					console.warn(`[sw] failed to precache ${to_cache[i]}:`, result.reason);
+				}
+			}
+			await worker.skipWaiting();
+		})()
 	);
 });
 
@@ -65,16 +73,35 @@ worker.addEventListener('fetch', (event) => {
 	const isStaticAsset = url.host === self.location.host && staticAssets.has(url.pathname);
 	const skipBecauseUncached = event.request.cache === 'only-if-cached' && !isStaticAsset;
 
-	if (isHttp && !isDevServerRequest && !skipBecauseUncached) {
+	if (!isHttp || isDevServerRequest || skipBecauseUncached) return;
+
+	// Network-first for navigation requests (HTML documents). A cache-first
+	// strategy here is dangerous: once index.html is cached it locks users onto
+	// a stale shell that references hashed chunks which no longer exist after a
+	// deploy, causing module parse errors on boot.
+	if (event.request.mode === 'navigate') {
 		event.respondWith(
 			(async () => {
-				// always serve static files and bundler-generated assets from cache.
-				// if your application has other URLs with data that will never change,
-				// set this variable to true for them and they will only be fetched once.
-				const cachedAsset = isStaticAsset && (await caches.match(event.request));
-
-				return cachedAsset || fetchAndCache(event.request);
+				try {
+					return await fetchAndCache(event.request);
+				} catch (err) {
+					const fallback = (await caches.match(event.request)) || (await caches.match('/'));
+					if (fallback) return fallback;
+					throw err;
+				}
 			})()
 		);
+		return;
 	}
+
+	event.respondWith(
+		(async () => {
+			// always serve static files and bundler-generated assets from cache.
+			// if your application has other URLs with data that will never change,
+			// set this variable to true for them and they will only be fetched once.
+			const cachedAsset = isStaticAsset && (await caches.match(event.request));
+
+			return cachedAsset || fetchAndCache(event.request);
+		})()
+	);
 });
