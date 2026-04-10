@@ -168,7 +168,7 @@
 		grid-template-columns: auto 1fr;
 		align-items: center;
 		width: 100%;
-		max-width: var(--column);
+		max-width: var(--max-w-xl);
 		margin: 0 auto;
 		padding: 0 var(--space-5);
 		height: var(--header-h);
@@ -224,7 +224,7 @@
 		font-size: var(--text-base);
 		font-weight: var(--weight-semibold);
 		letter-spacing: var(--tracking-wide);
-		color: var(--brand-200);
+		color: var(--color-text-secondary);
 		text-decoration: none;
 		white-space: nowrap;
 		padding: var(--space-2) var(--space-3);
@@ -327,7 +327,7 @@
 		border: 1px solid transparent;
 		border-radius: var(--radius-sm);
 		cursor: pointer;
-		color: var(--brand-200);
+		color: var(--color-text-secondary);
 		transition:
 			background-color var(--dur-fast) var(--ease-snes),
 			border-color var(--dur-fast) var(--ease-snes),
@@ -369,7 +369,7 @@
 		font-size: var(--text-base);
 		font-weight: var(--weight-semibold);
 		letter-spacing: var(--tracking-wide);
-		color: var(--brand-200);
+		color: var(--color-text-secondary);
 		text-decoration: none;
 		text-align: left;
 		background: transparent;
@@ -403,8 +403,8 @@
 		min-width: 1.1rem;
 		height: 1.1rem;
 		padding: 0 0.25rem;
-		background: var(--urgent);
-		color: var(--color-white);
+		background: var(--btn-danger-bg);
+		color: var(--color-on-accent);
 		font-size: 0.65rem;
 		font-weight: var(--weight-bold);
 		border-radius: 9999px;

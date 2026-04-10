@@ -1,0 +1,11 @@
+/* ─── FONTS ─────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&display=swap");
+
+/*
+  Font Roles – SNES Era Hierarchy
+  ────────────────────────────────
+  --font-display: Exo 2 Black Italic
+  --font-numeric: Orbitron Bold/Black
+  --font-body   : Rajdhani Medium/SemiBold
+  --font-endzone: Anton
+*/

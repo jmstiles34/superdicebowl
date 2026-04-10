@@ -389,25 +389,25 @@
 		flex: 1;
 		padding: 0.625rem;
 		text-align: center;
-		font-size: var(--14px);
-		color: var(--color-gray-300);
-		background-color: var(--color-gray-900);
-		border-bottom: 2px solid var(--color-gray-700);
+		font-size: var(--text-sm);
+		color: var(--color-text-secondary);
+		background-color: var(--color-bg-surface);
+		border-bottom: 2px solid var(--color-border-default);
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 	}
 	.tab:hover {
-		color: var(--color-white);
+		color: var(--color-on-accent);
 	}
 	.tab-selected,
 	.tab-selected:hover {
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		font-weight: 600;
-		border-bottom-color: var(--color-blue-500);
+		border-bottom-color: var(--color-border-brand);
 	}
 	.empty {
-		color: var(--color-gray-400);
+		color: var(--color-text-tertiary);
 		text-align: center;
 		padding: 2rem 0;
 	}
@@ -418,9 +418,9 @@
 	}
 	.game-card {
 		position: relative;
-		background: var(--color-gray-900);
-		border: 1px solid var(--color-gray-700);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-sm);
 		padding: 0.75rem;
 	}
 	.season-badge {
@@ -431,8 +431,8 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-		color: var(--color-blue-300);
-		border: 1px solid var(--color-blue-500);
+		color: var(--color-text-brand);
+		border: 1px solid var(--color-border-brand);
 		border-radius: 3px;
 		padding: 1px 5px;
 	}
@@ -446,24 +446,24 @@
 	.team-badge {
 		padding: 0.2rem 0.5rem;
 		border-radius: 3px;
-		color: var(--color-white);
-		font-size: var(--12px);
+		color: var(--color-on-accent);
+		font-size: var(--text-xs);
 		font-weight: 600;
 	}
 	.score {
-		color: var(--color-white);
-		font-size: var(--18px);
+		color: var(--color-on-accent);
+		font-size: var(--text-md);
 		font-weight: 700;
 		min-width: 1.5rem;
 		text-align: center;
 	}
 	.vs {
-		color: var(--color-gray-500);
-		font-size: var(--14px);
+		color: var(--color-text-muted);
+		font-size: var(--text-sm);
 	}
 	.meta {
 		color: var(--color-text-gold);
-		font-size: var(--12px);
+		font-size: var(--text-xs);
 		text-align: center;
 		margin-bottom: 0.75rem;
 	}
@@ -478,26 +478,26 @@
 		align-items: center;
 	}
 	.delete-trigger {
-		color: var(--urgent);
-		font-size: var(--12px);
+		color: var(--color-text-danger);
+		font-size: var(--text-xs);
 	}
 	.delete-trigger:hover {
-		color: var(--urgent-hover);
+		color: var(--color-text-danger);
 	}
 	.confirm-row {
 		display: flex;
 		gap: 0.5rem;
 	}
 	.delete-btn {
-		color: var(--color-white);
-		background: var(--urgent);
+		color: var(--color-on-accent);
+		background: var(--btn-danger-bg);
 		padding: 0.25rem 0.5rem;
-		border-radius: var(--border-radius);
-		font-size: var(--12px);
+		border-radius: var(--radius-sm);
+		font-size: var(--text-xs);
 	}
 	.cancel-btn {
-		color: var(--color-gray-300);
-		font-size: var(--12px);
+		color: var(--color-text-secondary);
+		font-size: var(--text-xs);
 	}
 	/* Online tab */
 	.tab-badge {
@@ -507,8 +507,8 @@
 		min-width: 1.1rem;
 		height: 1.1rem;
 		padding: 0 0.25rem;
-		background: var(--urgent);
-		color: var(--color-white);
+		background: var(--btn-danger-bg);
+		color: var(--color-on-accent);
 		font-size: 0.65rem;
 		font-weight: var(--weight-bold);
 		border-radius: 9999px;
@@ -521,7 +521,7 @@
 		transition: background-color var(--dur-fast) var(--ease-snes);
 	}
 	.online-card:hover {
-		background: var(--color-gray-800);
+		background: var(--color-bg-elevated);
 	}
 	.online-status-badge {
 		position: absolute;
@@ -540,29 +540,29 @@
 		border-color: var(--color-green-400, #4ade80);
 	}
 	.online-status-badge.waiting {
-		color: var(--color-gray-400);
-		border-color: var(--color-gray-600);
+		color: var(--color-text-tertiary);
+		border-color: var(--color-border-strong);
 	}
 	.online-status-badge.pending {
 		color: var(--color-text-gold);
 		border-color: var(--color-text-gold);
 	}
 	.online-status-badge.completed {
-		color: var(--color-blue-300);
-		border-color: var(--color-blue-500);
+		color: var(--color-text-brand);
+		border-color: var(--color-border-brand);
 	}
 	.pending-teams {
-		font-size: var(--12px);
-		color: var(--color-gray-400);
+		font-size: var(--text-xs);
+		color: var(--color-text-tertiary);
 		font-style: italic;
 	}
 	.show-completed-toggle {
 		margin-top: 1rem;
 		font-size: var(--text-sm);
-		color: var(--brand-300);
+		color: var(--color-text-brand);
 		display: block;
 	}
 	.show-completed-toggle:hover {
-		color: var(--brand-200);
+		color: var(--color-text-secondary);
 	}
 </style>

@@ -198,7 +198,7 @@
 
 	input[type='range'] {
 		width: 6rem;
-		accent-color: var(--brand-400);
+		accent-color: var(--color-border-focus);
 		cursor: pointer;
 	}
 

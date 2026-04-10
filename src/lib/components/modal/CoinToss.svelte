@@ -110,11 +110,11 @@
 		width: 7rem;
 		height: 7rem;
 		cursor: pointer;
-		filter: drop-shadow(4px 4px 0 var(--brand-950));
+		filter: drop-shadow(4px 4px 0 oklch(0.1829 0.1063 264.01));
 	}
 
 	#coin:not(.Home):not(.Away):hover {
-		filter: drop-shadow(4px 4px 0 var(--brand-900))
+		filter: drop-shadow(4px 4px 0 oklch(0.3077 0.1962 264.21))
 		        drop-shadow(0 0 12px rgba(64, 96, 240, 0.5));
 	}
 

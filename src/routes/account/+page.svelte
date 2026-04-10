@@ -287,21 +287,21 @@
 		font-weight: var(--weight-semibold);
 		letter-spacing: var(--tracking-wide);
 		text-transform: uppercase;
-		color: var(--color-gray-400);
+		color: var(--color-text-tertiary);
 		margin: 0;
 	}
 	.info-row {
 		display: flex;
 		justify-content: space-between;
 		padding: 0.75rem 0;
-		border-bottom: 1px solid var(--color-gray-800);
+		border-bottom: 1px solid var(--color-border-subtle);
 	}
 	.label {
-		color: var(--color-gray-400);
-		font-size: var(--14px);
+		color: var(--color-text-tertiary);
+		font-size: var(--text-sm);
 	}
 	.value {
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		font-weight: 500;
 	}
 	.online-connected {
@@ -331,11 +331,11 @@
 		content: '';
 		flex: 1;
 		height: 1px;
-		background: var(--color-gray-800);
+		background: var(--color-bg-elevated);
 	}
 	.online-description {
 		font-size: var(--text-sm);
-		color: var(--color-gray-400);
+		color: var(--color-text-tertiary);
 		margin-bottom: 1rem;
 	}
 	.online-actions {
@@ -355,20 +355,20 @@
 	}
 	.field label {
 		font-size: var(--text-sm);
-		color: var(--color-gray-400);
+		color: var(--color-text-tertiary);
 	}
 	.field input {
 		width: 100%;
 		padding: 0.5rem 0.75rem;
-		background: var(--color-gray-900);
-		border: 1px solid var(--color-gray-700);
-		border-radius: var(--border-radius);
-		color: var(--color-white);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-sm);
+		color: var(--color-on-accent);
 		font-size: var(--text-base);
 	}
 	.field input:focus {
 		outline: none;
-		border-color: var(--brand-400);
+		border-color: var(--color-border-focus);
 		box-shadow: var(--focus-ring);
 	}
 	.form-actions {
@@ -380,22 +380,22 @@
 		flex: 1;
 		padding: 0.5em;
 		text-align: center;
-		background: var(--color-gray-800);
-		color: var(--color-gray-300);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-elevated);
+		color: var(--color-text-secondary);
+		border-radius: var(--radius-sm);
 		font-size: var(--text-base);
 	}
 	.cancel-button:hover {
-		background: var(--color-gray-700);
+		background: var(--color-bg-overlay);
 	}
 	.text-button {
 		font-size: var(--text-sm);
-		color: var(--brand-300);
+		color: var(--color-text-brand);
 		text-align: center;
 		width: 100%;
 	}
 	.text-button:hover {
-		color: var(--brand-200);
+		color: var(--color-text-secondary);
 	}
 	.online-account-actions {
 		display: flex;
@@ -419,18 +419,18 @@
 		color: var(--color-text-tertiary);
 	}
 	.delete-online-trigger:hover {
-		color: var(--urgent);
+		color: var(--color-text-danger);
 	}
 	.delete-online-confirm {
 		margin-top: 0.5rem;
 		padding: 1rem;
-		background: var(--color-gray-900);
-		border: 1px solid var(--urgent);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border-danger);
+		border-radius: var(--radius-sm);
 	}
 	.delete-online-warning {
 		color: var(--color-text-secondary);
-		font-size: var(--14px);
+		font-size: var(--text-sm);
 		margin-bottom: 1rem;
 	}
 	.actions {
@@ -440,22 +440,22 @@
 		margin-top: 0.5rem;
 	}
 	.delete-trigger {
-		color: var(--urgent);
-		font-size: var(--14px);
+		color: var(--color-text-danger);
+		font-size: var(--text-sm);
 		text-align: center;
 	}
 	.delete-trigger:hover {
-		color: var(--urgent-hover);
+		color: var(--color-text-danger);
 	}
 	.delete-confirm {
 		padding: 1rem;
-		background: var(--color-gray-900);
-		border: 1px solid var(--urgent);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border-danger);
+		border-radius: var(--radius-sm);
 	}
 	.delete-warning {
-		color: var(--color-gray-300);
-		font-size: var(--14px);
+		color: var(--color-text-secondary);
+		font-size: var(--text-sm);
 		margin-bottom: 1rem;
 	}
 	.delete-actions {
@@ -466,16 +466,16 @@
 		flex: 1;
 		padding: 0.5em;
 		text-align: center;
-		background-color: var(--urgent);
-		color: var(--color-white);
-		border-radius: var(--border-radius);
+		background-color: var(--btn-danger-bg);
+		color: var(--color-on-accent);
+		border-radius: var(--radius-sm);
 	}
 	.delete-button:hover {
 		background-color: oklch(0.5 0.16 24);
 	}
 	.error {
-		color: var(--urgent);
-		font-size: var(--14px);
+		color: var(--color-text-danger);
+		font-size: var(--text-sm);
 		margin-bottom: 0.5rem;
 	}
 </style>

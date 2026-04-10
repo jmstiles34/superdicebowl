@@ -54,7 +54,7 @@
 <style>
 	.team-scores {
 		display: flex;
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		font-size: 0.9rem;
 		font-weight: bold;
 		white-space: nowrap;
@@ -90,15 +90,15 @@
 		box-shadow:
 			inset 0 2px #111,
 			inset 0 -2px #555;
-		background-color: var(--color-white);
+		background-color: var(--color-on-accent);
 	}
 	.score {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		width: 10%;
-		background-color: var(--color-white);
-		color: var(--color-offblack);
+		background-color: var(--color-on-accent);
+		color: var(--color-on-accent-dark);
 	}
 	@media (min-width: 52rem) {
 		.team {

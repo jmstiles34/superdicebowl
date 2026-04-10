@@ -493,6 +493,7 @@
 		font-family: var(--font-endzone);
 		font-weight: 700;
 		font-size: var(--text-display-sm);
+		text-transform: uppercase;
 		letter-spacing: 0.15em;
 		padding: var(--space-2) var(--space-6);
 		border-radius: var(--radius-sm);
@@ -560,8 +561,8 @@
 	}
 
 	.step-dot.active {
-		background: var(--brand-400);
-		box-shadow: 0 0 6px var(--brand-400);
+		background: var(--btn-primary-bg-hover);
+		box-shadow: 0 0 6px var(--btn-primary-bg-hover);
 	}
 
 	/* ── Mobile wizard ───────────────────────────────────────── */

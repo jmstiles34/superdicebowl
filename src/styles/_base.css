@@ -1,0 +1,158 @@
+/* ─── BASE / RESET STYLES ────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+* {
+	position: relative;
+}
+
+html {
+	font-size: 16px;
+	background: var(--color-bg-void);
+}
+
+/* Portal containers appended to <body> (flex container) */
+[modal-portal] {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 0;
+	overflow: visible;
+	z-index: var(--z-modal);
+}
+
+body {
+	font-family: var(--font-body);
+	font-size: var(--text-base);
+	font-weight: var(--weight-medium);
+	line-height: var(--leading-base);
+	color: var(--color-text-primary);
+	background-color: var(--color-bg-base);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	height: 100dvh;
+}
+
+/* Scrollbar */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+	background: var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+	background: var(--scrollbar-thumb);
+	border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	background: var(--scrollbar-thumb-hover);
+}
+
+:focus-visible {
+	outline: none;
+	box-shadow: var(--focus-ring);
+}
+
+p {
+	line-height: var(--leading-base);
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+button {
+	display: block;
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	text-align: left;
+	font: inherit;
+	color: inherit;
+	transition: all var(--dur-base) var(--ease-snes);
+}
+
+button:not(:disabled):active {
+	transform: translateY(2px);
+	box-shadow: none !important;
+}
+
+/* Disabled state uses themed tokens — not a hardcoded dark color */
+button:disabled {
+	background-color: var(--btn-disabled-bg);
+	border-color: var(--btn-disabled-border) !important;
+	color: var(--btn-disabled-text);
+	box-shadow: none !important;
+	cursor: default;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: var(--weight-semibold);
+	font-family: var(--font-body);
+	color: var(--color-text-primary);
+	margin: 0 0 0.5em 0;
+	line-height: var(--leading-tight);
+}
+
+h1 {
+	font-size: var(--text-2xl);
+}
+
+input,
+button,
+textarea,
+select {
+	font: inherit;
+	font-family: inherit;
+	font-size: inherit;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+}
+
+#root {
+	isolation: isolate;
+}

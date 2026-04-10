@@ -1,0 +1,166 @@
+/* ─── DARK MODE TOKENS (primary) ─────────────────────────── */
+:root,
+[data-theme="dark"] {
+	/* ── Backgrounds ────────────────────────────────────── */
+	--color-bg-void: oklch(0.1011 0.0397 276.62);
+	--color-bg-base: oklch(0.1328 0.0467 277.95);
+	--color-bg-surface: oklch(0.1634 0.0673 275.96);
+	--color-bg-elevated: oklch(0.1994 0.0825 275.9);
+	--color-bg-overlay: oklch(0.2343 0.0925 276.55);
+
+	/* ── Header ─────────────────────────────────────────── */
+	--color-header-bg: oklch(0.1274 0.0499 276.64);
+	--color-header-border: oklch(0.395 0.2636 264.16 / 0.45);
+	--color-header-shadow: 0 2px 0 oklch(0.395 0.2636 264.16 / 0.3);
+	--color-header-text: oklch(0.9595 0.02 286.02);
+	--color-header-logo-glow: 0 0 20px oklch(0.5543 0.2186 268.51 / 0.5);
+
+	/* ── Text ───────────────────────────────────────────── */
+	--color-text-primary: oklch(0.9595 0.02 286.02);
+	--color-text-secondary: oklch(0.8289 0.085 272.67 / 0.88);
+	--color-text-tertiary: oklch(0.7677 0.0909 272.94 / 0.8);
+	--color-text-brand: oklch(0.5543 0.2186 268.51);
+	--color-text-gold: oklch(0.8272 0.1711 80.53);
+	--color-text-success: oklch(0.7582 0.15 147.44);
+	--color-text-danger: oklch(0.6603 0.2273 19.88);
+	--color-text-warning: oklch(0.8618 0.1721 88.89);
+	--color-text-muted: oklch(0.7677 0.0909 272.94 / 0.8);
+
+	/* ── Borders ────────────────────────────────────────── */
+	--color-border-subtle: oklch(0.5543 0.2186 268.51 / 0.12);
+	--color-border-default: oklch(0.5543 0.2186 268.51 / 0.25);
+	--color-border-strong: oklch(0.5543 0.2186 268.51 / 0.5);
+	--color-border-brand: oklch(0.395 0.2636 264.16);
+	--color-border-danger: oklch(0.637 0.2486 23.64 / 0.45);
+	--color-border-focus: oklch(0.5543 0.2186 268.51);
+
+	/* ── SNES Chrome & Shadows ──────────────────────────── */
+	--snes-window-sm:
+		inset 0 1px 0 oklch(0.641 0.1668 274.59 / 0.45), 0 0 0 2px oklch(0.1829 0.1063 264.01 / 0.95);
+	--snes-window-md:
+		inset 0 1px 0 oklch(0.641 0.1668 274.59 / 0.45), 0 0 0 3px oklch(0.1829 0.1063 264.01 / 0.95);
+	--shadow-card: 4px 4px 0 oklch(0.1829 0.1063 264.01), var(--snes-window-sm);
+	--shadow-card-hover:
+		6px 6px 0 oklch(0.3077 0.1962 264.21), inset 0 1px 0 oklch(0.641 0.1668 274.59 / 0.5),
+		0 0 0 2px oklch(0.395 0.2636 264.16 / 0.7);
+	--shadow-modal:
+		8px 8px 0 oklch(0 0 0 / 0.95), inset 0 1px 0 oklch(0.641 0.1668 274.59 / 0.45),
+		0 0 0 4px oklch(0.1829 0.1063 264.01 / 0.95);
+
+	/* ── Glows ──────────────────────────────────────────── */
+	--glow-brand-sm: 0 0 10px oklch(0.395 0.2636 264.16 / 0.65);
+	--glow-brand-md:
+		0 0 18px oklch(0.395 0.2636 264.16 / 0.55), 0 0 36px oklch(0.5543 0.2186 268.51 / 0.25);
+	--glow-gold-sm: 0 0 10px oklch(0.8272 0.1711 80.53 / 0.65);
+	--glow-red-sm: 0 0 10px oklch(0.637 0.2486 23.64 / 0.6);
+
+	/* ── Surfaces ───────────────────────────────────────── */
+	--color-surface-brand: oklch(0.395 0.2636 264.16 / 0.14);
+
+	/* ── Buttons — Primary ──────────────────────────────── */
+	--btn-primary-bg: oklch(0.395 0.2636 264.16);
+	--btn-primary-bg-hover: oklch(0.5543 0.2186 268.51);
+	--btn-primary-bg-active: oklch(0.3427 0.225 264.19);
+	--btn-primary-text: oklch(1 0 0);
+	--btn-primary-border: oklch(0.641 0.1668 274.59);
+	--btn-primary-shadow: 4px 4px 0 oklch(0.1829 0.1063 264.01), var(--snes-window-sm);
+	--btn-primary-shadow-hover:
+		4px 4px 0 oklch(0.3077 0.1962 264.21), inset 0 1px 0 oklch(0.7832 0.1096 272.22 / 0.5),
+		0 0 0 2px oklch(0.395 0.2636 264.16 / 0.8), var(--glow-brand-sm);
+
+	/* ── Buttons — Secondary ────────────────────────────── */
+	--btn-secondary-bg: transparent;
+	--btn-secondary-bg-hover: oklch(0.395 0.2636 264.16 / 0.15);
+	--btn-secondary-bg-active: oklch(0.395 0.2636 264.16 / 0.25);
+	--btn-secondary-text: oklch(0.641 0.1668 274.59);
+	--btn-secondary-border: oklch(0.395 0.2636 264.16);
+	--btn-secondary-shadow: 4px 4px 0 oklch(0.1829 0.1063 264.01), var(--snes-window-sm);
+	--btn-secondary-shadow-hover:
+		4px 4px 0 oklch(0.3077 0.1962 264.21), inset 0 1px 0 oklch(0.641 0.1668 274.59 / 0.45),
+		0 0 0 2px oklch(0.395 0.2636 264.16 / 0.6);
+
+	/* ── Buttons — Gold ─────────────────────────────────── */
+	--btn-gold-bg: oklch(0.8272 0.1711 80.53);
+	--btn-gold-bg-hover: oklch(0.8618 0.1721 88.89);
+	--btn-gold-text: oklch(0.136 0.0279 94.15);
+	--btn-gold-border: oklch(0.9022 0.1548 94.96);
+	--btn-gold-shadow:
+		4px 4px 0 oklch(0.1882 0.0401 72.98), inset 0 1px 0 oklch(0.9436 0.1417 102.24 / 0.6),
+		0 0 0 2px oklch(0.4062 0.0871 71.65);
+	--btn-gold-shadow-hover:
+		4px 4px 0 oklch(0.4062 0.0871 71.65), inset 0 1px 0 oklch(0.9638 0.12 104.86 / 0.7),
+		0 0 0 2px oklch(0.5392 0.117 69.73), var(--glow-gold-sm);
+
+	/* ── Buttons — Danger ───────────────────────────────── */
+	--btn-danger-bg: oklch(0.637 0.2486 23.64);
+	--btn-danger-bg-hover: oklch(0.6603 0.2273 19.88);
+	--btn-danger-text: oklch(1 0 0);
+	--btn-danger-border: oklch(0.7443 0.1588 11.62);
+	--btn-danger-shadow:
+		4px 4px 0 oklch(0.23 0.0925 20.98), inset 0 1px 0 oklch(0.8015 0.1135 19.87 / 0.4),
+		0 0 0 2px oklch(0.3264 0.1317 22.94);
+
+	/* ── Buttons — Disabled ─────────────────────────────── */
+	--btn-disabled-bg: oklch(0.2288 0.0605 280.5);
+	--btn-disabled-border: oklch(0.2976 0.0678 281.47);
+	--btn-disabled-text: oklch(0.5266 0.1277 270.9 / 0.38);
+
+	/* ── Inputs ─────────────────────────────────────────── */
+	--input-bg: oklch(0.1188 0.05 275.67);
+	--input-border: var(--color-border-default);
+	--input-border-hover: var(--color-border-strong);
+	--input-border-focus: oklch(0.5543 0.2186 268.51);
+	--input-text: var(--color-text-primary);
+	--input-shadow: var(--snes-window-sm);
+	--input-shadow-focus:
+		0 0 0 1px oklch(0.641 0.1668 274.59 / 0.35), 0 0 0 3px oklch(0.5543 0.2186 268.51 / 0.2),
+		var(--glow-brand-sm);
+
+	/* ── Cards ──────────────────────────────────────────── */
+	--card-bg: var(--color-bg-surface);
+	--card-border: var(--color-border-default);
+	--card-border-hover: var(--color-border-strong);
+	--card-shadow: var(--shadow-card);
+	--card-shadow-hover: var(--shadow-card-hover);
+
+	/* ── Modal ──────────────────────────────────────────── */
+	--modal-bg: var(--color-bg-elevated);
+	--modal-backdrop: oklch(0.1011 0.0397 276.62 / 0.6);
+	--modal-border: var(--color-border-strong);
+	--modal-radius: var(--radius-lg);
+	--modal-shadow: var(--shadow-modal);
+	--modal-header-text: oklch(0.641 0.1668 274.59);
+
+	/* ── Table ──────────────────────────────────────────── */
+	--table-header-bg: oklch(0.1673 0.0791 273.77);
+	--table-header-text: oklch(0.641 0.1668 274.59);
+	--table-row-bg: var(--color-bg-surface);
+	--table-row-bg-alt: oklch(0.1634 0.0673 275.96 / 0.7);
+	--table-cell-text: var(--color-text-primary);
+
+	/* ── Nav ────────────────────────────────────────────── */
+	--nav-text-active: oklch(0.641 0.1668 274.59);
+	--nav-border-active: oklch(0.395 0.2636 264.16);
+	--nav-bg-active: oklch(0.395 0.2636 264.16 / 0.12);
+
+	/* ── Dice ───────────────────────────────────────────── */
+	--dice-bg: var(--color-bg-elevated);
+	--dice-border: oklch(0.5543 0.2186 268.51);
+	--dice-dot: oklch(1 0 0);
+	--dice-dot-glow: 0 0 3px oklch(1 0 0 / 0.5);
+	--dice-shadow: var(--shadow-card);
+	--dice-glow-active: var(--glow-brand-md);
+
+	/* ── Scrollbar ──────────────────────────────────────── */
+	--scrollbar-track: var(--color-bg-void);
+	--scrollbar-thumb: oklch(0.5543 0.2186 268.51 / 0.28);
+	--scrollbar-thumb-hover: oklch(0.5543 0.2186 268.51 / 0.52);
+
+	/* ── Misc ───────────────────────────────────────────── */
+	--focus-ring: 0 0 0 2px var(--color-bg-base), 0 0 0 4px oklch(0.5543 0.2186 268.51);
+	--text-shadow-display: 2px 2px 0 oklch(0.1868 0.1037 263.78), -1px -1px 0 oklch(0 0 0 / 0.4);
+
+	/* ── SVG icon filters ──────────────────────────────── */
+	--icon-filter-default: invert(1) opacity(0.6);
+	--icon-filter-hover: invert(1) opacity(1);
+}

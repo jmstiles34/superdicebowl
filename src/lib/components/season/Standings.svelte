@@ -54,17 +54,17 @@
 		font-size: 0.85rem;
 	}
 	th {
-		color: var(--color-gray-400);
+		color: var(--color-text-tertiary);
 		font-weight: 600;
 		text-align: center;
 		padding: 6px 8px;
-		border-bottom: 1px solid var(--color-gray-600);
+		border-bottom: 1px solid var(--color-border-strong);
 	}
 	td {
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		text-align: center;
 		padding: 6px 8px;
-		border-bottom: 1px solid var(--color-gray-700);
+		border-bottom: 1px solid var(--color-border-default);
 	}
 	.rank {
 		width: 2rem;
@@ -80,14 +80,14 @@
 	.badge {
 		font-size: 0.65rem;
 		font-weight: 700;
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		padding: 2px 5px;
 		border-radius: 3px;
 		min-width: 1.8rem;
 		text-align: center;
 	}
 	.user-team {
-		background-color: var(--color-gray-800);
+		background-color: var(--color-bg-elevated);
 	}
 	.user-team td {
 		color: gold;

@@ -68,7 +68,7 @@
 	}
 
 	.fieldgoal {
-		color: var(--color-white);
+		color: var(--color-on-accent);
 	}
 
 	.safety {

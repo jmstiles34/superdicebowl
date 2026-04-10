@@ -206,7 +206,7 @@
 			height: 2rem;
 			/* Lighter drop on small screens */
 			box-shadow:
-				3px 3px 0 var(--brand-950),
+				3px 3px 0 oklch(0.1829 0.1063 264.01),
 				inset 0 1px 0 rgba(112, 128, 240, 0.4),
 				0 0 0 2px rgba(0, 7, 64, 0.9);
 		}

@@ -1,0 +1,138 @@
+/* ─── SHARED / MODE-AGNOSTIC DESIGN TOKENS ───────────────── */
+:root {
+	/* ── Fixed Colors (theme-independent) ──────────────── */
+	--color-on-accent: oklch(1 0 0); /* White — text/borders on colored surfaces */
+	--color-on-accent-dark: oklch(
+		0.1328 0.0467 277.95
+	); /* Near-black — text on light accent surfaces */
+	--color-field-stripe-a: oklch(0.6599 0.13 147.34); /* Field stripe light */
+	--color-field-stripe-b: oklch(0.5577 0.11 147.18); /* Field stripe dark */
+	--color-field-marking: oklch(0.8272 0.1711 80.53); /* Endzone / yard marker gold */
+
+	/* ── Typography ─────────────────────────────────────── */
+	--font-display: "Exo 2", sans-serif;
+	--font-numeric: "Orbitron", monospace;
+	--font-body: "Rajdhani", sans-serif;
+	--font-endzone: "Anton", sans-serif;
+
+	--text-2xs: 0.6875rem;
+	--text-xs: 0.75rem;
+	--text-sm: 0.875rem;
+	--text-base: 1rem;
+	--text-md: 1.125rem;
+	--text-lg: 1.25rem;
+	--text-xl: 1.5rem;
+	--text-2xl: 2rem;
+	--text-3xl: 2.5rem;
+
+	--text-display-sm: 1.25rem;
+	--text-display-md: 1.75rem;
+	--text-display-lg: 2.5rem;
+	--text-display-xl: 3.5rem;
+
+	--text-score-xs: 0.875rem;
+	--text-score-sm: 1.25rem;
+	--text-score-md: 2rem;
+	--text-score-lg: 3rem;
+	--text-score-xl: 4rem;
+	--text-score-2xl: 5.5rem;
+
+	--weight-light: 300;
+	--weight-regular: 400;
+	--weight-medium: 500;
+	--weight-semibold: 600;
+	--weight-bold: 700;
+	--weight-extrabold: 800;
+	--weight-black: 900;
+
+	--leading-none: 1;
+	--leading-tight: 1.1;
+	--leading-snug: 1.25;
+	--leading-base: 1.5;
+	--leading-loose: 1.7;
+
+	--tracking-tight: -0.02em;
+	--tracking-normal: 0;
+	--tracking-wide: 0.04em;
+	--tracking-wider: 0.08em;
+	--tracking-widest: 0.15em;
+	--tracking-display: 0.06em;
+
+	--text-shadow-display: 2px 2px 0 oklch(0.1868 0.1037 263.78), -1px -1px 0 rgba(0, 0, 0, 0.4);
+	--text-shadow-score: 2px 2px 0 rgba(100, 60, 0, 0.8);
+	--text-shadow-hero: 3px 3px 0 oklch(0.1829 0.1063 264.01);
+
+	/* ── Spacing ────────────────────────────────────────── */
+	--space-1: 0.25rem;
+	--space-1-5: 0.375rem;
+	--space-2: 0.5rem;
+	--space-2-5: 0.625rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-5: 1.25rem;
+	--space-6: 1.5rem;
+	--space-7: 1.75rem;
+	--space-8: 2rem;
+	--space-10: 2.5rem;
+	--space-12: 3rem;
+	--space-16: 4rem;
+	--space-20: 5rem;
+	--space-24: 6rem;
+
+	/* ── Border Radius ──────────────────────────────────── */
+	--radius-none: 0;
+	--radius-xs: 2px;
+	--radius-sm: 4px;
+	--radius-md: 6px;
+	--radius-lg: 8px;
+	--radius-xl: 12px;
+	--radius-pill: 9999px;
+
+	/* ── Borders & SNES Window Chrome ───────────────────── */
+	--border-thin: 1px;
+	--border-base: 2px;
+	--border-thick: 3px;
+	--border-heavy: 4px;
+
+	--shadow-pixel-xs: 2px 2px 0px;
+	--shadow-pixel-sm: 3px 3px 0px;
+	--shadow-pixel-md: 4px 4px 0px;
+	--shadow-pixel-lg: 6px 6px 0px;
+	--shadow-pixel-xl: 8px 8px 0px;
+
+	--progress-h: 8px;
+	--progress-radius: var(--radius-xs);
+
+	/* ── Transitions ────────────────────────────────────── */
+	--ease-out: cubic-bezier(0, 0, 0.2, 1);
+	--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+	--ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+	--ease-snes: cubic-bezier(0, 0, 0.15, 1);
+
+	--dur-instant: 50ms;
+	--dur-fast: 100ms;
+	--dur-base: 180ms;
+	--dur-slow: 320ms;
+	--dur-slower: 500ms;
+
+	/* ── Z-Index ────────────────────────────────────────── */
+	--z-below: -1;
+	--z-base: 0;
+	--z-raised: 10;
+	--z-dropdown: 100;
+	--z-sticky: 200;
+	--z-overlay: 300;
+	--z-modal: 400;
+	--z-toast: 500;
+	--z-tooltip: 600;
+
+	/* ── Grid & Layout ──────────────────────────────────── */
+	--max-w-sm: 640px;
+	--max-w-md: 768px;
+	--max-w-lg: 1024px;
+	--max-w-xl: 1280px;
+	--max-w-2xl: 1536px;
+	--header-h: 60px;
+	--sidebar-w: 260px;
+	--card-gap: 12px;
+}

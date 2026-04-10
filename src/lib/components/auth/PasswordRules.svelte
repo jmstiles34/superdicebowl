@@ -22,8 +22,8 @@
 		gap: 0.25rem;
 	}
 	li {
-		font-size: var(--12px);
-		color: var(--color-gray-400);
+		font-size: var(--text-xs);
+		color: var(--color-text-tertiary);
 	}
 	li::before {
 		content: '\25CB\00a0\00a0';
@@ -35,7 +35,7 @@
 		content: '\2713\00a0\00a0';
 	}
 	.fail {
-		color: var(--urgent);
+		color: var(--color-text-danger);
 	}
 	.fail::before {
 		content: '\2717\00a0\00a0';

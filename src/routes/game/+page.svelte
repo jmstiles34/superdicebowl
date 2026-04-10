@@ -426,7 +426,7 @@
 		transform: scale(-1, 1);
 	}
 	.divider {
-		color: var(--brand-300);
+		color: var(--color-text-brand);
 		font-weight: bold;
 		font-size: 1.25rem;
 	}
@@ -434,8 +434,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		background-color: var(--color-gray-900);
-		border: 1px solid var(--color-white);
+		background-color: var(--color-bg-surface);
+		border: 1px solid var(--color-on-accent);
 		border-radius: 1rem;
 		padding: 0.25rem 0.5rem;
 		z-index: 100;

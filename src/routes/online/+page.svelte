@@ -598,7 +598,7 @@
 	}
 	.online-tag {
 		font-size: var(--text-sm);
-		color: var(--brand-300);
+		color: var(--color-text-brand);
 		font-weight: var(--weight-semibold);
 	}
 	.tab-row {
@@ -610,10 +610,10 @@
 		flex: 1;
 		padding: 0.625rem;
 		text-align: center;
-		font-size: var(--14px);
+		font-size: var(--text-sm);
 		color: var(--color-text-secondary);
-		background-color: var(--color-gray-900);
-		border-bottom: 2px solid var(--color-gray-700);
+		background-color: var(--color-bg-surface);
+		border-bottom: 2px solid var(--color-border-default);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -626,7 +626,7 @@
 	.tab-selected:hover {
 		color: var(--color-text-primary);
 		font-weight: 600;
-		border-bottom-color: var(--color-blue-500);
+		border-bottom-color: var(--color-border-brand);
 	}
 	.tab-badge {
 		display: inline-flex;
@@ -635,8 +635,8 @@
 		min-width: 1.1rem;
 		height: 1.1rem;
 		padding: 0 0.25rem;
-		background: var(--urgent);
-		color: var(--color-white);
+		background: var(--btn-danger-bg);
+		color: var(--color-on-accent);
 		font-size: 0.65rem;
 		font-weight: var(--weight-bold);
 		border-radius: 9999px;
@@ -655,16 +655,16 @@
 	}
 	.notif-action-btn {
 		font-size: var(--text-sm);
-		color: var(--brand-300);
+		color: var(--color-text-brand);
 	}
 	.notif-action-btn:hover {
-		color: var(--brand-200);
+		color: var(--color-text-secondary);
 	}
 	.notif-action-btn.danger {
 		color: var(--color-text-secondary);
 	}
 	.notif-action-btn.danger:hover {
-		color: var(--urgent);
+		color: var(--color-text-danger);
 	}
 	.notif-row-wrap {
 		display: flex;
@@ -682,12 +682,12 @@
 		width: 2rem;
 		color: var(--color-text-secondary);
 		font-size: 1.1rem;
-		border-radius: var(--border-radius);
+		border-radius: var(--radius-sm);
 		transition: color var(--dur-fast) var(--ease-snes), background-color var(--dur-fast) var(--ease-snes);
 	}
 	.notif-delete:hover {
-		color: var(--urgent);
-		background: var(--color-gray-900);
+		color: var(--color-text-danger);
+		background: var(--color-bg-surface);
 	}
 	.notification-list {
 		display: flex;
@@ -699,19 +699,19 @@
 		align-items: center;
 		gap: 0.75rem;
 		padding: 0.75rem;
-		background: var(--color-gray-900);
-		border: 1px solid var(--color-gray-800);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-sm);
 		text-align: left;
 		width: 100%;
 		cursor: pointer;
 		transition: background-color var(--dur-fast) var(--ease-snes);
 	}
 	.notification-row:hover {
-		background: var(--color-gray-800);
+		background: var(--color-bg-elevated);
 	}
 	.notification-row.unread {
-		border-color: var(--color-gray-700);
+		border-color: var(--color-border-default);
 	}
 	.notif-dot {
 		flex-shrink: 0;
@@ -721,7 +721,7 @@
 		background: transparent;
 	}
 	.notif-dot.visible {
-		background: var(--brand-400);
+		background: var(--btn-primary-bg-hover);
 	}
 	.notif-body {
 		display: flex;
@@ -739,15 +739,15 @@
 	}
 	.notif-action-hint {
 		font-size: var(--text-xs);
-		color: var(--brand-400);
+		color: var(--color-border-focus);
 		white-space: nowrap;
 	}
 	/* Game invite accept card */
 	.notif-card {
 		padding: 0.75rem;
-		background: var(--color-gray-900);
-		border: 1px solid var(--color-gray-700);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-sm);
 	}
 	.accept-prompt {
 		font-size: var(--text-sm);
@@ -787,9 +787,9 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 0.625rem 0.75rem;
-		background: var(--color-gray-900);
-		border: 1px solid var(--color-gray-800);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-sm);
 	}
 	.friend-name {
 		font-size: var(--text-sm);
@@ -806,21 +806,21 @@
 		color: var(--color-text-secondary);
 	}
 	.friends-label {
-		color: var(--brand-300);
+		color: var(--color-text-brand);
 	}
 	.decline-btn {
 		font-size: var(--text-xs);
 		color: var(--color-text-secondary);
 	}
 	.decline-btn:hover {
-		color: var(--urgent);
+		color: var(--color-text-danger);
 	}
 	/* Challenge form */
 	.challenge-form {
 		padding: 0.75rem;
-		background: var(--color-gray-900);
-		border: 1px solid var(--color-gray-700);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-sm);
 	}
 	.challenge-title {
 		font-size: var(--text-sm);
@@ -848,9 +848,9 @@
 	.team-dropdown,
 	.score-dropdown {
 		padding: 0.4rem 0.6rem;
-		background: var(--color-gray-800);
-		border: 1px solid var(--color-gray-700);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-elevated);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-sm);
 		color: var(--color-text-primary);
 		font-size: var(--text-sm);
 	}
@@ -863,7 +863,7 @@
 	.team-dropdown:focus,
 	.score-dropdown:focus {
 		outline: none;
-		border-color: var(--brand-400);
+		border-color: var(--color-border-focus);
 	}
 	.challenge-actions {
 		display: flex;
@@ -872,7 +872,7 @@
 	}
 	.form-error {
 		font-size: var(--text-xs);
-		color: var(--urgent);
+		color: var(--color-text-danger);
 		margin-bottom: 0.5rem;
 	}
 	.cancel-link {
@@ -889,15 +889,15 @@
 	.search-input {
 		width: 100%;
 		padding: 0.5rem 0.75rem;
-		background: var(--color-gray-900);
-		border: 1px solid var(--color-gray-700);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-sm);
 		color: var(--color-text-primary);
 		font-size: var(--text-base);
 	}
 	.search-input:focus {
 		outline: none;
-		border-color: var(--brand-400);
+		border-color: var(--color-border-focus);
 		box-shadow: var(--focus-ring);
 	}
 	:global(.game-button.small) {

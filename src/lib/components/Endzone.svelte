@@ -99,8 +99,8 @@
 		cursor: pointer;
 	}
 	.endZone {
-		border: 0.125rem solid var(--color-white);
-		background-color: var(--color-yellow);
+		border: 0.125rem solid var(--color-on-accent);
+		background-color: var(--color-field-marking);
 		container-type: size;
 	}
 	.endZoneElements {
@@ -137,14 +137,14 @@
 		width: 0.7rem;
 		height: 0.7rem;
 		border-radius: 50%;
-		background-color: var(--color-yellow);
+		background-color: var(--color-field-marking);
 		margin-block: -0.1rem;
 		z-index: 1;
 	}
 	.bar {
 		width: 0.4rem;
 		height: 100%;
-		background-color: var(--color-yellow);
+		background-color: var(--color-field-marking);
 	}
 	.helmetLogo {
 		display: flex;
@@ -166,6 +166,7 @@
 		font-weight: 700;
 		font-family: var(--font-endzone);
 		font-size: clamp(1rem, 55cqb, 5rem);
+		text-transform: uppercase;
 		transform: rotate(180deg);
 		writing-mode: vertical-lr;
 		margin: auto 0;

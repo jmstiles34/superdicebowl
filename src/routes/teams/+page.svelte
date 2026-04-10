@@ -164,7 +164,7 @@
 		white-space: nowrap;
 	}
 	.empty {
-		color: var(--color-gray-400);
+		color: var(--color-text-tertiary);
 		text-align: center;
 		padding: 2rem 0;
 	}
@@ -174,9 +174,9 @@
 		gap: 0.75rem;
 	}
 	.team-card {
-		background: var(--color-gray-900);
-		border: 1px solid var(--color-gray-700);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-surface);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-sm);
 		padding: 0.75rem;
 	}
 	.team-header {
@@ -202,6 +202,7 @@
 		font-family: var(--font-endzone);
 		font-weight: 700;
 		font-size: var(--text-display-sm);
+		text-transform: uppercase;
 		letter-spacing: 0.15em;
 	}
 	.team-record {
@@ -214,25 +215,25 @@
 		align-items: center;
 	}
 	.delete-trigger {
-		color: var(--urgent);
-		font-size: var(--12px);
+		color: var(--color-text-danger);
+		font-size: var(--text-xs);
 	}
 	.delete-trigger:hover {
-		color: var(--urgent-hover);
+		color: var(--color-text-danger);
 	}
 	.confirm-row {
 		display: flex;
 		gap: 0.5rem;
 	}
 	.delete-btn {
-		color: var(--color-white);
-		background: var(--urgent);
+		color: var(--color-on-accent);
+		background: var(--btn-danger-bg);
 		padding: 0.25rem 0.5rem;
-		border-radius: var(--border-radius);
-		font-size: var(--12px);
+		border-radius: var(--radius-sm);
+		font-size: var(--text-xs);
 	}
 	.cancel-btn {
-		color: var(--color-gray-300);
-		font-size: var(--12px);
+		color: var(--color-text-secondary);
+		font-size: var(--text-xs);
 	}
 </style>

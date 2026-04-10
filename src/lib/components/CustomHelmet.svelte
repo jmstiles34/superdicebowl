@@ -143,14 +143,14 @@
 						filter: drop-shadow(4px 4px 8px oklch(0 0 0 / 0.95));
 					}
 					.ear-hole {
-						fill: var(--slate-900);
+						fill: oklch(0.1708 0.0486 279.94);
 						filter: url(#inset-shadow);
 					}
 					.outline {
-						fill: var(--slate-950);
+						fill: var(--color-on-accent-dark);
 					}
 					.white {
-						fill: var(--slate-0);
+						fill: var(--color-on-accent);
 					}
 					.snaps {
 						fill: oklch(0.9042 0.0261 242.58 / 1);
@@ -168,7 +168,7 @@
 						filter: drop-shadow(2px -2px 4px oklch(0.4184 0 0 / 0.75));
 					}
 					.stroke {
-						stroke: var(--slate-950);
+						stroke: var(--color-on-accent-dark);
 						stroke-linecap: round;
 						stroke-linejoin: round;
 						stroke-width: 0;

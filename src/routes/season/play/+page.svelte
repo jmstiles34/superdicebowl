@@ -250,9 +250,9 @@
 	.tabs {
 		display: flex;
 		gap: 0;
-		border-radius: var(--border-radius);
+		border-radius: var(--radius-sm);
 		overflow: hidden;
-		border: 1px solid var(--color-gray-600);
+		border: 1px solid var(--color-border-strong);
 	}
 	.tab {
 		font-family: inherit;
@@ -260,16 +260,16 @@
 		font-weight: 500;
 		padding: 8px 24px;
 		border: none;
-		background: var(--color-gray-800);
-		color: var(--color-gray-300);
+		background: var(--color-bg-elevated);
+		color: var(--color-text-secondary);
 		cursor: pointer;
 	}
 	.tab:hover {
-		background: var(--color-gray-700);
+		background: var(--color-bg-overlay);
 	}
 	.tab.active {
-		background: var(--color-blue-600);
-		color: var(--color-white);
+		background: var(--btn-primary-bg-active);
+		color: var(--color-on-accent);
 		font-weight: 600;
 	}
 	.week-nav {
@@ -281,10 +281,10 @@
 		font-family: inherit;
 		font-size: 1.2rem;
 		font-weight: 700;
-		background: var(--color-gray-700);
-		color: var(--color-white);
-		border: 1px solid var(--color-gray-500);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-overlay);
+		color: var(--color-on-accent);
+		border: 1px solid var(--color-border-strong);
+		border-radius: var(--radius-sm);
 		padding: 4px 12px;
 		cursor: pointer;
 	}
@@ -293,10 +293,10 @@
 		cursor: default;
 	}
 	.nav-arrow:not(:disabled):hover {
-		background: var(--color-gray-600);
+		background: var(--color-bg-overlay);
 	}
 	.week-label {
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		font-size: 1rem;
 		font-weight: 600;
 		min-width: 120px;
@@ -324,13 +324,13 @@
 		font-size: 1.3rem;
 	}
 	.champion {
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		font-size: 1.1rem;
 		font-weight: 600;
 		margin: 0;
 	}
 	.record {
-		color: var(--color-gray-300);
+		color: var(--color-text-secondary);
 		margin: 0;
 	}
 </style>

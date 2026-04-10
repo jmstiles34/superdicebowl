@@ -187,7 +187,7 @@
 		gap: 16px;
 	}
 	h2 {
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		margin: 0;
 	}
 	.active-season {
@@ -197,15 +197,15 @@
 		gap: 12px;
 	}
 	.active-season p {
-		color: var(--color-gray-300);
+		color: var(--color-text-secondary);
 		margin: 0;
 	}
 	.divider-line {
 		width: 200px;
-		border-top: 1px solid var(--color-gray-600);
+		border-top: 1px solid var(--color-border-strong);
 	}
 	.or-text {
-		color: var(--color-gray-400);
+		color: var(--color-text-tertiary);
 		font-size: 0.9rem;
 		margin: 0;
 	}
@@ -222,16 +222,16 @@
 		gap: 12px;
 	}
 	.label {
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		white-space: nowrap;
 	}
 	.select {
 		font-family: inherit;
 		font-size: inherit;
-		background-color: var(--color-blue-300);
+		background-color: var(--color-text-brand);
 		border: none;
-		border-radius: var(--border-radius);
-		color: var(--color-offblack);
+		border-radius: var(--radius-sm);
+		color: var(--color-on-accent-dark);
 		padding: 6px 8px;
 		min-width: 160px;
 	}

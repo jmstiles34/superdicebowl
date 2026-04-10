@@ -59,19 +59,19 @@
 		flex: 1;
 		padding: 0.625rem;
 		text-align: center;
-		font-size: var(--16px);
-		color: var(--color-gray-300);
-		background-color: var(--color-gray-900);
-		border-bottom: 2px solid var(--color-gray-700);
+		font-size: var(--text-base);
+		color: var(--color-text-secondary);
+		background-color: var(--color-bg-surface);
+		border-bottom: 2px solid var(--color-border-default);
 	}
 	.tab:hover {
-		color: var(--color-white);
+		color: var(--color-on-accent);
 	}
 	.tab-selected,
 	.tab-selected:hover {
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		font-weight: 600;
-		border-bottom-color: var(--color-blue-500);
+		border-bottom-color: var(--color-border-brand);
 	}
 	.tab-content {
 		padding: 0 0.25rem;

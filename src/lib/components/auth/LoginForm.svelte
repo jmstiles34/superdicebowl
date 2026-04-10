@@ -63,24 +63,24 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
-		color: var(--color-gray-300);
-		font-size: var(--14px);
+		color: var(--color-text-secondary);
+		font-size: var(--text-sm);
 	}
 	input {
 		padding: 0.5rem;
-		border-radius: var(--border-radius);
-		border: 1px solid var(--color-gray-700);
-		background: var(--color-gray-900);
-		color: var(--color-white);
+		border-radius: var(--radius-sm);
+		border: 1px solid var(--color-border-default);
+		background: var(--color-bg-surface);
+		color: var(--color-on-accent);
 		font-size: 1rem;
 	}
 	input:focus {
-		outline: 2px solid var(--color-blue-500);
+		outline: 2px solid var(--color-border-brand);
 		outline-offset: 1px;
 	}
 	.error {
-		color: var(--urgent);
-		font-size: var(--14px);
+		color: var(--color-text-danger);
+		font-size: var(--text-sm);
 		margin: 0;
 	}
 	.submit {

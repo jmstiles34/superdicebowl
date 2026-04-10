@@ -73,9 +73,9 @@
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
-		background: var(--color-gray-800);
-		border: 1px solid var(--color-gray-600);
-		border-radius: var(--border-radius);
+		background: var(--color-bg-elevated);
+		border: 1px solid var(--color-border-strong);
+		border-radius: var(--radius-sm);
 		padding: 10px 14px;
 	}
 	.completed {
@@ -99,19 +99,19 @@
 	.badge {
 		font-size: 0.7rem;
 		font-weight: 700;
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		padding: 3px 6px;
 		border-radius: 3px;
 		text-align: center;
 		min-width: 2rem;
 	}
 	.team-name {
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		font-size: 0.85rem;
 		white-space: nowrap;
 	}
 	.vs {
-		color: var(--color-gray-400);
+		color: var(--color-text-tertiary);
 		font-size: 0.8rem;
 		min-width: 2rem;
 		text-align: center;
@@ -121,12 +121,12 @@
 		gap: 4px;
 		font-size: 1rem;
 		font-weight: 600;
-		color: var(--color-gray-300);
+		color: var(--color-text-secondary);
 		min-width: 4rem;
 		justify-content: center;
 	}
 	.dash {
-		color: var(--color-gray-500);
+		color: var(--color-text-muted);
 	}
 	.winner {
 		color: gold;
@@ -141,30 +141,30 @@
 		font-size: 0.8rem;
 		font-weight: 600;
 		border: none;
-		border-radius: var(--border-radius);
+		border-radius: var(--radius-sm);
 		padding: 5px 14px;
 		cursor: pointer;
 	}
 	.play {
-		background-color: var(--color-blue-500);
-		color: var(--color-white);
+		background-color: var(--btn-primary-bg);
+		color: var(--color-on-accent);
 	}
 	.play:hover {
-		background-color: var(--color-blue-600);
+		background-color: var(--btn-primary-bg-active);
 	}
 	.sim {
-		background-color: var(--color-gray-600);
-		color: var(--color-white);
+		background-color: var(--color-bg-overlay);
+		color: var(--color-on-accent);
 	}
 	.sim:hover {
-		background-color: var(--color-gray-500);
+		background-color: var(--color-bg-overlay);
 	}
 	.instant {
-		background-color: var(--color-gray-700);
-		color: var(--color-gray-300);
-		border: 1px solid var(--color-gray-500);
+		background-color: var(--color-bg-overlay);
+		color: var(--color-text-secondary);
+		border: 1px solid var(--color-border-strong);
 	}
 	.instant:hover {
-		background-color: var(--color-gray-600);
+		background-color: var(--color-bg-overlay);
 	}
 </style>

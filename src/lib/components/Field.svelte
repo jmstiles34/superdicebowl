@@ -119,46 +119,46 @@
 			90deg,
 			white 0%,
 			white 9.99%,
-			var(--field-odd) 10%,
-			var(--field-odd) 13.99%,
-			var(--field-even) 14%,
-			var(--field-even) 17.99%,
-			var(--field-odd) 18%,
-			var(--field-odd) 21.99%,
-			var(--field-even) 22%,
-			var(--field-even) 25.99%,
-			var(--field-odd) 26%,
-			var(--field-odd) 29.99%,
-			var(--field-even) 30%,
-			var(--field-even) 33.99%,
-			var(--field-odd) 34%,
-			var(--field-odd) 37.99%,
-			var(--field-even) 38%,
-			var(--field-even) 41.99%,
-			var(--field-odd) 42%,
-			var(--field-odd) 45.99%,
-			var(--field-even) 46%,
-			var(--field-even) 49.99%,
-			var(--field-odd) 50%,
-			var(--field-odd) 53.99%,
-			var(--field-even) 54%,
-			var(--field-even) 57.99%,
-			var(--field-odd) 58%,
-			var(--field-odd) 61.99%,
-			var(--field-even) 62%,
-			var(--field-even) 65.99%,
-			var(--field-odd) 66%,
-			var(--field-odd) 69.99%,
-			var(--field-even) 70%,
-			var(--field-even) 73.99%,
-			var(--field-odd) 74%,
-			var(--field-odd) 77.99%,
-			var(--field-even) 78%,
-			var(--field-even) 81.99%,
-			var(--field-odd) 82%,
-			var(--field-odd) 85.99%,
-			var(--field-even) 86%,
-			var(--field-even) 89.99%,
+			var(--color-field-stripe-a) 10%,
+			var(--color-field-stripe-a) 13.99%,
+			var(--color-field-stripe-b) 14%,
+			var(--color-field-stripe-b) 17.99%,
+			var(--color-field-stripe-a) 18%,
+			var(--color-field-stripe-a) 21.99%,
+			var(--color-field-stripe-b) 22%,
+			var(--color-field-stripe-b) 25.99%,
+			var(--color-field-stripe-a) 26%,
+			var(--color-field-stripe-a) 29.99%,
+			var(--color-field-stripe-b) 30%,
+			var(--color-field-stripe-b) 33.99%,
+			var(--color-field-stripe-a) 34%,
+			var(--color-field-stripe-a) 37.99%,
+			var(--color-field-stripe-b) 38%,
+			var(--color-field-stripe-b) 41.99%,
+			var(--color-field-stripe-a) 42%,
+			var(--color-field-stripe-a) 45.99%,
+			var(--color-field-stripe-b) 46%,
+			var(--color-field-stripe-b) 49.99%,
+			var(--color-field-stripe-a) 50%,
+			var(--color-field-stripe-a) 53.99%,
+			var(--color-field-stripe-b) 54%,
+			var(--color-field-stripe-b) 57.99%,
+			var(--color-field-stripe-a) 58%,
+			var(--color-field-stripe-a) 61.99%,
+			var(--color-field-stripe-b) 62%,
+			var(--color-field-stripe-b) 65.99%,
+			var(--color-field-stripe-a) 66%,
+			var(--color-field-stripe-a) 69.99%,
+			var(--color-field-stripe-b) 70%,
+			var(--color-field-stripe-b) 73.99%,
+			var(--color-field-stripe-a) 74%,
+			var(--color-field-stripe-a) 77.99%,
+			var(--color-field-stripe-b) 78%,
+			var(--color-field-stripe-b) 81.99%,
+			var(--color-field-stripe-a) 82%,
+			var(--color-field-stripe-a) 85.99%,
+			var(--color-field-stripe-b) 86%,
+			var(--color-field-stripe-b) 89.99%,
 			white 40%
 		);
 	}
@@ -198,18 +198,18 @@
 		}
 	}
 	.yardsAway {
-		border-top: 2px solid var(--color-white);
-		border-bottom: 2px solid var(--color-white);
-		border-left: 1px solid var(--color-white);
+		border-top: 2px solid var(--color-on-accent);
+		border-bottom: 2px solid var(--color-on-accent);
+		border-left: 1px solid var(--color-on-accent);
 	}
 	.yardsHome {
-		border-top: 2px solid var(--color-white);
-		border-bottom: 2px solid var(--color-white);
-		border-right: 1px solid var(--color-white);
+		border-top: 2px solid var(--color-on-accent);
+		border-bottom: 2px solid var(--color-on-accent);
+		border-right: 1px solid var(--color-on-accent);
 	}
 	.fieldNumber {
 		position: absolute;
-		color: var(--color-white);
+		color: var(--color-on-accent);
 		font-size: clamp(0.625rem, 0.3rem + 3vw, 1.85rem);
 		font-family: 'Abril Fatface', sans-serif;
 		opacity: 0.95;
@@ -244,7 +244,7 @@
 		opacity: 0;
 		transform: translate(-50%);
 		z-index: 10;
-		color: var(--color-yellow);
+		color: var(--color-field-marking);
 		font-size: clamp(1rem, 0.75rem + 1.5vw, 1.35rem);
 		font-family: var(--font-body);
 		font-weight: var(--weight-bold);
@@ -260,17 +260,17 @@
 		transition-delay: 0.75s;
 	}
 	.firstDownLeft {
-		border-right: 2px solid var(--color-yellow);
+		border-right: 2px solid var(--color-field-marking);
 	}
 	.firstDownRight {
-		border-left: 2px solid var(--color-yellow);
+		border-left: 2px solid var(--color-field-marking);
 	}
 	.hashes {
 		position: absolute;
 		left: 15%;
 		right: 0;
 		height: 3%;
-		background: linear-gradient(to right, var(--color-white) 25%, transparent 25%);
+		background: linear-gradient(to right, var(--color-on-accent) 25%, transparent 25%);
 		background-size: 25% 100%;
 	}
 	.first-mid.hashes {

@@ -1,0 +1,38 @@
+/* ─── GLOBAL COMPONENT STYLES ────────────────────────────── */
+
+/* Global game button
+   Defined here as a global utility so any component can use it.
+   +page.svelte also adds scoped .game-button overrides on top. */
+.game-button {
+	background-color: var(--btn-primary-bg);
+	color: var(--btn-primary-text);
+	border: var(--border-base) solid var(--btn-primary-border);
+	border-radius: var(--radius-sm);
+	padding: var(--space-2) var(--space-4);
+	text-align: center;
+	font-family: var(--font-body);
+	font-weight: var(--weight-semibold);
+	letter-spacing: var(--tracking-wide);
+	box-shadow: var(--btn-primary-shadow);
+	transition: all var(--dur-base) var(--ease-snes);
+
+	&:disabled,
+	&:disabled:hover {
+		background-color: var(--btn-disabled-bg);
+		border-color: var(--btn-disabled-border);
+		color: var(--btn-disabled-text);
+		box-shadow: none;
+		cursor: default;
+	}
+
+	&:not(:disabled):hover {
+		background-color: var(--btn-primary-bg-hover);
+		box-shadow: var(--btn-primary-shadow-hover);
+	}
+
+	&:not(:disabled):active {
+		background-color: var(--btn-primary-bg-active);
+		transform: translateY(2px);
+		box-shadow: none;
+	}
+}
