@@ -41,8 +41,8 @@
 				{stripe}
 				{trim}
 				direction={position === POSITION.LEFT ? POSITION.LEFT : POSITION.RIGHT}
-				logo={team.logo || ''}
-				logoLeft={team.logoLeft || ''}
+				logo={team.logo ?? ''}
+				logoLeft={team.logoLeft ?? ''}
 				logoFixed={(position === POSITION.LEFT && team.logoFixed) || false}
 				logoX={team.logoX}
 				logoY={team.logoY}
@@ -69,8 +69,8 @@
 				{stripe}
 				{trim}
 				direction={position === POSITION.LEFT ? POSITION.RIGHT : POSITION.LEFT}
-				logo={team.logo || ''}
-				logoLeft={team.logoLeft || ''}
+				logo={team.logo ?? ''}
+				logoLeft={team.logoLeft ?? ''}
 				logoFixed={(position === POSITION.RIGHT && team.logoFixed) || false}
 				logoX={team.logoX}
 				logoY={team.logoY}

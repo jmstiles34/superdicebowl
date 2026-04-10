@@ -224,7 +224,7 @@
 		font-size: var(--text-base);
 		font-weight: var(--weight-semibold);
 		letter-spacing: var(--tracking-wide);
-		color: var(--color-text-secondary);
+		color: var(--color-header-link);
 		text-decoration: none;
 		white-space: nowrap;
 		padding: var(--space-2) var(--space-3);
@@ -237,7 +237,7 @@
 	}
 
 	.link:hover {
-		color: var(--color-header-text);
+		color: var(--color-header-link-hover);
 		background-color: var(--nav-bg-active);
 		border-color: rgba(64, 96, 240, 0.25);
 	}

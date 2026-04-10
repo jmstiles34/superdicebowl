@@ -83,13 +83,13 @@
 						>
 							<div class="helmet-preview">
 								<CustomHelmet
-									faceMask={record.teamData.colors.faceMask || ''}
-									helmet={record.teamData.colors.helmet || ''}
-									stripe={record.teamData.colors.stripe || ''}
-									trim={record.teamData.colors.trim || ''}
+									faceMask={record.teamData.colors.faceMask ?? ''}
+									helmet={record.teamData.colors.helmet ?? ''}
+									stripe={record.teamData.colors.stripe ?? ''}
+									trim={record.teamData.colors.trim ?? ''}
 									logo={record.teamData.logo}
 									logoFixed={false}
-									logoLeft={record.teamData.logoLeft || ''}
+									logoLeft={record.teamData.logoLeft ?? ''}
 									logoX={record.teamData.logoX}
 									logoY={record.teamData.logoY}
 									logoWidth={record.teamData.logoWidth}

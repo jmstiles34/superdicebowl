@@ -13,16 +13,18 @@
 	--color-header-border: oklch(0.395 0.2636 264.16 / 0.45);
 	--color-header-shadow: 0 2px 0 oklch(0.395 0.2636 264.16 / 0.3);
 	--color-header-text: oklch(0.9595 0.02 286.02);
+	--color-header-link: var(--color-text-secondary);
+	--color-header-link-hover: var(--color-text-primary);
 	--color-header-logo-glow: 0 0 20px oklch(0.5543 0.2186 268.51 / 0.5);
 
 	/* ── Text ───────────────────────────────────────────── */
 	--color-text-primary: oklch(0.9595 0.02 286.02);
 	--color-text-secondary: oklch(0.8289 0.085 272.67 / 0.88);
 	--color-text-tertiary: oklch(0.7677 0.0909 272.94 / 0.8);
-	--color-text-brand: oklch(0.5543 0.2186 268.51);
+	--color-text-brand: oklch(0.62 0.19 268.51);
 	--color-text-gold: oklch(0.8272 0.1711 80.53);
 	--color-text-success: oklch(0.7582 0.15 147.44);
-	--color-text-danger: oklch(0.6603 0.2273 19.88);
+	--color-text-danger: oklch(0.68 0.18 19.88);
 	--color-text-warning: oklch(0.8618 0.1721 88.89);
 	--color-text-muted: oklch(0.7677 0.0909 272.94 / 0.8);
 
@@ -44,7 +46,7 @@
 		6px 6px 0 oklch(0.3077 0.1962 264.21), inset 0 1px 0 oklch(0.641 0.1668 274.59 / 0.5),
 		0 0 0 2px oklch(0.395 0.2636 264.16 / 0.7);
 	--shadow-modal:
-		8px 8px 0 oklch(0 0 0 / 0.95), inset 0 1px 0 oklch(0.641 0.1668 274.59 / 0.45),
+		8px 8px 0 oklch(0.08 0.04 264 / 0.95), inset 0 1px 0 oklch(0.641 0.1668 274.59 / 0.45),
 		0 0 0 4px oklch(0.1829 0.1063 264.01 / 0.95);
 
 	/* ── Glows ──────────────────────────────────────────── */
@@ -101,9 +103,9 @@
 		0 0 0 2px oklch(0.3264 0.1317 22.94);
 
 	/* ── Buttons — Disabled ─────────────────────────────── */
-	--btn-disabled-bg: oklch(0.2288 0.0605 280.5);
-	--btn-disabled-border: oklch(0.2976 0.0678 281.47);
-	--btn-disabled-text: oklch(0.5266 0.1277 270.9 / 0.38);
+	--btn-disabled-bg: oklch(0.2 0.04 275);
+	--btn-disabled-border: oklch(0.28 0.05 275);
+	--btn-disabled-text: oklch(0.52 0.04 275);
 
 	/* ── Inputs ─────────────────────────────────────────── */
 	--input-bg: oklch(0.1188 0.05 275.67);

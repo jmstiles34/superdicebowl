@@ -176,7 +176,7 @@
 								</span>
 							</div>
 							<div class="meta">
-								{record.gameState.lastPlay || 'Coin toss pending'}
+								{record.gameState.lastPlay ?? 'Coin toss pending'}
 								<span class="date">{formatDate(record.updatedAt)}</span>
 							</div>
 							<div class="card-actions">

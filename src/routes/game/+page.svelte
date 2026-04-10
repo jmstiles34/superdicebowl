@@ -279,8 +279,8 @@
 				<div class="dice-container">
 					<div class="action">{game.action}</div>
 					<Dice
-						dieColor={primaryColor(settings, game.possession) || '#FFF'}
-						pipColor={secondaryColor(settings, game.possession) || '#000'}
+						dieColor={primaryColor(settings, game.possession) ?? '#FFF'}
+						pipColor={secondaryColor(settings, game.possession) ?? '#000'}
 						onRollComplete={saveGame}
 					/>
 					{#if game.restrictDice || isAutoPlay(mode, game.possession, userTeam)}

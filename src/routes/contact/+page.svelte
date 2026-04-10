@@ -46,7 +46,7 @@
 
 			if (!res.ok) {
 				const data = await res.json().catch(() => null);
-				error = data?.error || 'Something went wrong. Please try again.';
+				error = data?.error ?? 'Something went wrong. Please try again.';
 			} else {
 				success = true;
 			}

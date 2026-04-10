@@ -338,8 +338,8 @@
 					<div class="action">{game.action}</div>
 					<Dice
 						bind:this={diceEl}
-						dieColor={primaryColor(settings, game.possession) || '#FFF'}
-						pipColor={secondaryColor(settings, game.possession) || '#000'}
+						dieColor={primaryColor(settings, game.possession) ?? '#FFF'}
+						pipColor={secondaryColor(settings, game.possession) ?? '#000'}
 						onRollComplete={saveRemoteGame}
 					/>
 					<!-- Block dice when: game is restricted, or it's not my turn during an actionable state -->
