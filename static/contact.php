@@ -33,6 +33,13 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
+// Reject header injection attempts (newlines in name/email/message fields)
+if (preg_match('/[\r\n]/', $name) || preg_match('/[\r\n]/', $email)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Invalid input']);
+    exit;
+}
+
 // Honeypot check
 if (!empty($input['hp'])) {
     // Silently accept to fool bots
