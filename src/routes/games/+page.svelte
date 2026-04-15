@@ -398,11 +398,11 @@
 		justify-content: center;
 	}
 	.tab:hover {
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 	}
 	.tab-selected,
 	.tab-selected:hover {
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 		font-weight: 600;
 		border-bottom-color: var(--color-border-brand);
 	}
@@ -451,7 +451,7 @@
 		font-weight: 600;
 	}
 	.score {
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 		font-size: var(--text-md);
 		font-weight: 700;
 		min-width: 1.5rem;

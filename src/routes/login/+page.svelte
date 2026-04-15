@@ -65,11 +65,11 @@
 		border-bottom: 2px solid var(--color-border-default);
 	}
 	.tab:hover {
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 	}
 	.tab-selected,
 	.tab-selected:hover {
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 		font-weight: 600;
 		border-bottom-color: var(--color-border-brand);
 	}

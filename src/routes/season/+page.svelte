@@ -187,7 +187,7 @@
 		gap: 16px;
 	}
 	h2 {
-		color: var(--color-on-accent);
+		color: var(--color-text-brand);
 		margin: 0;
 	}
 	.active-season {
@@ -222,7 +222,7 @@
 		gap: 12px;
 	}
 	.label {
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 		white-space: nowrap;
 	}
 	.select {
@@ -231,7 +231,7 @@
 		background-color: var(--color-text-brand);
 		border: none;
 		border-radius: var(--radius-sm);
-		color: var(--color-on-accent-dark);
+		color: var(--btn-primary-text);
 		padding: 6px 8px;
 		min-width: 160px;
 	}

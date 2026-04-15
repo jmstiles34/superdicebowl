@@ -282,7 +282,7 @@
 		font-size: 1.2rem;
 		font-weight: 700;
 		background: var(--color-bg-overlay);
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 		border: 1px solid var(--color-border-strong);
 		border-radius: var(--radius-sm);
 		padding: 4px 12px;
@@ -296,7 +296,7 @@
 		background: var(--color-bg-overlay);
 	}
 	.week-label {
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 		font-size: 1rem;
 		font-weight: 600;
 		min-width: 120px;
@@ -324,7 +324,7 @@
 		font-size: 1.3rem;
 	}
 	.champion {
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 		font-size: 1.1rem;
 		font-weight: 600;
 		margin: 0;

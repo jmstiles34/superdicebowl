@@ -61,7 +61,7 @@
 		border-bottom: 1px solid var(--color-border-strong);
 	}
 	td {
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 		text-align: center;
 		padding: 6px 8px;
 		border-bottom: 1px solid var(--color-border-default);

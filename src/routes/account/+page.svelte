@@ -301,7 +301,7 @@
 		font-size: var(--text-sm);
 	}
 	.value {
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 		font-weight: 500;
 	}
 	.online-connected {
@@ -363,7 +363,7 @@
 		background: var(--color-bg-surface);
 		border: 1px solid var(--color-border-default);
 		border-radius: var(--radius-sm);
-		color: var(--color-on-accent);
+		color: var(--input-text);
 		font-size: var(--text-base);
 	}
 	.field input:focus {

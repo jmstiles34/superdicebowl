@@ -106,7 +106,7 @@
 		min-width: 2rem;
 	}
 	.team-name {
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 		font-size: 0.85rem;
 		white-space: nowrap;
 	}
@@ -154,7 +154,7 @@
 	}
 	.sim {
 		background-color: var(--color-bg-overlay);
-		color: var(--color-on-accent);
+		color: var(--color-text-primary);
 	}
 	.sim:hover {
 		background-color: var(--color-bg-overlay);

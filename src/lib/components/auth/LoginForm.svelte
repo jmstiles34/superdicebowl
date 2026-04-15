@@ -71,7 +71,7 @@
 		border-radius: var(--radius-sm);
 		border: 1px solid var(--color-border-default);
 		background: var(--color-bg-surface);
-		color: var(--color-on-accent);
+		color: var(--input-text);
 		font-size: 1rem;
 	}
 	input:focus {
