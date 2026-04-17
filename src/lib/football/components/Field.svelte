@@ -1,8 +1,8 @@
 <script lang="ts">
 	import '@fontsource/abril-fatface';
-	import { fieldData } from '$lib/data/data.json';
+	import { fieldData } from '$lib/football/data/data.json';
 	import { BALL_KICK_GOOD, POSITION, TEAM, YARD_INTERVAL } from '$lib/constants/constants';
-	import EndZone from '$lib/components/Endzone.svelte';
+	import EndZone from '$lib/football/components/Endzone.svelte';
 	import { randomNumber } from '$lib/utils/common';
 	import { getLogoUrl } from '$lib/utils/logoPreloader';
 	import type { Team, Void } from '$lib/types';
@@ -52,7 +52,7 @@
 	<div class="fieldLogo">
 		<img
 			alt={`${homeTeam.city} ${homeTeam.name} Logo`}
-			src={getLogoUrl(homeTeam.fieldLogo)}
+			src={getLogoUrl(homeTeam.fieldLogo ?? '')}
 		/>
 	</div>
 	<div class="field-grid">

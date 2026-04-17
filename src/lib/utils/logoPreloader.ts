@@ -1,4 +1,4 @@
-import { logos } from '$lib/data/logos.json';
+import { logos } from '$lib/football/data/logos.json';
 
 let _supportsAvif: boolean | null = null;
 const _preloaded = new Set<string>();

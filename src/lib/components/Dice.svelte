@@ -1,22 +1,33 @@
 <script lang="ts">
-	import { game } from '$lib/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import { nonZeroRandomNumber, sleep } from '$lib/utils/common';
-	import { isAutoPlay, isRollAction } from '$lib/utils/game';
-	import { GAME_MODE, TEAM } from '$lib/constants/constants';
 	import flick from '$lib/assets/sfx/flick.mp3';
 	import type { Howl } from 'howler';
 	import { createSound, playSound } from '$lib/utils/sound';
 
 	type DiceProps = {
+		autoRoll?: boolean;
 		dieColor?: string;
+		paused?: boolean;
 		pipColor?: string;
 		pipCount?: number;
+		restricted?: boolean;
 		rollDelay?: number;
+		onDiceRoll?: (diceId: number) => void;
 		onRollComplete?: () => void;
 	};
 
-	let { dieColor, pipColor, pipCount = 6, rollDelay = 1000, onRollComplete }: DiceProps = $props();
+	let {
+		autoRoll = false,
+		dieColor,
+		paused = false,
+		pipColor,
+		pipCount = 6,
+		restricted = false,
+		rollDelay = 1000,
+		onDiceRoll,
+		onRollComplete
+	}: DiceProps = $props();
 
 	const flickSfx: Howl = createSound(flick);
 	let die1Pips: number = $state(1);
@@ -25,17 +36,10 @@
 	let canRoll: boolean = $state(true);
 
 	$effect(() => {
-		if (
-			isAutoPlay(settings.mode, game.possession, settings.userTeam) &&
-			isRollAction(game.action) &&
-			canRoll &&
-			!game.paused
-		) {
-			if (game.ballIndex > 0 || game.currentDown > 0) {
-				sleep(2000 * settings.speed).then(() => {
-					if (!game.paused) handleRollDice();
-				});
-			}
+		if (autoRoll && canRoll && !paused) {
+			sleep(2000 * settings.speed).then(() => {
+				if (!paused) handleRollDice();
+			});
 		}
 	});
 
@@ -52,7 +56,6 @@
 	async function handleRollDice() {
 		if (!canRoll) return;
 
-		game.restrictDice = true;
 		playSound(flickSfx, settings.volume);
 		canRoll = false;
 		let die1: number = nonZeroRandomNumber(pipCount);
@@ -66,7 +69,7 @@
 		rolling = false;
 		await sleep(rollDelay);
 		canRoll = true;
-		game.handleDiceRoll(game.action, diceId);
+		onDiceRoll?.(diceId);
 		onRollComplete?.();
 	}
 
@@ -85,7 +88,7 @@
 <button
 	class="dice-button"
 	class:rolling={rolling}
-	class:restricted={!canRoll}
+	class:restricted={!canRoll || restricted}
 	onclick={handleRollDice}
 	style={buttonStyle}
 >

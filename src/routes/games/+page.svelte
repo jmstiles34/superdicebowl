@@ -5,12 +5,12 @@
 	import { game } from '$lib/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import { TEAM } from '$lib/constants/constants';
-	import type { GameRecord } from '$lib/db/database';
+	import type { FootballGameSettingsSnapshot, FootballGameStateSnapshot, GameRecord } from '$lib/db/database';
 	import { deleteGame, getGamesByUser } from '$lib/db/repositories/gameRepository';
 	import { getSeasonsByUser } from '$lib/db/repositories/seasonRepository';
 	import { getScoreByTeam } from '$lib/utils/game';
 	import Modal from '$lib/components/Modal.svelte';
-	import GameSummary from '$lib/components/modal/GameSummary.svelte';
+	import GameSummary from '$lib/football/components/modal/GameSummary.svelte';
 	import { onlineState } from '$lib/state/onlineState.svelte';
 	import { declineChallenge, getRemoteGames, resignGame, type RemoteGame } from '$lib/online/remoteGames';
 
@@ -91,12 +91,12 @@
 	}
 
 	function remoteHomeScore(rg: RemoteGame): number {
-		if (!rg.gameState) return 0;
+		if (!rg.gameState || rg.gameState.sport !== 'football') return 0;
 		return getScoreByTeam(TEAM.HOME, rg.gameState.playLog);
 	}
 
 	function remoteAwayScore(rg: RemoteGame): number {
-		if (!rg.gameState) return 0;
+		if (!rg.gameState || rg.gameState.sport !== 'football') return 0;
 		return getScoreByTeam(TEAM.AWAY, rg.gameState.playLog);
 	}
 
@@ -130,7 +130,7 @@
 	function resumeGame(record: GameRecord) {
 		game.loadSnapshot(record.gameState);
 		game.activeGameId = record.id!;
-		settings.loadSnapshot(record.gameSettings);
+		settings.loadSnapshot(record.gameSettings as FootballGameSettingsSnapshot);
 		goto('/game');
 	}
 
@@ -141,10 +141,12 @@
 	}
 
 	function getHomeScore(record: GameRecord): number {
+		if (record.gameState.sport !== 'football') return 0;
 		return getScoreByTeam(TEAM.HOME, record.gameState.playLog);
 	}
 
 	function getAwayScore(record: GameRecord): number {
+		if (record.gameState.sport !== 'football') return 0;
 		return getScoreByTeam(TEAM.AWAY, record.gameState.playLog);
 	}
 
@@ -433,7 +435,7 @@
 		<GameSummary
 			awayTeam={viewStatsRecord.gameSettings.awayTeam}
 			homeTeam={viewStatsRecord.gameSettings.homeTeam}
-			playLog={viewStatsRecord.gameState.playLog}
+			playLog={(viewStatsRecord.gameState as FootballGameStateSnapshot).playLog}
 		/>
 	</Modal>
 {/if}

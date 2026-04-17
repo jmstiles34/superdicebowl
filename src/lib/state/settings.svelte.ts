@@ -1,5 +1,5 @@
 import { DEFAULT_SETTINGS, DEFAULT_TEAM, GAME_MODE, TEAM } from '$lib/constants/constants';
-import type { GameSettingsSnapshot } from '$lib/db/database';
+import type { FootballGameSettingsSnapshot } from '$lib/db/database';
 import type { Team } from '$lib/types';
 
 export type Theme = 'dark' | 'light';
@@ -23,15 +23,16 @@ class SettingsState {
 	speed = $state(1);
 	theme: Theme = $state('dark');
 
-	snapshotSettings = (): GameSettingsSnapshot =>
+	snapshotSettings = (): FootballGameSettingsSnapshot =>
 		$state.snapshot({
+			sport: 'football' as const,
 			awayTeam: this.awayTeam,
 			homeTeam: this.homeTeam,
 			mode: this.mode,
 			winScore: this.winScore
 		});
 
-	loadSnapshot = (snapshot: GameSettingsSnapshot) => {
+	loadSnapshot = (snapshot: FootballGameSettingsSnapshot) => {
 		this.awayTeam = snapshot.awayTeam;
 		this.homeTeam = snapshot.homeTeam;
 		this.mode = snapshot.mode;

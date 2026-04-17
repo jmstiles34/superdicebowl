@@ -5,16 +5,19 @@ import {
 	type GameSettingsSnapshot,
 	type GameStateSnapshot
 } from '$lib/db/database';
+import type { SportType } from '$lib/types';
 import { getScoreByTeam } from '$lib/utils/game';
 
 export async function createGame(
 	userId: number,
 	gameState: GameStateSnapshot,
-	gameSettings: GameSettingsSnapshot
+	gameSettings: GameSettingsSnapshot,
+	sport: SportType = 'football'
 ): Promise<GameRecord> {
 	const now = Date.now();
 	const id = await db.games.add({
 		userId,
+		sport,
 		status: 'in_progress',
 		gameState,
 		gameSettings,
@@ -45,12 +48,13 @@ export async function getGame(gameId: number): Promise<GameRecord | undefined> {
 
 export async function getGamesByUser(
 	userId: number,
-	status: 'in_progress' | 'completed'
+	status: 'in_progress' | 'completed',
+	sport?: SportType
 ): Promise<GameRecord[]> {
 	const games = await db.games
 		.where('userId')
 		.equals(userId)
-		.filter((g) => g.status === status)
+		.filter((g) => g.status === status && (!sport || g.sport === sport))
 		.toArray();
 	return games.sort((a, b) => b.updatedAt - a.updatedAt);
 }
@@ -76,6 +80,7 @@ export async function getTeamRecord(userId: number, teamId: string): Promise<Tea
 	let losses = 0;
 
 	for (const game of completed) {
+		if (game.gameState.sport !== 'football') continue;
 		const { homeTeam, awayTeam } = game.gameSettings;
 		const isHome = homeTeam.id === teamId;
 		const isAway = awayTeam.id === teamId;

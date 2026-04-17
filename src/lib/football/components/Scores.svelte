@@ -1,18 +1,19 @@
 <script lang="ts">
 	import { TEAM } from '$lib/constants/constants';
-	import type { Team } from '$lib/types';
-	import { game } from '$lib/state/game.svelte';
+	import type { Play, Team } from '$lib/types';
 	import { getScoreByTeam } from '$lib/utils/game';
 	import { getLogoUrl } from '$lib/utils/logoPreloader';
 
 	type ScoresProps = {
 		awayTeam: Team;
 		homeTeam: Team;
+		playLog: Play[];
+		possession: string;
 	};
 
-	let { awayTeam, homeTeam }: ScoresProps = $props();
-	let awayScore = $derived(getScoreByTeam(TEAM.AWAY, game.playLog));
-	let homeScore = $derived(getScoreByTeam(TEAM.HOME, game.playLog));
+	let { awayTeam, homeTeam, playLog, possession }: ScoresProps = $props();
+	let awayScore = $derived(getScoreByTeam(TEAM.AWAY, playLog));
+	let homeScore = $derived(getScoreByTeam(TEAM.HOME, playLog));
 
 	let awayToRgb = $derived(awayTeam.colors.primary.replace('/ 1', '/ 0.5'));
 	let homeToRgb = $derived(homeTeam.colors.primary.replace('/ 1', '/ 0.5'));
@@ -23,10 +24,10 @@
 		class="team"
 		style={`
         background-color: ${homeTeam.colors.primary};
-        background-image: linear-gradient(to right, ${homeToRgb} 0 100%), url(${getLogoUrl(homeTeam.fieldLogo)})`}
+        background-image: linear-gradient(to right, ${homeToRgb} 0 100%), url(${getLogoUrl(homeTeam.fieldLogo ?? '')})`}
 	>
 		<div class="city-wrapper">
-			{#if game.possession === TEAM.HOME}
+			{#if possession === TEAM.HOME}
 				<div class="possession"></div>
 			{/if}
 			<div class="cityName">{homeTeam.city}</div>
@@ -38,10 +39,10 @@
 		class="team"
 		style={`
         background-color: ${awayTeam.colors.primary};
-        background-image: linear-gradient(to right, ${awayToRgb} 0 100%), url(${getLogoUrl(awayTeam.fieldLogo)})`}
+        background-image: linear-gradient(to right, ${awayToRgb} 0 100%), url(${getLogoUrl(awayTeam.fieldLogo ?? '')})`}
 	>
 		<div class="city-wrapper">
-			{#if game.possession === TEAM.AWAY}
+			{#if possession === TEAM.AWAY}
 				<div class="possession"></div>
 			{/if}
 			<div class="cityName">{awayTeam.city}</div>

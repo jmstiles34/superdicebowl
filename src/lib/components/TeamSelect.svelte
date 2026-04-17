@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { DEFAULT_TEAM, DICE_COLORS, NOOP, POSITION, TEAM } from '$lib/constants/constants';
-	import { teamsData } from '$lib/data/data.json';
+	import { teamsData } from '$lib/football/data/data.json';
 	import type { SaveTeam, Team } from '$lib/types';
 	import { pickRandom } from '$lib/utils/common';
 	import { setRandomTeam, teamByUUId } from '$lib/utils/game';
 	import { cubicInOut } from 'svelte/easing';
 	import fadeScale from '$lib/transitions/fadeScale';
 	import Modal from '$lib/components/Modal.svelte';
-	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
+	import CustomHelmet from '$lib/football/components/CustomHelmet.svelte';
 	import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { getCustomTeamsByUser } from '$lib/db/repositories/customTeamRepository';

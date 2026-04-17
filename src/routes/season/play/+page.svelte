@@ -96,7 +96,7 @@
 			if (record) {
 				game.loadSnapshot(record.gameState);
 				game.activeGameId = record.id!;
-				settings.loadSnapshot(record.gameSettings);
+				if (record.gameSettings.sport === 'football') settings.loadSnapshot(record.gameSettings);
 				settings.userTeam = matchup.homeTeamId === season.userTeamId ? TEAM.HOME : TEAM.AWAY;
 				await sleep(500);
 				goto('/game');

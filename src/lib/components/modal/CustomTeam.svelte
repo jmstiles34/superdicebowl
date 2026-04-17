@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
-	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
-	import { logos } from '$lib/data/logos.json';
+	import CustomHelmet from '$lib/football/components/CustomHelmet.svelte';
+	import { logos } from '$lib/football/data/logos.json';
 	import type { Team } from '$lib/types';
 	import { hexToOklch, oklchToHex } from '$lib/utils/common';
 	import { auth } from '$lib/auth/authState.svelte';

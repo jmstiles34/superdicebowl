@@ -36,12 +36,13 @@
 	import type { GameStateSnapshot } from '$lib/db/database';
 	import Dice from '$lib/components/Dice.svelte';
 	import EventAnnouncement from '$lib/components/EventAnnouncement.svelte';
-	import Field from '$lib/components/Field.svelte';
+	import Field from '$lib/football/components/Field.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import PointOption from '$lib/components/modal/PointOption.svelte';
-	import FourthDown from '$lib/components/modal/FourthDown.svelte';
-	import Scores from '$lib/components/Scores.svelte';
-	import GameSummary from '$lib/components/modal/GameSummary.svelte';
+	import PointOption from '$lib/football/components/modal/PointOption.svelte';
+	import FourthDown from '$lib/football/components/modal/FourthDown.svelte';
+	import Scores from '$lib/football/components/Scores.svelte';
+	import GameSummary from '$lib/football/components/modal/GameSummary.svelte';
+	import ConfirmExit from '$lib/components/modal/ConfirmExit.svelte';
 	import Settings from '$lib/components/modal/Settings.svelte';
 	import exit from '$lib/images/exit.svg';
 	import gear from '$lib/images/gear.svg';
@@ -277,9 +278,10 @@
 		hasPushedForCurrentAction = false;
 
 		// Show the opponent's dice roll before applying the new state
-		if (diceEl && isRollAction(game.action) && snapshot.diceId > 0) {
-			const die1 = Math.floor(snapshot.diceId / 10);
-			const die2 = snapshot.diceId % 10;
+		const diceId = snapshot.sport === 'football' ? snapshot.diceId : 0;
+		if (diceEl && isRollAction(game.action) && diceId > 0) {
+			const die1 = Math.floor(diceId / 10);
+			const die2 = diceId % 10;
 			await diceEl.showOpponentRoll(die1, die2);
 		}
 
@@ -455,7 +457,7 @@
 				</div>
 
 				<div class="scores">
-					<Scores {awayTeam} {homeTeam} />
+					<Scores {awayTeam} {homeTeam} playLog={game.playLog} possession={game.possession} />
 				</div>
 			</div>
 

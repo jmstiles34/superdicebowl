@@ -1,10 +1,13 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import { savePreferences, saveGuestPreferences } from '$lib/db/repositories/preferencesRepository';
 	import soundOn from '$lib/images/volume-high.svg';
 	import soundLow from '$lib/images/volume-low.svg';
 	import soundOff from '$lib/images/volume-off.svg';
+
+	let { extra, hideWinScore = false }: { extra?: Snippet; hideWinScore?: boolean } = $props();
 
 	let volumeIcon = $derived(
 		settings.volume === 0 ? soundOff : settings.volume <= 40 ? soundLow : soundOn
@@ -90,19 +93,21 @@
 	</div>
 
 	<!-- Default Win Score -->
-	<div class="setting-row">
-		<label class="label" for="defaultWinScore">Default Win Score</label>
-		<select
-			id="defaultWinScore"
-			class="setting-select"
-			value={settings.winScore}
-			onchange={handleScoreChange}
-		>
-			{#each Array(99) as _, i}
-				<option value={i + 2}>{i + 2}</option>
-			{/each}
-		</select>
-	</div>
+	{#if !hideWinScore}
+		<div class="setting-row">
+			<label class="label" for="defaultWinScore">Default Win Score</label>
+			<select
+				id="defaultWinScore"
+				class="setting-select"
+				value={settings.winScore}
+				onchange={handleScoreChange}
+			>
+				{#each Array(99) as _, i}
+					<option value={i + 2}>{i + 2}</option>
+				{/each}
+			</select>
+		</div>
+	{/if}
 
 	<!-- Play Speed -->
 	<div class="setting-row">
@@ -119,6 +124,10 @@
 			<option value={0.25}>3x</option>
 		</select>
 	</div>
+
+	{#if extra}
+		{@render extra()}
+	{/if}
 </div>
 
 <style>

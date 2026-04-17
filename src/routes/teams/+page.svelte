@@ -7,7 +7,7 @@
 		getCustomTeamsByUser
 	} from '$lib/db/repositories/customTeamRepository';
 	import { getTeamRecord, type TeamRecord } from '$lib/db/repositories/gameRepository';
-	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
+	import CustomHelmet from '$lib/football/components/CustomHelmet.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
 	import { POSITION } from '$lib/constants/constants';

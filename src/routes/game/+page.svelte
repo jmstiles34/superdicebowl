@@ -21,6 +21,7 @@
 		isAutoPlay,
 		inFieldGoalRange,
 		isGameComplete,
+		isRollAction,
 		primaryColor,
 		secondaryColor,
 		showDownDistance
@@ -34,14 +35,14 @@
 		TEAM
 	} from '$lib/constants/constants';
 	import Dice from '$lib/components/Dice.svelte';
-	import CoinToss from '$lib/components/modal/CoinToss.svelte';
+	import CoinToss from '$lib/football/components/modal/CoinToss.svelte';
 	import EventAnnouncement from '$lib/components/EventAnnouncement.svelte';
-	import Field from '$lib/components/Field.svelte';
-	import FourthDown from '$lib/components/modal/FourthDown.svelte';
+	import Field from '$lib/football/components/Field.svelte';
+	import FourthDown from '$lib/football/components/modal/FourthDown.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import PointOption from '$lib/components/modal/PointOption.svelte';
-	import Scores from '$lib/components/Scores.svelte';
-	import GameSummary from '$lib/components/modal/GameSummary.svelte';
+	import PointOption from '$lib/football/components/modal/PointOption.svelte';
+	import Scores from '$lib/football/components/Scores.svelte';
+	import GameSummary from '$lib/football/components/modal/GameSummary.svelte';
 	import exit from '$lib/images/exit.svg';
 	import gear from '$lib/images/gear.svg';
 	import summary from '$lib/images/summary.svg';
@@ -279,8 +280,11 @@
 				<div class="dice-container">
 					<div class="action">{game.action}</div>
 					<Dice
+						autoRoll={isAutoPlay(mode, game.possession, userTeam) && isRollAction(game.action) && (game.ballIndex > 0 || game.currentDown > 0)}
 						dieColor={primaryColor(settings, game.possession) ?? '#FFF'}
+						paused={game.paused}
 						pipColor={secondaryColor(settings, game.possession) ?? '#000'}
+						onDiceRoll={(diceId) => { game.restrictDice = true; game.handleDiceRoll(game.action, diceId); }}
 						onRollComplete={saveGame}
 					/>
 					{#if game.restrictDice || isAutoPlay(mode, game.possession, userTeam)}
@@ -288,7 +292,7 @@
 					{/if}
 				</div>
 				<div class="scores">
-					<Scores {awayTeam} {homeTeam} />
+					<Scores {awayTeam} {homeTeam} playLog={game.playLog} possession={game.possession} />
 				</div>
 			</div>
 

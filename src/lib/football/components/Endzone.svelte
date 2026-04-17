@@ -4,7 +4,7 @@
 		NOOP,
 		POSITION
 	} from '$lib/constants/constants';
-	import CustomHelmet from '$lib/components/CustomHelmet.svelte';
+	import CustomHelmet from '$lib/football/components/CustomHelmet.svelte';
 	import type { Team, Void } from '$lib/types';
 
 	type EndZoneProps = {

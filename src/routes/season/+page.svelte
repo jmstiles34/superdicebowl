@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { season } from '$lib/state/season.svelte';
-	import { teamsData } from '$lib/data/data.json';
+	import { teamsData } from '$lib/football/data/data.json';
 	import { getCustomTeamsByUser } from '$lib/db/repositories/customTeamRepository';
 	import { createSeason, deleteSeason, getSeasonsByUser } from '$lib/db/repositories/seasonRepository';
 	import { generateSchedule } from '$lib/utils/schedule';
@@ -93,6 +93,7 @@
 		}));
 
 		const record = await createSeason(auth.currentUser.id, $state.snapshot({
+			sport: 'football' as const,
 			status: 'in_progress' as const,
 			userTeamId: selectedTeamId,
 			teams: seasonTeams,

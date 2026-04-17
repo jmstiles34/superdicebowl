@@ -1,0 +1,600 @@
+{
+  "teamsData": [
+  {
+    "city": "Arizona",
+    "cityKey": "ARI",
+    "name": "Diamondbacks",
+    "logo": "mlb-diamondbacks",
+    "id": "f8034cd1-345c-49cc-94f7-2ddfb04e47c3",
+    "colors": {
+      "primary": "oklch(0.472 0.174 19.7)",
+      "secondary": "oklch(0.000 0.000 0.0)",
+      "tertiary": "oklch(0.872 0.054 89.5)"
+    }
+  },
+  {
+    "city": "Atlanta",
+    "cityKey": "ATL",
+    "name": "Braves",
+    "logo": "mlb-braves",
+    "id": "561d7c7c-0216-4e60-9c16-a252ec5862be",
+    "colors": {
+      "primary": "oklch(0.545 0.211 17.0)",
+      "secondary": "oklch(0.281 0.078 262.5)",
+      "tertiary": "oklch(0.778 0.161 81.3)"
+    }
+  },
+  {
+    "city": "Baltimore",
+    "cityKey": "BAL",
+    "name": "Orioles",
+    "logo": "mlb-orioles",
+    "id": "26569a65-1729-4665-a0a7-5f20622a3cb8",
+    "colors": {
+      "primary": "oklch(0.607 0.199 37.9)",
+      "secondary": "oklch(0.000 0.000 0.0)",
+      "tertiary": "oklch(0.846 0.014 233.8)"
+    }
+  },
+  {
+    "city": "Boston",
+    "cityKey": "BOS",
+    "name": "Red Sox",
+    "logo": "mlb-redsox",
+    "id": "79d1022f-4131-4acd-b7b5-4b995bab67e4",
+    "colors": {
+      "primary": "oklch(0.531 0.177 22.5)",
+      "secondary": "oklch(0.255 0.062 255.5)"
+    }
+  },
+  {
+    "city": "Chicago",
+    "cityKey": "CHC",
+    "name": "Cubs",
+    "logo": "mlb-cubs",
+    "id": "ad75e813-2daf-4a4f-b14a-0d612d601d90",
+    "colors": {
+      "primary": "oklch(0.355 0.145 263.0)",
+      "secondary": "oklch(0.560 0.189 26.1)"
+    }
+  },
+  {
+    "city": "Chicago",
+    "cityKey": "CWS",
+    "name": "White Sox",
+    "logo": "mlb-whitesox",
+    "id": "cb9ba824-3b83-4255-84b1-e676919594e6",
+    "colors": {
+      "primary": "oklch(0.265 0.011 91.7)",
+      "secondary": "oklch(0.846 0.014 233.8)"
+    }
+  },
+  {
+    "city": "Cincinnati",
+    "cityKey": "CIN",
+    "name": "Reds",
+    "logo": "mlb-reds",
+    "id": "0db1cc83-e069-4e05-9791-7528073450b7",
+    "colors": {
+      "primary": "oklch(0.521 0.211 25.1)",
+      "secondary": "oklch(0.000 0.000 0.0)"
+    }
+  },
+  {
+    "city": "Cleveland",
+    "cityKey": "CLE",
+    "name": "Guardians",
+    "logo": "mlb-guardians",
+    "id": "29e7bf75-df85-4f47-844c-7c08084920cc",
+    "colors": {
+      "primary": "oklch(0.255 0.062 255.5)",
+      "secondary": "oklch(0.585 0.226 22.3)"
+    }
+  },
+  {
+    "city": "Colorado",
+    "cityKey": "COL",
+    "name": "Rockies",
+    "logo": "mlb-rockies",
+    "id": "71c308c7-2c3b-48f3-b7be-3e624bd583c7",
+    "colors": {
+      "primary": "oklch(0.349 0.087 280.9)",
+      "secondary": "oklch(0.846 0.014 233.8)",
+      "tertiary": "oklch(0.000 0.000 0.0)"
+    }
+  },
+  {
+    "city": "Detroit",
+    "cityKey": "DET",
+    "name": "Tigers",
+    "logo": "mlb-tigers",
+    "id": "e1f0e82a-8ef3-4236-890f-335e1ff766ca",
+    "colors": {
+      "primary": "oklch(0.255 0.062 255.5)",
+      "secondary": "oklch(0.653 0.223 34.4)"
+    }
+  },
+  {
+    "city": "Houston",
+    "cityKey": "HOU",
+    "name": "Astros",
+    "logo": "mlb-astros",
+    "id": "79cdba9f-234e-4911-a00a-7e04913dc8f6",
+    "colors": {
+      "primary": "oklch(0.305 0.105 256.2)",
+      "secondary": "oklch(0.678 0.175 47.1)"
+    }
+  },
+  {
+    "city": "Kansas City",
+    "cityKey": "KC",
+    "name": "Royals",
+    "logo": "mlb-royals",
+    "id": "bb54c203-1055-4173-b04a-2052f6b33671",
+    "colors": {
+      "primary": "oklch(0.396 0.125 253.6)",
+      "secondary": "oklch(0.707 0.087 80.4)",
+      "tertiary": "oklch(0.708 0.093 79.0)"
+    }
+  },
+  {
+    "city": "Los Angeles",
+    "cityKey": "LAA",
+    "name": "Angels",
+    "logo": "mlb-angels",
+    "id": "247d87c7-37e9-4d89-9e93-0300855edf2d",
+    "colors": {
+      "primary": "oklch(0.497 0.201 24.0)",
+      "secondary": "oklch(0.318 0.100 253.4)",
+      "tertiary": "oklch(0.422 0.130 17.1)"
+    }
+  },
+  {
+    "city": "Los Angeles",
+    "cityKey": "LAD",
+    "name": "Dodgers",
+    "logo": "mlb-dodgers",
+    "id": "50066012-fef5-4c41-8606-21cf3eb01ef4",
+    "colors": {
+      "primary": "oklch(0.460 0.129 249.6)",
+      "secondary": "oklch(0.631 0.213 24.7)"
+    }
+  },
+  {
+    "city": "Miami",
+    "cityKey": "MIA",
+    "name": "Marlins",
+    "logo": "mlb-marlins",
+    "id": "22a10d22-4f32-4579-b187-9b3d2bac6658",
+    "colors": {
+      "primary": "oklch(0.675 0.142 234.3)",
+      "secondary": "oklch(0.622 0.221 23.5)",
+      "tertiary": "oklch(0.534 0.067 231.2)"
+    }
+  },
+  {
+    "city": "Milwaukee",
+    "cityKey": "MIL",
+    "name": "Brewers",
+    "logo": "mlb-brewers",
+    "id": "5058e17e-ff41-4e23-ba8a-2203faaf9bfd",
+    "colors": {
+      "primary": "oklch(0.280 0.071 259.3)",
+      "secondary": "oklch(0.853 0.164 85.3)"
+    }
+  },
+  {
+    "city": "Minnesota",
+    "cityKey": "MIN",
+    "name": "Twins",
+    "logo": "mlb-twins",
+    "id": "63e8cbb9-a3dc-4658-80ca-51672cb81b72",
+    "colors": {
+      "primary": "oklch(0.295 0.099 255.5)",
+      "secondary": "oklch(0.555 0.216 16.2)",
+      "tertiary": "oklch(0.236 0.006 0.6)"
+    }
+  },
+  {
+    "city": "New York",
+    "cityKey": "NYM",
+    "name": "Mets",
+    "logo": "mlb-mets",
+    "id": "b2ecfc23-0e01-4932-9177-e5fcabe348ee",
+    "colors": {
+      "primary": "oklch(0.320 0.128 259.6)",
+      "secondary": "oklch(0.681 0.213 38.9)"
+    }
+  },
+  {
+    "city": "New York",
+    "cityKey": "NYY",
+    "name": "Yankees",
+    "logo": "mlb-yankees",
+    "id": "4aba7f37-7635-4390-aed6-5b93e9765d49",
+    "colors": {
+      "primary": "oklch(0.268 0.071 263.4)",
+      "secondary": "oklch(0.845 0.013 229.0)"
+    }
+  },
+  {
+    "city": "Athletics",
+    "cityKey": "ATH",
+    "name": "Athletics",
+    "logo": "mlb-athletics",
+    "id": "2e31cf15-7fed-4e91-9aa1-3007f812ce53",
+    "colors": {
+      "primary": "oklch(0.306 0.055 181.5)",
+      "secondary": "oklch(0.799 0.159 82.6)",
+      "tertiary": "oklch(1.000 0.000 89.9)"
+    }
+  },
+  {
+    "city": "Philadelphia",
+    "cityKey": "PHI",
+    "name": "Phillies",
+    "logo": "mlb-phillies",
+    "id": "97eb1359-9cb0-4700-860f-715dfd2b1137",
+    "colors": {
+      "primary": "oklch(0.593 0.232 25.8)",
+      "secondary": "oklch(0.320 0.128 259.6)"
+    }
+  },
+  {
+    "city": "Pittsburgh",
+    "cityKey": "PIT",
+    "name": "Pirates",
+    "logo": "mlb-pirates",
+    "id": "b80e7580-1f0c-4469-a2c6-7c98f9e0b7f0",
+    "colors": {
+      "primary": "oklch(0.826 0.163 79.7)",
+      "secondary": "oklch(0.265 0.011 91.7)"
+    }
+  },
+  {
+    "city": "San Diego",
+    "cityKey": "SD",
+    "name": "Padres",
+    "logo": "mlb-padres",
+    "id": "652d0e5f-17e5-47c7-83f3-e6c439d4e3f9",
+    "colors": {
+      "primary": "oklch(0.271 0.021 54.1)",
+      "secondary": "oklch(0.851 0.167 85.4)"
+    }
+  },
+  {
+    "city": "San Francisco",
+    "cityKey": "SF",
+    "name": "Giants",
+    "logo": "mlb-giants",
+    "id": "08c52a2a-a701-48b8-8c44-43eceaafea39",
+    "colors": {
+      "primary": "oklch(0.679 0.209 38.0)",
+      "secondary": "oklch(0.265 0.011 91.7)",
+      "tertiary": "oklch(0.874 0.073 80.2)"
+    }
+  },
+  {
+    "city": "Seattle",
+    "cityKey": "SEA",
+    "name": "Mariners",
+    "logo": "mlb-mariners",
+    "id": "26357c85-8eb5-4ddb-b650-4ecb85d9c403",
+    "colors": {
+      "primary": "oklch(0.296 0.085 256.8)",
+      "secondary": "oklch(0.430 0.073 194.8)",
+      "tertiary": "oklch(0.846 0.014 233.8)"
+    }
+  },
+  {
+    "city": "St. Louis",
+    "cityKey": "STL",
+    "name": "Cardinals",
+    "logo": "mlb-cardinals",
+    "id": "2d50ac22-f1f3-48be-826c-1a923545419f",
+    "colors": {
+      "primary": "oklch(0.531 0.197 19.5)",
+      "secondary": "oklch(0.255 0.062 255.5)",
+      "tertiary": "oklch(0.894 0.184 97.4)"
+    }
+  },
+  {
+    "city": "Tampa Bay",
+    "cityKey": "TB",
+    "name": "Rays",
+    "logo": "mlb-rays",
+    "id": "7a43de5f-a3b5-4e08-8faf-f3a15680a8a4",
+    "colors": {
+      "primary": "oklch(0.300 0.095 257.8)",
+      "secondary": "oklch(0.778 0.077 247.1)",
+      "tertiary": "oklch(0.867 0.167 95.3)"
+    }
+  },
+  {
+    "city": "Texas",
+    "cityKey": "TEX",
+    "name": "Rangers",
+    "logo": "mlb-rangers",
+    "id": "42496cac-4400-4bfc-bd6d-c2e40ce6ca5b",
+    "colors": {
+      "primary": "oklch(0.337 0.130 258.9)",
+      "secondary": "oklch(0.514 0.201 25.8)"
+    }
+  },
+  {
+    "city": "Toronto",
+    "cityKey": "TOR",
+    "name": "Blue Jays",
+    "logo": "mlb-bluejays",
+    "id": "b82e79a1-6222-4618-85f5-b128426cd174",
+    "colors": {
+      "primary": "oklch(0.415 0.126 256.3)",
+      "secondary": "oklch(0.311 0.087 267.1)",
+      "tertiary": "oklch(0.600 0.225 29.5)"
+    }
+  },
+  {
+    "city": "Washington",
+    "cityKey": "WSH",
+    "name": "Nationals",
+    "logo": "mlb-nationals",
+    "id": "ec6967ef-41fd-40b0-9d2d-5625424ceabd",
+    "colors": {
+      "primary": "oklch(0.466 0.191 28.8)",
+      "secondary": "oklch(0.279 0.102 268.3)",
+      "tertiary": "oklch(1.000 0.000 89.9)"
+    }
+  }
+],
+  "diceData": [
+		{
+			"id": 11,
+			"isHit": true,
+      "batterAdvancement": 4,
+      "runnerAdvancement": 4,
+			"description": [
+				"Home run to right field",
+				"Home run to left field",
+				"Home run to center field",
+				"Home run to right-center field",
+				"Home run to left-center field",
+				"Home run outside the park"
+			]
+		},
+		{
+			"id": 12,
+			"isHit": true,
+      "batterAdvancement": 2,
+      "runnerAdvancement": 2,
+			"description": [
+				"Double to deep right field",
+				"Double to deep left field",
+				"Double to center field",
+				"Double in the gap",
+				"Double to short right field",
+				"Double to short left field"
+			]
+		},
+		{
+			"id": 13,
+			"isOut": true,
+      "outCount": 1,
+			"description": [
+				"Fly out to right field",
+        "Fly out to left field",
+        "Fly out to center field",
+        "Fly out to right-center field",
+        "Fly out to left-center field",
+        "Fly out to short right field",
+        "Fly out to short left field"
+			]
+		},
+		{
+			"id": 14,
+			"batterAdvancement": 1,
+      "runnerAdvancement": 1,
+			"description": [
+				"Walk"
+			]
+		},
+		{
+			"id": 15,
+			"isOut": true,
+      "outCount": 1,
+			"description": [
+				"Pop out to first base",
+        "Pop out to second base",
+        "Pop out to third base",
+        "Pop out to short stop",
+        "Pop out to pitcher",
+        "Pop out to catcher"
+			]
+		},
+		{
+			"id": 16,
+			"isHit": true,
+      "batterAdvancement": 1,
+      "runnerAdvancement": 2,
+			"description": [
+				"Single to right field",
+				"Single to left field",
+				"Single to center field",
+				"Single up the middle"
+			]
+		},
+		{
+			"id": 22,
+			"isOut": true,
+			"outCount": 2,
+			"description": [
+				"Double play"
+			]
+		},
+		{
+			"id": 23,
+			"isOut": true,
+			"description": [
+				"Ground out to first base",
+        "Ground out to second base",
+        "Ground out to third base",
+        "Ground out to short stop",
+        "Ground out to pitcher",
+        "Ground out to catcher"
+			]
+		},
+		{
+			"id": 24,
+			"isOut": true,
+			"description": [
+				"Strike out swinging",
+        "Strike out looking"
+			]
+		},
+		{
+			"id": 25,
+			"isHit": true,
+      "batterAdvancement": 1,
+      "runnerAdvancement": 2,
+			"description": [
+				"Single to right field",
+				"Single to left field",
+				"Single to center field",
+				"Single up the middle",
+				"Single to third base",
+				"Single to short stop",
+				"Single to second base",
+        "Single to first base",
+        "Bunt single"
+			]
+		},
+		{
+			"id": 26,
+			"isOut": true,
+			"description": [
+				"Strike out swinging",
+        "Strike out looking"
+			]
+		},
+		{
+			"id": 33,
+			"batterAdvancement": 1,
+      "runnerAdvancement": 1,
+			"description": [
+				"Walk"
+			]
+		},
+		{
+			"id": 34,
+			"isHit": true,
+      "batterAdvancement": 3,
+      "runnerAdvancement": 3,
+			"description": [
+				"Triple to deep right field",
+				"Triple to deep left field",
+				"Triple to center field",
+				"Triple in the gap"
+			]
+		},
+		{
+			"id": 35,
+			"isOut": true,
+      "outCount": 1,
+			"description": [
+				"Ground out to first base",
+        "Ground out to second base",
+        "Ground out to third base",
+        "Ground out to short stop",
+        "Ground out to pitcher",
+        "Ground out to catcher"
+			]
+		},
+		{
+			"id": 36,
+			"isOut": true,
+      "outCount": 1,
+			"description": [
+				"Fly out to right field",
+        "Fly out to left field",
+        "Fly out to center field",
+        "Fly out to right-center field",
+        "Fly out to left-center field",
+        "Fly out to short right field",
+        "Fly out to short left field"
+			]
+		},
+		{
+			"id": 44,
+			"batterAdvancement": 1,
+      "runnerAdvancement": 1,
+			"description": [
+				"Walk"
+			]
+		},
+		{
+			"id": 45,
+			"isOut": true,
+      "outCount": 1,
+			"description": [
+				"Pop out to first base",
+        "Pop out to second base",
+        "Pop out to third base",
+        "Pop out to short stop",
+        "Pop out to pitcher",
+        "Pop out to catcher"
+			]
+		},
+		{
+			"id": 46,
+			"isOut": true,
+      "outCount": 1,
+			"description": [
+				"Strike out swinging",
+        "Strike out looking"
+			]
+		},
+		{
+			"id": 55,
+			"isHit": true,
+      "batterAdvancement": 2,
+      "runnerAdvancement": 3,
+			"description": [
+				"Double to deep right field",
+				"Double to deep left field",
+				"Double to center field",
+				"Double in the gap",
+				"Double to short right field",
+				"Double to short left field"
+			]
+		},
+		{
+			"id": 56,
+			"isOut": true,
+      "outCount": 1,
+      "isSacrifice": true,
+      "runnerAdvancement": 1,
+			"description": [
+				"Fly out to right field",
+        "Fly out to left field",
+        "Fly out to center field",
+        "Fly out to right-center field",
+        "Fly out to left-center field",
+        "Fly out to short right field",
+        "Fly out to short left field"
+			]
+		},
+		{
+			"id": 66,
+			"isHit": true,
+      "batterAdvancement": 4,
+      "runnerAdvancement": 4,
+			"description": [
+				"Home run to right field",
+				"Home run to left field",
+				"Home run to center field",
+				"Home run to right-center field",
+				"Home run to left-center field",
+				"Home run outside the park"
+			]
+		}
+	]
+}

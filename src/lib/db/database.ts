@@ -1,5 +1,5 @@
 import Dexie, { type Table } from 'dexie';
-import type { Play, Team } from '$lib/types';
+import type { Play, SportType, Team } from '$lib/types';
 
 export interface UserRecord {
 	id?: number;
@@ -20,7 +20,10 @@ export interface SessionRecord {
 	expiresAt: number;
 }
 
-export interface GameStateSnapshot {
+// ── Football snapshot types ──────────────────────────────────
+
+export interface FootballGameStateSnapshot {
+	sport: 'football';
 	action: string;
 	ballIndex: number;
 	currentDown: number;
@@ -38,16 +41,73 @@ export interface GameStateSnapshot {
 	stateVersion?: number;
 }
 
-export interface GameSettingsSnapshot {
+export interface FootballGameSettingsSnapshot {
+	sport: 'football';
 	awayTeam: Team;
 	homeTeam: Team;
 	mode: string;
 	winScore: number;
 }
 
+// ── Baseball snapshot types (placeholder for Phase 8) ─────────
+
+export interface BaseballGameStateSnapshot {
+	sport: 'baseball';
+	action: string;
+	lastPlay: string;
+	modalContent: string | null;
+	possession: string;
+	restrictDice: boolean;
+	playLog: unknown[];
+	inning: number;
+	half: 'top' | 'bottom';
+	outs: number;
+	balls: number;
+	strikes: number;
+	bases: [boolean, boolean, boolean];
+	scores: {
+		vis: (number | null)[];
+		hom: (number | null)[];
+	};
+	totals: {
+		vis: { r: number; h: number; e: number };
+		hom: { r: number; h: number; e: number };
+	};
+}
+
+export interface BaseballGameSettingsSnapshot {
+	sport: 'baseball';
+	awayTeam: Team;
+	homeTeam: Team;
+	mode: string;
+	innings: number;
+}
+
+// ── Discriminated unions ─────────────────────────────────────
+
+/**
+ * Legacy snapshots (pre-v8) lack a `sport` field. During migration they
+ * get `sport: 'football'` added, but TypeScript needs to accept both
+ * shapes when reading from the DB.
+ */
+export type GameStateSnapshot = FootballGameStateSnapshot | BaseballGameStateSnapshot;
+export type GameSettingsSnapshot = FootballGameSettingsSnapshot | BaseballGameSettingsSnapshot;
+
+/**
+ * Legacy type alias: most existing code was written against the football
+ * shape before the discriminated union existed. This alias lets those
+ * call sites keep compiling without changes.
+ *
+ * @deprecated Import FootballGameStateSnapshot directly for new code.
+ */
+export type LegacyGameStateSnapshot = Omit<FootballGameStateSnapshot, 'sport'> & {
+	sport?: 'football';
+};
+
 export interface GameRecord {
 	id?: number;
 	userId: number;
+	sport: SportType;
 	status: 'in_progress' | 'completed';
 	gameState: GameStateSnapshot;
 	gameSettings: GameSettingsSnapshot;
@@ -98,6 +158,7 @@ export interface StandingsEntry {
 export interface SeasonRecord {
 	id?: number;
 	userId: number;
+	sport: SportType;
 	status: 'in_progress' | 'completed';
 	userTeamId: string;
 	teams: Team[];
@@ -170,6 +231,36 @@ class AppDatabase extends Dexie {
 			userPreferences: '++id, &userId',
 			seasons: '++id, userId'
 		});
+
+		this.version(8)
+			.stores({
+				users: '++id, &usernameLower',
+				sessions: '++id, userId, &token',
+				games: '++id, userId, sport',
+				customTeams: '++id, userId',
+				userPreferences: '++id, &userId',
+				seasons: '++id, userId, sport'
+			})
+			.upgrade((tx) => {
+				// Backfill existing records with sport: 'football'
+				return Promise.all([
+					tx
+						.table('games')
+						.toCollection()
+						.modify((game) => {
+							if (!game.sport) game.sport = 'football';
+							if (game.gameState && !game.gameState.sport) game.gameState.sport = 'football';
+							if (game.gameSettings && !game.gameSettings.sport)
+								game.gameSettings.sport = 'football';
+						}),
+					tx
+						.table('seasons')
+						.toCollection()
+						.modify((season) => {
+							if (!season.sport) season.sport = 'football';
+						})
+				]);
+			});
 	}
 }
 

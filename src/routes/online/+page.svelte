@@ -5,7 +5,7 @@
 	import { onlineState } from '$lib/state/onlineState.svelte';
 	import { supabase } from '$lib/online/supabaseClient';
 	import { DEFAULT_TEAM } from '$lib/constants/constants';
-	import { teamsData } from '$lib/data/data.json';
+	import { teamsData } from '$lib/football/data/data.json';
 	import { getCustomTeamsByUser } from '$lib/db/repositories/customTeamRepository';
 	import {
 		searchProfiles,

@@ -15,7 +15,10 @@
 	let { children } = $props();
 	const currentYear = new Date().getFullYear();
 	let isGamePage = $derived(
-		$page.url.pathname === '/game' || $page.url.pathname.startsWith('/online/game/')
+		$page.url.pathname === '/game' ||
+		$page.url.pathname.startsWith('/online/game/') ||
+		$page.url.pathname === '/baseball/game' ||
+		$page.url.pathname.startsWith('/baseball/online/game/')
 	);
 	let showSettings = $state(false);
 	let showMobileMenu = $state(false);
@@ -80,6 +83,7 @@
 		</a>
 
 		<div class="menu-wrapper">
+			<a class="link desktop-link" href="/baseball">Baseball</a>
 			{#if auth.isLoggedIn}
 				<a class="link desktop-link" href="/season">Season</a>
 				<a class="link desktop-link" href="/teams">My Teams</a>
@@ -123,6 +127,7 @@
 
 			{#if showMobileMenu}
 				<div class="kebab-dropdown" bind:this={dropdown}>
+					<a class="kebab-item" href="/baseball" onclick={() => showMobileMenu = false}>Baseball</a>
 					{#if auth.isLoggedIn}
 						<a class="kebab-item" href="/season" onclick={() => showMobileMenu = false}>Season</a>
 						<a class="kebab-item" href="/teams" onclick={() => showMobileMenu = false}>My Teams</a>

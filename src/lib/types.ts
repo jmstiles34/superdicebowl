@@ -1,64 +1,7 @@
-export interface DiceRoll {
-	id: number;
-	autoFirstDown?: boolean | false;
-	description: string[];
-	isPenalty?: boolean | false;
-	isTurnover?: boolean | false;
-	yards: number | number[];
-}
+// Barrel re-export: shared + football types
+// During migration, all existing imports continue to work unchanged.
+// Once imports are updated to use $lib/shared/ and $lib/football/ directly,
+// this file can be removed.
 
-interface Colors {
-	primary: string;
-	secondary: string;
-	faceMask?: string;
-	helmet?: string;
-	stripe?: string;
-	trim?: string;
-}
-
-export interface Play {
-	team: string;
-	diceRoll: number;
-	action: string;
-	description: string;
-	points: number;
-	yards: number;
-	penaltyYards: number;
-	isFirstdown: boolean;
-}
-
-export interface PlaySummary {
-	team: string;
-	description: string;
-	homeScore: number;
-	awayScore: number;
-}
-
-export interface Team {
-	id: string;
-	city: string;
-	cityKey: string;
-	colors: Colors;
-	isCustom?: boolean;
-	fieldLogo: string;
-	logo: string;
-	logoFixed?: boolean;
-	logoHeight?: number;
-	logoLeft?: string;
-	logoRotation?: number;
-	logoWidth?: number;
-	logoX?: number;
-	logoY?: number;
-	name: string;
-}
-
-export interface Logo {
-	name: string;
-	file: string;
-}
-
-export type Modal = (value: string) => void;
-
-export type SaveTeam = (a: Team) => void;
-
-export type Void = () => void;
+export type { DiceRoll, Play, PlaySummary } from '$lib/football/types';
+export type { Logo, Modal, SaveTeam, SportEngine, SportType, Team, Void } from '$lib/shared/types';
