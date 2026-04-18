@@ -245,7 +245,7 @@ export function makeFourthDownChoice(
 }
 
 export function makePointChoice(myScore: number, oppScore: number, winScore: number) {
-	if (winScore - myScore <= 2) return GAME_ACTION.TWO_POINT;
+	if (winScore - myScore === 2) return GAME_ACTION.TWO_POINT;
 	if (oppScore - myScore >= 10) return GAME_ACTION.TWO_POINT;
 	return GAME_ACTION.EXTRA_POINT;
 }

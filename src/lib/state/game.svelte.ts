@@ -407,15 +407,18 @@ class GameState {
 				case GAME_ACTION.FIELD_GOAL_MISS:
 					await this.delay(1500, seqId);
 					this.turnover(ballIndex);
+					await this.save();
 					break;
 				case GAME_ACTION.FOURTH_DOWN:
 					await this.delay(1500, seqId);
 					this.action = GAME_ACTION.FOURTH_DOWN_OPTIONS;
+					await this.save();
 					this.handleSoloDecision();
 					break;
 				case GAME_ACTION.KICKOFF_ONSIDE:
 					await this.delay(100, seqId);
 					this.saveKickoffOnside();
+					await this.save();
 					break;
 				case GAME_ACTION.KICKOFF_KICK:
 					await this.delay(1000, seqId);
@@ -424,6 +427,7 @@ class GameState {
 				case GAME_ACTION.KICKOFF_RETURN:
 					await this.delay(1000, seqId);
 					this.action = GAME_ACTION.OFFENSE;
+					await this.save();
 					break;
 				case GAME_ACTION.KICKOFF_TOUCHDOWN:
 					await this.delay(1000, seqId);
@@ -432,10 +436,12 @@ class GameState {
 				case GAME_ACTION.PLACE_KICKOFF:
 					await this.delay(1500, seqId);
 					this.prepareKickoff();
+					await this.save();
 					break;
 				case GAME_ACTION.TOUCHDOWN:
 					await this.delay(2000, seqId);
 					this.action = GAME_ACTION.POINT_OPTION;
+					await this.save();
 					this.handleSoloDecision();
 					break;
 				default:

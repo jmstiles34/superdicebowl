@@ -150,8 +150,8 @@
 		display: flex;
 		justify-content: center;
 		margin: auto;
-		height: clamp(2rem, 60cqi, 7rem);
-		width: clamp(2rem, 60cqi, 7rem);
+		height: clamp(1.25rem, 50cqi, 7rem);
+		width: clamp(1.25rem, 50cqi, 7rem);
 	}
 	.helmetLogo :global(.helmet-wrapper) {
 		height: 100%;
@@ -159,13 +159,13 @@
 	.name-container {
 		display: flex;
 		justify-content: center;
-		overflow: hidden;
 		min-height: 0;
+		container-type: size;
 	}
 	.name {
 		font-weight: 700;
 		font-family: var(--font-endzone);
-		font-size: clamp(1rem, 55cqb, 5rem);
+		font-size: clamp(1rem, min(55cqb, 8vh), 10rem);
 		text-transform: uppercase;
 		transform: rotate(180deg);
 		writing-mode: vertical-lr;

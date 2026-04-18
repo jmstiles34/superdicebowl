@@ -83,6 +83,9 @@
 
 	// It's my turn when current_turn matches my role AND the action needs input
 	let isMyTurn = $derived(remoteGame?.currentTurn === myRole);
+	// Tracks whether the current animation chain was started by a local action (dice roll / modal).
+	// Prevents the opponent from pushing duplicate state when their continueAfterAction runs.
+	let isLocalAction = false;
 	let awayTeam = $derived(settings.awayTeam);
 	let homeTeam = $derived(settings.homeTeam);
 
@@ -177,7 +180,7 @@
 
 	// ── Remote save ────────────────────────────────────────────
 	async function saveRemoteGame() {
-		if (!remoteGame || !myRole || !onlineState.profile) return;
+		if (!remoteGame || !myRole || !onlineState.profile || !isLocalAction) return;
 
 		const snapshot = game.snapshotState();
 		const newTurn = deriveTurn(snapshot);
@@ -202,6 +205,7 @@
 		// Ignore reflections of our own pushes
 		if (updatedAt <= lastPushedAt) return;
 		lastPushedAt = updatedAt;
+		isLocalAction = false;
 
 		// Show the opponent's dice roll before applying the new state
 		if (diceEl && isRollAction(game.action) && snapshot.diceId > 0) {
@@ -340,7 +344,7 @@
 						bind:this={diceEl}
 						dieColor={primaryColor(settings, game.possession) ?? '#FFF'}
 						pipColor={secondaryColor(settings, game.possession) ?? '#000'}
-						onRollComplete={saveRemoteGame}
+						onRollComplete={() => { isLocalAction = true; saveRemoteGame(); }}
 					/>
 					<!-- Block dice when: game is restricted, or it's not my turn during an actionable state -->
 					{#if game.restrictDice || (isActionableState(game.action) && !isMyTurn)}
@@ -382,12 +386,12 @@
 			{#if (game.action === GAME_ACTION.POINT_OPTION || game.action === GAME_ACTION.FOURTH_DOWN_OPTIONS) && isMyTurn}
 				<Modal showModal={true} close={NOOP} hasClose={false} choiceRequired={true}>
 					{#if game.action === GAME_ACTION.POINT_OPTION}
-						<PointOption savePointOption={(a) => { game.preparePointOption(a); saveRemoteGame(); }} />
+						<PointOption savePointOption={(a) => { game.preparePointOption(a); isLocalAction = true; saveRemoteGame(); }} />
 					{:else if game.action === GAME_ACTION.FOURTH_DOWN_OPTIONS}
 						<FourthDown
 							inFieldGoalRange={compareFns[game.possession](game.ballIndex, BALL_FIELD_GOAL[game.possession])}
-							saveFourthDown={(a) => { game.saveFourthDown(a); saveRemoteGame(); }}
-							toggleFieldGoal={() => { game.toggleFieldGoal(); saveRemoteGame(); }}
+							saveFourthDown={(a) => { game.saveFourthDown(a); isLocalAction = true; saveRemoteGame(); }}
+							toggleFieldGoal={() => { game.toggleFieldGoal(); isLocalAction = true; saveRemoteGame(); }}
 						/>
 					{/if}
 				</Modal>
