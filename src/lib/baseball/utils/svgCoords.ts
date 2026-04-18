@@ -35,10 +35,10 @@ export const SVG_POS = {
 
 /** Runner positions — offset slightly from the base center for visibility. */
 export const RUNNER_POS: Record<BaseName | 'home', { x: number; y: number }> = {
-	first: { x: SVG_POS.first.x + 2, y: SVG_POS.first.y - 4 },
-	second: { x: SVG_POS.second.x, y: SVG_POS.second.y - 5 },
-	third: { x: SVG_POS.third.x - 2, y: SVG_POS.third.y - 4 },
-	home: { x: SVG_POS.home.x, y: SVG_POS.home.y - 2 }
+	first: { x: SVG_POS.first.x + 2, y: SVG_POS.first.y - 10 },
+	second: { x: SVG_POS.second.x, y: SVG_POS.second.y - 11 },
+	third: { x: SVG_POS.third.x - 2, y: SVG_POS.third.y - 10 },
+	home: { x: SVG_POS.home.x, y: SVG_POS.home.y - 8 }
 };
 
 const SCALE = 0.25;

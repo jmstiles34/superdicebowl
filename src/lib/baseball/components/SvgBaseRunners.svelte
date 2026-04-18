@@ -8,6 +8,8 @@
 	import { game } from '$lib/baseball/state/game.svelte';
 	import { RUNNER_POS, SVG_POS } from '$lib/baseball/utils/svgCoords';
 	import type { BaseName, RunnerToken } from '$lib/baseball/types';
+	import onFirstSvg from '$lib/images/onfirst.svg';
+	import onSecondSvg from '$lib/images/onsecond.svg';
 
 	const BASE_ORDER: BaseName[] = ['first', 'second', 'third'];
 
@@ -16,17 +18,37 @@
 
 	const baseToId = new Map<BaseName, number>();
 
+	// Source images are 48×74. Scale to ~3.8×5.9 SVG units.
+	const IMG_W = 48;
+	const IMG_H = 74;
+	const RUNNER_SCALE = 0.19;
+
+	function getRunnerBase(runnerId: number): BaseName | 'home' {
+		for (const [base, id] of baseToId) {
+			if (id === runnerId) return base;
+		}
+		return 'home';
+	}
+
 	function placeRunner(base: BaseName): void {
-		const pos = RUNNER_POS[base];
+		// Start at home plate, then transition to the target base
+		const home = RUNNER_POS.home;
 		const runner: RunnerToken = {
 			id: nextId++,
-			x: pos.x,
-			y: pos.y,
+			x: home.x,
+			y: home.y,
 			scoring: false
 		};
 		runners.push(runner);
 		baseToId.set(base, runner.id);
 		game.bases[base] = true;
+
+		// After the DOM updates, move to the target base (CSS transition animates it)
+		requestAnimationFrame(() => {
+			const pos = RUNNER_POS[base];
+			runner.x = pos.x;
+			runner.y = pos.y;
+		});
 	}
 
 	function advanceRunner(base: BaseName): void {
@@ -125,19 +147,20 @@
 
 <!-- Runner sprites -->
 {#each runners as runner (runner.id)}
+	{@const base = getRunnerBase(runner.id)}
 	<g
 		class="svg-runner"
 		class:scoring={runner.scoring}
 		style:transform="translate({runner.x}px, {runner.y}px)"
 	>
-		<g transform="scale(0.3)">
-			<rect x="-6" y="-8" width="12" height="3" fill="#1a3a8a" rx="1"/>
-			<rect x="-6" y="-5" width="12" height="3" fill="#1a3a8a"/>
-			<rect x="-5" y="-2" width="10" height="4" fill="#eeeeee"/>
-			<rect x="-5" y="2" width="4" height="3" fill="#1a2060"/>
-			<rect x="1"  y="2" width="4" height="3" fill="#1a2060"/>
-			<rect x="-5" y="5" width="4" height="3" fill="#111111"/>
-			<rect x="1"  y="5" width="4" height="3" fill="#111111"/>
+		<g transform="scale({RUNNER_SCALE})">
+			<image
+				href={base === 'first' ? onFirstSvg : onSecondSvg}
+				x={-IMG_W / 2}
+				y={-IMG_H / 2}
+				width={IMG_W}
+				height={IMG_H}
+			/>
 		</g>
 	</g>
 {/each}
@@ -180,7 +203,7 @@
 	}
 
 	@keyframes svg-r-appear {
-		from { opacity: 0; transform: translate(var(--x)) scale(0.3); }
+		from { opacity: 0; }
 		to   { opacity: 1; }
 	}
 

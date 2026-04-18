@@ -121,18 +121,16 @@
 			});
 		} else if (isOut && !result.isSacrifice) {
 			pitchBallRef?.throwPitch(() => {
+				batterRef?.swing();
 				setTimeout(() => {
-					batterRef?.swing();
-					setTimeout(() => {
-						game.handleDiceRoll(game.action, diceId);
-						hitResultRef?.show(overlayText);
-						baseRunnersRef?.syncToState();
-						sleep(800).then(() => {
-							newBatter();
-							game.continueAfterAction();
-						});
-					}, 400);
-				}, 80);
+					game.handleDiceRoll(game.action, diceId);
+					hitResultRef?.show(overlayText);
+					baseRunnersRef?.syncToState();
+					sleep(800).then(() => {
+						newBatter();
+						game.continueAfterAction();
+					});
+				}, 400);
 			});
 		} else {
 			// Hit or sacrifice fly
@@ -141,18 +139,16 @@
 			const hitOverlay = isOut ? overlayText : hitLabel(batterAdv);
 
 			pitchBallRef?.throwPitch(() => {
-				setTimeout(() => {
-					batterRef?.swing();
-					battedBallRef?.play(hitType, zone, () => {
-						game.handleDiceRoll(game.action, diceId);
-						hitResultRef?.show(hitOverlay);
-						baseRunnersRef?.syncToState();
-						sleep(800).then(() => {
-							newBatter();
-							game.continueAfterAction();
-						});
+				batterRef?.swing();
+				battedBallRef?.play(hitType, zone, () => {
+					game.handleDiceRoll(game.action, diceId);
+					hitResultRef?.show(hitOverlay);
+					baseRunnersRef?.syncToState();
+					sleep(800).then(() => {
+						newBatter();
+						game.continueAfterAction();
 					});
-				}, 80);
+				});
 			});
 		}
 	}
