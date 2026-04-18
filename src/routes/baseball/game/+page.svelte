@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { Fireworks } from '@fireworks-js/svelte';
 	import { game } from '$lib/baseball/state/game.svelte';
@@ -10,7 +10,7 @@
 	import { sleep } from '$lib/utils/common';
 	import { primaryColor, secondaryColor } from '$lib/utils/game';
 	import { fireworkShow, options } from '$lib/utils/fireworks';
-	import type { BatterHand, HitType, MowPattern } from '$lib/baseball/types';
+	import type { BatterHand, HitType } from '$lib/baseball/types';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { createGame, updateGameState, completeGame } from '$lib/db/repositories/gameRepository';
 
@@ -19,12 +19,12 @@
 	import ConfirmExit from '$lib/components/modal/ConfirmExit.svelte';
 	import Settings from '$lib/components/modal/Settings.svelte';
 	import Scoreboard from '$lib/baseball/components/Scoreboard.svelte';
-	import Field from '$lib/baseball/components/Field.svelte';
-	import BaseRunners from '$lib/baseball/components/BaseRunners.svelte';
-	import Batter from '$lib/baseball/components/Batter.svelte';
-	import PitchBall from '$lib/baseball/components/PitchBall.svelte';
-	import BattedBall from '$lib/baseball/components/BattedBall.svelte';
-	import HitResult from '$lib/baseball/components/HitResult.svelte';
+	import FieldSVG from '$lib/baseball/components/FieldSVG.svelte';
+	import SvgBaseRunners from '$lib/baseball/components/SvgBaseRunners.svelte';
+	import SvgBatter from '$lib/baseball/components/SvgBatter.svelte';
+	import SvgPitchBall from '$lib/baseball/components/SvgPitchBall.svelte';
+	import SvgBattedBall from '$lib/baseball/components/SvgBattedBall.svelte';
+	import SvgHitResult from '$lib/baseball/components/SvgHitResult.svelte';
 
 	import exit from '$lib/images/exit.svg';
 	import gear from '$lib/images/gear.svg';
@@ -38,40 +38,20 @@
 	const isGameReady = awayTeam.id.length && homeTeam.id.length;
 	let showSettings = $state(false);
 
-	// ── Canvas scaling ───────────────────────────────────────
-	const DESIGN_W = 900;
-	const DESIGN_H = 920;
-	let outerEl = $state<HTMLDivElement>();
-	let scale = $state(1);
-
-	onMount(() => {
-		if (!outerEl) return;
-		const ro = new ResizeObserver(() => {
-			if (!outerEl) return;
-			const sw = outerEl.clientWidth / DESIGN_W;
-			const sh = outerEl.clientHeight / DESIGN_H;
-			scale = Math.min(sw, sh);
-		});
-		ro.observe(outerEl);
-		scale = Math.min(outerEl.clientWidth / DESIGN_W, outerEl.clientHeight / DESIGN_H);
-		return () => ro.disconnect();
-	});
-
 	onDestroy(() => {
 		game.resetGame();
 	});
 
 	// ── Component refs ───────────────────────────────────────
-	let batterRef = $state<Batter>();
-	let pitchBallRef = $state<PitchBall>();
-	let battedBallRef = $state<BattedBall>();
-	let hitResultRef = $state<HitResult>();
-	let baseRunnersRef = $state<BaseRunners>();
+	let batterRef = $state<SvgBatter>();
+	let pitchBallRef = $state<SvgPitchBall>();
+	let battedBallRef = $state<SvgBattedBall>();
+	let hitResultRef = $state<SvgHitResult>();
+	let baseRunnersRef = $state<SvgBaseRunners>();
 	let fw = $state(fireworkShow);
 
 	// ── Settings ─────────────────────────────────────────────
 	let batterHand: BatterHand = $state(Math.random() < 0.5 ? 'rh' : 'lh');
-	let mowPattern: MowPattern = $state('');
 
 	function newBatter() {
 		batterHand = Math.random() < 0.5 ? 'rh' : 'lh';
@@ -158,7 +138,7 @@
 			// Hit or sacrifice fly
 			const hitType = mapDiceToHitType(batterAdv, isOut);
 			const zone = pickZone(hitType);
-			const hitOverlay = isOut ? overlayText : zone.label;
+			const hitOverlay = isOut ? overlayText : hitLabel(batterAdv);
 
 			pitchBallRef?.throwPitch(() => {
 				setTimeout(() => {
@@ -175,6 +155,13 @@
 				}, 80);
 			});
 		}
+	}
+
+	function hitLabel(batterAdv: number): string {
+		if (batterAdv >= 4) return 'HOME RUN!';
+		if (batterAdv === 3) return 'TRIPLE!';
+		if (batterAdv === 2) return 'DOUBLE!';
+		return 'SINGLE!';
 	}
 
 	function mapDiceToHitType(batterAdv: number, isOut: boolean): HitType {
@@ -286,30 +273,36 @@
 				<div class="scores">
 					<Scoreboard {awayTeam} {homeTeam} />
 				</div>
-				
 			</div>
 
-			<div class="field-outer" bind:this={outerEl}>
-				<div class="field-canvas" style:transform="scale({scale})">
-					<div class="field-region">
-						<div
-							id="stadium"
-							class="stadium"
-							class:pat-wide-stripes={mowPattern === 'pat-wide-stripes'}
-							class:pat-cross-cut={mowPattern === 'pat-cross-cut'}
-							class:pat-radial={mowPattern === 'pat-radial'}
-							class:pat-diamond={mowPattern === 'pat-diamond'}
-							class:pat-fan={mowPattern === 'pat-fan'}
-						>
-							<Field {mowPattern} />
-							<BaseRunners bind:this={baseRunnersRef} />
-							<Batter hand={batterHand} bind:this={batterRef} />
-							<PitchBall bind:this={pitchBallRef} />
-							<BattedBall bind:this={battedBallRef} />
-						</div>
-					</div>
-					<HitResult bind:this={hitResultRef} />
-				</div>
+			<div class="field-outer">
+				<svg
+					class="field-svg"
+					viewBox="-20 -10 370 350"
+					preserveAspectRatio="xMidYMin meet"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<defs>
+						<pattern id="crowd" width="16" height="14" patternUnits="userSpaceOnUse">
+							<rect width="16" height="14" fill="#2A2F3A" />
+							<circle cx="2"  cy="2"  r="2" fill={homeTeam.colors.primary} opacity="0.85" />
+							<circle cx="9"  cy="1"  r="2" fill={homeTeam.colors.secondary} opacity="0.8" />
+							<circle cx="14" cy="3"  r="2" fill={homeTeam.colors.primary} opacity="0.75" />
+							<circle cx="5"  cy="6"  r="2" fill={homeTeam.colors.secondary} opacity="0.85" />
+							<circle cx="12" cy="7"  r="2" fill={homeTeam.colors.primary} opacity="0.8" />
+							<circle cx="1"  cy="10" r="2" fill={homeTeam.colors.secondary} opacity="0.75" />
+							<circle cx="8"  cy="11" r="2" fill={homeTeam.colors.primary} opacity="0.85" />
+							<circle cx="15" cy="12" r="2" fill={homeTeam.colors.secondary} opacity="0.8" />
+						</pattern>
+					</defs>
+
+					<FieldSVG />
+					<SvgBaseRunners bind:this={baseRunnersRef} />
+					<SvgBatter hand={batterHand} bind:this={batterRef} />
+					<SvgPitchBall bind:this={pitchBallRef} />
+					<SvgBattedBall bind:this={battedBallRef} />
+					<SvgHitResult bind:this={hitResultRef} />
+				</svg>
 				{#if game.action === GAME_ACTION.GAME_OVER}
 					<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
 				{/if}
@@ -331,28 +324,7 @@
 			hasClose={true}
 			choiceRequired={false}
 		>
-			<Settings hideWinScore>
-				{#snippet extra()}
-					<div class="mow-setting">
-						<label class="mow-label" for="mowPattern">Grass Pattern</label>
-						<select
-							id="mowPattern"
-							class="mow-select"
-							value={mowPattern}
-							onchange={(e) => {
-								mowPattern = (e.currentTarget as HTMLSelectElement).value as MowPattern;
-							}}
-						>
-							<option value="">Stripes</option>
-							<option value="pat-wide-stripes">Wide</option>
-							<option value="pat-cross-cut">Cross</option>
-							<option value="pat-radial">Radial</option>
-							<option value="pat-diamond">Diamond</option>
-							<option value="pat-fan">Fan</option>
-						</select>
-					</div>
-				{/snippet}
-			</Settings>
+			<Settings hideWinScore />
 		</Modal>
 	</main>
 {/if}
@@ -361,11 +333,20 @@
 	main {
 		position: relative;
 		padding: 1rem;
+		height: 100vh;
+		height: 100dvh;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.game {
-		max-width: 90%;
+		width: 90%;
 		margin: -3.25rem auto 0 auto;
+		flex: 1;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.toolbar {
@@ -383,9 +364,10 @@
 	.scoreboard {
 		display: grid;
 		grid-template-columns: 1fr auto 1fr;
-		align-items: start;
+		align-items: end;
 		column-gap: 0.25rem;
-		top: 2.5rem;
+		padding-top: 3.25rem;
+		flex-shrink: 0;
 	}
 
 	.toolbarButton {
@@ -407,50 +389,6 @@
 
 	.flip {
 		transform: scaleX(-1);
-	}
-
-	.mow-setting {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var(--space-6);
-		padding: var(--space-3) 0;
-	}
-
-	.mow-label {
-		font-family: var(--font-body);
-		font-size: var(--text-sm);
-		font-weight: var(--weight-bold);
-		letter-spacing: var(--tracking-wider);
-		text-transform: uppercase;
-		color: var(--color-text-secondary);
-		white-space: nowrap;
-	}
-
-	.mow-select {
-		font-family: var(--font-numeric);
-		font-size: var(--text-score-xs);
-		font-weight: var(--weight-bold);
-		color: var(--color-text-gold);
-		background-color: var(--input-bg);
-		border: 2px solid var(--input-border);
-		border-radius: var(--radius-sm);
-		box-shadow: var(--input-shadow);
-		padding: var(--space-1-5) var(--space-3);
-		cursor: pointer;
-		appearance: none;
-		text-align: center;
-		min-width: 4.5rem;
-	}
-
-	.mow-select:hover {
-		border-color: var(--input-border-hover);
-	}
-
-	.mow-select:focus-visible {
-		outline: none;
-		border-color: var(--input-border-focus);
-		box-shadow: var(--input-shadow-focus);
 	}
 
 	.last-play {
@@ -516,57 +454,10 @@
 		background: var(--bb-field-bg);
 	}
 
-	.field-canvas {
-		position: absolute;
-		top: 0;
-		left: 50%;
-		width: 900px;
-		height: 920px;
-		transform-origin: top center;
-		margin-left: -450px;
-		background: var(--bb-field-bg);
-	}
-
-	.field-canvas::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		border: 4px solid var(--bb-panel-border);
-		box-shadow: inset 0 0 0 2px var(--bb-accent-blue-12);
-		pointer-events: none;
-		z-index: 9000;
-	}
-
-	.field-canvas::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: repeating-linear-gradient(
-			0deg,
-			transparent,
-			transparent 3px,
-			oklch(0 0 0 / 0.07) 3px,
-			oklch(0 0 0 / 0.07) 4px
-		);
-		pointer-events: none;
-		z-index: 8000;
-	}
-
-	.field-region {
-		position: absolute;
-		top: 104px;
-		left: 4px;
-		right: 4px;
-		bottom: 4px;
-		perspective: 900px;
-		perspective-origin: 50% 18%;
-		background: var(--color-bg-void);
-		overflow: visible;
-	}
-
-	.stadium {
-		transform: translateY(80px) rotateX(10deg);
-		transform-origin: 50% 50%;
+	.field-svg {
+		height: 100%;
+		margin: 0 auto;
+		display: block;
 	}
 
 	:global(.fireworks) {

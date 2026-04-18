@@ -59,7 +59,7 @@ export interface BaseballDiceRoll {
 /** A runner token in the reactive runners array. */
 export interface RunnerToken {
 	id: number;
-	top: number; // position in #stadium local space
-	left: number;
+	x: number; // position in SVG coordinate space
+	y: number;
 	scoring: boolean; // true while the score-flash CSS animation is running
 }
