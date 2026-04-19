@@ -22,16 +22,16 @@
 	>
 		<!-- Stroke outline for readability (rendered behind fill) -->
 		<text
-			x="165"
-			y="170"
+			x="600"
+			y="350"
 			text-anchor="middle"
 			dominant-baseline="middle"
 			class="result-outline"
 		>{label}</text>
 		<!-- Fill text on top -->
 		<text
-			x="165"
-			y="170"
+			x="600"
+			y="350"
 			text-anchor="middle"
 			dominant-baseline="middle"
 			class="result-fill"
@@ -48,19 +48,19 @@
 	}
 
 	.result-outline {
-		font-size: 18px;
+		font-size: 60px;
 		font-weight: 900;
 		font-family: var(--font-body, system-ui);
 		letter-spacing: 0.05em;
 		fill: none;
 		stroke: oklch(0 0 0);
-		stroke-width: 3px;
+		stroke-width: 8px;
 		stroke-linejoin: round;
 		paint-order: stroke;
 	}
 
 	.result-fill {
-		font-size: 18px;
+		font-size: 60px;
 		font-weight: 900;
 		font-family: var(--font-body, system-ui);
 		letter-spacing: 0.05em;

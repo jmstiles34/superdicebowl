@@ -3,9 +3,6 @@
 // Baseball that travels from the pitcher's plate to home plate.
 // Rendered as an SVG <g> inside the field SVG. Uses WAAPI for animation.
 //
-// Old canvas: translate(2px, 221px) over 0.65s
-// SVG space:  translate(0.5, 55) — scaled by 0.25
-//
 // Exposed: throwPitch(onArrive?) — guard prevents re-entry while in flight
 
 	import { SVG_POS } from '$lib/baseball/utils/svgCoords';
@@ -26,11 +23,11 @@
 		flying = true;
 
 		const anim = ballEl.animate([
-			{ opacity: 1, transform: T(0, 0.35) },
-			{ opacity: 1, transform: T(10, 0.45), offset: 0.18 },
-			{ opacity: 1, transform: T(36, 0.7), offset: 0.65 },
-			{ opacity: 1, transform: T(50, 0.9), offset: 0.90 },
-			{ opacity: 0, transform: T(55, 1.0) }
+			{ opacity: 1, transform: T(0, 1.0) },
+			{ opacity: 1, transform: T(29, 1.3), offset: 0.18 },
+			{ opacity: 1, transform: T(105, 2.0), offset: 0.65 },
+			{ opacity: 1, transform: T(145, 2.6), offset: 0.90 },
+			{ opacity: 0, transform: T(161, 2.9) }
 		], {
 			duration: 650,
 			easing: 'cubic-bezier(.2,0,.9,1)',
@@ -51,15 +48,15 @@
 	class="svg-pitch-ball"
 	bind:this={ballEl}
 >
-	<circle cx="0" cy="0" r="3.5" fill="#f5f0e5" stroke="#c8c0a8" stroke-width=".3"/>
-	<path d="M -2 -2.8 Q -2.8 0 -2 2.8" stroke="#c03838" stroke-width=".5" fill="none" stroke-linecap="round"/>
-	<path d="M 2 -2.8 Q 2.8 0 2 2.8" stroke="#c03838" stroke-width=".5" fill="none" stroke-linecap="round"/>
+	<circle cx="0" cy="0" r="10" fill="#f5f0e5" stroke="#c8c0a8" stroke-width="1"/>
+	<path d="M -6 -8 Q -8 0 -6 8" stroke="#c03838" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+	<path d="M 6 -8 Q 8 0 6 8" stroke="#c03838" stroke-width="1.5" fill="none" stroke-linecap="round"/>
 </g>
 
 <style>
 	.svg-pitch-ball {
 		opacity: 0;
-		filter: drop-shadow(0 0 2px rgba(255,255,255,.85));
+		filter: drop-shadow(0 0 6px rgba(255,255,255,.85));
 		pointer-events: none;
 	}
 </style>

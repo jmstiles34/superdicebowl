@@ -18,10 +18,10 @@
 
 	const baseToId = new Map<BaseName, number>();
 
-	// Source images are 48×74. Scale to ~3.8×5.9 SVG units.
+	// Source images are 48×74. Scale for 1200×630 field.
 	const IMG_W = 48;
 	const IMG_H = 74;
-	const RUNNER_SCALE = 0.19;
+	const RUNNER_SCALE = 0.62;
 
 	function getRunnerBase(runnerId: number): BaseName | 'home' {
 		for (const [base, id] of baseToId) {
@@ -129,10 +129,10 @@
 	<rect
 		class="base-diamond"
 		class:occupied={game.bases[base]}
-		x={SVG_POS[base].x - 2}
-		y={SVG_POS[base].y - 2}
-		width="4"
-		height="4"
+		x={SVG_POS[base].x - 7}
+		y={SVG_POS[base].y - 7}
+		width="14"
+		height="14"
 		transform="rotate(45, {SVG_POS[base].x}, {SVG_POS[base].y})"
 	/>
 	{#if game.bases[base]}
@@ -140,7 +140,7 @@
 			class="base-pulse"
 			cx={SVG_POS[base].x}
 			cy={SVG_POS[base].y}
-			r="4"
+			r="14"
 		/>
 	{/if}
 {/each}
@@ -169,7 +169,7 @@
 	.base-diamond {
 		fill: white;
 		stroke: white;
-		stroke-width: 0.5;
+		stroke-width: 1.5;
 		transition: fill 0.15s, stroke 0.15s;
 	}
 
@@ -181,7 +181,7 @@
 	.base-pulse {
 		fill: none;
 		stroke: #aaa;
-		stroke-width: 0.3;
+		stroke-width: 1;
 		opacity: 0;
 		transform-box: fill-box;
 		transform-origin: center;
@@ -196,7 +196,7 @@
 
 	.svg-runner {
 		pointer-events: none;
-		filter: drop-shadow(0 0.3px 1px rgba(0,0,0,.9));
+		filter: drop-shadow(0 1px 3px rgba(0,0,0,.9));
 		transition:
 			transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 		animation: svg-r-appear 0.2s ease-out;

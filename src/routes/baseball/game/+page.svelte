@@ -274,24 +274,10 @@
 			<div class="field-outer">
 				<svg
 					class="field-svg"
-					viewBox="-20 -10 370 350"
-					preserveAspectRatio="xMidYMin meet"
+					viewBox="0 0 1200 630"
+					preserveAspectRatio="xMidYMid meet"
 					xmlns="http://www.w3.org/2000/svg"
 				>
-					<defs>
-						<pattern id="crowd" width="16" height="14" patternUnits="userSpaceOnUse">
-							<rect width="16" height="14" fill="#2A2F3A" />
-							<circle cx="2"  cy="2"  r="2" fill={homeTeam.colors.primary} opacity="0.85" />
-							<circle cx="9"  cy="1"  r="2" fill={homeTeam.colors.secondary} opacity="0.8" />
-							<circle cx="14" cy="3"  r="2" fill={homeTeam.colors.primary} opacity="0.75" />
-							<circle cx="5"  cy="6"  r="2" fill={homeTeam.colors.secondary} opacity="0.85" />
-							<circle cx="12" cy="7"  r="2" fill={homeTeam.colors.primary} opacity="0.8" />
-							<circle cx="1"  cy="10" r="2" fill={homeTeam.colors.secondary} opacity="0.75" />
-							<circle cx="8"  cy="11" r="2" fill={homeTeam.colors.primary} opacity="0.85" />
-							<circle cx="15" cy="12" r="2" fill={homeTeam.colors.secondary} opacity="0.8" />
-						</pattern>
-					</defs>
-
 					<FieldSVG />
 					<SvgBaseRunners bind:this={baseRunnersRef} />
 					<SvgBatter hand={batterHand} bind:this={batterRef} />
