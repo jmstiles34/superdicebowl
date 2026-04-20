@@ -28,6 +28,7 @@ export interface GameStateSnapshot {
 	firstDownIndex: number;
 	lastPlay: string;
 	missedKick: boolean;
+	missedTwoPoint: boolean;
 	modalContent: string | null;
 	onsideKick: boolean;
 	playLog: Play[];

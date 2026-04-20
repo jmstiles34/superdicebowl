@@ -179,6 +179,7 @@ class GameState {
 			firstDownIndex: this.firstDownIndex,
 			lastPlay: this.lastPlay,
 			missedKick: this.missedKick,
+			missedTwoPoint: this.missedTwoPoint,
 			modalContent: this.modalContent,
 			onsideKick: this.onsideKick,
 			playLog: this.playLog,

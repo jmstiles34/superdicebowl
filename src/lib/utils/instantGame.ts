@@ -12,7 +12,6 @@ import {
 	EXTRA_POINT_SUCCESS,
 	FIELD_GOAL_ROLL,
 	GAME_ACTION,
-	INTERCEPTION_ROLLS,
 	KICKOFF_RETURN_ACTION,
 	KICKOFF_RETURN_YARDS,
 	OPPOSITE_TEAM,
@@ -25,7 +24,6 @@ import type { Play } from '$lib/types';
 import { equals, gt, gte, isArray, lt, pickRandom, sumDigits } from '$lib/utils/common';
 import {
 	ballPosition,
-	compareFns,
 	fieldGoalYardsFns,
 	forwardFns,
 	getScoreByTeam,

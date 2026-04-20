@@ -1,4 +1,4 @@
-import { DEFAULT_GAME, OPPOSITE_TEAM } from '$lib/constants/constants';
+import { DEFAULT_GAME } from '$lib/constants/constants';
 import type { GameStateSnapshot } from '$lib/db/database';
 import type { Team } from '$lib/types';
 import type { Profile } from './friends';

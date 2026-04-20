@@ -126,3 +126,77 @@ describe('deriveTurn', () => {
 		).toBe('home');
 	});
 });
+
+// ─── Possession-change scenarios ─────────────────────────
+// These tests simulate the snapshot state at the moment saveRemoteGame()
+// fires (after handleDiceRoll, before continueAfterAction) and verify
+// that deriveTurn returns the correct next player for each scenario.
+describe('deriveTurn — possession-change scenarios', () => {
+	it('after extra point: HOME scores, snapshot is PLACE_KICKOFF → turn goes to AWAY', () => {
+		// kickExtraPoint sets action = PLACE_KICKOFF, possession stays with scorer
+		const s = snapshot({ action: GAME_ACTION.PLACE_KICKOFF, possession: TEAM.HOME });
+		expect(deriveTurn(s)).toBe('away');
+	});
+
+	it('after two-point attempt: AWAY scores, snapshot is PLACE_KICKOFF → turn goes to HOME', () => {
+		// doTwoPointPlay sets action = PLACE_KICKOFF, possession stays with scorer
+		const s = snapshot({ action: GAME_ACTION.PLACE_KICKOFF, possession: TEAM.AWAY });
+		expect(deriveTurn(s)).toBe('home');
+	});
+
+	it('after field goal made: possession stays with kicker → turn goes to opponent', () => {
+		const s = snapshot({ action: GAME_ACTION.FIELD_GOAL_MADE, possession: TEAM.HOME });
+		expect(deriveTurn(s)).toBe('away');
+	});
+
+	it('after field goal miss: possession stays with kicker → turn goes to opponent', () => {
+		const s = snapshot({ action: GAME_ACTION.FIELD_GOAL_MISS, possession: TEAM.AWAY });
+		expect(deriveTurn(s)).toBe('home');
+	});
+
+	it('after interception: possession is already flipped → turn follows new possessor', () => {
+		// doOffensivePlay flips possession before snapshot; action = INTERCEPTION
+		const s = snapshot({ action: GAME_ACTION.INTERCEPTION, possession: TEAM.AWAY });
+		expect(deriveTurn(s)).toBe('away');
+	});
+
+	it('after fumble: possession is already flipped → turn follows new possessor', () => {
+		const s = snapshot({ action: GAME_ACTION.FUMBLE, possession: TEAM.HOME });
+		expect(deriveTurn(s)).toBe('home');
+	});
+
+	it('after turnover on downs: possession is already flipped → turn follows new possessor', () => {
+		const s = snapshot({ action: GAME_ACTION.TURNOVER, possession: TEAM.AWAY });
+		expect(deriveTurn(s)).toBe('away');
+	});
+
+	it('after punt: possession is already flipped → turn follows new possessor', () => {
+		const s = snapshot({ action: GAME_ACTION.PUNT_RESULT, possession: TEAM.HOME });
+		expect(deriveTurn(s)).toBe('home');
+	});
+
+	it('after safety: action is PLACE_KICKOFF, possession stays with penalized team → turn flips', () => {
+		// Safety sets action = PLACE_KICKOFF without flipping possession
+		const s = snapshot({ action: GAME_ACTION.PLACE_KICKOFF, possession: TEAM.HOME });
+		expect(deriveTurn(s)).toBe('away');
+	});
+
+	it('after onside kick: possession stays with kicker → turn flips to opponent', () => {
+		const s = snapshot({ action: GAME_ACTION.KICKOFF_ONSIDE, possession: TEAM.HOME });
+		expect(deriveTurn(s)).toBe('away');
+	});
+
+	it('regular kickoff kick: possession = receiver → turn stays with receiver', () => {
+		// After prepareKickoff, possession = receiving team; they roll kickoff → KICKOFF_KICK
+		const s = snapshot({ action: GAME_ACTION.KICKOFF_KICK, possession: TEAM.AWAY });
+		expect(deriveTurn(s)).toBe('away');
+	});
+
+	it('game start: PLACE_KICKOFF with random possession → turn goes to the other team', () => {
+		// acceptChallenge creates initial state with PLACE_KICKOFF
+		const homeFirst = snapshot({ action: GAME_ACTION.PLACE_KICKOFF, possession: TEAM.HOME });
+		const awayFirst = snapshot({ action: GAME_ACTION.PLACE_KICKOFF, possession: TEAM.AWAY });
+		expect(deriveTurn(homeFirst)).toBe('away');
+		expect(deriveTurn(awayFirst)).toBe('home');
+	});
+});

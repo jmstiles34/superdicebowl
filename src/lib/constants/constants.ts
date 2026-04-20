@@ -109,6 +109,7 @@ export const DEFAULT_GAME = {
 	firstDownIndex: -1,
 	lastPlay: '',
 	missedKick: false,
+	missedTwoPoint: false,
 	modalContent: null,
 	onsideKick: false,
 	playLog: [],
