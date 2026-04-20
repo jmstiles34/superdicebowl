@@ -61,8 +61,6 @@
 	let channel: ReturnType<typeof subscribeToGame> | null = null;
 	let diceEl = $state<{ showOpponentRoll: (d1: number, d2: number) => Promise<void> } | null>(null);
 
-	// Sync status — visible on screen so we can diagnose push issues
-	let syncStatus = $state('');
 	let syncFailed = $state(false);
 
 	let announcementText = $state('');
@@ -228,41 +226,23 @@
 	// this.save() multiple times, but the hasPushedForCurrentAction guard
 	// ensures only the first push goes through. Both sides run the animation
 	// chain locally, so they independently arrive at the same final state.
-	const PUSH_MAX_RETRIES = 2;
-
 	async function saveRemoteGame() {
 		if (!remoteGame || !myRole || !onlineState.profile) return;
-		if (!isActingPlayer || hasPushedForCurrentAction) {
-			console.log('[sync] saveRemoteGame skipped:', { isActingPlayer, hasPushedForCurrentAction, action: game.action });
-			return;
-		}
+		if (!isActingPlayer || hasPushedForCurrentAction) return;
 		hasPushedForCurrentAction = true;
 
 		localVersion++;
 		const snapshot = { ...game.snapshotState(), stateVersion: localVersion };
 		const newTurn = deriveTurn(snapshot);
 
-		console.log('[sync] pushing v%d action=%s turn=%s', localVersion, snapshot.action, newTurn);
-
-		let ok = false;
-		for (let attempt = 1; attempt <= PUSH_MAX_RETRIES; attempt++) {
-			ok = await pushGameState(gameId, snapshot, newTurn);
-			if (ok) break;
-			console.warn('[sync] push attempt %d/%d failed for v%d', attempt, PUSH_MAX_RETRIES, localVersion);
-			if (attempt < PUSH_MAX_RETRIES) await sleep(500 * attempt);
-		}
-
+		const ok = await pushGameState(gameId, snapshot, newTurn);
 		if (!ok) {
-			console.error('[sync] push FAILED after %d retries — v%d action=%s LOST', PUSH_MAX_RETRIES, localVersion, snapshot.action);
 			localVersion--;
 			hasPushedForCurrentAction = false;
-			syncStatus = `Save failed: ${snapshot.action}`;
 			syncFailed = true;
 			return;
 		}
 
-		console.log('[sync] push OK v%d action=%s', localVersion, snapshot.action);
-		syncStatus = `Saved v${localVersion}`;
 		syncFailed = false;
 		remoteGame = { ...remoteGame, currentTurn: newTurn, gameState: snapshot };
 
@@ -284,15 +264,8 @@
 		const incomingVersion = snapshot.stateVersion ?? 0;
 
 		// Discard our own reflections and duplicate/out-of-order events
-		if (incomingVersion <= localVersion) {
-			console.log('[sync] realtime skipped (own reflection) v%d <= local v%d', incomingVersion, localVersion);
-			return;
-		}
-		if (incomingVersion <= remoteVersion) {
-			console.log('[sync] realtime skipped (duplicate) v%d <= remote v%d', incomingVersion, remoteVersion);
-			return;
-		}
-		console.log('[sync] realtime applying v%d action=%s turn=%s', incomingVersion, snapshot.action, currentTurn);
+		if (incomingVersion <= localVersion) return;
+		if (incomingVersion <= remoteVersion) return;
 		remoteVersion = incomingVersion;
 		// Advance localVersion so our next push is always higher than
 		// any version we've seen (prevents version collisions when both
@@ -326,19 +299,11 @@
 	// state that hasn't been pushed yet (e.g. resetting an EP roll result).
 	async function resyncFromDb() {
 		if (!onlineState.profile || !myRole || !remoteGame || remoteGame.status !== 'in_progress') return;
-		if (isActingPlayer) {
-			console.log('[sync] poll skipped (acting player)');
-			return;
-		}
+		if (isActingPlayer) return;
 		const rg = await getRemoteGame(gameId);
 		if (!rg?.gameState) return;
 		const dbVersion = rg.gameState.stateVersion ?? 0;
-		if (dbVersion <= remoteVersion || dbVersion <= localVersion) {
-			console.log('[sync] poll skipped v%d (remote=%d local=%d)', dbVersion, remoteVersion, localVersion);
-			return;
-		}
-		// DB has a newer state than we've seen — apply it
-		console.log('[sync] poll applying v%d action=%s (was remote=%d local=%d)', dbVersion, rg.gameState.action, remoteVersion, localVersion);
+		if (dbVersion <= remoteVersion || dbVersion <= localVersion) return;
 		remoteVersion = dbVersion;
 		localVersion = Math.max(localVersion, dbVersion);
 		game.loadSnapshot(rg.gameState);
@@ -520,7 +485,7 @@
 
 				<!-- Sync status — diagnostic indicator for push failures -->
 				{#if syncFailed}
-					<div class="sync-status failed">{syncStatus}</div>
+					<div class="sync-status failed">Save failed — check connection</div>
 				{/if}
 			</div>
 

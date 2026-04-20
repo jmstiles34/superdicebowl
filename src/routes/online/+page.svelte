@@ -95,11 +95,19 @@
 			.subscribe();
 	});
 
+	// Poll as a fallback — realtime can silently miss events
+	const LOBBY_POLL_MS = 10000;
+	let lobbyPollTimer: ReturnType<typeof setInterval> | null = null;
+
 	onDestroy(() => {
 		notifChannel?.unsubscribe();
+		if (lobbyPollTimer) clearInterval(lobbyPollTimer);
 	});
 
 	onMount(async () => {
+		lobbyPollTimer = setInterval(() => {
+			if (onlineState.isOnline) loadAll();
+		}, LOBBY_POLL_MS);
 		let customTeams: Team[] = [];
 		if (auth.currentUser?.id) {
 			const records = await getCustomTeamsByUser(auth.currentUser.id);

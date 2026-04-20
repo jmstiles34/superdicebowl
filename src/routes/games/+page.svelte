@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { game } from '$lib/state/game.svelte';
@@ -11,7 +12,7 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import GameSummary from '$lib/components/modal/GameSummary.svelte';
 	import { onlineState } from '$lib/state/onlineState.svelte';
-	import { getRemoteGames, type RemoteGame } from '$lib/online/remoteGames';
+	import { getRemoteGames, resignGame, type RemoteGame } from '$lib/online/remoteGames';
 
 	let activeTab: 'in_progress' | 'completed' | 'online' = $state('in_progress');
 	let remoteGames = $state<RemoteGame[]>([]);
@@ -31,6 +32,27 @@
 
 	$effect(() => {
 		if (onlineState.isOnline && onlineState.profile) loadRemoteGames();
+	});
+
+	// Poll remote games so the list stays fresh (scores, turn status)
+	const GAMES_POLL_MS = 10000;
+	let gamesPollTimer: ReturnType<typeof setInterval> | null = null;
+
+	$effect(() => {
+		if (activeTab === 'online' && onlineState.isOnline) {
+			if (!gamesPollTimer) {
+				gamesPollTimer = setInterval(loadRemoteGames, GAMES_POLL_MS);
+			}
+		} else {
+			if (gamesPollTimer) {
+				clearInterval(gamesPollTimer);
+				gamesPollTimer = null;
+			}
+		}
+	});
+
+	onDestroy(() => {
+		if (gamesPollTimer) clearInterval(gamesPollTimer);
 	});
 
 	async function loadGames() {
@@ -83,6 +105,18 @@
 	);
 	let completedRemoteGames = $derived(remoteGames.filter((rg) => rg.status === 'completed'));
 	let showCompletedRemote = $state(false);
+	let confirmResignId = $state<string | null>(null);
+	let resignLoading = $state(false);
+
+	async function handleResign(rg: RemoteGame) {
+		if (!onlineState.profile || resignLoading) return;
+		resignLoading = true;
+		const opponentId = rg.homeUserId === onlineState.profile.id ? rg.awayUserId : rg.homeUserId;
+		await resignGame(rg.id, onlineState.profile.id, opponentId);
+		confirmResignId = null;
+		resignLoading = false;
+		await loadRemoteGames();
+	}
 
 	function resumeGame(record: GameRecord) {
 		game.loadSnapshot(record.gameState);
@@ -270,48 +304,66 @@
 					{#each activeRemoteGames as rg (rg.id)}
 						{@const status = remoteGameStatus(rg)}
 						{@const opponent = remoteOpponent(rg)}
-						<button
-							class="game-card online-card"
-							onclick={() => goto(`/online/game/${rg.id}`)}
-						>
-							<span
-								class="online-status-badge"
-								class:your-turn={status === 'your_turn'}
-								class:waiting={status === 'waiting'}
-								class:pending={status === 'pending'}
-								class:completed={status === 'completed'}
+						<div class="game-card">
+							<button
+								class="online-card-body"
+								onclick={() => goto(`/online/game/${rg.id}`)}
 							>
-								{#if status === 'your_turn'}Your Turn
-								{:else if status === 'waiting'}Waiting
-								{:else if status === 'pending'}Pending
-								{:else}Final{/if}
-							</span>
-							<div class="teams-row">
-								{#if rg.homeTeam && rg.awayTeam}
-									<span
-										class="team-badge"
-										style:background-color={rg.homeTeam.colors.primary}
-									>
-										{rg.homeTeam.cityKey}
-									</span>
-									<span class="score">{remoteHomeScore(rg)}</span>
-									<span class="vs">-</span>
-									<span class="score">{remoteAwayScore(rg)}</span>
-									<span
-										class="team-badge"
-										style:background-color={rg.awayTeam.colors.primary}
-									>
-										{rg.awayTeam.cityKey}
-									</span>
+								<span
+									class="online-status-badge"
+									class:your-turn={status === 'your_turn'}
+									class:waiting={status === 'waiting'}
+									class:pending={status === 'pending'}
+									class:completed={status === 'completed'}
+								>
+									{#if status === 'your_turn'}Your Turn
+									{:else if status === 'waiting'}Waiting
+									{:else if status === 'pending'}Pending
+									{:else}Final{/if}
+								</span>
+								<div class="teams-row">
+									{#if rg.homeTeam && rg.awayTeam}
+										<span
+											class="team-badge"
+											style:background-color={rg.homeTeam.colors.primary}
+										>
+											{rg.homeTeam.cityKey}
+										</span>
+										<span class="score">{remoteHomeScore(rg)}</span>
+										<span class="vs">-</span>
+										<span class="score">{remoteAwayScore(rg)}</span>
+										<span
+											class="team-badge"
+											style:background-color={rg.awayTeam.colors.primary}
+										>
+											{rg.awayTeam.cityKey}
+										</span>
+									{:else}
+										<span class="pending-teams">Team selection in progress</span>
+									{/if}
+								</div>
+								<div class="meta">
+									vs @{opponent}
+									<span class="date">{formatDate(new Date(rg.updatedAt).getTime())}</span>
+								</div>
+							</button>
+							<div class="card-actions">
+								{#if confirmResignId === rg.id}
+									<div class="confirm-row">
+										<button class="delete-btn" disabled={resignLoading} onclick={() => handleResign(rg)}>
+											{resignLoading ? 'Resigning…' : 'Confirm Resign'}
+										</button>
+										<button class="cancel-btn" onclick={() => (confirmResignId = null)}>
+											Cancel
+										</button>
+									</div>
 								{:else}
-									<span class="pending-teams">Team selection in progress</span>
+									<button class="delete-trigger" onclick={() => (confirmResignId = rg.id)}>
+										Resign
+									</button>
 								{/if}
 							</div>
-							<div class="meta">
-								vs @{opponent}
-								<span class="date">{formatDate(new Date(rg.updatedAt).getTime())}</span>
-							</div>
-						</button>
+						</div>
 					{/each}
 				</div>
 				{/if}
@@ -514,13 +566,20 @@
 		border-radius: 9999px;
 		margin-left: 0.3rem;
 	}
-	.online-card {
+	.online-card-body {
 		cursor: pointer;
 		text-align: left;
 		width: 100%;
+		position: relative;
+		background: none;
+		border: none;
+		border-radius: var(--radius-sm);
+		padding: 0;
+		color: inherit;
+		font: inherit;
 		transition: background-color var(--dur-fast) var(--ease-snes);
 	}
-	.online-card:hover {
+	.online-card-body:hover {
 		background: var(--color-bg-elevated);
 	}
 	.online-status-badge {
