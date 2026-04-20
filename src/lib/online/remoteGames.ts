@@ -48,7 +48,7 @@ export async function createChallenge(
 		from_user_id: homeUserId,
 		type: 'game_invite',
 		game_id: data.id,
-		data: { homeTeamName: `${homeTeam.city} ${homeTeam.name}`, winScore }
+		data: { homeTeamName: `${homeTeam.city} ${homeTeam.name}`, homeTeamId: homeTeam.id, winScore }
 	});
 
 	return { success: true, gameId: data.id };

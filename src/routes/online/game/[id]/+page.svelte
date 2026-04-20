@@ -287,16 +287,19 @@
 		if (remoteGame) remoteGame = { ...remoteGame, currentTurn, gameState: snapshot };
 	}
 
-	// ── Resync on visibility ──────────────────────────────────
+	// ── Resync from DB ───────────────────────────────────────
 	// Supabase realtime can miss events (WebSocket drop, backgrounded tab,
-	// network glitch). When the tab becomes visible, re-fetch from the DB
-	// to catch any missed state changes.
+	// network glitch). Polling catches missed state changes.
+	// IMPORTANT: Skip when we're the acting player — our own pushes update
+	// the DB, and polling a stale version mid-action would overwrite local
+	// state that hasn't been pushed yet (e.g. resetting an EP roll result).
 	async function resyncFromDb() {
 		if (!onlineState.profile || !myRole || !remoteGame || remoteGame.status !== 'in_progress') return;
+		if (isActingPlayer) return;
 		const rg = await getRemoteGame(gameId);
 		if (!rg?.gameState) return;
 		const dbVersion = rg.gameState.stateVersion ?? 0;
-		if (dbVersion <= remoteVersion && dbVersion <= localVersion) return;
+		if (dbVersion <= remoteVersion || dbVersion <= localVersion) return;
 		// DB has a newer state than we've seen — apply it
 		remoteVersion = dbVersion;
 		localVersion = Math.max(localVersion, dbVersion);

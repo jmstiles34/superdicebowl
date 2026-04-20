@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { onlineState } from '$lib/state/onlineState.svelte';
+	import { supabase } from '$lib/online/supabaseClient';
 	import { DEFAULT_TEAM } from '$lib/constants/constants';
 	import { teamsData } from '$lib/data/data.json';
 	import { getCustomTeamsByUser } from '$lib/db/repositories/customTeamRepository';
@@ -62,6 +63,40 @@
 
 	$effect(() => {
 		if (onlineState.isOnline) loadAll();
+	});
+
+	// ── Realtime subscription ─────────────────────────────────
+	// Listen for new/updated notifications so the page refreshes
+	// without a manual reload.
+	let notifChannel: ReturnType<typeof supabase.channel> | null = null;
+
+	$effect(() => {
+		const userId = onlineState.profile?.id;
+		if (!userId) return;
+
+		notifChannel?.unsubscribe();
+		notifChannel = supabase
+			.channel(`online_notifications:${userId}`)
+			.on(
+				'postgres_changes',
+				{ event: '*', schema: 'public', table: 'notifications', filter: `user_id=eq.${userId}` },
+				() => loadAll()
+			)
+			.on(
+				'postgres_changes',
+				{ event: '*', schema: 'public', table: 'friendships', filter: `requester_id=eq.${userId}` },
+				() => loadAll()
+			)
+			.on(
+				'postgres_changes',
+				{ event: '*', schema: 'public', table: 'friendships', filter: `addressee_id=eq.${userId}` },
+				() => loadAll()
+			)
+			.subscribe();
+	});
+
+	onDestroy(() => {
+		notifChannel?.unsubscribe();
 	});
 
 	onMount(async () => {
