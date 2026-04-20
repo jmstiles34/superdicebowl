@@ -12,7 +12,7 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import GameSummary from '$lib/components/modal/GameSummary.svelte';
 	import { onlineState } from '$lib/state/onlineState.svelte';
-	import { getRemoteGames, resignGame, type RemoteGame } from '$lib/online/remoteGames';
+	import { declineChallenge, getRemoteGames, resignGame, type RemoteGame } from '$lib/online/remoteGames';
 
 	let activeTab: 'in_progress' | 'completed' | 'online' = $state('in_progress');
 	let remoteGames = $state<RemoteGame[]>([]);
@@ -105,16 +105,25 @@
 	);
 	let completedRemoteGames = $derived(remoteGames.filter((rg) => rg.status === 'completed'));
 	let showCompletedRemote = $state(false);
-	let confirmResignId = $state<string | null>(null);
-	let resignLoading = $state(false);
+	let confirmActionId = $state<string | null>(null);
+	let actionLoading = $state(false);
 
 	async function handleResign(rg: RemoteGame) {
-		if (!onlineState.profile || resignLoading) return;
-		resignLoading = true;
+		if (!onlineState.profile || actionLoading) return;
+		actionLoading = true;
 		const opponentId = rg.homeUserId === onlineState.profile.id ? rg.awayUserId : rg.homeUserId;
 		await resignGame(rg.id, onlineState.profile.id, opponentId);
-		confirmResignId = null;
-		resignLoading = false;
+		confirmActionId = null;
+		actionLoading = false;
+		await loadRemoteGames();
+	}
+
+	async function handleCancelChallenge(rg: RemoteGame) {
+		if (actionLoading) return;
+		actionLoading = true;
+		await declineChallenge(rg.id);
+		confirmActionId = null;
+		actionLoading = false;
 		await loadRemoteGames();
 	}
 
@@ -348,18 +357,24 @@
 								</div>
 							</button>
 							<div class="card-actions">
-								{#if confirmResignId === rg.id}
+								{#if confirmActionId === rg.id}
 									<div class="confirm-row">
-										<button class="delete-btn" disabled={resignLoading} onclick={() => handleResign(rg)}>
-											{resignLoading ? 'Resigning…' : 'Confirm Resign'}
-										</button>
-										<button class="cancel-btn" onclick={() => (confirmResignId = null)}>
-											Cancel
+										{#if rg.status === 'pending_team_select'}
+											<button class="delete-btn" disabled={actionLoading} onclick={() => handleCancelChallenge(rg)}>
+												{actionLoading ? 'Cancelling…' : 'Confirm Cancel'}
+											</button>
+										{:else}
+											<button class="delete-btn" disabled={actionLoading} onclick={() => handleResign(rg)}>
+												{actionLoading ? 'Resigning…' : 'Confirm Resign'}
+											</button>
+										{/if}
+										<button class="cancel-btn" onclick={() => (confirmActionId = null)}>
+											Back
 										</button>
 									</div>
 								{:else}
-									<button class="delete-trigger" onclick={() => (confirmResignId = rg.id)}>
-										Resign
+									<button class="delete-trigger" onclick={() => (confirmActionId = rg.id)}>
+										{rg.status === 'pending_team_select' ? 'Cancel' : 'Resign'}
 									</button>
 								{/if}
 							</div>

@@ -518,12 +518,12 @@
 				<h3>Leave Game</h3>
 				<p class="exit-subtitle">You can return to this game later from the online lobby.</p>
 				<div class="exit-buttons">
-					<button class="exit-btn secondary" onclick={cancelExit}>Cancel</button>
 					<button class="exit-btn" onclick={() => goto('/online')}>Leave</button>
-					<button class="exit-btn danger" onclick={handleResign} disabled={resignLoading}>
-						{resignLoading ? 'Resigning…' : 'Resign'}
-					</button>
+					<button class="exit-btn secondary" onclick={cancelExit}>Cancel</button>
 				</div>
+				<button class="resign-link" onclick={handleResign} disabled={resignLoading}>
+					{resignLoading ? 'Resigning…' : 'Resign Game'}
+				</button>
 			</div>
 		</Modal>
 
@@ -736,14 +736,19 @@
 	}
 	.exit-btn:hover { background-color: var(--btn-secondary-bg-hover); }
 	.exit-btn.secondary { border-color: var(--btn-secondary-border); }
-	.exit-btn.danger {
-		border-color: var(--btn-danger-border);
-		background-color: var(--btn-danger-bg);
-		color: var(--btn-danger-text);
-		box-shadow: var(--btn-danger-shadow);
-	}
-	.exit-btn.danger:hover { background-color: var(--btn-danger-bg-hover); }
 	.exit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+	.resign-link {
+		margin-top: var(--space-2);
+		font-size: var(--text-xs);
+		color: var(--color-text-tertiary);
+		background: none;
+		border: none;
+		cursor: pointer;
+		text-decoration: underline;
+		font-family: var(--font-body);
+	}
+	.resign-link:hover { color: var(--color-text-danger); }
+	.resign-link:disabled { opacity: 0.6; cursor: not-allowed; }
 	:global(.fireworks) {
 		top: 0;
 		left: 0;
