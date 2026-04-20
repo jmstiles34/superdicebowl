@@ -58,9 +58,11 @@ Always run `npm run check` and `npm run lint` after non-trivial changes.
 
 ## Gotchas
 
-- **Kickoffs invert whose turn it is online.** `deriveTurn(snapshot)` in
-  [remoteGameEngine.ts](src/lib/online/remoteGameEngine.ts) handles this —
-  don't duplicate the logic.
+- **`deriveTurn` anticipates possession flips.** Actions whose animation
+  chains flip possession (`PLACE_KICKOFF`, `FIELD_GOAL_MADE`,
+  `FIELD_GOAL_MISS`, `KICKOFF_ONSIDE`) return the *opposite* team so
+  `current_turn` matches the post-chain state. All other actions, including
+  `KICKOFF`, follow possession directly — the receiving team rolls.
 - **Forfeit is lazy**, triggered on game load after 7 idle days.
 - **Custom teams migrated from `localStorage` once.** `migrateFromLocalStorage`
   is intentionally still called on login for stragglers.

@@ -240,28 +240,31 @@ class GameState {
 				const description = isTurnoverOnDowns
 					? 'TURNOVER: On downs'
 					: `TURNOVER: ${label} ${playYards} Yds downfield`;
+				const turnoverAction = isTurnoverOnDowns
+					? GAME_ACTION.TURNOVER
+					: isInterception
+						? GAME_ACTION.INTERCEPTION
+						: GAME_ACTION.FUMBLE;
 				playSound(shakeSfx, settings.volume);
 				if (isTouchback(playIndex)) {
 					const newPos = OPPOSITE_TEAM[this.possession];
-					this.action = GAME_ACTION.OFFENSE;
+					this.action = turnoverAction;
 					this.ballIndex = BALL_PUNT[newPos];
 					this.currentDown = 1;
 					this.firstDownIndex = setFirstDownMarker(BALL_PUNT[newPos], newPos);
 					this.lastPlay = 'TURNOVER: Int in the endzone (Touchback)';
 					this.possession = newPos;
-					this.restrictDice = false;
 					this.yardsToGo = 10;
 				} else {
 					const newPos = OPPOSITE_TEAM[this.possession];
 					const newFirstDown = setFirstDownMarker(playIndex, newPos);
-					this.action = GAME_ACTION.OFFENSE;
+					this.action = turnoverAction;
 					this.ballIndex = playIndex;
 					this.currentDown = 1;
 					this.firstDownIndex = newFirstDown;
 					this.lastPlay = description;
 					this.missedKick = false;
 					this.possession = newPos;
-					this.restrictDice = false;
 					this.yardsToGo = calcYardsToGo(newFirstDown, newFirstDown - playIndex);
 				}
 				playResult.description = this.lastPlay;
@@ -407,6 +410,15 @@ class GameState {
 				case GAME_ACTION.FIELD_GOAL_MISS:
 					await this.delay(1500, seqId);
 					this.turnover(ballIndex);
+					await this.save();
+					break;
+				case GAME_ACTION.FUMBLE:
+				case GAME_ACTION.INTERCEPTION:
+				case GAME_ACTION.PUNT_RESULT:
+				case GAME_ACTION.TURNOVER:
+					await this.delay(1500, seqId);
+					this.action = GAME_ACTION.OFFENSE;
+					this.restrictDice = false;
 					await this.save();
 					break;
 				case GAME_ACTION.FOURTH_DOWN:
@@ -592,13 +604,12 @@ class GameState {
 		const puntIndex = forwardFns[puntingTeam](this.ballIndex, distanceIndex);
 		const newPos = OPPOSITE_TEAM[puntingTeam];
 		const newBallIndex = isTouchback(puntIndex) ? BALL_PUNT[newPos] : puntIndex;
-		this.action = GAME_ACTION.OFFENSE;
+		this.action = GAME_ACTION.PUNT_RESULT;
 		this.ballIndex = newBallIndex;
 		this.currentDown = 1;
 		this.firstDownIndex = setFirstDownMarker(puntIndex, newPos);
 		this.lastPlay = descPunt(isTouchback(puntIndex), indexToYards(distanceIndex));
 		this.possession = newPos;
-		this.restrictDice = false;
 		this.yardsToGo = 10;
 		const playResult: Play = {
 			...DEFAULT_PLAY,

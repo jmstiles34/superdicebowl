@@ -8,7 +8,8 @@
 	import { game } from '$lib/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import { BALL_FIELD_GOAL, DOWN, GAME_ACTION, GAME_MODE, NOOP, TEAM } from '$lib/constants/constants';
-	import { getRemoteGame, checkAndApplyForfeit, type RemoteGame } from '$lib/online/remoteGames';
+	import { clearTurnNotifications } from '$lib/online/friends';
+	import { getRemoteGame, checkAndApplyForfeit, resignGame, type RemoteGame } from '$lib/online/remoteGames';
 	import {
 		deriveTurn,
 		isActionableState,
@@ -41,7 +42,6 @@
 	import FourthDown from '$lib/components/modal/FourthDown.svelte';
 	import Scores from '$lib/components/Scores.svelte';
 	import GameSummary from '$lib/components/modal/GameSummary.svelte';
-	import ConfirmExit from '$lib/components/modal/ConfirmExit.svelte';
 	import Settings from '$lib/components/modal/Settings.svelte';
 	import exit from '$lib/images/exit.svg';
 	import gear from '$lib/images/gear.svg';
@@ -55,7 +55,6 @@
 	let loaded = $state(false);
 	let loadError = $state('');
 	let waitingForAccept = $state(false);
-	let lastPushedAt = $state('');
 	let showGameSummary = $state(false);
 	let showSettings = $state(false);
 	let fw = $state(fireworkShow);
@@ -83,9 +82,21 @@
 
 	// It's my turn when current_turn matches my role AND the action needs input
 	let isMyTurn = $derived(remoteGame?.currentTurn === myRole);
-	// Tracks whether the current animation chain was started by a local action (dice roll / modal).
-	// Prevents the opponent from pushing duplicate state when their continueAfterAction runs.
-	let isLocalAction = false;
+
+	// ── Sync state ────────────────────────────────────────────
+	// Version counter replaces unreliable timestamp-based reflection filtering.
+	// Each push increments localVersion. Incoming events with version <= localVersion
+	// are our own reflections and are discarded.
+	let localVersion = 0;
+	let remoteVersion = -1;
+	// True only when THIS client initiated the current action (dice roll / modal).
+	// Prevents the opponent's continueAfterAction chain from pushing.
+	let isActingPlayer = false;
+	// Prevents the continueAfterAction chain from pushing a SECOND time after
+	// the initial onRollComplete/modal push. Both sides run the chain locally,
+	// so only ONE push per player action is needed.
+	let hasPushedForCurrentAction = false;
+
 	let awayTeam = $derived(settings.awayTeam);
 	let homeTeam = $derived(settings.homeTeam);
 
@@ -104,13 +115,20 @@
 
 		rg = await checkAndApplyForfeit(rg);
 
-		// Pending: away player hasn't accepted yet — show waiting screen to home player
+		// Pending: away player hasn't accepted yet — show waiting screen to home player.
+		// Subscribe to changes so we auto-reload when the opponent accepts.
 		if (rg.status === 'pending_team_select') {
 			if (rg.homeUserId !== onlineState.profile.id) { goto('/online'); return; }
 			remoteGame = rg;
 			myRole = 'home';
 			waitingForAccept = true;
 			loaded = true;
+			channel = subscribeToGame(gameId, () => {
+				// Opponent accepted — reload the page to enter the game
+				channel?.unsubscribe();
+				channel = null;
+				location.reload();
+			});
 			return;
 		}
 
@@ -156,10 +174,24 @@
 		if (rg.gameState) game.loadSnapshot(rg.gameState);
 
 		game.setSaveGame(saveRemoteGame);
-		lastPushedAt = rg.updatedAt;
+		localVersion = rg.gameState?.stateVersion ?? 0;
 		loaded = true;
 
 		channel = subscribeToGame(gameId, handleRemoteUpdate);
+
+		// Clear stale your_turn notifications for this game — the player
+		// is already in the game so the notification has served its purpose.
+		clearTurnNotifications(onlineState.profile.id, gameId);
+		onlineState.refreshUnreadCount();
+
+		// Re-sync when the tab becomes visible (catches missed realtime events)
+		document.addEventListener('visibilitychange', handleVisibility);
+
+		// Poll the DB as a fallback for missed realtime events.
+		// Realtime can silently drop events (WebSocket reconnects, network
+		// blips, backgrounded tabs). Polling every few seconds ensures both
+		// players always converge to the latest state.
+		pollTimer = setInterval(resyncFromDb, POLL_INTERVAL_MS);
 
 		// Lock orientation
 		try {
@@ -170,8 +202,17 @@
 		} catch {}
 	});
 
+	const POLL_INTERVAL_MS = 5000;
+	let pollTimer: ReturnType<typeof setInterval> | null = null;
+
+	function handleVisibility() {
+		if (document.visibilityState === 'visible') resyncFromDb();
+	}
+
 	onDestroy(() => {
+		if (pollTimer) clearInterval(pollTimer);
 		channel?.unsubscribe();
+		document.removeEventListener('visibilitychange', handleVisibility);
 		game.resetGame();
 		try {
 			(screen.orientation as ScreenOrientation & { unlock?(): void }).unlock?.();
@@ -179,19 +220,33 @@
 	});
 
 	// ── Remote save ────────────────────────────────────────────
+	// Only pushes ONCE per player action. The continueAfterAction chain calls
+	// this.save() multiple times, but the hasPushedForCurrentAction guard
+	// ensures only the first push goes through. Both sides run the animation
+	// chain locally, so they independently arrive at the same final state.
 	async function saveRemoteGame() {
-		if (!remoteGame || !myRole || !onlineState.profile || !isLocalAction) return;
+		if (!remoteGame || !myRole || !onlineState.profile) return;
+		if (!isActingPlayer || hasPushedForCurrentAction) return;
+		hasPushedForCurrentAction = true;
 
-		const snapshot = game.snapshotState();
+		localVersion++;
+		const snapshot = { ...game.snapshotState(), stateVersion: localVersion };
 		const newTurn = deriveTurn(snapshot);
-		const prevTurn = remoteGame.currentTurn;
 
-		await pushGameState(gameId, snapshot, newTurn);
-		lastPushedAt = new Date().toISOString();
+		const ok = await pushGameState(gameId, snapshot, newTurn);
+		if (!ok) {
+			// Roll back so the next action can retry
+			localVersion--;
+			hasPushedForCurrentAction = false;
+			return;
+		}
 		remoteGame = { ...remoteGame, currentTurn: newTurn, gameState: snapshot };
 
-		// Notify opponent when the turn passes to them
-		if (newTurn !== prevTurn && isActionableState(snapshot.action)) {
+		// deriveTurn already accounts for chain possession flips, so
+		// newTurn reliably indicates who acts next. No need to wait for
+		// an actionable state — with push-once the final state is never
+		// pushed, so the notification must go out with the first push.
+		if (newTurn !== myRole) {
 			await notifyYourTurn(gameId, opponentUserId, onlineState.profile.id);
 		}
 	}
@@ -200,12 +255,22 @@
 	async function handleRemoteUpdate(
 		snapshot: GameStateSnapshot,
 		currentTurn: 'home' | 'away',
-		updatedAt: string
+		_updatedAt: string
 	) {
-		// Ignore reflections of our own pushes
-		if (updatedAt <= lastPushedAt) return;
-		lastPushedAt = updatedAt;
-		isLocalAction = false;
+		const incomingVersion = snapshot.stateVersion ?? 0;
+
+		// Discard our own reflections and duplicate/out-of-order events
+		if (incomingVersion <= localVersion) return;
+		if (incomingVersion <= remoteVersion) return;
+		remoteVersion = incomingVersion;
+		// Advance localVersion so our next push is always higher than
+		// any version we've seen (prevents version collisions when both
+		// players start from the same loaded stateVersion).
+		localVersion = Math.max(localVersion, incomingVersion);
+
+		// Opponent acted — reset our action flags
+		isActingPlayer = false;
+		hasPushedForCurrentAction = false;
 
 		// Show the opponent's dice roll before applying the new state
 		if (diceEl && isRollAction(game.action) && snapshot.diceId > 0) {
@@ -214,8 +279,29 @@
 			await diceEl.showOpponentRoll(die1, die2);
 		}
 
+		// A newer event may have arrived and been processed during the
+		// dice animation await. If so, this snapshot is stale — skip it.
+		if (incomingVersion < remoteVersion) return;
+
 		game.loadSnapshot(snapshot);
 		if (remoteGame) remoteGame = { ...remoteGame, currentTurn, gameState: snapshot };
+	}
+
+	// ── Resync on visibility ──────────────────────────────────
+	// Supabase realtime can miss events (WebSocket drop, backgrounded tab,
+	// network glitch). When the tab becomes visible, re-fetch from the DB
+	// to catch any missed state changes.
+	async function resyncFromDb() {
+		if (!onlineState.profile || !myRole || !remoteGame || remoteGame.status !== 'in_progress') return;
+		const rg = await getRemoteGame(gameId);
+		if (!rg?.gameState) return;
+		const dbVersion = rg.gameState.stateVersion ?? 0;
+		if (dbVersion <= remoteVersion && dbVersion <= localVersion) return;
+		// DB has a newer state than we've seen — apply it
+		remoteVersion = dbVersion;
+		localVersion = Math.max(localVersion, dbVersion);
+		game.loadSnapshot(rg.gameState);
+		if (remoteGame) remoteGame = { ...remoteGame, currentTurn: rg.currentTurn, gameState: rg.gameState };
 	}
 
 	// ── Game over ──────────────────────────────────────────────
@@ -255,15 +341,15 @@
 			announcementText = 'FIELD GOAL!';
 			announcementType = 'fieldgoal';
 			announcementKey = Date.now();
-		} else if (lastPlay.includes('TURNOVER') && lastPlay.includes('Int')) {
+		} else if (action === GAME_ACTION.INTERCEPTION) {
 			announcementText = 'INTERCEPTION!';
 			announcementType = 'turnover';
 			announcementKey = Date.now();
-		} else if (lastPlay.includes('TURNOVER') && lastPlay.includes('Fumble')) {
+		} else if (action === GAME_ACTION.FUMBLE) {
 			announcementText = 'FUMBLE!';
 			announcementType = 'turnover';
 			announcementKey = Date.now();
-		} else if (lastPlay.includes('TURNOVER') && lastPlay.includes('On downs')) {
+		} else if (action === GAME_ACTION.TURNOVER) {
 			announcementText = 'TURNOVER ON DOWNS!';
 			announcementType = 'turnover';
 			announcementKey = Date.now();
@@ -298,6 +384,16 @@
 	function cancelExit() {
 		playSound(buttonSfx, settings.volume);
 		game.cancelExit();
+	}
+
+	let resignLoading = $state(false);
+
+	async function handleResign() {
+		if (!remoteGame || !onlineState.profile || resignLoading) return;
+		resignLoading = true;
+		await resignGame(gameId, onlineState.profile.id, opponentUserId);
+		resignLoading = false;
+		goto('/online');
 	}
 </script>
 
@@ -344,7 +440,7 @@
 						bind:this={diceEl}
 						dieColor={primaryColor(settings, game.possession) ?? '#FFF'}
 						pipColor={secondaryColor(settings, game.possession) ?? '#000'}
-						onRollComplete={() => { isLocalAction = true; saveRemoteGame(); }}
+						onRollComplete={() => { isActingPlayer = true; hasPushedForCurrentAction = false; saveRemoteGame(); }}
 					/>
 					<!-- Block dice when: game is restricted, or it's not my turn during an actionable state -->
 					{#if game.restrictDice || (isActionableState(game.action) && !isMyTurn)}
@@ -386,12 +482,12 @@
 			{#if (game.action === GAME_ACTION.POINT_OPTION || game.action === GAME_ACTION.FOURTH_DOWN_OPTIONS) && isMyTurn}
 				<Modal showModal={true} close={NOOP} hasClose={false} choiceRequired={true}>
 					{#if game.action === GAME_ACTION.POINT_OPTION}
-						<PointOption savePointOption={(a) => { game.preparePointOption(a); isLocalAction = true; saveRemoteGame(); }} />
+						<PointOption savePointOption={(a) => { game.preparePointOption(a); isActingPlayer = true; hasPushedForCurrentAction = false; saveRemoteGame(); }} />
 					{:else if game.action === GAME_ACTION.FOURTH_DOWN_OPTIONS}
 						<FourthDown
 							inFieldGoalRange={compareFns[game.possession](game.ballIndex, BALL_FIELD_GOAL[game.possession])}
-							saveFourthDown={(a) => { game.saveFourthDown(a); isLocalAction = true; saveRemoteGame(); }}
-							toggleFieldGoal={() => { game.toggleFieldGoal(); isLocalAction = true; saveRemoteGame(); }}
+							saveFourthDown={(a) => { game.saveFourthDown(a); isActingPlayer = true; hasPushedForCurrentAction = false; saveRemoteGame(); }}
+							toggleFieldGoal={() => { game.toggleFieldGoal(); isActingPlayer = true; hasPushedForCurrentAction = false; saveRemoteGame(); }}
 						/>
 					{/if}
 				</Modal>
@@ -407,7 +503,17 @@
 		</Modal>
 
 		<Modal showModal={game.action === GAME_ACTION.EXIT} close={cancelExit} hasClose={false} choiceRequired={true}>
-			<ConfirmExit cancel={cancelExit} />
+			<div class="exit-container">
+				<h3>Leave Game</h3>
+				<p class="exit-subtitle">You can return to this game later from the online lobby.</p>
+				<div class="exit-buttons">
+					<button class="exit-btn secondary" onclick={cancelExit}>Cancel</button>
+					<button class="exit-btn" onclick={() => goto('/online')}>Leave</button>
+					<button class="exit-btn danger" onclick={handleResign} disabled={resignLoading}>
+						{resignLoading ? 'Resigning…' : 'Resign'}
+					</button>
+				</div>
+			</div>
 		</Modal>
 
 		<Modal showModal={showSettings} close={toggleSettings} hasClose={true} choiceRequired={false}>
@@ -551,6 +657,62 @@
 		white-space: nowrap;
 		pointer-events: none;
 	}
+	.exit-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-4);
+		padding: var(--space-6) var(--space-8);
+	}
+	.exit-container h3 {
+		font-family: var(--font-display);
+		font-weight: var(--weight-extrabold);
+		font-style: italic;
+		font-size: var(--text-display-sm);
+		letter-spacing: var(--tracking-display);
+		text-shadow: var(--text-shadow-display);
+		color: var(--modal-header-text);
+		text-align: center;
+		margin: 0;
+	}
+	.exit-subtitle {
+		font-size: var(--text-sm);
+		color: var(--color-text-tertiary);
+		text-align: center;
+		margin: 0;
+	}
+	.exit-buttons {
+		display: flex;
+		justify-content: center;
+		gap: var(--space-3);
+		flex-wrap: wrap;
+	}
+	.exit-btn {
+		min-width: 7rem;
+		min-height: 2.75rem;
+		font-family: var(--font-body);
+		font-size: var(--text-sm);
+		font-weight: var(--weight-bold);
+		letter-spacing: var(--tracking-wider);
+		text-transform: uppercase;
+		padding: var(--space-2) var(--space-4);
+		border-radius: var(--radius-sm);
+		border: 2px solid var(--btn-secondary-border);
+		background-color: var(--btn-secondary-bg);
+		color: var(--btn-secondary-text);
+		box-shadow: var(--btn-secondary-shadow);
+		cursor: pointer;
+	}
+	.exit-btn:hover { background-color: var(--btn-secondary-bg-hover); }
+	.exit-btn.secondary { border-color: var(--btn-secondary-border); }
+	.exit-btn.danger {
+		border-color: var(--btn-danger-border);
+		background-color: var(--btn-danger-bg);
+		color: var(--btn-danger-text);
+		box-shadow: var(--btn-danger-shadow);
+	}
+	.exit-btn.danger:hover { background-color: var(--btn-danger-bg-hover); }
+	.exit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 	:global(.fireworks) {
 		top: 0;
 		left: 0;

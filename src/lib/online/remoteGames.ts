@@ -2,6 +2,7 @@ import { DEFAULT_GAME, OPPOSITE_TEAM } from '$lib/constants/constants';
 import type { GameStateSnapshot } from '$lib/db/database';
 import type { Team } from '$lib/types';
 import type { Profile } from './friends';
+import { deriveTurn } from './remoteGameEngine';
 import { supabase } from './supabaseClient';
 
 export interface RemoteGame {
@@ -58,9 +59,8 @@ export async function acceptChallenge(
 	awayTeam: Team,
 	homeUserId: string,
 	awayUserId: string
-): Promise<void> {
+): Promise<boolean> {
 	const possession = Math.random() < 0.5 ? 'Home' : 'Away';
-	const currentTurn: 'home' | 'away' = possession === 'Home' ? 'away' : 'home';
 
 	const gameState: GameStateSnapshot = {
 		...DEFAULT_GAME,
@@ -68,7 +68,9 @@ export async function acceptChallenge(
 		possession
 	};
 
-	await supabase
+	const currentTurn = deriveTurn(gameState);
+
+	const { error } = await supabase
 		.from('remote_games')
 		.update({
 			away_team: awayTeam,
@@ -79,14 +81,19 @@ export async function acceptChallenge(
 		})
 		.eq('id', gameId);
 
-	// Notify whoever kicks first that it's their turn
+	if (error) return false;
+
+	// Notify whoever acts first that it's their turn
 	const notifyUserId = currentTurn === 'home' ? homeUserId : awayUserId;
+	const fromUserId = currentTurn === 'home' ? awayUserId : homeUserId;
 	await supabase.from('notifications').insert({
 		user_id: notifyUserId,
-		from_user_id: awayUserId,
+		from_user_id: fromUserId,
 		type: 'your_turn',
 		game_id: gameId
 	});
+
+	return true;
 }
 
 export async function declineChallenge(gameId: string): Promise<void> {
@@ -163,6 +170,31 @@ export async function checkAndApplyForfeit(game: RemoteGame): Promise<RemoteGame
 	]);
 
 	return { ...game, status: 'completed' };
+}
+
+export async function resignGame(
+	gameId: string,
+	resigningUserId: string,
+	opponentUserId: string
+): Promise<void> {
+	await supabase.rpc('forfeit_game', { game_id: gameId });
+
+	await supabase.from('notifications').insert([
+		{
+			user_id: resigningUserId,
+			from_user_id: opponentUserId,
+			type: 'game_over',
+			game_id: gameId,
+			data: { result: 'forfeit_loss' }
+		},
+		{
+			user_id: opponentUserId,
+			from_user_id: resigningUserId,
+			type: 'game_over',
+			game_id: gameId,
+			data: { result: 'forfeit_win' }
+		}
+	]);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

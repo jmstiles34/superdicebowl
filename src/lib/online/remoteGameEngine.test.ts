@@ -73,15 +73,27 @@ describe('deriveTurn', () => {
 		);
 	});
 
-	it('inverts on KICKOFF because the receiving team has possession but the kicker rolls', () => {
-		// Home is receiving → Away kicks → away rolls → turn = 'away'
+	it('gives KICKOFF turn to the receiving (possessing) team', () => {
+		// Home is receiving → Home rolls the kickoff
 		expect(deriveTurn(snapshot({ action: GAME_ACTION.KICKOFF, possession: TEAM.HOME }))).toBe(
-			'away'
-		);
-		// Away is receiving → Home kicks → turn = 'home'
-		expect(deriveTurn(snapshot({ action: GAME_ACTION.KICKOFF, possession: TEAM.AWAY }))).toBe(
 			'home'
 		);
+		// Away is receiving → Away rolls the kickoff
+		expect(deriveTurn(snapshot({ action: GAME_ACTION.KICKOFF, possession: TEAM.AWAY }))).toBe(
+			'away'
+		);
+	});
+
+	it('inverts for actions whose chains flip possession', () => {
+		for (const action of [
+			GAME_ACTION.PLACE_KICKOFF,
+			GAME_ACTION.FIELD_GOAL_MADE,
+			GAME_ACTION.FIELD_GOAL_MISS,
+			GAME_ACTION.KICKOFF_ONSIDE
+		]) {
+			expect(deriveTurn(snapshot({ action, possession: TEAM.HOME }))).toBe('away');
+			expect(deriveTurn(snapshot({ action, possession: TEAM.AWAY }))).toBe('home');
+		}
 	});
 
 	it('returns the possession team for punts, field goals, and conversions', () => {

@@ -83,8 +83,18 @@ worker.addEventListener('fetch', (event) => {
 		event.respondWith(
 			(async () => {
 				try {
-					return await fetchAndCache(event.request);
+					const response = await fetch(event.request);
+					if (response.ok) {
+						const cache = await caches.open(`offline${version}`);
+						cache.put(event.request, response.clone());
+						return response;
+					}
+					// Non-OK response (404, etc.) — SPA fallback to cached root
+					const fallback = (await caches.match('/')) || (await caches.match('/index.html'));
+					if (fallback) return fallback;
+					return response;
 				} catch (err) {
+					// Offline — serve from cache
 					const fallback = (await caches.match(event.request)) || (await caches.match('/'));
 					if (fallback) return fallback;
 					throw err;

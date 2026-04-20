@@ -208,12 +208,20 @@
 		acceptError = '';
 		acceptLoading = true;
 		const gameId = acceptingNotification.gameId;
-		await acceptChallenge(
+		const success = await acceptChallenge(
 			gameId,
 			selectedAcceptTeam,
 			acceptingNotification.fromUserId,
 			onlineState.profile.id
 		);
+		if (!success) {
+			acceptError = 'Failed to accept challenge. Please try again.';
+			acceptLoading = false;
+			return;
+		}
+		await deleteNotification(acceptingNotification.id);
+		notifications = notifications.filter((x) => x.id !== acceptingNotification!.id);
+		onlineState.refreshUnreadCount();
 		acceptLoading = false;
 		cancelAccept();
 		navigateToGame(gameId);

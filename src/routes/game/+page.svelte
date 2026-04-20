@@ -83,15 +83,15 @@
 			announcementText = 'FIELD GOAL!';
 			announcementType = 'fieldgoal';
 			announcementKey = Date.now();
-		} else if (lastPlay.includes('TURNOVER') && lastPlay.includes('Int')) {
+		} else if (action === GAME_ACTION.INTERCEPTION) {
 			announcementText = 'INTERCEPTION!';
 			announcementType = 'turnover';
 			announcementKey = Date.now();
-		} else if (lastPlay.includes('TURNOVER') && lastPlay.includes('Fumble')) {
+		} else if (action === GAME_ACTION.FUMBLE) {
 			announcementText = 'FUMBLE!';
 			announcementType = 'turnover';
 			announcementKey = Date.now();
-		} else if (lastPlay.includes('TURNOVER') && lastPlay.includes('On downs')) {
+		} else if (action === GAME_ACTION.TURNOVER) {
 			announcementText = 'TURNOVER ON DOWNS!';
 			announcementType = 'turnover';
 			announcementKey = Date.now();

@@ -34,6 +34,7 @@ export interface GameStateSnapshot {
 	possession: string;
 	restrictDice: boolean;
 	yardsToGo: number | string;
+	stateVersion?: number;
 }
 
 export interface GameSettingsSnapshot {

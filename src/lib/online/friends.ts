@@ -146,6 +146,15 @@ export async function deleteNotification(notificationId: string): Promise<void> 
 	await supabase.from('notifications').delete().eq('id', notificationId);
 }
 
+export async function clearTurnNotifications(userId: string, gameId: string): Promise<void> {
+	await supabase
+		.from('notifications')
+		.delete()
+		.eq('user_id', userId)
+		.eq('game_id', gameId)
+		.eq('type', 'your_turn');
+}
+
 export async function deleteAllNotifications(userId: string): Promise<void> {
 	await supabase.from('notifications').delete().eq('user_id', userId);
 }

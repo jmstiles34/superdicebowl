@@ -90,6 +90,7 @@ export const GAME_ACTION = {
 	PLACE_TWO_POINT: 'Place Two Point',
 	POINT_OPTION: 'Point(s) Option',
 	PUNT: 'Punt',
+	PUNT_RESULT: 'Punting',
 	QUIT: 'quit',
 	SAFETY: 'Safety',
 	TOUCHBACK: 'Touchback',
