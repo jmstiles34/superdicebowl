@@ -1,4 +1,14 @@
-import { TEAM } from '$lib/shared/constants';
+import type { Team } from '$lib/types';
+
+export const TEAM = {
+	AWAY: 'Away',
+	HOME: 'Home'
+};
+
+export const OPPOSITE_TEAM = {
+	[TEAM.AWAY]: 'Home',
+	[TEAM.HOME]: 'Away'
+};
 
 export const BALL_ENDZONE = {
 	[TEAM.HOME]: 21,
@@ -92,7 +102,6 @@ export const GAME_ACTION = {
 };
 
 export const DEFAULT_GAME = {
-	sport: 'football' as const,
 	action: GAME_ACTION.COIN_TOSS,
 	ballIndex: 10,
 	currentDown: 1,
@@ -127,33 +136,22 @@ export const DEFAULT_PLAY_SUMMARY = {
 	awayScore: 0
 };
 
-export const DEFAULT_SETTINGS = {
-	homeTeam: {
-		id: '',
-		city: '',
-		cityKey: '',
-		name: '',
-		fieldLogo: '',
-		logo: '',
-		logoFixed: false,
-		logoLeft: '',
-		colors: { primary: '#FFFFFF', secondary: '' }
-	},
-	awayTeam: {
-		id: '',
-		city: '',
-		cityKey: '',
-		name: '',
-		fieldLogo: '',
-		logo: '',
-		logoFixed: false,
-		logoLeft: '',
-		colors: { primary: '#FFFFFF', secondary: '' }
-	},
-	mode: 'Head-to-Head',
-	winScore: 30,
-	volume: 75
+export const DEFAULT_TEAM: Team = {
+	id: '',
+	city: '',
+	cityKey: '',
+	name: '',
+	fieldLogo: '',
+	logo: '',
+	logoFixed: false,
+	logoLeft: '',
+	colors: {
+		primary: '#FFFFFF',
+		secondary: ''
+	}
 };
+
+export const DICE_COLORS = ['blue', 'red', 'orange', 'purple', 'green', 'gold'];
 
 export const DOWN: { [key: number]: string } = {
 	1: '1st',
@@ -165,15 +163,15 @@ export const DOWN: { [key: number]: string } = {
 export const EXTRA_POINT_SUCCESS = 4;
 
 export const FIELD_GOAL_ROLL: { [key: number]: number } = {
-	5: 4,
-	10: 4,
-	15: 4,
-	20: 5,
-	25: 6,
-	30: 7,
-	35: 8,
-	40: 8,
-	45: 9
+	5: 4, // 22yds (96%) 4+
+	10: 4, // 27yds (94%) 4+
+	15: 4, // 32yds (90%) 4+
+	20: 5, // 37yds(84%) 5+
+	25: 6, // 42yds (75%) 6+
+	30: 7, // 47yds (63%) 7+
+	35: 8, // 52yds (50%) 8+
+	40: 8, // 57yds (36%) 8+
+	45: 9 // 62yds (25%) 9+
 };
 
 export const FIELD_GOAL_YARDS = 17;
@@ -182,6 +180,20 @@ export const FOURTH_DOWN = {
 	FIELD_GOAL: 'Field Goal',
 	GO_FOR_IT: 'Go For It!',
 	PUNT: 'Punt'
+};
+
+export const GAME_MODE = {
+	SOLO: 'Solo',
+	HEAD_TO_HEAD: 'Head-to-Head',
+	SIMULATION: 'Simulation'
+};
+
+export const DEFAULT_SETTINGS = {
+	homeTeam: DEFAULT_TEAM,
+	awayTeam: DEFAULT_TEAM,
+	mode: GAME_MODE.HEAD_TO_HEAD,
+	winScore: 30,
+	volume: 75
 };
 
 export const INTERCEPTION_ROLLS = [12, 45];
@@ -195,12 +207,23 @@ export const KICKOFF_RETURN_YARDS = [
 	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 ];
 
+export const NOOP = () => {
+	// do nothing
+};
+
 export const POINTS = {
 	EXTRA_POINT: 1,
 	FIELD_GOAL: 3,
 	SAFETY: 2,
 	TOUCHDOWN: 6,
 	TWO_POINT: 2
+};
+
+export const POSITION = {
+	LEFT: 'Left',
+	RIGHT: 'Right',
+	TOP: 'Top',
+	BOTTOM: 'Bottom'
 };
 
 export const TURNOVER_ONSIDE_KICK = 'TURNOVER - Onside Kick';
