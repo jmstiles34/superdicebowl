@@ -123,6 +123,8 @@ export interface CustomTeamRecord {
 	updatedAt: number;
 }
 
+export type MowPattern = 'none' | 'crosscut' | 'stripes' | 'diamonds' | 'arcs' | 'checkerboard';
+
 export interface UserPreferencesRecord {
 	id?: number;
 	userId: number;
@@ -130,6 +132,7 @@ export interface UserPreferencesRecord {
 	speed: number;
 	theme: 'dark' | 'light';
 	defaultWinScore: number;
+	mowPattern?: MowPattern;
 }
 
 export interface SeasonMatchup {
@@ -261,6 +264,15 @@ class AppDatabase extends Dexie {
 						})
 				]);
 			});
+
+		this.version(9).stores({
+			users: '++id, &usernameLower',
+			sessions: '++id, userId, &token',
+			games: '++id, userId, sport',
+			customTeams: '++id, userId',
+			userPreferences: '++id, &userId',
+			seasons: '++id, userId, sport'
+		});
 	}
 }
 

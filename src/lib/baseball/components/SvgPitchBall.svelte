@@ -23,11 +23,11 @@
 		flying = true;
 
 		const anim = ballEl.animate([
-			{ opacity: 1, transform: T(0, 1.0) },
-			{ opacity: 1, transform: T(29, 1.3), offset: 0.18 },
-			{ opacity: 1, transform: T(105, 2.0), offset: 0.65 },
-			{ opacity: 1, transform: T(145, 2.6), offset: 0.90 },
-			{ opacity: 0, transform: T(161, 2.9) }
+			{ opacity: 1, transform: T(0, 0.8) },
+			{ opacity: 1, transform: T(29, 1.0), offset: 0.18 },
+			{ opacity: 1, transform: T(105, 1.4), offset: 0.65 },
+			{ opacity: 1, transform: T(145, 1.8), offset: 0.90 },
+			{ opacity: 0, transform: T(161, 2.0) }
 		], {
 			duration: 650,
 			easing: 'cubic-bezier(.2,0,.9,1)',

@@ -1,5 +1,5 @@
 import { DEFAULT_SETTINGS, DEFAULT_TEAM, GAME_MODE, TEAM } from '$lib/constants/constants';
-import type { FootballGameSettingsSnapshot } from '$lib/db/database';
+import type { FootballGameSettingsSnapshot, MowPattern } from '$lib/db/database';
 import type { Team } from '$lib/types';
 
 export type Theme = 'dark' | 'light';
@@ -11,6 +11,7 @@ export type Settings = {
 	winScore: number;
 	volume: number;
 	theme: Theme;
+	mowPattern?: MowPattern;
 };
 
 class SettingsState {
@@ -22,6 +23,7 @@ class SettingsState {
 	volume = $state(75);
 	speed = $state(1);
 	theme: Theme = $state('dark');
+	mowPattern: MowPattern = $state('crosscut');
 
 	snapshotSettings = (): FootballGameSettingsSnapshot =>
 		$state.snapshot({
@@ -51,11 +53,13 @@ class SettingsState {
 		speed?: number;
 		theme: Theme;
 		defaultWinScore: number;
+		mowPattern?: MowPattern;
 	}) => {
 		this.volume = prefs.volume;
 		this.speed = prefs.speed ?? 1;
 		this.theme = prefs.theme;
 		this.winScore = prefs.defaultWinScore;
+		this.mowPattern = prefs.mowPattern ?? 'crosscut';
 	};
 }
 

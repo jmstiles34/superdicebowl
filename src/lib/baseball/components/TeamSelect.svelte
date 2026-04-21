@@ -42,12 +42,17 @@
 <div class="team-select-card">
 	<div class="team-type">{teamType}</div>
 
-	<div class="logo-area" style:background-color={team.colors?.primary ?? 'var(--color-bg-surface)'}>
-		{#if team.logo}
+	<div
+		class="logo-area"
+		style:border-color={team.id ? team.colors?.primary ?? 'var(--color-border-default)' : 'var(--color-border-default)'}
+	>
+		{#if team.id && team.logo}
 			<picture>
 				<source type="image/avif" srcset={`/logos/${team.logo}.avif`} />
 				<img alt={`${team.city} ${team.name}`} src={`/logos/${team.logo}.webp`} />
 			</picture>
+		{:else if diceColor}
+			<img class="dice-placeholder" alt={`${teamType} Team Placeholder`} src={`/images/dice-${diceColor}.svg`} />
 		{/if}
 	</div>
 
@@ -72,10 +77,12 @@
 		<button
 			class="random-button"
 			onclick={handleRandom}
-			title="Random Team"
-			style:background-color={diceColor}
+			aria-label={`Random ${teamType} Team`}
 		>
-			?
+			<picture>
+				<source type="image/avif" srcset="/images/randomize.avif" />
+				<img alt={`Random ${teamType} Team`} src="/images/randomize.png" />
+			</picture>
 		</button>
 	</div>
 </div>
@@ -104,18 +111,31 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 8rem;
-		height: 8rem;
+		width: 12rem;
+		height: 12rem;
 		border-radius: var(--radius-md);
-		border: 2px solid var(--color-border-default);
+		border: 3px solid var(--color-border-default);
 		overflow: hidden;
-		transition: background-color var(--dur-base) var(--ease-snes);
+		background-color: var(--color-bg-surface);
+		transition:
+			border-color var(--dur-base) var(--ease-snes),
+			box-shadow var(--dur-base) var(--ease-snes);
 	}
 
 	.logo-area img {
-		width: 5.5rem;
-		height: 5.5rem;
+		width: 8rem;
+		height: 8rem;
 		object-fit: contain;
+		filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
+	}
+
+	:global([data-theme='dark']) .logo-area {
+		background-color: var(--color-bg-elevated);
+	}
+
+	.dice-placeholder {
+		width: 6rem;
+		height: 6rem;
 	}
 
 	.team-name {
@@ -170,27 +190,30 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 2.25rem;
-		height: 2.25rem;
+		background-color: var(--btn-secondary-bg);
+		border: 2px solid var(--btn-secondary-border);
 		border-radius: var(--radius-sm);
-		border: 2px solid var(--color-border-default);
-		color: var(--color-on-accent);
-		font-family: var(--font-display);
-		font-weight: var(--weight-black);
-		font-size: var(--text-md);
+		box-shadow: var(--btn-secondary-shadow);
+		padding: var(--space-2) var(--space-3);
 		cursor: pointer;
 		transition:
-			filter var(--dur-fast) var(--ease-snes),
+			background-color var(--dur-fast) var(--ease-snes),
 			box-shadow var(--dur-fast) var(--ease-snes);
 	}
 
 	.random-button:hover {
-		filter: brightness(1.2);
+		background-color: var(--btn-secondary-bg-hover);
 		box-shadow: var(--btn-secondary-shadow-hover);
 	}
 
 	.random-button:focus-visible {
 		outline: none;
 		box-shadow: var(--focus-ring);
+	}
+
+	.random-button img {
+		height: 1.5rem;
+		width: 1.5rem;
+		display: block;
 	}
 </style>

@@ -183,4 +183,9 @@
 	--bb-out-red-border: oklch(0.58 0.24 24);
 	--bb-out-red-glow: 0 0 8px oklch(0.62 0.24 25 / 0.65);
 	--bb-gold-accent-bg: oklch(0.8272 0.1711 80.53 / 0.13);
+
+	/* ── Baseball field surface colors ────────────────────── */
+	--bb-grass: #5dae2b;
+	--bb-dirt: #9d8c28;
+	--bb-warning-track: #6f722a;
 }

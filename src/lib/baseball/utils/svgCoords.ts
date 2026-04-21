@@ -9,9 +9,9 @@ import type { BaseName } from '$lib/baseball/types';
 const POS = {
 	home: { x: 607, y: 516 },
 	pitcher: { x: 606, y: 355 },
-	first: { x: 857, y: 412 },
+	first: { x: 857, y: 355 },
 	second: { x: 607, y: 203 },
-	third: { x: 345, y: 412 }
+	third: { x: 357, y: 354 }
 } as const;
 
 /** Base and landmark positions in SVG coordinate space. */
@@ -19,10 +19,10 @@ export const SVG_POS = POS;
 
 /** Runner positions — offset slightly from the base center for visibility. */
 export const RUNNER_POS: Record<BaseName | 'home', { x: number; y: number }> = {
-	first: { x: SVG_POS.first.x + 8, y: SVG_POS.first.y - 35 },
-	second: { x: SVG_POS.second.x, y: SVG_POS.second.y - 38 },
-	third: { x: SVG_POS.third.x - 8, y: SVG_POS.third.y - 35 },
-	home: { x: SVG_POS.home.x, y: SVG_POS.home.y - 28 }
+	first: { x: SVG_POS.first.x, y: SVG_POS.first.y - 27 },
+	second: { x: SVG_POS.second.x, y: SVG_POS.second.y - 25 },
+	third: { x: SVG_POS.third.x, y: SVG_POS.third.y - 25 },
+	home: { x: SVG_POS.home.x, y: SVG_POS.home.y - 29 }
 };
 
 const SCALE = 0.97;

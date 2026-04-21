@@ -21,7 +21,7 @@
 	// Source images are 48×74. Scale for 1200×630 field.
 	const IMG_W = 48;
 	const IMG_H = 74;
-	const RUNNER_SCALE = 0.62;
+	const RUNNER_SCALE = 0.82;
 
 	function getRunnerBase(runnerId: number): BaseName | 'home' {
 		for (const [base, id] of baseToId) {
@@ -32,23 +32,16 @@
 
 	function placeRunner(base: BaseName): void {
 		// Start at home plate, then transition to the target base
-		const home = RUNNER_POS.home;
+		const pos = RUNNER_POS[base];
 		const runner: RunnerToken = {
 			id: nextId++,
-			x: home.x,
-			y: home.y,
+			x: pos.x,
+			y: pos.y,
 			scoring: false
 		};
-		runners.push(runner);
+		runners = [...runners, runner];
 		baseToId.set(base, runner.id);
 		game.bases[base] = true;
-
-		// After the DOM updates, move to the target base (CSS transition animates it)
-		requestAnimationFrame(() => {
-			const pos = RUNNER_POS[base];
-			runner.x = pos.x;
-			runner.y = pos.y;
-		});
 	}
 
 	function advanceRunner(base: BaseName): void {
@@ -174,8 +167,8 @@
 	}
 
 	.base-diamond.occupied {
-		fill: #f5c518;
-		stroke: #f5c518;
+		fill: white;
+		stroke: white;
 	}
 
 	.base-pulse {

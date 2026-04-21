@@ -18,7 +18,8 @@
 			volume: settings.volume,
 			speed: settings.speed,
 			theme: settings.theme,
-			defaultWinScore: settings.winScore
+			defaultWinScore: settings.winScore,
+			mowPattern: settings.mowPattern
 		};
 		if (auth.isLoggedIn && auth.currentUser?.id) {
 			savePreferences(auth.currentUser.id, prefs);
@@ -51,6 +52,12 @@
 	function handleSpeedChange(e: Event) {
 		const { value } = e.currentTarget as HTMLSelectElement;
 		settings.speed = parseFloat(value);
+		persist();
+	}
+
+	function handleMowPatternChange(e: Event) {
+		const { value } = e.currentTarget as HTMLSelectElement;
+		settings.mowPattern = value as typeof settings.mowPattern;
 		persist();
 	}
 </script>
@@ -122,6 +129,24 @@
 			<option value={1}>1x</option>
 			<option value={0.5}>2x</option>
 			<option value={0.25}>3x</option>
+		</select>
+	</div>
+
+	<!-- Mow Pattern -->
+	<div class="setting-row">
+		<label class="label" for="mowPattern">Field Pattern</label>
+		<select
+			id="mowPattern"
+			class="setting-select"
+			value={settings.mowPattern}
+			onchange={handleMowPatternChange}
+		>
+			<option value="none">None</option>
+			<option value="crosscut">Cross-Cut</option>
+			<option value="stripes">Stripes</option>
+			<option value="diamonds">Diamonds</option>
+			<option value="arcs">Arcs</option>
+			<option value="checkerboard">Checkerboard</option>
 		</select>
 	</div>
 

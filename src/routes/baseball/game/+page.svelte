@@ -98,12 +98,13 @@
 		const outCount = result.outCount ?? 1;
 
 		// Determine result overlay text
+		const hasRunners = game.bases.first || game.bases.second || game.bases.third;
 		let overlayText = '';
 		if (isWalk) {
 			overlayText = 'WALK!';
-		} else if (isOut && outCount >= 2) {
+		} else if (isOut && outCount >= 2 && hasRunners) {
 			overlayText = 'DOUBLE PLAY!';
-		} else if (isOut && result.isSacrifice) {
+		} else if (isOut && result.isSacrifice && hasRunners) {
 			overlayText = 'SAC FLY!';
 		} else if (isOut) {
 			overlayText = 'OUT!';
@@ -228,9 +229,9 @@
 {#if isGameReady}
 	<main>
 		<div class="game">
-			<div class="scoreboard">
-				<div class="menu-with-play">
-					<div class="toolbar">
+			<div class="scoreboard-wrapper">
+				<Scoreboard {awayTeam} {homeTeam}>
+					{#snippet toolbar()}
 						<button
 							class="toolbarButton flip"
 							onclick={handleExitClick}
@@ -239,7 +240,6 @@
 						>
 							<img src={exit} alt="Quit Game" />
 						</button>
-						<div class="divider">|</div>
 						<button
 							class="toolbarButton"
 							onclick={toggleSettings}
@@ -248,27 +248,8 @@
 						>
 							<img src={gear} alt="Settings" />
 						</button>
-					</div>
-					<div class="last-play">{game.lastPlay}</div>
-				</div>
-				<div class="dice-container">
-					<div class="outs-indicator">
-						<span class="outs-label">Outs</span>
-						{#each [1, 2, 3] as n}
-							<span class="out-dot" class:lit={n <= game.outs}></span>
-						{/each}
-					</div>
-					<Dice
-						dieColor={primaryColor(settings, game.possession.toLowerCase()) ?? '#FFF'}
-						pipColor={secondaryColor(settings, game.possession.toLowerCase()) ?? '#000'}
-						restricted={game.restrictDice}
-						onDiceRoll={handleDiceRoll}
-						onRollComplete={saveGame}
-					/>
-				</div>
-				<div class="scores">
-					<Scoreboard {awayTeam} {homeTeam} />
-				</div>
+					{/snippet}
+				</Scoreboard>
 			</div>
 
 			<div class="field-outer">
@@ -288,6 +269,20 @@
 				{#if game.action === GAME_ACTION.GAME_OVER}
 					<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
 				{/if}
+			</div>
+
+			<div class="dice-container">
+				<Dice
+					dieColor={primaryColor(settings, game.possession.toLowerCase()) ?? '#FFF'}
+					pipColor={(() => {
+						const team = game.possession.toLowerCase();
+						const teamTyped = `${team}Team` as 'homeTeam' | 'awayTeam';
+						return settings[teamTyped].colors.tertiary ?? settings[teamTyped].colors.secondary ?? '#000';
+					})()}
+					restricted={game.restrictDice}
+					onDiceRoll={handleDiceRoll}
+					onRollComplete={saveGame}
+				/>
 			</div>
 		</div>
 
@@ -324,32 +319,18 @@
 
 	.game {
 		width: 90%;
-		margin: -3.25rem auto 0 auto;
-		flex: 1;
-		min-height: 0;
+		max-width: 60rem;
+		margin: auto;
 		display: flex;
 		flex-direction: column;
-	}
-
-	.toolbar {
-		display: flex;
 		align-items: center;
-		gap: 8px;
-		margin-top: 14px;
+		position: relative;
+	}
+
+	.scoreboard-wrapper {
+		position: relative;
 		z-index: 100;
-	}
-
-	.menu-with-play {
-		display: flex;
-	}
-
-	.scoreboard {
-		display: grid;
-		grid-template-columns: 1fr auto 1fr;
-		align-items: end;
-		column-gap: 0.25rem;
-		padding-top: 3.25rem;
-		flex-shrink: 0;
+		margin-bottom: -1.5rem;
 	}
 
 	.toolbarButton {
@@ -366,57 +347,17 @@
 	}
 
 	.toolbarButton:hover img {
-		filter: brightness(1.5);
+		filter: brightness(0.7);
 	}
 
 	.flip {
 		transform: scaleX(-1);
 	}
 
-	.last-play {
-		flex: 1;
-		text-align: center;
-		font-size: var(--text-sm);
-		font-family: var(--font-body);
-		color: var(--color-text-gold);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-
-	.outs-indicator {
-		display: flex;
-		align-items: center;
-		gap: 0.4rem;
-	}
-
-	.out-dot {
-		width: 0.7rem;
-		height: 0.7rem;
-		border-radius: 50%;
-		border: 1.5px solid var(--color-text-tertiary);
-		transition:
-			background-color 0.15s,
-			border-color 0.15s,
-			box-shadow 0.15s;
-	}
-
-	.out-dot.lit {
-		background-color: var(--bb-out-red);
-		border-color: var(--bb-out-red-border);
-		box-shadow: var(--bb-out-red-glow);
-	}
-
-	.outs-label {
-		font-family: var(--font-body);
-		font-size: 0.8rem;
-		font-weight: var(--weight-bold);
-		color: var(--color-text-gold);
-		letter-spacing: 0.05em;
-		margin-right: 0.15rem;
-	}
-
 	.dice-container {
+		position: relative;
+		z-index: 100;
+		margin-top: -2rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -424,21 +365,18 @@
 		border: 1px solid var(--color-on-accent);
 		border-radius: 1rem;
 		padding: 0.25rem 0.5rem;
-		z-index: 100;
 		filter: drop-shadow(3px 6px 8px oklch(0 0 0 / 0.5));
 	}
 
 	.field-outer {
-		flex: 1;
-		min-height: 0;
 		position: relative;
 		overflow: hidden;
-		background: var(--bb-field-bg);
+		width: 100%;
 	}
 
 	.field-svg {
-		height: 100%;
-		margin: 0 auto;
+		width: 100%;
+		height: auto;
 		display: block;
 	}
 

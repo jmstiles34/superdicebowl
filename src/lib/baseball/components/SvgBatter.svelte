@@ -18,7 +18,7 @@
 	// Source image is 50×75. Scale to fit the 1200×630 field.
 	const IMG_W = 50;
 	const IMG_H = 75;
-	const SCALE = 0.62;
+	const SCALE = 0.95;
 
 	const SW = IMG_W * SCALE; // ~31
 	const SH = IMG_H * SCALE; // ~46.5
@@ -26,8 +26,8 @@
 	// Position batter in the batter's box beside home plate.
 	// RH batter stands to the left of home plate (third-base side).
 	// LH: right of home plate (first-base side).
-	const rhX = SVG_POS.home.x - SW - 6;
-	const lhX = SVG_POS.home.x + SW + 6;
+	const rhX = SVG_POS.home.x - SW - 16;
+	const lhX = SVG_POS.home.x + SW + 16;
 	const by = SVG_POS.home.y - SH + 10;
 
 	export function swing(): void {
