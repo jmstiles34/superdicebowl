@@ -1,4 +1,4 @@
-import type { GameStateSnapshot } from '$lib/db/database';
+import type { FootballGameStateSnapshot } from '$lib/db/database';
 import { DEFAULT_GAME } from '$lib/football/constants';
 import type { Profile } from '$lib/online/friends';
 import { supabase } from '$lib/online/supabaseClient';
@@ -13,7 +13,7 @@ export interface RemoteGame {
 	awayTeam: Team | null;
 	status: 'pending_team_select' | 'in_progress' | 'completed' | 'declined';
 	currentTurn: 'home' | 'away';
-	gameState: GameStateSnapshot | null;
+	gameState: FootballGameStateSnapshot | null;
 	winScore: number;
 	homeProfile: Profile;
 	awayProfile: Profile;
@@ -62,8 +62,9 @@ export async function acceptChallenge(
 ): Promise<boolean> {
 	const possession = Math.random() < 0.5 ? 'Home' : 'Away';
 
-	const gameState: GameStateSnapshot = {
+	const gameState: FootballGameStateSnapshot = {
 		...DEFAULT_GAME,
+		sport: 'football',
 		action: 'Place Kickoff',
 		possession
 	};
@@ -207,7 +208,7 @@ function mapRemoteGame(d: any): RemoteGame {
 		awayTeam: d.away_team as Team | null,
 		status: d.status,
 		currentTurn: d.current_turn,
-		gameState: d.game_state as GameStateSnapshot | null,
+		gameState: d.game_state as FootballGameStateSnapshot | null,
 		winScore: d.win_score,
 		homeProfile: d.home_profile as Profile,
 		awayProfile: d.away_profile as Profile,

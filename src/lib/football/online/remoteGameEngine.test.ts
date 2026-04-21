@@ -5,7 +5,7 @@ import { TEAM } from '$lib/shared/constants';
 import { deriveTurn, isActionableState } from './remoteGameEngine';
 
 function snapshot(overrides: Partial<FootballGameStateSnapshot> = {}): FootballGameStateSnapshot {
-	return { ...DEFAULT_GAME, ...overrides };
+	return { ...DEFAULT_GAME, sport: 'football' as const, ...overrides };
 }
 
 // ─── isActionableState ────────────────────────────────────

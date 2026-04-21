@@ -1,4 +1,4 @@
-import type { Team } from '$lib/types';
+import type { Team } from '$lib/shared/types';
 
 export const TEAM = {
 	AWAY: 'Away',
