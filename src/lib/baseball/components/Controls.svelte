@@ -57,7 +57,7 @@
       value={mowPattern}
       onchange={e => onMowPatternChange?.(e.currentTarget.value as MowPattern)}
     >
-      {#each MOW_OPTIONS as opt}
+      {#each MOW_OPTIONS as opt (opt.value)}
         <option value={opt.value}>{opt.label}</option>
       {/each}
     </select>
@@ -66,7 +66,7 @@
   <!-- HIT type selector -->
   <div class="cp-g">
     <span class="cp-lbl">HIT</span>
-    {#each HIT_OPTIONS as opt}
+    {#each HIT_OPTIONS as opt (opt.value)}
       <button
         class="snes-btn"
         class:active={hitType === opt.value}

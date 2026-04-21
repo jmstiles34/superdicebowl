@@ -89,7 +89,7 @@ describe('validatePassword', () => {
 	});
 
 	it('fails a password exceeding max length', () => {
-		const long = 'A'.repeat(129) + 'a1';
+		const long = `${'A'.repeat(129)}a1`;
 		const result = validatePassword(long);
 		expect(result.valid).toBe(false);
 	});

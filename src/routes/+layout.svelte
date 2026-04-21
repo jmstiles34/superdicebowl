@@ -18,7 +18,11 @@
 		$page.url.pathname === '/game' ||
 		$page.url.pathname.startsWith('/online/game/') ||
 		$page.url.pathname === '/baseball/game' ||
-		$page.url.pathname.startsWith('/baseball/online/game/')
+		$page.url.pathname.startsWith('/baseball/online/game/') ||
+		$page.url.pathname === '/hockey/game' ||
+		$page.url.pathname.startsWith('/hockey/online/game/') ||
+		$page.url.pathname === '/basketball/game' ||
+		$page.url.pathname.startsWith('/basketball/online/game/')
 	);
 	let showSettings = $state(false);
 	let showMobileMenu = $state(false);
@@ -84,6 +88,8 @@
 
 		<div class="menu-wrapper">
 			<a class="link desktop-link" href="/baseball">Baseball</a>
+			<a class="link desktop-link" href="/hockey">Hockey</a>
+			<a class="link desktop-link" href="/basketball">Basketball</a>
 			{#if auth.isLoggedIn}
 				<a class="link desktop-link" href="/season">Season</a>
 				<a class="link desktop-link" href="/teams">My Teams</a>
@@ -128,6 +134,8 @@
 			{#if showMobileMenu}
 				<div class="kebab-dropdown" bind:this={dropdown}>
 					<a class="kebab-item" href="/baseball" onclick={() => showMobileMenu = false}>Baseball</a>
+					<a class="kebab-item" href="/hockey" onclick={() => showMobileMenu = false}>Hockey</a>
+					<a class="kebab-item" href="/basketball" onclick={() => showMobileMenu = false}>Basketball</a>
 					{#if auth.isLoggedIn}
 						<a class="kebab-item" href="/season" onclick={() => showMobileMenu = false}>Season</a>
 						<a class="kebab-item" href="/teams" onclick={() => showMobileMenu = false}>My Teams</a>

@@ -7,6 +7,7 @@
 
 	import { game } from '$lib/baseball/state/game.svelte';
 	import { RUNNER_POS, SVG_POS } from '$lib/baseball/utils/svgCoords';
+	import { SvelteMap } from 'svelte/reactivity';
 	import type { BaseName, RunnerToken } from '$lib/baseball/types';
 	import onFirstSvg from '$lib/images/onfirst.svg';
 	import onSecondSvg from '$lib/images/onsecond.svg';
@@ -16,7 +17,7 @@
 	let runners = $state<RunnerToken[]>([]);
 	let nextId = 0;
 
-	const baseToId = new Map<BaseName, number>();
+	const baseToId = new SvelteMap<BaseName, number>();
 
 	// Source images are 48×74. Scale for 1200×630 field.
 	const IMG_W = 48;
@@ -118,7 +119,7 @@
 </script>
 
 <!-- Base indicator diamonds -->
-{#each BASE_ORDER as base}
+{#each BASE_ORDER as base (base)}
 	<rect
 		class="base-diamond"
 		class:occupied={game.bases[base]}

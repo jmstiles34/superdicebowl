@@ -10,6 +10,7 @@
 	import CustomHelmet from '$lib/football/components/CustomHelmet.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
+	import { SvelteMap } from 'svelte/reactivity';
 	import { POSITION } from '$lib/shared/constants';
 
 	let teams: CustomTeamRecord[] = $state([]);
@@ -30,7 +31,7 @@
 		if (!auth.currentUser?.id) return;
 		teams = await getCustomTeamsByUser(auth.currentUser.id);
 
-		const newRecords = new Map<string, TeamRecord>();
+		const newRecords = new SvelteMap<string, TeamRecord>();
 		for (const team of teams) {
 			const record = await getTeamRecord(auth.currentUser.id, team.teamData.id);
 			newRecords.set(team.teamData.id, record);
@@ -43,7 +44,7 @@
 		showEditor = true;
 	}
 
-	async function closeEditor(id: string) {
+	async function closeEditor(_id: string) {
 		showEditor = false;
 		editTeamId = '';
 		await loadTeams();

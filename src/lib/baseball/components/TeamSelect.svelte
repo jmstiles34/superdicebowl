@@ -67,7 +67,7 @@
 	<div class="controls">
 		<select class="team-dropdown" value={selected} onchange={handleTeamSelect}>
 			<option value="">-- Select --</option>
-			{#each teams as t}
+			{#each teams as t (t.id)}
 				<option value={t.id} disabled={t.id === opponentId}>
 					{t.city} {t.name}
 				</option>

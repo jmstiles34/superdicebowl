@@ -9,14 +9,12 @@
 	import { generateSchedule } from '$lib/utils/schedule';
 	import type { Team } from '$lib/shared/types';
 	import type { SeasonRecord, StandingsEntry } from '$lib/db/database';
-	import tap from '$lib/assets/sfx/tap.mp3';
 	import tackle from '$lib/assets/sfx/tackle.mp3';
 	import type { Howl } from 'howler';
 	import { createSound, playSound } from '$lib/utils/sound';
 	import { settings } from '$lib/state/settings.svelte';
-	import { pickRandom, sleep } from '$lib/utils/common';
+	import { sleep } from '$lib/utils/common';
 
-	const tapSfx: Howl = createSound(tap);
 	const tackleSfx: Howl = createSound(tackle);
 
 	let allTeams: Team[] = $state([]);
@@ -38,9 +36,8 @@
 	onMount(async () => {
 		if (!auth.isLoggedIn || !auth.currentUser?.id) return;
 
-		let customTeamData: Team[] = [];
 		const records = await getCustomTeamsByUser(auth.currentUser.id);
-		customTeamData = records.map((r) => r.teamData);
+		const customTeamData = records.map((r) => r.teamData);
 		allTeams = [...customTeamData, ...teamsData];
 
 		// Check for active season
@@ -131,7 +128,7 @@
 				bind:value={selectedTeamId}
 			>
 				<option value="">Select a team...</option>
-				{#each allTeams as team}
+				{#each allTeams as team (team.id)}
 					<option value={team.id}>{team.city} {team.name}</option>
 				{/each}
 			</select>
@@ -145,7 +142,7 @@
 				value={teamCount}
 				onchange={handleTeamCountChange}
 			>
-				{#each evenNumbers as n}
+				{#each evenNumbers as n (n)}
 					<option value={n}>{n}</option>
 				{/each}
 			</select>
@@ -154,7 +151,7 @@
 		<div class="form-row">
 			<label class="label" for="weeks">Weeks</label>
 			<select id="weeks" class="select" bind:value={weeks}>
-				{#each Array(maxWeeks) as _, i}
+				{#each Array(maxWeeks) as _, i (i)}
 					<option value={i + 1}>{i + 1}</option>
 				{/each}
 			</select>
@@ -163,7 +160,7 @@
 		<div class="form-row">
 			<label class="label" for="winScore">Win Score</label>
 			<select id="winScore" class="select" bind:value={winScore}>
-				{#each Array(99) as _, i}
+				{#each Array(99) as _, i (i)}
 					<option value={i + 1}>{i + 1}</option>
 				{/each}
 			</select>

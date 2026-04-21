@@ -268,7 +268,11 @@ export function secondaryColor(settings: Settings, team = 'home') {
 
 export function setRandomTeam(teams: Team[], opponentId: string, saveFn: (a: Team) => void) {
 	const { id } = teamById(teams)(randomNumber(teams.length - 1).toString());
-	equals(id, opponentId) ? setRandomTeam(teams, opponentId, saveFn) : saveFn(teamByUUId(teams)(id));
+	if (equals(id, opponentId)) {
+		setRandomTeam(teams, opponentId, saveFn);
+	} else {
+		saveFn(teamByUUId(teams)(id));
+	}
 }
 
 export function showDownDistance(action: string) {

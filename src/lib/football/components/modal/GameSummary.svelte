@@ -29,7 +29,7 @@
 				const previousPlay = acc.at(-1) || DEFAULT_PLAY;
 				const newAcc = acc.slice(0, -1);
 				let extraPoints = 0;
-				let pointResult = '';
+				let pointResult: string;
 				if (pointAfterMade.includes(play.action)) {
 					extraPoints = play.points;
 					pointResult = `(${play.points === 1 ? 'Kick good' : 'Two-Point made'})`;
@@ -201,7 +201,7 @@
 			</div>
 
 			<!-- Scoring play rows -->
-			{#each scoringPlays as play}
+			{#each scoringPlays as play, i (i)}
 				<div class="score-row">
 					<div class="team-logo"
 						style="background-color: {play.team === TEAM.HOME ? homeTeam.colors.primary : awayTeam.colors.primary};"

@@ -66,7 +66,7 @@
 		/>
 
 		<div class="field">
-			{#each fieldData as block, i}
+			{#each fieldData as block, i (i)}
 				<div
 					class:yardsHome={i <= 9}
 					class:yardsAway={i > 9}

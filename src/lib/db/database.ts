@@ -1,5 +1,7 @@
 import Dexie, { type Table } from 'dexie';
+import type { Quarter } from '$lib/basketball/types';
 import type { Play } from '$lib/football/types';
+import type { Period } from '$lib/hockey/types';
 import type { SportType, Team } from '$lib/shared/types';
 
 export interface UserRecord {
@@ -84,6 +86,74 @@ export interface BaseballGameSettingsSnapshot {
 	innings: number;
 }
 
+// ── Hockey snapshot types ────────────────────────────────────
+
+export interface HockeyGameStateSnapshot {
+	sport: 'hockey';
+	action: string;
+	lastPlay: string;
+	modalContent: string | null;
+	possession: string;
+	restrictDice: boolean;
+	playLog: unknown[];
+	period: Period;
+	scores: {
+		away: number[];
+		home: number[];
+	};
+	shotsOnGoal: {
+		away: number;
+		home: number;
+	};
+	penaltyMinutes: {
+		away: number;
+		home: number;
+	};
+	powerPlay: boolean;
+}
+
+export interface HockeyGameSettingsSnapshot {
+	sport: 'hockey';
+	awayTeam: Team;
+	homeTeam: Team;
+	mode: string;
+	periods: number;
+}
+
+// ── Basketball snapshot types ────────────────────────────────
+
+export interface BasketballGameStateSnapshot {
+	sport: 'basketball';
+	action: string;
+	lastPlay: string;
+	modalContent: string | null;
+	possession: string;
+	restrictDice: boolean;
+	playLog: unknown[];
+	quarter: Quarter;
+	scores: {
+		away: number[];
+		home: number[];
+	};
+	fouls: {
+		away: number;
+		home: number;
+	};
+	turnovers: {
+		away: number;
+		home: number;
+	};
+	shotClock: boolean;
+}
+
+export interface BasketballGameSettingsSnapshot {
+	sport: 'basketball';
+	awayTeam: Team;
+	homeTeam: Team;
+	mode: string;
+	quarters: number;
+}
+
 // ── Discriminated unions ─────────────────────────────────────
 
 /**
@@ -91,8 +161,16 @@ export interface BaseballGameSettingsSnapshot {
  * get `sport: 'football'` added, but TypeScript needs to accept both
  * shapes when reading from the DB.
  */
-export type GameStateSnapshot = FootballGameStateSnapshot | BaseballGameStateSnapshot;
-export type GameSettingsSnapshot = FootballGameSettingsSnapshot | BaseballGameSettingsSnapshot;
+export type GameStateSnapshot =
+	| FootballGameStateSnapshot
+	| BaseballGameStateSnapshot
+	| HockeyGameStateSnapshot
+	| BasketballGameStateSnapshot;
+export type GameSettingsSnapshot =
+	| FootballGameSettingsSnapshot
+	| BaseballGameSettingsSnapshot
+	| HockeyGameSettingsSnapshot
+	| BasketballGameSettingsSnapshot;
 
 /**
  * Legacy type alias: most existing code was written against the football
@@ -267,6 +345,17 @@ class AppDatabase extends Dexie {
 			});
 
 		this.version(9).stores({
+			users: '++id, &usernameLower',
+			sessions: '++id, userId, &token',
+			games: '++id, userId, sport',
+			customTeams: '++id, userId',
+			userPreferences: '++id, &userId',
+			seasons: '++id, userId, sport'
+		});
+
+		// v10: hockey + basketball sport types added to SportType union.
+		// No index changes — sport column already supports arbitrary strings.
+		this.version(10).stores({
 			users: '++id, &usernameLower',
 			sessions: '++id, userId, &token',
 			games: '++id, userId, sport',

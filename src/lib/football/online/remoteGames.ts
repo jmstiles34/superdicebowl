@@ -21,6 +21,22 @@ export interface RemoteGame {
 	updatedAt: string;
 }
 
+interface RawRemoteGameRow {
+	id: string;
+	home_user_id: string;
+	away_user_id: string;
+	home_team: unknown;
+	away_team: unknown;
+	status: RemoteGame['status'];
+	current_turn: RemoteGame['currentTurn'];
+	game_state: unknown;
+	win_score: number;
+	home_profile: unknown;
+	away_profile: unknown;
+	created_at: string;
+	updated_at: string;
+}
+
 export async function createChallenge(
 	homeUserId: string,
 	awayUserId: string,
@@ -117,7 +133,7 @@ export async function getRemoteGame(gameId: string): Promise<RemoteGame | null> 
 		.single();
 
 	if (!data) return null;
-	return mapRemoteGame(data);
+	return mapRemoteGame(data as RawRemoteGameRow);
 }
 
 export async function getRemoteGames(userId: string): Promise<RemoteGame[]> {
@@ -134,7 +150,7 @@ export async function getRemoteGames(userId: string): Promise<RemoteGame[]> {
 		.order('updated_at', { ascending: false });
 
 	if (!data) return [];
-	return data.map(mapRemoteGame);
+	return (data as RawRemoteGameRow[]).map(mapRemoteGame);
 }
 
 // Lazy forfeit: called when loading a game. If the current player hasn't moved in 7 days,
@@ -198,8 +214,7 @@ export async function resignGame(
 	]);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mapRemoteGame(d: any): RemoteGame {
+function mapRemoteGame(d: RawRemoteGameRow): RemoteGame {
 	return {
 		id: d.id,
 		homeUserId: d.home_user_id,

@@ -49,7 +49,7 @@
 				{@render toolbar()}
 			{/if}
 		</div>
-		{#each INNINGS as i}
+		{#each INNINGS as i (i)}
 			<div class="cell hdr" class:active={i === game.inning}>{i}</div>
 		{/each}
 		<div class="cell sep"></div>
@@ -64,7 +64,7 @@
 		>
 			{awayTeam.city}
 		</div>
-		{#each INNINGS as i}
+		{#each INNINGS as i (i)}
 			<div
 				class="cell inn"
 				class:played={isPlayed('vis', i)}
@@ -85,7 +85,7 @@
 		>
 			{homeTeam.city}
 		</div>
-		{#each INNINGS as i}
+		{#each INNINGS as i (i)}
 			<div
 				class="cell inn"
 				class:played={isPlayed('hom', i)}
@@ -103,7 +103,7 @@
 	<!-- Outs indicator -->
 	<div class="outs-indicator">
 		<span class="outs-label">Outs</span>
-		{#each [1, 2, 3] as n}
+		{#each [1, 2, 3] as n (n)}
 			<span class="out-dot" class:lit={n <= game.outs}></span>
 		{/each}
 	</div>

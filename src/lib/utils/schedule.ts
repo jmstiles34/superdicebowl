@@ -85,7 +85,7 @@ function generateCycle(ids: string[]): [string, string][][] {
 		rounds.push(round);
 
 		// Rotate: move last element to the front of the rotating array
-		rotating.unshift(rotating.pop()!);
+		rotating.unshift(rotating.pop() as string);
 	}
 
 	return rounds;

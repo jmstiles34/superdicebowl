@@ -23,10 +23,11 @@ class AuthState {
 	initialize = async () => {
 		const result = await getValidSession();
 		if (result) {
+			const userId = result.user.id as number;
 			this.currentUser = result.user;
 			this.sessionToken = result.session.token;
-			await migrateFromLocalStorage(result.user.id!);
-			const prefs = await getPreferences(result.user.id!);
+			await migrateFromLocalStorage(userId);
+			const prefs = await getPreferences(userId);
 			settings.loadPreferences(prefs);
 			await this.tryOnlineSignIn(result.user);
 		}
@@ -44,11 +45,12 @@ class AuthState {
 			return { success: false, error: 'Invalid username or password' };
 		}
 
-		const session = await createSession(user.id!);
+		const userId = user.id as number;
+		const session = await createSession(userId);
 		this.currentUser = user;
 		this.sessionToken = session.token;
-		await migrateFromLocalStorage(user.id!);
-		const prefs = await getPreferences(user.id!);
+		await migrateFromLocalStorage(userId);
+		const prefs = await getPreferences(userId);
 		settings.loadPreferences(prefs);
 		await this.tryOnlineSignIn(user);
 		return { success: true };
@@ -70,11 +72,12 @@ class AuthState {
 			return { success: false, error: result.error };
 		}
 
-		const session = await createSession(result.user.id!);
+		const userId = result.user.id as number;
+		const session = await createSession(userId);
 		this.currentUser = result.user;
 		this.sessionToken = session.token;
-		await migrateFromLocalStorage(result.user.id!);
-		const prefs = await getPreferences(result.user.id!);
+		await migrateFromLocalStorage(userId);
+		const prefs = await getPreferences(userId);
 		settings.loadPreferences(prefs);
 		return { success: true };
 	};

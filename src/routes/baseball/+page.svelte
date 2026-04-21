@@ -43,7 +43,7 @@
 	<h1>Super Dice Baseball</h1>
 
 	<div class="mode-row">
-		{#each [[GAME_MODE.SOLO, 'Solo Play'], [GAME_MODE.HEAD_TO_HEAD, 'Head-to-Head'], [GAME_MODE.SIMULATION, 'Simulation']] as [m, text]}
+		{#each [[GAME_MODE.SOLO, 'Solo Play'], [GAME_MODE.HEAD_TO_HEAD, 'Head-to-Head'], [GAME_MODE.SIMULATION, 'Simulation']] as [m, text] (m)}
 			<button
 				class="game-button mode-button"
 				class:mode-selected={mode === m}

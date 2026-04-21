@@ -12,7 +12,7 @@ export async function getPreferences(userId: number): Promise<UserPreferencesRec
 	const existing = await db.userPreferences.where('userId').equals(userId).first();
 	if (existing) return existing;
 	const id = await db.userPreferences.add({ ...DEFAULTS, userId });
-	return (await db.userPreferences.get(id))!;
+	return (await db.userPreferences.get(id)) as UserPreferencesRecord;
 }
 
 export async function savePreferences(
@@ -23,7 +23,7 @@ export async function savePreferences(
 ): Promise<void> {
 	const existing = await db.userPreferences.where('userId').equals(userId).first();
 	if (existing) {
-		await db.userPreferences.update(existing.id!, prefs);
+		await db.userPreferences.update(existing.id as number, prefs);
 	} else {
 		await db.userPreferences.add({ ...DEFAULTS, ...prefs, userId });
 	}

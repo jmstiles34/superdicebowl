@@ -202,7 +202,11 @@ class GameState {
 			GAME_ACTION.KICKOFF_KICK;
 		this.ballIndex = isOnside ? this.ballIndex : BALL_ENDZONE[OPPOSITE_TEAM[this.possession]];
 		this.diceId = diceId;
-		isOnside ? playSound(whizSfx, settings.volume) : playSound(kickSfx, settings.volume);
+		if (isOnside) {
+			playSound(whizSfx, settings.volume);
+		} else {
+			playSound(kickSfx, settings.volume);
+		}
 	};
 
 	doOffensivePlay = (diceId: number) => {
@@ -338,7 +342,11 @@ class GameState {
 			points: success ? POINTS.TWO_POINT : 0
 		};
 		this.addPlay(playResult);
-		success ? playSound(hornsSfx, settings.volume) : playSound(miss1Sfx, settings.volume);
+		if (success) {
+			playSound(hornsSfx, settings.volume);
+		} else {
+			playSound(miss1Sfx, settings.volume);
+		}
 	};
 
 	gameComplete = (winner: string) => {
@@ -362,7 +370,11 @@ class GameState {
 			points: success ? POINTS.EXTRA_POINT : 0
 		};
 		this.addPlay(playResult);
-		success ? playSound(kickSfx, settings.volume) : playSound(missSfx, settings.volume);
+		if (success) {
+			playSound(kickSfx, settings.volume);
+		} else {
+			playSound(missSfx, settings.volume);
+		}
 	};
 
 	kickFieldGoal = (diceId: number) => {
@@ -381,7 +393,11 @@ class GameState {
 			points: success ? POINTS.FIELD_GOAL : 0
 		};
 		this.addPlay(playResult);
-		success ? playSound(kickSfx, settings.volume) : playSound(missSfx, settings.volume);
+		if (success) {
+			playSound(kickSfx, settings.volume);
+		} else {
+			playSound(missSfx, settings.volume);
+		}
 	};
 
 	handleDiceRoll = (action: string, diceId: number) => {

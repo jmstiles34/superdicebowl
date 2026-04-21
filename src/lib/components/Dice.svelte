@@ -93,12 +93,12 @@
 	style={buttonStyle}
 >
 	<div class="face" class:rolling>
-		{#each Array(die1Pips) as _}
+		{#each Array(die1Pips) as _, i (i)}
 			<span class="pip"></span>
 		{/each}
 	</div>
 	<div class="face" class:rolling>
-		{#each Array(die2Pips) as _}
+		{#each Array(die2Pips) as _, i (i)}
 			<span class="pip"></span>
 		{/each}
 	</div>

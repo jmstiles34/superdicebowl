@@ -150,12 +150,12 @@ z`;
 {:else if settings.mowPattern === 'arcs'}
 	<!-- Concentric arcs from home plate on both areas -->
 	<g clip-path="url(#clip-outfield)">
-		{#each Array(12) as _, i}
+		{#each Array(12) as _, i (i)}
 			<circle cx="607" cy="516" r={80 + i * 40} fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="14" />
 		{/each}
 	</g>
 	<g clip-path="url(#clip-infield)">
-		{#each Array(7) as _, i}
+		{#each Array(7) as _, i (i)}
 			<circle cx="607" cy="516" r={120 + i * 40} fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="12" />
 		{/each}
 	</g>

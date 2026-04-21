@@ -71,7 +71,7 @@
 	<div class="line-score">
 		<div class="ls-grid">
 			<div class="ls-cell ls-corner"></div>
-			{#each INNINGS as i}
+			{#each INNINGS as i (i)}
 				<div class="ls-cell ls-hdr" class:ls-active={i === s.inning}>{i}</div>
 			{/each}
 			<div class="ls-cell ls-sep"></div>
@@ -80,7 +80,7 @@
 			<div class="ls-cell ls-hdr ls-rhe">E</div>
 
 			<div class="ls-cell ls-team" style:color={awayColor}>{awayKey}</div>
-			{#each INNINGS as i}
+			{#each INNINGS as i (i)}
 				<div class="ls-cell ls-inn">{cellText(s.scores.vis[i - 1])}</div>
 			{/each}
 			<div class="ls-cell ls-sep"></div>
@@ -89,7 +89,7 @@
 			<div class="ls-cell ls-tot">{s.totals.vis.e}</div>
 
 			<div class="ls-cell ls-team" style:color={homeColor}>{homeKey}</div>
-			{#each INNINGS as i}
+			{#each INNINGS as i (i)}
 				<div class="ls-cell ls-inn">{cellText(s.scores.hom[i - 1])}</div>
 			{/each}
 			<div class="ls-cell ls-sep"></div>

@@ -396,7 +396,7 @@
 									{/if}
 									<select class="team-dropdown" bind:value={acceptTeamId}>
 										<option value="">Choose your team…</option>
-										{#each allTeams as t}
+										{#each allTeams as t (t.id)}
 											{#if t.id !== (n.data?.homeTeamId ?? '')}
 												<option value={t.id}>{t.city} {t.name}</option>
 											{/if}
@@ -521,7 +521,7 @@
 											<label class="field-label" for="challenge-team">Your team</label>
 											<select id="challenge-team" class="team-dropdown" bind:value={challengeTeamId}>
 												<option value="">Choose a team…</option>
-												{#each allTeams as t}
+												{#each allTeams as t (t.id)}
 													<option value={t.id}>{t.city} {t.name}</option>
 												{/each}
 											</select>
@@ -533,7 +533,7 @@
 												class="score-dropdown"
 												bind:value={challengeWinScore}
 											>
-												{#each Array(99) as _, i}
+												{#each Array(99) as _, i (i)}
 													<option value={i + 1}>{i + 1}</option>
 												{/each}
 											</select>

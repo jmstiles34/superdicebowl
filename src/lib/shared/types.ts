@@ -1,4 +1,4 @@
-export type SportType = 'football' | 'baseball';
+export type SportType = 'football' | 'baseball' | 'hockey' | 'basketball';
 
 interface Colors {
 	primary: string;
@@ -63,10 +63,8 @@ export interface SportEngine {
 	// ── Persistence / lifecycle ───────────────────────────────
 	activeGameId: number | null;
 	setSaveGame(fn: () => Promise<void>): void;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	snapshotState(): any;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	loadSnapshot(snapshot: any): void;
+	snapshotState(): object;
+	loadSnapshot(snapshot: object): void;
 	resetGame(): void;
 
 	// ── Dice / turn ──────────────────────────────────────────

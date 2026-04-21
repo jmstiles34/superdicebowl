@@ -5,7 +5,7 @@
 </script>
 
 <ul class="rules">
-	{#each PASSWORD_RULES as rule}
+	{#each PASSWORD_RULES as rule (rule.label)}
 		<li class:pass={rule.test(password)} class:fail={password.length > 0 && !rule.test(password)}>
 			{rule.label}
 		</li>

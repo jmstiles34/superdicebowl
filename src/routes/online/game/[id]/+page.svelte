@@ -3,7 +3,6 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { Fireworks } from '@fireworks-js/svelte';
-	import { auth } from '$lib/auth/authState.svelte';
 	import { onlineState } from '$lib/state/onlineState.svelte';
 	import { game } from '$lib/football/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
@@ -43,7 +42,6 @@
 	import FourthDown from '$lib/football/components/modal/FourthDown.svelte';
 	import Scores from '$lib/football/components/Scores.svelte';
 	import GameSummary from '$lib/football/components/modal/GameSummary.svelte';
-	import ConfirmExit from '$lib/components/modal/ConfirmExit.svelte';
 	import Settings from '$lib/components/modal/Settings.svelte';
 	import exit from '$lib/images/exit.svg';
 	import gear from '$lib/images/gear.svg';
@@ -203,7 +201,9 @@
 				lock?(type: string): Promise<void>;
 			};
 			orientation.lock?.('landscape')?.catch(() => {});
-		} catch {}
+		} catch {
+			// ignored — orientation lock not supported on all platforms
+		}
 	});
 
 	const POLL_INTERVAL_MS = 5000;
@@ -220,7 +220,9 @@
 		game.resetGame();
 		try {
 			(screen.orientation as ScreenOrientation & { unlock?(): void }).unlock?.();
-		} catch {}
+		} catch {
+			// ignored — orientation unlock not supported on all platforms
+		}
 	});
 
 	// ── Remote save ────────────────────────────────────────────

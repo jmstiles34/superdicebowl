@@ -139,11 +139,15 @@
 		};
 		try {
 			orientation.lock?.('landscape')?.catch(() => {});
-		} catch {}
+		} catch {
+			// orientation lock not supported on all platforms
+		}
 		return () => {
 			try {
 				orientation.unlock?.();
-			} catch {}
+			} catch {
+				// orientation unlock not supported on all platforms
+			}
 		};
 	});
 

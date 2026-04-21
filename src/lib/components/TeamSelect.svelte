@@ -149,7 +149,7 @@
 		</div>
 		<select name="teamSelect" onchange={handleTeamSelect} value={selected} class="team-select">
 			<option value="">Choose {teamType} Team</option>
-			{#each allTeamsData as team}
+			{#each allTeamsData as team (team.id)}
 				{#if team.id !== opponentId}
 					<option value={team.id}>{team.city} {team.name}</option>
 				{/if}

@@ -109,7 +109,7 @@
 				value={settings.winScore}
 				onchange={handleScoreChange}
 			>
-				{#each Array(99) as _, i}
+				{#each Array(99) as _, i (i)}
 					<option value={i + 2}>{i + 2}</option>
 				{/each}
 			</select>

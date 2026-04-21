@@ -4,7 +4,7 @@ import type { Team } from '$lib/shared/types';
 export async function createCustomTeam(userId: number, teamData: Team): Promise<CustomTeamRecord> {
 	const now = Date.now();
 	const id = await db.customTeams.add({ userId, teamData, createdAt: now, updatedAt: now });
-	return (await db.customTeams.get(id))!;
+	return (await db.customTeams.get(id)) as CustomTeamRecord;
 }
 
 export async function updateCustomTeam(recordId: number, teamData: Team): Promise<void> {

@@ -194,7 +194,7 @@
 					<label class="field-label" for="logo">Logo</label>
 					<select id="logo" bind:value={logo} class:error={errors.includes('logo')}>
 						<option value="">Choose...</option>
-						{#each sortedLogos as l}
+						{#each sortedLogos as l (l.file)}
 							<option value={l.file}>{l.name}</option>
 						{/each}
 					</select>
@@ -248,7 +248,7 @@
 			&#x25C0; Back
 		</button>
 		<div class="step-indicators">
-			{#each Array(totalSteps) as _, i}
+			{#each Array(totalSteps) as _, i (i)}
 				<span class="step-dot" class:active={currentStep === i + 1}></span>
 			{/each}
 		</div>

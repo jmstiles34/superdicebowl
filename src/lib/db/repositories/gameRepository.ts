@@ -24,7 +24,7 @@ export async function createGame(
 		createdAt: now,
 		updatedAt: now
 	});
-	return (await db.games.get(id))!;
+	return (await db.games.get(id)) as GameRecord;
 }
 
 export async function updateGameState(gameId: number, gameState: GameStateSnapshot): Promise<void> {

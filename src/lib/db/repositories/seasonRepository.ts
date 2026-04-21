@@ -12,7 +12,7 @@ export async function createSeason(
 		createdAt: now,
 		updatedAt: now
 	});
-	return (await db.seasons.get(id))!;
+	return (await db.seasons.get(id)) as SeasonRecord;
 }
 
 export async function updateSeason(
@@ -58,6 +58,6 @@ export async function deleteSeasonsByUser(
 ): Promise<void> {
 	const seasons = await getSeasonsByUser(userId, status);
 	for (const s of seasons) {
-		await deleteSeason(s.id!);
+		await deleteSeason(s.id as number);
 	}
 }

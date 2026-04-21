@@ -18,7 +18,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each standings as entry, i}
+			{#each standings as entry, i (entry.teamId)}
 				{@const team = season.getTeamById(entry.teamId)}
 				{#if team}
 					<tr class:user-team={entry.teamId === season.userTeamId}>

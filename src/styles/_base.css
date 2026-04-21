@@ -96,14 +96,17 @@ button {
 
 button:not(:disabled):active {
 	transform: translateY(2px);
+	/* biome-ignore lint/complexity/noImportantStyles: global reset must override component shadows */
 	box-shadow: none !important;
 }
 
 /* Disabled state uses themed tokens — not a hardcoded dark color */
 button:disabled {
 	background-color: var(--btn-disabled-bg);
+	/* biome-ignore lint/complexity/noImportantStyles: global reset must override component borders */
 	border-color: var(--btn-disabled-border) !important;
 	color: var(--btn-disabled-text);
+	/* biome-ignore lint/complexity/noImportantStyles: global reset must override component shadows */
 	box-shadow: none !important;
 	cursor: default;
 }

@@ -11,6 +11,7 @@
 	import { getScoreByTeam } from '$lib/football/utils/game';
 	import Modal from '$lib/components/Modal.svelte';
 	import GameSummary from '$lib/football/components/modal/GameSummary.svelte';
+	import { SvelteSet } from 'svelte/reactivity';
 	import { onlineState } from '$lib/state/onlineState.svelte';
 	import { declineChallenge, getRemoteGames, resignGame, type RemoteGame } from '$lib/football/online/remoteGames';
 
@@ -20,7 +21,7 @@
 	let completedGames: GameRecord[] = $state([]);
 	let confirmDeleteId: number | null = $state(null);
 	let viewStatsRecord: GameRecord | null = $state(null);
-	let seasonGameIds: Set<number> = $state(new Set());
+	let seasonGameIds = new SvelteSet<number>();
 
 	$effect(() => {
 		if (auth.initialized && !auth.isLoggedIn) goto('/login');
@@ -61,15 +62,14 @@
 		completedGames = await getGamesByUser(auth.currentUser.id, 'completed');
 
 		const seasons = await getSeasonsByUser(auth.currentUser.id);
-		const ids = new Set<number>();
+		seasonGameIds.clear();
 		for (const s of seasons) {
 			for (const week of s.schedule) {
 				for (const m of week.matchups) {
-					if (m.gameRecordId) ids.add(m.gameRecordId);
+					if (m.gameRecordId) seasonGameIds.add(m.gameRecordId);
 				}
 			}
 		}
-		seasonGameIds = ids;
 	}
 
 	async function loadRemoteGames() {

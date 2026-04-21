@@ -191,7 +191,7 @@
 
 			{#if viewWeekData}
 				<div class="matchups">
-					{#each viewWeekData.matchups as matchup, i}
+					{#each viewWeekData.matchups as matchup, i (matchup.homeTeamId)}
 						{@const homeTeam = season.getTeamById(matchup.homeTeamId)}
 						{@const awayTeam = season.getTeamById(matchup.awayTeamId)}
 						{#if homeTeam && awayTeam}

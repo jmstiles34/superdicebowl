@@ -47,7 +47,7 @@
 <div class="benefits">
 	<p class="benefits-title">Create an account to:</p>
 	<ul>
-		{#each REGISTER_BENEFITS as benefit}
+		{#each REGISTER_BENEFITS as benefit (benefit)}
 			<li>{benefit}</li>
 		{/each}
 	</ul>
