@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { game } from '$lib/state/game.svelte';
+	import { game } from '$lib/football/state/game.svelte';
 	import { goto } from '$app/navigation';
-	import { GAME_MODE, TEAM } from '$lib/constants/constants';
+	import { GAME_MODE, TEAM } from '$lib/shared/constants';
 	import TeamSelect from '$lib/components/TeamSelect.svelte';
-	import { beginDisabled } from '$lib/utils/game';
+	import { beginDisabled } from '$lib/football/utils/game';
 	import { sleep } from '$lib/utils/common';
 	import gust from '$lib/assets/sfx/gust.mp3';
 	import tackle from '$lib/assets/sfx/tackle.mp3';

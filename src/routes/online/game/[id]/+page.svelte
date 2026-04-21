@@ -5,11 +5,12 @@
 	import { Fireworks } from '@fireworks-js/svelte';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { onlineState } from '$lib/state/onlineState.svelte';
-	import { game } from '$lib/state/game.svelte';
+	import { game } from '$lib/football/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
-	import { BALL_FIELD_GOAL, DOWN, GAME_ACTION, GAME_MODE, NOOP, TEAM } from '$lib/constants/constants';
+	import { BALL_FIELD_GOAL, DOWN, GAME_ACTION } from '$lib/football/constants';
+	import { GAME_MODE, NOOP, TEAM } from '$lib/shared/constants';
 	import { clearTurnNotifications } from '$lib/online/friends';
-	import { getRemoteGame, checkAndApplyForfeit, resignGame, type RemoteGame } from '$lib/online/remoteGames';
+	import { getRemoteGame, checkAndApplyForfeit, resignGame, type RemoteGame } from '$lib/football/online/remoteGames';
 	import {
 		deriveTurn,
 		isActionableState,
@@ -18,7 +19,7 @@
 		notifyYourTurn,
 		notifyGameOver,
 		subscribeToGame
-	} from '$lib/online/remoteGameEngine';
+	} from '$lib/football/online/remoteGameEngine';
 	import button from '$lib/assets/sfx/button.mp3';
 	import { sleep } from '$lib/utils/common';
 	import { fireworkShow, options } from '$lib/utils/fireworks';
@@ -31,7 +32,7 @@
 		primaryColor,
 		secondaryColor,
 		showDownDistance
-	} from '$lib/utils/game';
+	} from '$lib/football/utils/game';
 	import { createSound, playSound } from '$lib/utils/sound';
 	import type { GameStateSnapshot } from '$lib/db/database';
 	import Dice from '$lib/components/Dice.svelte';
@@ -149,7 +150,7 @@
 			settings.awayTeam = rg.awayTeam!;
 			settings.winScore = rg.winScore;
 			settings.mode = GAME_MODE.HEAD_TO_HEAD;
-			if (rg.gameState) game.loadSnapshot(rg.gameState);
+			if (rg.gameState && rg.gameState.sport === 'football') game.loadSnapshot(rg.gameState);
 			showGameSummary = true;
 			loaded = true;
 			return;
@@ -174,10 +175,10 @@
 		settings.mode = GAME_MODE.HEAD_TO_HEAD;
 		settings.userTeam = myRole === 'home' ? TEAM.HOME : TEAM.AWAY;
 
-		if (rg.gameState) game.loadSnapshot(rg.gameState);
+		if (rg.gameState && rg.gameState.sport === 'football') game.loadSnapshot(rg.gameState);
 
 		game.setSaveGame(saveRemoteGame);
-		localVersion = rg.gameState?.stateVersion ?? 0;
+		localVersion = (rg.gameState?.sport === 'football' ? rg.gameState.stateVersion : undefined) ?? 0;
 		loaded = true;
 
 		channel = subscribeToGame(gameId, handleRemoteUpdate);
@@ -262,6 +263,7 @@
 		currentTurn: 'home' | 'away',
 		_updatedAt: string
 	) {
+		if (snapshot.sport !== 'football') return;
 		const incomingVersion = snapshot.stateVersion ?? 0;
 
 		// Discard our own reflections and duplicate/out-of-order events
@@ -303,7 +305,7 @@
 		if (!onlineState.profile || !myRole || !remoteGame || remoteGame.status !== 'in_progress') return;
 		if (isActingPlayer) return;
 		const rg = await getRemoteGame(gameId);
-		if (!rg?.gameState) return;
+		if (!rg?.gameState || rg.gameState.sport !== 'football') return;
 		const dbVersion = rg.gameState.stateVersion ?? 0;
 		if (dbVersion <= remoteVersion || dbVersion <= localVersion) return;
 		remoteVersion = dbVersion;

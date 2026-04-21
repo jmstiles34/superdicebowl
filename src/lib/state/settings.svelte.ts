@@ -1,6 +1,7 @@
-import { DEFAULT_SETTINGS, DEFAULT_TEAM, GAME_MODE, TEAM } from '$lib/constants/constants';
 import type { FootballGameSettingsSnapshot, MowPattern } from '$lib/db/database';
-import type { Team } from '$lib/types';
+import { DEFAULT_SETTINGS } from '$lib/football/constants';
+import { DEFAULT_TEAM, GAME_MODE, TEAM } from '$lib/shared/constants';
+import type { Team } from '$lib/shared/types';
 
 export type Theme = 'dark' | 'light';
 

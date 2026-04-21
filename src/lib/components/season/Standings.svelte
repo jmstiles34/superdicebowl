@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { season } from '$lib/state/season.svelte';
+	import { season } from '$lib/football/state/season.svelte';
 
 	const standings = $derived(season.sortedStandings);
 </script>

@@ -10,7 +10,7 @@
 	import CustomHelmet from '$lib/football/components/CustomHelmet.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import CustomTeam from '$lib/components/modal/CustomTeam.svelte';
-	import { POSITION } from '$lib/constants/constants';
+	import { POSITION } from '$lib/shared/constants';
 
 	let teams: CustomTeamRecord[] = $state([]);
 	let records: Map<string, TeamRecord> = $state(new Map());

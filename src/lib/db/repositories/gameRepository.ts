@@ -1,12 +1,12 @@
-import { TEAM } from '$lib/constants/constants';
 import {
 	db,
 	type GameRecord,
 	type GameSettingsSnapshot,
 	type GameStateSnapshot
 } from '$lib/db/database';
-import type { SportType } from '$lib/types';
-import { getScoreByTeam } from '$lib/utils/game';
+import { getScoreByTeam } from '$lib/football/utils/game';
+import { TEAM } from '$lib/shared/constants';
+import type { SportType } from '$lib/shared/types';
 
 export async function createGame(
 	userId: number,

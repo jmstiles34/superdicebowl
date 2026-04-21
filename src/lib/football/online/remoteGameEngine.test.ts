@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_GAME, GAME_ACTION, TEAM } from '$lib/constants/constants';
 import type { FootballGameStateSnapshot } from '$lib/db/database';
+import { DEFAULT_GAME, GAME_ACTION } from '$lib/football/constants';
+import { TEAM } from '$lib/shared/constants';
 import { deriveTurn, isActionableState } from './remoteGameEngine';
 
 function snapshot(overrides: Partial<FootballGameStateSnapshot> = {}): FootballGameStateSnapshot {

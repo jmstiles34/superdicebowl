@@ -2,13 +2,13 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { auth } from '$lib/auth/authState.svelte';
-	import { season } from '$lib/state/season.svelte';
+	import { season } from '$lib/football/state/season.svelte';
 	import { settings } from '$lib/state/settings.svelte';
-	import { GAME_MODE, TEAM } from '$lib/constants/constants';
-	import { game } from '$lib/state/game.svelte';
+	import { GAME_MODE, TEAM } from '$lib/shared/constants';
+	import { game } from '$lib/football/state/game.svelte';
 	import { getGame } from '$lib/db/repositories/gameRepository';
 	import { getSeasonsByUser, updateSeason } from '$lib/db/repositories/seasonRepository';
-	import { simulateInstantGame } from '$lib/utils/instantGame';
+	import { simulateInstantGame } from '$lib/football/utils/instantGame';
 	import MatchupCard from '$lib/components/season/MatchupCard.svelte';
 	import Standings from '$lib/components/season/Standings.svelte';
 	import button from '$lib/assets/sfx/button.mp3';
@@ -93,7 +93,7 @@
 		// Resume existing game
 		if (matchup.status === 'in_progress' && matchup.gameRecordId) {
 			const record = await getGame(matchup.gameRecordId);
-			if (record) {
+			if (record && record.gameState.sport === 'football') {
 				game.loadSnapshot(record.gameState);
 				game.activeGameId = record.id!;
 				if (record.gameSettings.sport === 'football') settings.loadSnapshot(record.gameSettings);

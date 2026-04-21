@@ -1,6 +1,7 @@
-import { GAME_ACTION, TEAM } from '$lib/constants/constants';
 import type { GameStateSnapshot } from '$lib/db/database';
+import { GAME_ACTION } from '$lib/football/constants';
 import { supabase } from '$lib/online/supabaseClient';
+import { TEAM } from '$lib/shared/constants';
 
 // Actions that require the active player to roll dice
 const ROLL_ACTIONS = new Set([
@@ -25,12 +26,23 @@ export function isActionableState(action: string): boolean {
 
 /**
  * Derive whose turn it is from the current game snapshot.
- * During KICKOFF, possession = receiving team, so the kicker (opposite) rolls.
- * For all other actions, the possession team rolls or decides.
+ *
+ * Most actions: the possessing team acts (rolls or decides).
+ *
+ * Some intermediate actions trigger animation chains that flip possession
+ * (e.g. PLACE_KICKOFF → prepareKickoff). For those, we return the
+ * OPPOSITE team so current_turn matches the post-chain state.
  */
+const POSSESSION_FLIPS_IN_CHAIN = new Set([
+	GAME_ACTION.PLACE_KICKOFF,
+	GAME_ACTION.FIELD_GOAL_MADE,
+	GAME_ACTION.FIELD_GOAL_MISS,
+	GAME_ACTION.KICKOFF_ONSIDE
+]);
+
 export function deriveTurn(snapshot: GameStateSnapshot): 'home' | 'away' {
 	const { action, possession } = snapshot;
-	if (action === GAME_ACTION.KICKOFF) {
+	if (POSSESSION_FLIPS_IN_CHAIN.has(action)) {
 		return possession === TEAM.HOME ? 'away' : 'home';
 	}
 	return possession === TEAM.HOME ? 'home' : 'away';
@@ -40,8 +52,8 @@ export async function pushGameState(
 	gameId: string,
 	snapshot: GameStateSnapshot,
 	currentTurn: 'home' | 'away'
-): Promise<void> {
-	await supabase
+): Promise<boolean> {
+	const { error } = await supabase
 		.from('remote_games')
 		.update({
 			game_state: snapshot,
@@ -49,6 +61,12 @@ export async function pushGameState(
 			updated_at: new Date().toISOString()
 		})
 		.eq('id', gameId);
+
+	if (error) {
+		console.error('[remote] pushGameState failed:', error.message);
+		return false;
+	}
+	return true;
 }
 
 /**

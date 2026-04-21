@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { DEFAULT_TEAM, DICE_COLORS } from '$lib/shared/constants';
 	import { teamsData } from '$lib/baseball/data/data.json';
-	import type { SaveTeam, Team } from '$lib/types';
+	import type { SaveTeam, Team } from '$lib/shared/types';
 	import { pickRandom } from '$lib/utils/common';
 	import { onMount } from 'svelte';
 

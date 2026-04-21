@@ -1,5 +1,5 @@
 import type { SeasonMatchup, SeasonWeek } from '$lib/db/database';
-import type { Team } from '$lib/types';
+import type { Team } from '$lib/shared/types';
 
 /**
  * Generate a round-robin schedule using the circle method.

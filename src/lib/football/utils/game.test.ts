@@ -1,12 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import {
-	BALL_FIELD_GOAL,
-	DEFAULT_TEAM,
-	GAME_ACTION,
-	GAME_MODE,
-	TEAM
-} from '$lib/constants/constants';
-import type { Play, Team } from '$lib/types';
+import { BALL_FIELD_GOAL, GAME_ACTION } from '$lib/football/constants';
+import type { Play } from '$lib/football/types';
+import { DEFAULT_TEAM, GAME_MODE, TEAM } from '$lib/shared/constants';
+import type { Team } from '$lib/shared/types';
 import {
 	backFns,
 	ballPosition,

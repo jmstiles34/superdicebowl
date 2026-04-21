@@ -12,20 +12,15 @@ import {
 	EXTRA_POINT_SUCCESS,
 	FIELD_GOAL_ROLL,
 	GAME_ACTION,
-	INTERCEPTION_ROLLS,
 	KICKOFF_RETURN_ACTION,
 	KICKOFF_RETURN_YARDS,
-	OPPOSITE_TEAM,
 	POINTS,
-	TEAM,
 	TURNOVER_ONSIDE_KICK
-} from '$lib/constants/constants';
+} from '$lib/football/constants';
 import { diceData } from '$lib/football/data/data.json';
-import type { Play } from '$lib/types';
-import { equals, gt, gte, isArray, lt, pickRandom, sumDigits } from '$lib/utils/common';
+import type { Play } from '$lib/football/types';
 import {
 	ballPosition,
-	compareFns,
 	fieldGoalYardsFns,
 	forwardFns,
 	getScoreByTeam,
@@ -42,7 +37,9 @@ import {
 	turnoverOnDowns,
 	twoPointSuccess,
 	yardsToEndzone
-} from '$lib/utils/game';
+} from '$lib/football/utils/game';
+import { OPPOSITE_TEAM, TEAM } from '$lib/shared/constants';
+import { equals, gt, gte, isArray, lt, pickRandom, sumDigits } from '$lib/utils/common';
 
 const MAX_ITERATIONS = 5000;
 

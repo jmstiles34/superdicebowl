@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CONVERSION, GAME_ACTION } from '$lib/constants/constants';
+	import { CONVERSION, GAME_ACTION } from '$lib/football/constants';
 	import button from '$lib/assets/sfx/button.mp3';
 	import { settings } from '$lib/state/settings.svelte';
 	import type { Howl } from 'howler';

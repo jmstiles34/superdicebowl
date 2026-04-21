@@ -1,5 +1,5 @@
 import { type CustomTeamRecord, db } from '$lib/db/database';
-import type { Team } from '$lib/types';
+import type { Team } from '$lib/shared/types';
 
 export async function createCustomTeam(userId: number, teamData: Team): Promise<CustomTeamRecord> {
 	const now = Date.now();

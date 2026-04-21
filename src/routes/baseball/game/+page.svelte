@@ -8,7 +8,7 @@
 	import { pickZone } from '$lib/baseball/utils/hitZones';
 	import { settings } from '$lib/state/settings.svelte';
 	import { sleep } from '$lib/utils/common';
-	import { primaryColor, secondaryColor } from '$lib/utils/game';
+	import { primaryColor, secondaryColor } from '$lib/football/utils/game';
 	import { fireworkShow, options } from '$lib/utils/fireworks';
 	import type { BatterHand, HitType } from '$lib/baseball/types';
 	import { auth } from '$lib/auth/authState.svelte';

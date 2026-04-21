@@ -1,11 +1,12 @@
 <script lang="ts">
 	import '@fontsource/abril-fatface';
 	import { fieldData } from '$lib/football/data/data.json';
-	import { BALL_KICK_GOOD, POSITION, TEAM, YARD_INTERVAL } from '$lib/constants/constants';
+	import { BALL_KICK_GOOD, YARD_INTERVAL } from '$lib/football/constants';
+	import { POSITION, TEAM } from '$lib/shared/constants';
 	import EndZone from '$lib/football/components/Endzone.svelte';
 	import { randomNumber } from '$lib/utils/common';
 	import { getLogoUrl } from '$lib/utils/logoPreloader';
-	import type { Team, Void } from '$lib/types';
+	import type { Team, Void } from '$lib/shared/types';
 
 	type FieldProps = {
 		awayTeam: Team;

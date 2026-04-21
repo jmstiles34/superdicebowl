@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { FOURTH_DOWN, GAME_ACTION } from '$lib/constants/constants';
-	import type { Void } from '$lib/types';
+	import { FOURTH_DOWN, GAME_ACTION } from '$lib/football/constants';
+	import type { Void } from '$lib/shared/types';
 	import button from '$lib/assets/sfx/button.mp3';
 	import { settings } from '$lib/state/settings.svelte';
 	import type { Howl } from 'howler';

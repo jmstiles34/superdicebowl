@@ -3,8 +3,8 @@
 	import { goto } from '$app/navigation';
 	import { Fireworks } from '@fireworks-js/svelte';
 	import { auth } from '$lib/auth/authState.svelte';
-	import { game } from '$lib/state/game.svelte';
-	import { season } from '$lib/state/season.svelte';
+	import { game } from '$lib/football/state/game.svelte';
+	import { season } from '$lib/football/state/season.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import {
 		completeGame,
@@ -25,15 +25,9 @@
 		primaryColor,
 		secondaryColor,
 		showDownDistance
-	} from '$lib/utils/game';
-	import {
-		BALL_FIELD_GOAL,
-		DOWN,
-		GAME_ACTION,
-		GAME_MODE,
-		NOOP,
-		TEAM
-	} from '$lib/constants/constants';
+	} from '$lib/football/utils/game';
+	import { BALL_FIELD_GOAL, DOWN, GAME_ACTION } from '$lib/football/constants';
+	import { GAME_MODE, NOOP, TEAM } from '$lib/shared/constants';
 	import Dice from '$lib/components/Dice.svelte';
 	import CoinToss from '$lib/football/components/modal/CoinToss.svelte';
 	import EventAnnouncement from '$lib/components/EventAnnouncement.svelte';

@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { DEFAULT_PLAY, DEFAULT_PLAY_SUMMARY, GAME_ACTION, TEAM } from '$lib/constants/constants';
+	import { DEFAULT_PLAY, DEFAULT_PLAY_SUMMARY, GAME_ACTION } from '$lib/football/constants';
+	import { TEAM } from '$lib/shared/constants';
 	import { getLogoUrl } from '$lib/utils/logoPreloader';
-	import type { Play, PlaySummary, Team } from '$lib/types';
+	import type { Play, PlaySummary } from '$lib/football/types';
+	import type { Team } from '$lib/shared/types';
 
 	type SummaryProps = {
 		awayTeam: Team;

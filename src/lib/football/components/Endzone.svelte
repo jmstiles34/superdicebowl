@@ -1,11 +1,7 @@
 <script lang="ts">
-	import {
-		DEFAULT_TEAM,
-		NOOP,
-		POSITION
-	} from '$lib/constants/constants';
+	import { DEFAULT_TEAM, NOOP, POSITION } from '$lib/shared/constants';
 	import CustomHelmet from '$lib/football/components/CustomHelmet.svelte';
-	import type { Team, Void } from '$lib/types';
+	import type { Team, Void } from '$lib/shared/types';
 
 	type EndZoneProps = {
 		hasBall: boolean;

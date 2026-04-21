@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { game } from '$lib/baseball/state/game.svelte';
 	import { getLogoUrl } from '$lib/utils/logoPreloader';
-	import type { Team } from '$lib/types';
+	import type { Team } from '$lib/shared/types';
 	import type { Snippet } from 'svelte';
 
 	let { awayTeam, homeTeam, toolbar }: { awayTeam: Team; homeTeam: Team; toolbar?: Snippet } =

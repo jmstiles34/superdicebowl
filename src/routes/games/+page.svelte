@@ -2,17 +2,17 @@
 	import { onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { auth } from '$lib/auth/authState.svelte';
-	import { game } from '$lib/state/game.svelte';
+	import { game } from '$lib/football/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
-	import { TEAM } from '$lib/constants/constants';
+	import { TEAM } from '$lib/shared/constants';
 	import type { FootballGameSettingsSnapshot, FootballGameStateSnapshot, GameRecord } from '$lib/db/database';
 	import { deleteGame, getGamesByUser } from '$lib/db/repositories/gameRepository';
 	import { getSeasonsByUser } from '$lib/db/repositories/seasonRepository';
-	import { getScoreByTeam } from '$lib/utils/game';
+	import { getScoreByTeam } from '$lib/football/utils/game';
 	import Modal from '$lib/components/Modal.svelte';
 	import GameSummary from '$lib/football/components/modal/GameSummary.svelte';
 	import { onlineState } from '$lib/state/onlineState.svelte';
-	import { declineChallenge, getRemoteGames, resignGame, type RemoteGame } from '$lib/online/remoteGames';
+	import { declineChallenge, getRemoteGames, resignGame, type RemoteGame } from '$lib/football/online/remoteGames';
 
 	let activeTab: 'in_progress' | 'completed' | 'online' = $state('in_progress');
 	let remoteGames = $state<RemoteGame[]>([]);
@@ -128,6 +128,7 @@
 	}
 
 	function resumeGame(record: GameRecord) {
+		if (record.gameState.sport !== 'football') return;
 		game.loadSnapshot(record.gameState);
 		game.activeGameId = record.id!;
 		settings.loadSnapshot(record.gameSettings as FootballGameSettingsSnapshot);

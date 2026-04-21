@@ -3,7 +3,7 @@
 	import closeIcon from '$lib/images/close.svg';
 	import ModalPortal from './modal/ModalPortal.svelte';
 	import TrapFocus from './modal/TrapFocus.svelte';
-	import { NOOP } from '$lib/constants/constants';
+	import { NOOP } from '$lib/shared/constants';
 	import type { Snippet } from 'svelte';
 	import { self, stopPropagation } from '$lib/utils/events';
 

@@ -3,7 +3,7 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import CustomHelmet from '$lib/football/components/CustomHelmet.svelte';
 	import { logos } from '$lib/football/data/logos.json';
-	import type { Team } from '$lib/types';
+	import type { Team } from '$lib/shared/types';
 	import { hexToOklch, oklchToHex } from '$lib/utils/common';
 	import { auth } from '$lib/auth/authState.svelte';
 	import rotateLeft from '$lib/images/rotate-left.svg';

@@ -1,5 +1,6 @@
 import Dexie, { type Table } from 'dexie';
-import type { Play, SportType, Team } from '$lib/types';
+import type { Play } from '$lib/football/types';
+import type { SportType, Team } from '$lib/shared/types';
 
 export interface UserRecord {
 	id?: number;

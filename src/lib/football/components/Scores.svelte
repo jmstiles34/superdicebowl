@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { TEAM } from '$lib/constants/constants';
-	import type { Play, Team } from '$lib/types';
-	import { getScoreByTeam } from '$lib/utils/game';
+	import { TEAM } from '$lib/shared/constants';
+	import type { Play } from '$lib/football/types';
+	import type { Team } from '$lib/shared/types';
+	import { getScoreByTeam } from '$lib/football/utils/game';
 	import { getLogoUrl } from '$lib/utils/logoPreloader';
 
 	type ScoresProps = {

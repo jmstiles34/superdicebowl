@@ -2,12 +2,12 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { auth } from '$lib/auth/authState.svelte';
-	import { season } from '$lib/state/season.svelte';
+	import { season } from '$lib/football/state/season.svelte';
 	import { teamsData } from '$lib/football/data/data.json';
 	import { getCustomTeamsByUser } from '$lib/db/repositories/customTeamRepository';
 	import { createSeason, deleteSeason, getSeasonsByUser } from '$lib/db/repositories/seasonRepository';
 	import { generateSchedule } from '$lib/utils/schedule';
-	import type { Team } from '$lib/types';
+	import type { Team } from '$lib/shared/types';
 	import type { SeasonRecord, StandingsEntry } from '$lib/db/database';
 	import tap from '$lib/assets/sfx/tap.mp3';
 	import tackle from '$lib/assets/sfx/tackle.mp3';

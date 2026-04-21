@@ -4,7 +4,7 @@
 	import { auth } from '$lib/auth/authState.svelte';
 	import { onlineState } from '$lib/state/onlineState.svelte';
 	import { supabase } from '$lib/online/supabaseClient';
-	import { DEFAULT_TEAM } from '$lib/constants/constants';
+	import { DEFAULT_TEAM } from '$lib/shared/constants';
 	import { teamsData } from '$lib/football/data/data.json';
 	import { getCustomTeamsByUser } from '$lib/db/repositories/customTeamRepository';
 	import {
@@ -22,8 +22,8 @@
 		type OnlineNotification,
 		type Profile
 	} from '$lib/online/friends';
-	import { createChallenge, acceptChallenge, declineChallenge } from '$lib/online/remoteGames';
-	import type { Team } from '$lib/types';
+	import { createChallenge, acceptChallenge, declineChallenge } from '$lib/football/online/remoteGames';
+	import type { Team } from '$lib/shared/types';
 
 	type Tab = 'notifications' | 'friends' | 'find';
 

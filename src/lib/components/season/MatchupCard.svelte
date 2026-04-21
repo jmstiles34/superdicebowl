@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SeasonMatchup } from '$lib/db/database';
-	import type { Team } from '$lib/types';
+	import type { Team } from '$lib/shared/types';
 
 	type MatchupCardProps = {
 		matchup: SeasonMatchup;

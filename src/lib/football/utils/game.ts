@@ -1,15 +1,13 @@
 import {
 	BALL_FIELD_GOAL,
-	DEFAULT_TEAM,
 	FIELD_GOAL_YARDS,
 	GAME_ACTION,
-	GAME_MODE,
-	OPPOSITE_TEAM,
-	TEAM,
 	YARD_INTERVAL
-} from '$lib/constants/constants';
+} from '$lib/football/constants';
+import type { DiceRoll, Play } from '$lib/football/types';
+import { DEFAULT_TEAM, GAME_MODE, OPPOSITE_TEAM, TEAM } from '$lib/shared/constants';
+import type { Team } from '$lib/shared/types';
 import type { Settings } from '$lib/state/settings.svelte';
-import type { DiceRoll, Play, Team } from '$lib/types';
 import { add, buildTextString, equals, gte, lte, randomNumber, subtract } from '$lib/utils/common';
 
 export const backFns = {

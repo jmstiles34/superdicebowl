@@ -1,5 +1,5 @@
 import type { SeasonRecord, SeasonWeek, StandingsEntry } from '$lib/db/database';
-import type { Team } from '$lib/types';
+import type { Team } from '$lib/shared/types';
 
 class SeasonState {
 	activeSeasonId: number | null = $state(null);

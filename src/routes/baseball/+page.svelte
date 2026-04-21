@@ -4,7 +4,7 @@
 	import { game } from '$lib/baseball/state/game.svelte';
 	import { GAME_MODE, TEAM } from '$lib/shared/constants';
 	import { DEFAULT_TEAM } from '$lib/shared/constants';
-	import { beginDisabled } from '$lib/utils/game';
+	import { beginDisabled } from '$lib/football/utils/game';
 	import { sleep } from '$lib/utils/common';
 	import tap from '$lib/assets/sfx/tap.mp3';
 	import gust from '$lib/assets/sfx/gust.mp3';
@@ -13,7 +13,7 @@
 	import { createSound, playSound } from '$lib/utils/sound';
 	import { settings } from '$lib/state/settings.svelte';
 	import TeamSelect from '$lib/baseball/components/TeamSelect.svelte';
-	import type { Team } from '$lib/types';
+	import type { Team } from '$lib/shared/types';
 
 	const gustSfx: Howl = createSound(gust);
 	const tackleSfx: Howl = createSound(tackle);

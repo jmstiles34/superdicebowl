@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_TEAM } from '$lib/constants/constants';
-import type { Team } from '$lib/types';
+import { DEFAULT_TEAM } from '$lib/shared/constants';
+import type { Team } from '$lib/shared/types';
 import { generateSchedule } from './schedule';
 
 // ─── Fixtures ──────────────────────────────────────────────

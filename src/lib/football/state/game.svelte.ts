@@ -10,6 +10,7 @@ import shake from '$lib/assets/sfx/shake.mp3';
 import touchdown from '$lib/assets/sfx/touchdown.mp3';
 import whiz from '$lib/assets/sfx/whiz.mp3';
 import whoosh from '$lib/assets/sfx/whoosh.mp3';
+import type { FootballGameStateSnapshot } from '$lib/db/database';
 import {
 	BALL_ENDZONE,
 	BALL_EXTRA_POINT,
@@ -29,15 +30,11 @@ import {
 	INTERCEPTION_ROLLS,
 	KICKOFF_RETURN_ACTION,
 	KICKOFF_RETURN_YARDS,
-	OPPOSITE_TEAM,
 	POINTS,
 	TURNOVER_ONSIDE_KICK
-} from '$lib/constants/constants';
-import type { GameStateSnapshot } from '$lib/db/database';
+} from '$lib/football/constants';
 import { diceData } from '$lib/football/data/data.json';
-import { settings } from '$lib/state/settings.svelte';
-import type { Play } from '$lib/types';
-import { equals, gt, gte, isArray, lt, pickRandom, sleep, sumDigits } from '$lib/utils/common';
+import type { Play } from '$lib/football/types';
 import {
 	ballPosition,
 	calcYardsToGo,
@@ -65,7 +62,10 @@ import {
 	turnoverOnDowns,
 	twoPointSuccess,
 	yardsToEndzone
-} from '$lib/utils/game';
+} from '$lib/football/utils/game';
+import { OPPOSITE_TEAM } from '$lib/shared/constants';
+import { settings } from '$lib/state/settings.svelte';
+import { equals, gt, gte, isArray, lt, pickRandom, sleep, sumDigits } from '$lib/utils/common';
 import { createSound, playSound } from '$lib/utils/sound';
 
 class CancelledError extends Error {
@@ -170,7 +170,7 @@ class GameState {
 		this.playLog = [...this.playLog, play];
 	};
 
-	snapshotState = (): GameStateSnapshot =>
+	snapshotState = (): FootballGameStateSnapshot =>
 		$state.snapshot({
 			sport: 'football' as const,
 			action: this.action,
@@ -180,6 +180,7 @@ class GameState {
 			firstDownIndex: this.firstDownIndex,
 			lastPlay: this.lastPlay,
 			missedKick: this.missedKick,
+			missedTwoPoint: this.missedTwoPoint,
 			modalContent: this.modalContent,
 			onsideKick: this.onsideKick,
 			playLog: this.playLog,
@@ -188,7 +189,7 @@ class GameState {
 			yardsToGo: this.yardsToGo
 		});
 
-	loadSnapshot = (snapshot: GameStateSnapshot) => {
+	loadSnapshot = (snapshot: FootballGameStateSnapshot) => {
 		for (const [key, value] of Object.entries(snapshot)) {
 			(this as Record<string, unknown>)[key] = value;
 		}
@@ -241,28 +242,31 @@ class GameState {
 				const description = isTurnoverOnDowns
 					? 'TURNOVER: On downs'
 					: `TURNOVER: ${label} ${playYards} Yds downfield`;
+				const turnoverAction = isTurnoverOnDowns
+					? GAME_ACTION.TURNOVER
+					: isInterception
+						? GAME_ACTION.INTERCEPTION
+						: GAME_ACTION.FUMBLE;
 				playSound(shakeSfx, settings.volume);
 				if (isTouchback(playIndex)) {
 					const newPos = OPPOSITE_TEAM[this.possession];
-					this.action = GAME_ACTION.OFFENSE;
+					this.action = turnoverAction;
 					this.ballIndex = BALL_PUNT[newPos];
 					this.currentDown = 1;
 					this.firstDownIndex = setFirstDownMarker(BALL_PUNT[newPos], newPos);
 					this.lastPlay = 'TURNOVER: Int in the endzone (Touchback)';
 					this.possession = newPos;
-					this.restrictDice = false;
 					this.yardsToGo = 10;
 				} else {
 					const newPos = OPPOSITE_TEAM[this.possession];
 					const newFirstDown = setFirstDownMarker(playIndex, newPos);
-					this.action = GAME_ACTION.OFFENSE;
+					this.action = turnoverAction;
 					this.ballIndex = playIndex;
 					this.currentDown = 1;
 					this.firstDownIndex = newFirstDown;
 					this.lastPlay = description;
 					this.missedKick = false;
 					this.possession = newPos;
-					this.restrictDice = false;
 					this.yardsToGo = calcYardsToGo(newFirstDown, newFirstDown - playIndex);
 				}
 				playResult.description = this.lastPlay;
@@ -408,15 +412,27 @@ class GameState {
 				case GAME_ACTION.FIELD_GOAL_MISS:
 					await this.delay(1500, seqId);
 					this.turnover(ballIndex);
+					await this.save();
+					break;
+				case GAME_ACTION.FUMBLE:
+				case GAME_ACTION.INTERCEPTION:
+				case GAME_ACTION.PUNT_RESULT:
+				case GAME_ACTION.TURNOVER:
+					await this.delay(1500, seqId);
+					this.action = GAME_ACTION.OFFENSE;
+					this.restrictDice = false;
+					await this.save();
 					break;
 				case GAME_ACTION.FOURTH_DOWN:
 					await this.delay(1500, seqId);
 					this.action = GAME_ACTION.FOURTH_DOWN_OPTIONS;
+					await this.save();
 					this.handleSoloDecision();
 					break;
 				case GAME_ACTION.KICKOFF_ONSIDE:
 					await this.delay(100, seqId);
 					this.saveKickoffOnside();
+					await this.save();
 					break;
 				case GAME_ACTION.KICKOFF_KICK:
 					await this.delay(1000, seqId);
@@ -425,6 +441,7 @@ class GameState {
 				case GAME_ACTION.KICKOFF_RETURN:
 					await this.delay(1000, seqId);
 					this.action = GAME_ACTION.OFFENSE;
+					await this.save();
 					break;
 				case GAME_ACTION.KICKOFF_TOUCHDOWN:
 					await this.delay(1000, seqId);
@@ -433,10 +450,12 @@ class GameState {
 				case GAME_ACTION.PLACE_KICKOFF:
 					await this.delay(1500, seqId);
 					this.prepareKickoff();
+					await this.save();
 					break;
 				case GAME_ACTION.TOUCHDOWN:
 					await this.delay(2000, seqId);
 					this.action = GAME_ACTION.POINT_OPTION;
+					await this.save();
 					this.handleSoloDecision();
 					break;
 				default:
@@ -587,13 +606,12 @@ class GameState {
 		const puntIndex = forwardFns[puntingTeam](this.ballIndex, distanceIndex);
 		const newPos = OPPOSITE_TEAM[puntingTeam];
 		const newBallIndex = isTouchback(puntIndex) ? BALL_PUNT[newPos] : puntIndex;
-		this.action = GAME_ACTION.OFFENSE;
+		this.action = GAME_ACTION.PUNT_RESULT;
 		this.ballIndex = newBallIndex;
 		this.currentDown = 1;
 		this.firstDownIndex = setFirstDownMarker(puntIndex, newPos);
 		this.lastPlay = descPunt(isTouchback(puntIndex), indexToYards(distanceIndex));
 		this.possession = newPos;
-		this.restrictDice = false;
 		this.yardsToGo = 10;
 		const playResult: Play = {
 			...DEFAULT_PLAY,
@@ -655,8 +673,3 @@ class GameState {
 }
 
 export const game = new GameState();
-
-// Compile-time check: GameState satisfies the shared SportEngine contract
-import type { SportEngine } from '$lib/shared/types';
-
-null as unknown as GameState satisfies SportEngine;

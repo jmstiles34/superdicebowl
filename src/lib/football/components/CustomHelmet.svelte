@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { POSITION } from '$lib/constants/constants';
+	import { POSITION } from '$lib/shared/constants';
 	import { lightenColor } from '$lib/utils/common';
 	import { getLogoUrl } from '$lib/utils/logoPreloader';
 

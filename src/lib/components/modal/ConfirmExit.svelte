@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { auth } from '$lib/auth/authState.svelte';
-	import { season } from '$lib/state/season.svelte';
+	import { season } from '$lib/football/state/season.svelte';
 
 	type ConfirmExitProps = {
 		cancel: () => void;

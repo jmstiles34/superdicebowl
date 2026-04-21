@@ -1,12 +1,12 @@
-import { DEFAULT_GAME, OPPOSITE_TEAM } from '$lib/constants/constants';
 import type { GameStateSnapshot } from '$lib/db/database';
+import { DEFAULT_GAME } from '$lib/football/constants';
 import type { Profile } from '$lib/online/friends';
 import { supabase } from '$lib/online/supabaseClient';
-import type { SportType, Team } from '$lib/types';
+import type { Team } from '$lib/shared/types';
+import { deriveTurn } from './remoteGameEngine';
 
 export interface RemoteGame {
 	id: string;
-	sport: SportType;
 	homeUserId: string;
 	awayUserId: string;
 	homeTeam: Team;
@@ -25,8 +25,7 @@ export async function createChallenge(
 	homeUserId: string,
 	awayUserId: string,
 	homeTeam: Team,
-	winScore: number,
-	sport: SportType = 'football'
+	winScore: number
 ): Promise<{ success: boolean; gameId?: string; error?: string }> {
 	const { data, error } = await supabase
 		.from('remote_games')
@@ -35,7 +34,6 @@ export async function createChallenge(
 			away_user_id: awayUserId,
 			home_team: homeTeam,
 			win_score: winScore,
-			sport,
 			status: 'pending_team_select'
 		})
 		.select('id')
@@ -50,7 +48,7 @@ export async function createChallenge(
 		from_user_id: homeUserId,
 		type: 'game_invite',
 		game_id: data.id,
-		data: { homeTeamName: `${homeTeam.city} ${homeTeam.name}`, winScore, sport }
+		data: { homeTeamName: `${homeTeam.city} ${homeTeam.name}`, homeTeamId: homeTeam.id, winScore }
 	});
 
 	return { success: true, gameId: data.id };
@@ -61,18 +59,18 @@ export async function acceptChallenge(
 	awayTeam: Team,
 	homeUserId: string,
 	awayUserId: string
-): Promise<void> {
+): Promise<boolean> {
 	const possession = Math.random() < 0.5 ? 'Home' : 'Away';
-	const currentTurn: 'home' | 'away' = possession === 'Home' ? 'away' : 'home';
 
 	const gameState: GameStateSnapshot = {
 		...DEFAULT_GAME,
-		sport: 'football',
 		action: 'Place Kickoff',
 		possession
 	};
 
-	await supabase
+	const currentTurn = deriveTurn(gameState);
+
+	const { error } = await supabase
 		.from('remote_games')
 		.update({
 			away_team: awayTeam,
@@ -83,14 +81,19 @@ export async function acceptChallenge(
 		})
 		.eq('id', gameId);
 
-	// Notify whoever kicks first that it's their turn
+	if (error) return false;
+
+	// Notify whoever acts first that it's their turn
 	const notifyUserId = currentTurn === 'home' ? homeUserId : awayUserId;
+	const fromUserId = currentTurn === 'home' ? awayUserId : homeUserId;
 	await supabase.from('notifications').insert({
 		user_id: notifyUserId,
-		from_user_id: awayUserId,
+		from_user_id: fromUserId,
 		type: 'your_turn',
 		game_id: gameId
 	});
+
+	return true;
 }
 
 export async function declineChallenge(gameId: string): Promise<void> {
@@ -104,10 +107,10 @@ export async function getRemoteGame(gameId: string): Promise<RemoteGame | null> 
 	const { data } = await supabase
 		.from('remote_games')
 		.select(
-			`id, sport, home_user_id, away_user_id, home_team, away_team,
-			 status, current_turn, game_state, win_score, created_at, updated_at,
-			 home_profile:home_user_id(id, username),
-			 away_profile:away_user_id(id, username)`
+			`id, home_user_id, away_user_id, home_team, away_team,
+       status, current_turn, game_state, win_score, created_at, updated_at,
+       home_profile:home_user_id(id, username),
+       away_profile:away_user_id(id, username)`
 		)
 		.eq('id', gameId)
 		.single();
@@ -116,23 +119,18 @@ export async function getRemoteGame(gameId: string): Promise<RemoteGame | null> 
 	return mapRemoteGame(data);
 }
 
-export async function getRemoteGames(userId: string, sport?: SportType): Promise<RemoteGame[]> {
-	let query = supabase
+export async function getRemoteGames(userId: string): Promise<RemoteGame[]> {
+	const { data } = await supabase
 		.from('remote_games')
 		.select(
-			`id, sport, home_user_id, away_user_id, home_team, away_team,
-			 status, current_turn, game_state, win_score, created_at, updated_at,
-			 home_profile:home_user_id(id, username),
-			 away_profile:away_user_id(id, username)`
+			`id, home_user_id, away_user_id, home_team, away_team,
+       status, current_turn, game_state, win_score, created_at, updated_at,
+       home_profile:home_user_id(id, username),
+       away_profile:away_user_id(id, username)`
 		)
 		.or(`home_user_id.eq.${userId},away_user_id.eq.${userId}`)
-		.neq('status', 'declined');
-
-	if (sport) {
-		query = query.eq('sport', sport);
-	}
-
-	const { data } = await query.order('updated_at', { ascending: false });
+		.neq('status', 'declined')
+		.order('updated_at', { ascending: false });
 
 	if (!data) return [];
 	return data.map(mapRemoteGame);
@@ -174,11 +172,35 @@ export async function checkAndApplyForfeit(game: RemoteGame): Promise<RemoteGame
 	return { ...game, status: 'completed' };
 }
 
+export async function resignGame(
+	gameId: string,
+	resigningUserId: string,
+	opponentUserId: string
+): Promise<void> {
+	await supabase.rpc('forfeit_game', { game_id: gameId });
+
+	await supabase.from('notifications').insert([
+		{
+			user_id: resigningUserId,
+			from_user_id: opponentUserId,
+			type: 'game_over',
+			game_id: gameId,
+			data: { result: 'forfeit_loss' }
+		},
+		{
+			user_id: opponentUserId,
+			from_user_id: resigningUserId,
+			type: 'game_over',
+			game_id: gameId,
+			data: { result: 'forfeit_win' }
+		}
+	]);
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapRemoteGame(d: any): RemoteGame {
 	return {
 		id: d.id,
-		sport: (d.sport as SportType) ?? 'football',
 		homeUserId: d.home_user_id,
 		awayUserId: d.away_user_id,
 		homeTeam: d.home_team as Team,

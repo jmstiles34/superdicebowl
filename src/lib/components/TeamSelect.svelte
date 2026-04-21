@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { DEFAULT_TEAM, DICE_COLORS, NOOP, POSITION, TEAM } from '$lib/constants/constants';
+	import { DEFAULT_TEAM, DICE_COLORS, NOOP, POSITION, TEAM } from '$lib/shared/constants';
 	import { teamsData } from '$lib/football/data/data.json';
-	import type { SaveTeam, Team } from '$lib/types';
+	import type { SaveTeam, Team } from '$lib/shared/types';
 	import { pickRandom } from '$lib/utils/common';
-	import { setRandomTeam, teamByUUId } from '$lib/utils/game';
+	import { setRandomTeam, teamByUUId } from '$lib/football/utils/game';
 	import { cubicInOut } from 'svelte/easing';
 	import fadeScale from '$lib/transitions/fadeScale';
 	import Modal from '$lib/components/Modal.svelte';
