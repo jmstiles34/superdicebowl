@@ -1,4 +1,960 @@
 {
-	"teamsData": [],
-	"diceData": []
+	"teamsData": [
+  {
+    "city": "Anaheim",
+    "cityKey": "ANA",
+    "name": "Ducks",
+    "logo": "nhl-ducks",
+    "id": "8c3e4b61-0001",
+    "colors": {
+      "primary": "oklch(0.63 0.20 40)",
+      "secondary": "oklch(0.00 0.00 0)",
+      "tertiary": "oklch(0.72 0.08 85)",
+      "quaternary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Boston",
+    "cityKey": "BOS",
+    "name": "Bruins",
+    "logo": "nhl-bruins",
+    "id": "8c3e4b61-0002",
+    "colors": {
+      "primary": "oklch(0.88 0.16 85)",
+      "secondary": "oklch(0.00 0.00 0)",
+      "tertiary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Buffalo",
+    "cityKey": "BUF",
+    "name": "Sabres",
+    "logo": "nhl-sabres",
+    "id": "8c3e4b61-0003",
+    "colors": {
+      "primary": "oklch(0.39 0.16 260)",
+      "secondary": "oklch(0.88 0.16 85)",
+      "tertiary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Calgary",
+    "cityKey": "CGY",
+    "name": "Flames",
+    "logo": "nhl-flames",
+    "id": "8c3e4b61-0004",
+    "colors": {
+      "primary": "oklch(0.55 0.21 25)",
+      "secondary": "oklch(0.85 0.14 90)",
+      "tertiary": "oklch(0.18 0.00 0)",
+      "quaternary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Carolina",
+    "cityKey": "CAR",
+    "name": "Hurricanes",
+    "logo": "nhl-hurricanes",
+    "id": "8c3e4b61-0005",
+    "colors": {
+      "primary": "oklch(0.54 0.22 25)",
+      "secondary": "oklch(0.00 0.00 0)",
+      "tertiary": "oklch(0.74 0.02 260)",
+      "quaternary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Chicago",
+    "cityKey": "CHI",
+    "name": "Blackhawks",
+    "logo": "nhl-blackhawks",
+    "id": "8c3e4b61-0006",
+    "colors": {
+      "primary": "oklch(0.55 0.22 25)",
+      "secondary": "oklch(0.00 0.00 0)",
+      "tertiary": "oklch(0.90 0.18 100)",
+      "quaternary": "oklch(0.60 0.15 145)"
+    }
+  },
+  {
+    "city": "Colorado",
+    "cityKey": "COL",
+    "name": "Avalanche",
+    "logo": "nhl-avalanche",
+    "id": "8c3e4b61-0007",
+    "colors": {
+      "primary": "oklch(0.40 0.10 350)",
+      "secondary": "oklch(0.48 0.14 250)",
+      "tertiary": "oklch(0.75 0.02 260)",
+      "quaternary": "oklch(0.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Columbus",
+    "cityKey": "CBJ",
+    "name": "Blue Jackets",
+    "logo": "nhl-bluejackets",
+    "id": "8c3e4b61-0008",
+    "colors": {
+      "primary": "oklch(0.32 0.10 260)",
+      "secondary": "oklch(0.55 0.22 25)",
+      "tertiary": "oklch(0.74 0.02 260)",
+      "quaternary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Dallas",
+    "cityKey": "DAL",
+    "name": "Stars",
+    "logo": "nhl-stars",
+    "id": "8c3e4b61-0009",
+    "colors": {
+      "primary": "oklch(0.50 0.12 155)",
+      "secondary": "oklch(0.65 0.02 90)",
+      "tertiary": "oklch(0.18 0.00 0)",
+      "quaternary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Detroit",
+    "cityKey": "DET",
+    "name": "Red Wings",
+    "logo": "nhl-redwings",
+    "id": "8c3e4b61-0010",
+    "colors": {
+      "primary": "oklch(0.55 0.22 25)",
+      "secondary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Edmonton",
+    "cityKey": "EDM",
+    "name": "Oilers",
+    "logo": "nhl-oilers",
+    "id": "8c3e4b61-0011",
+    "colors": {
+      "primary": "oklch(0.28 0.10 255)",
+      "secondary": "oklch(0.65 0.22 40)",
+      "tertiary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Florida",
+    "cityKey": "FLA",
+    "name": "Panthers",
+    "logo": "nhl-panthers",
+    "id": "8c3e4b61-0012",
+    "colors": {
+      "primary": "oklch(0.28 0.10 255)",
+      "secondary": "oklch(0.55 0.22 25)",
+      "tertiary": "oklch(0.72 0.08 85)",
+      "quaternary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Los Angeles",
+    "cityKey": "LAK",
+    "name": "Kings",
+    "logo": "nhl-kings",
+    "id": "8c3e4b61-0013",
+    "colors": {
+      "primary": "oklch(0.18 0.00 0)",
+      "secondary": "oklch(0.75 0.02 260)",
+      "tertiary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Minnesota",
+    "cityKey": "MIN",
+    "name": "Wild",
+    "logo": "nhl-wild",
+    "id": "8c3e4b61-0014",
+    "colors": {
+      "primary": "oklch(0.42 0.12 155)",
+      "secondary": "oklch(0.50 0.20 25)",
+      "tertiary": "oklch(0.80 0.15 95)",
+      "quaternary": "oklch(0.80 0.05 85)"
+    }
+  },
+  {
+    "city": "Montreal",
+    "cityKey": "MTL",
+    "name": "Canadiens",
+    "logo": "nhl-canadiens",
+    "id": "8c3e4b61-0015",
+    "colors": {
+      "primary": "oklch(0.52 0.20 25)",
+      "secondary": "oklch(0.30 0.12 260)",
+      "tertiary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Nashville",
+    "cityKey": "NSH",
+    "name": "Predators",
+    "logo": "nhl-predators",
+    "id": "8c3e4b61-0016",
+    "colors": {
+      "primary": "oklch(0.88 0.16 85)",
+      "secondary": "oklch(0.28 0.10 255)",
+      "tertiary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "New Jersey",
+    "cityKey": "NJD",
+    "name": "Devils",
+    "logo": "nhl-devils",
+    "id": "8c3e4b61-0017",
+    "colors": {
+      "primary": "oklch(0.55 0.22 25)",
+      "secondary": "oklch(0.00 0.00 0)",
+      "tertiary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "New York",
+    "cityKey": "NYI",
+    "name": "Islanders",
+    "logo": "nhl-islanders",
+    "id": "8c3e4b61-0018",
+    "colors": {
+      "primary": "oklch(0.45 0.16 255)",
+      "secondary": "oklch(0.68 0.22 40)",
+      "tertiary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "New York",
+    "cityKey": "NYR",
+    "name": "Rangers",
+    "logo": "nhl-rangers",
+    "id": "8c3e4b61-0019",
+    "colors": {
+      "primary": "oklch(0.40 0.16 255)",
+      "secondary": "oklch(0.55 0.22 25)",
+      "tertiary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Ottawa",
+    "cityKey": "OTT",
+    "name": "Senators",
+    "logo": "nhl-senators",
+    "id": "8c3e4b61-0020",
+    "colors": {
+      "primary": "oklch(0.55 0.22 25)",
+      "secondary": "oklch(0.00 0.00 0)",
+      "tertiary": "oklch(0.75 0.10 85)",
+      "quaternary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Philadelphia",
+    "cityKey": "PHI",
+    "name": "Flyers",
+    "logo": "nhl-flyers",
+    "id": "8c3e4b61-0021",
+    "colors": {
+      "primary": "oklch(0.68 0.23 40)",
+      "secondary": "oklch(0.00 0.00 0)",
+      "tertiary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Pittsburgh",
+    "cityKey": "PIT",
+    "name": "Penguins",
+    "logo": "nhl-penguins",
+    "id": "8c3e4b61-0022",
+    "colors": {
+      "primary": "oklch(0.00 0.00 0)",
+      "secondary": "oklch(0.86 0.17 90)",
+      "tertiary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "San Jose",
+    "cityKey": "SJS",
+    "name": "Sharks",
+    "logo": "nhl-sharks",
+    "id": "8c3e4b61-0023",
+    "colors": {
+      "primary": "oklch(0.50 0.10 190)",
+      "secondary": "oklch(0.65 0.22 40)",
+      "tertiary": "oklch(0.00 0.00 0)",
+      "quaternary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Seattle",
+    "cityKey": "SEA",
+    "name": "Kraken",
+    "logo": "nhl-kraken",
+    "id": "8c3e4b61-0024",
+    "colors": {
+      "primary": "oklch(0.20 0.06 250)",
+      "secondary": "oklch(0.85 0.06 200)",
+      "tertiary": "oklch(0.40 0.06 220)",
+      "quaternary": "oklch(0.70 0.08 210)"
+    }
+  },
+  {
+    "city": "St. Louis",
+    "cityKey": "STL",
+    "name": "Blues",
+    "logo": "nhl-blues",
+    "id": "8c3e4b61-0025",
+    "colors": {
+      "primary": "oklch(0.38 0.16 255)",
+      "secondary": "oklch(0.86 0.17 90)",
+      "tertiary": "oklch(0.28 0.10 255)",
+      "quaternary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Tampa Bay",
+    "cityKey": "TBL",
+    "name": "Lightning",
+    "logo": "nhl-lightning",
+    "id": "8c3e4b61-0026",
+    "colors": {
+      "primary": "oklch(0.32 0.12 255)",
+      "secondary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Toronto",
+    "cityKey": "TOR",
+    "name": "Maple Leafs",
+    "logo": "nhl-mapleleafs",
+    "id": "8c3e4b61-0027",
+    "colors": {
+      "primary": "oklch(0.30 0.12 255)",
+      "secondary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Utah",
+    "cityKey": "UTA",
+    "name": "Hockey Club",
+    "logo": "nhl-hockeyclub",
+    "id": "8c3e4b61-0028",
+    "colors": {
+      "primary": "oklch(0.00 0.00 0)",
+      "secondary": "oklch(1.00 0.00 0)",
+      "tertiary": "oklch(0.70 0.10 240)"
+    }
+  },
+  {
+    "city": "Vancouver",
+    "cityKey": "VAN",
+    "name": "Canucks",
+    "logo": "nhl-canucks",
+    "id": "8c3e4b61-0029",
+    "colors": {
+      "primary": "oklch(0.30 0.12 255)",
+      "secondary": "oklch(0.50 0.12 155)",
+      "tertiary": "oklch(0.20 0.06 250)",
+      "quaternary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Vegas",
+    "cityKey": "VGK",
+    "name": "Golden Knights",
+    "logo": "nhl-goldenknights",
+    "id": "8c3e4b61-0030",
+    "colors": {
+      "primary": "oklch(0.70 0.10 85)",
+      "secondary": "oklch(0.40 0.02 200)",
+      "tertiary": "oklch(0.55 0.22 25)",
+      "quaternary": "oklch(0.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Washington",
+    "cityKey": "WSH",
+    "name": "Capitals",
+    "logo": "nhl-capitals",
+    "id": "8c3e4b61-0031",
+    "colors": {
+      "primary": "oklch(0.28 0.10 255)",
+      "secondary": "oklch(0.55 0.22 25)",
+      "tertiary": "oklch(1.00 0.00 0)"
+    }
+  },
+  {
+    "city": "Winnipeg",
+    "cityKey": "WPG",
+    "name": "Jets",
+    "logo": "nhl-jets",
+    "id": "8c3e4b61-0032",
+    "colors": {
+      "primary": "oklch(0.28 0.10 255)",
+      "secondary": "oklch(0.40 0.14 250)",
+      "tertiary": "oklch(0.35 0.10 10)",
+      "quaternary": "oklch(0.70 0.02 260)"
+    }
+  },
+  {
+    "city": "Adirondack",
+    "cityKey": "ADK",
+    "name": "Thunder",
+    "logo": "echl-thunder",
+    "id": "echl-0001",
+    "colors": {
+      "primary": "#002B5C",
+      "secondary": "#F05A28",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Allen",
+    "cityKey": "ALN",
+    "name": "Americans",
+    "logo": "echl-americans",
+    "id": "echl-0002",
+    "colors": {
+      "primary": "#C8102E",
+      "secondary": "#0033A0",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Atlanta",
+    "cityKey": "ATL",
+    "name": "Gladiators",
+    "logo": "echl-gladiators",
+    "id": "echl-0003",
+    "colors": {
+      "primary": "#111111",
+      "secondary": "#C8102E",
+      "tertiary": "#F2A900"
+    }
+  },
+  {
+    "city": "Bloomington",
+    "cityKey": "BLM",
+    "name": "Bison",
+    "logo": "echl-bison",
+    "id": "echl-0004",
+    "colors": {
+      "primary": "#5B2C83",
+      "secondary": "#F2A900",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Cincinnati",
+    "cityKey": "CIN",
+    "name": "Cyclones",
+    "logo": "echl-cyclones",
+    "id": "echl-0005",
+    "colors": {
+      "primary": "#E31837",
+      "secondary": "#000000",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Florida",
+    "cityKey": "FLA",
+    "name": "Everblades",
+    "logo": "echl-everblades",
+    "id": "echl-0006",
+    "colors": {
+      "primary": "#004B87",
+      "secondary": "#C5A028",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Fort Wayne",
+    "cityKey": "FW",
+    "name": "Komets",
+    "logo": "echl-komets",
+    "id": "echl-0007",
+    "colors": {
+      "primary": "#000000",
+      "secondary": "#F05A28",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Greenville",
+    "cityKey": "GVL",
+    "name": "Swamp Rabbits",
+    "logo": "echl-swamp-rabbits",
+    "id": "echl-0008",
+    "colors": {
+      "primary": "#00573F",
+      "secondary": "#F2A900",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Idaho",
+    "cityKey": "IDH",
+    "name": "Steelheads",
+    "logo": "echl-steelheads",
+    "id": "echl-0009",
+    "colors": {
+      "primary": "#003A8F",
+      "secondary": "#F2A900",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Indy",
+    "cityKey": "IND",
+    "name": "Fuel",
+    "logo": "echl-fuel",
+    "id": "echl-0010",
+    "colors": {
+      "primary": "#041E42",
+      "secondary": "#C8102E",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Iowa",
+    "cityKey": "IA",
+    "name": "Heartlanders",
+    "logo": "echl-heartlanders",
+    "id": "echl-0011",
+    "colors": {
+      "primary": "#1E4D2B",
+      "secondary": "#F2A900",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Jacksonville",
+    "cityKey": "JAX",
+    "name": "Icemen",
+    "logo": "echl-icemen",
+    "id": "echl-0012",
+    "colors": {
+      "primary": "#041E42",
+      "secondary": "#00A3E0",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Kansas City",
+    "cityKey": "KC",
+    "name": "Mavericks",
+    "logo": "echl-mavericks",
+    "id": "echl-0013",
+    "colors": {
+      "primary": "#002F87",
+      "secondary": "#F2A900",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Kalamazoo",
+    "cityKey": "KZ",
+    "name": "Wings",
+    "logo": "echl-wings",
+    "id": "echl-0014",
+    "colors": {
+      "primary": "#F05A28",
+      "secondary": "#000000",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Maine",
+    "cityKey": "MNE",
+    "name": "Mariners",
+    "logo": "echl-mariners",
+    "id": "echl-0015",
+    "colors": {
+      "primary": "#00205B",
+      "secondary": "#00A3E0",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Norfolk",
+    "cityKey": "NOR",
+    "name": "Admirals",
+    "logo": "echl-admirals",
+    "id": "echl-0016",
+    "colors": {
+      "primary": "#041E42",
+      "secondary": "#A2AAAD",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Orlando",
+    "cityKey": "ORL",
+    "name": "Solar Bears",
+    "logo": "echl-solarbears",
+    "id": "echl-0017",
+    "colors": {
+      "primary": "#4B2E83",
+      "secondary": "#F2A900",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Rapid City",
+    "cityKey": "RC",
+    "name": "Rush",
+    "logo": "echl-rush",
+    "id": "echl-0018",
+    "colors": {
+      "primary": "#041E42",
+      "secondary": "#F2A900",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Reading",
+    "cityKey": "RDG",
+    "name": "Royals",
+    "logo": "echl-royals",
+    "id": "echl-0019",
+    "colors": {
+      "primary": "#002F87",
+      "secondary": "#C5A028",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Savannah",
+    "cityKey": "SAV",
+    "name": "Ghost Pirates",
+    "logo": "echl-ghostpirates",
+    "id": "echl-0020",
+    "colors": {
+      "primary": "#0C2340",
+      "secondary": "#00A3E0",
+      "tertiary": "#A7A8AA"
+    }
+  },
+  {
+    "city": "South Carolina",
+    "cityKey": "SC",
+    "name": "Stingrays",
+    "logo": "echl-stingrays",
+    "id": "echl-0021",
+    "colors": {
+      "primary": "#041E42",
+      "secondary": "#F2A900",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Toledo",
+    "cityKey": "TOL",
+    "name": "Walleye",
+    "logo": "echl-walleye",
+    "id": "echl-0022",
+    "colors": {
+      "primary": "#003A5D",
+      "secondary": "#F2A900",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Tulsa",
+    "cityKey": "TUL",
+    "name": "Oil ers",
+    "logo": "echl-oilers",
+    "id": "echl-0023",
+    "colors": {
+      "primary": "#041E42",
+      "secondary": "#C8102E",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Utah",
+    "cityKey": "UTA",
+    "name": "Grizzlies",
+    "logo": "echl-grizzlies",
+    "id": "echl-0024",
+    "colors": {
+      "primary": "#041E42",
+      "secondary": "#00A3E0",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Wheeling",
+    "cityKey": "WHL",
+    "name": "Nailers",
+    "logo": "echl-nailers",
+    "id": "echl-0025",
+    "colors": {
+      "primary": "#FFB81C",
+      "secondary": "#000000",
+      "tertiary": "#FFFFFF"
+    }
+  },
+  {
+    "city": "Wichita",
+    "cityKey": "WIC",
+    "name": "Thunder",
+    "logo": "echl-thunder2",
+    "id": "echl-0026",
+    "colors": {
+			"primary": "#003A8F",
+			"secondary": "#000000",
+			"tertiary": "#A2AAAD",
+			"quaternary": "#FFFFFF"
+		}
+  },
+  {
+    "city": "Worcester",
+    "cityKey": "WOR",
+    "name": "Railers",
+    "logo": "echl-railers",
+    "id": "echl-0027",
+    "colors": {
+      "primary": "#00205B",
+      "secondary": "#C8102E",
+      "tertiary": "#FFFFFF"
+    }
+  }
+],
+	"diceData": [
+		{
+			"id": 11,
+			"isHit": true,
+			"batterAdvancement": 4,
+			"runnerAdvancement": 4,
+			"description": [
+				"Home run to right field",
+				"Home run to left field",
+				"Home run to center field",
+				"Home run to right-center field",
+				"Home run to left-center field",
+				"Home run outside the park"
+			]
+		},
+		{
+			"id": 12,
+			"isHit": true,
+			"batterAdvancement": 2,
+			"runnerAdvancement": 2,
+			"description": [
+				"Double to deep right field",
+				"Double to deep left field",
+				"Double to center field",
+				"Double in the gap",
+				"Double to short right field",
+				"Double to short left field"
+			]
+		},
+		{
+			"id": 13,
+			"isOut": true,
+			"outCount": 1,
+			"description": [
+				"Fly out to right field",
+				"Fly out to left field",
+				"Fly out to center field",
+				"Fly out to right-center field",
+				"Fly out to left-center field",
+				"Fly out to short right field",
+				"Fly out to short left field"
+			]
+		},
+		{
+			"id": 14,
+			"batterAdvancement": 1,
+			"runnerAdvancement": 1,
+			"description": ["Walk"]
+		},
+		{
+			"id": 15,
+			"isOut": true,
+			"outCount": 1,
+			"description": [
+				"Pop out to first base",
+				"Pop out to second base",
+				"Pop out to third base",
+				"Pop out to short stop",
+				"Pop out to pitcher",
+				"Pop out to catcher"
+			]
+		},
+		{
+			"id": 16,
+			"isHit": true,
+			"batterAdvancement": 1,
+			"runnerAdvancement": 2,
+			"description": [
+				"Single to right field",
+				"Single to left field",
+				"Single to center field",
+				"Single up the middle"
+			]
+		},
+		{
+			"id": 22,
+			"isOut": true,
+			"outCount": 2,
+			"description": ["Double play"]
+		},
+		{
+			"id": 23,
+			"isOut": true,
+			"description": [
+				"Ground out to first base",
+				"Ground out to second base",
+				"Ground out to third base",
+				"Ground out to short stop",
+				"Ground out to pitcher",
+				"Ground out to catcher"
+			]
+		},
+		{
+			"id": 24,
+			"isOut": true,
+			"description": ["Strike out swinging", "Strike out looking"]
+		},
+		{
+			"id": 25,
+			"isHit": true,
+			"batterAdvancement": 1,
+			"runnerAdvancement": 2,
+			"description": [
+				"Single to right field",
+				"Single to left field",
+				"Single to center field",
+				"Single up the middle",
+				"Single to third base",
+				"Single to short stop",
+				"Single to second base",
+				"Single to first base",
+				"Bunt single"
+			]
+		},
+		{
+			"id": 26,
+			"isOut": true,
+			"description": ["Strike out swinging", "Strike out looking"]
+		},
+		{
+			"id": 33,
+			"batterAdvancement": 1,
+			"runnerAdvancement": 1,
+			"description": ["Walk"]
+		},
+		{
+			"id": 34,
+			"isHit": true,
+			"batterAdvancement": 3,
+			"runnerAdvancement": 3,
+			"description": [
+				"Triple to deep right field",
+				"Triple to deep left field",
+				"Triple to center field",
+				"Triple in the gap"
+			]
+		},
+		{
+			"id": 35,
+			"isOut": true,
+			"outCount": 1,
+			"description": [
+				"Ground out to first base",
+				"Ground out to second base",
+				"Ground out to third base",
+				"Ground out to short stop",
+				"Ground out to pitcher",
+				"Ground out to catcher"
+			]
+		},
+		{
+			"id": 36,
+			"isOut": true,
+			"outCount": 1,
+			"description": [
+				"Fly out to right field",
+				"Fly out to left field",
+				"Fly out to center field",
+				"Fly out to right-center field",
+				"Fly out to left-center field",
+				"Fly out to short right field",
+				"Fly out to short left field"
+			]
+		},
+		{
+			"id": 44,
+			"batterAdvancement": 1,
+			"runnerAdvancement": 1,
+			"description": ["Walk"]
+		},
+		{
+			"id": 45,
+			"isOut": true,
+			"outCount": 1,
+			"description": [
+				"Pop out to first base",
+				"Pop out to second base",
+				"Pop out to third base",
+				"Pop out to short stop",
+				"Pop out to pitcher",
+				"Pop out to catcher"
+			]
+		},
+		{
+			"id": 46,
+			"isOut": true,
+			"outCount": 1,
+			"description": ["Strike out swinging", "Strike out looking"]
+		},
+		{
+			"id": 55,
+			"isHit": true,
+			"batterAdvancement": 2,
+			"runnerAdvancement": 3,
+			"description": [
+				"Double to deep right field",
+				"Double to deep left field",
+				"Double to center field",
+				"Double in the gap",
+				"Double to short right field",
+				"Double to short left field"
+			]
+		},
+		{
+			"id": 56,
+			"isOut": true,
+			"outCount": 1,
+			"isSacrifice": true,
+			"runnerAdvancement": 1,
+			"description": [
+				"Fly out to right field",
+				"Fly out to left field",
+				"Fly out to center field",
+				"Fly out to right-center field",
+				"Fly out to left-center field",
+				"Fly out to short right field",
+				"Fly out to short left field"
+			]
+		},
+		{
+			"id": 66,
+			"isHit": true,
+			"batterAdvancement": 4,
+			"runnerAdvancement": 4,
+			"description": [
+				"Home run to right field",
+				"Home run to left field",
+				"Home run to center field",
+				"Home run to right-center field",
+				"Home run to left-center field",
+				"Home run outside the park"
+			]
+		}
+	]
 }
