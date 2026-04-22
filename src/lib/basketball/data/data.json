@@ -1,349 +1,349 @@
 {
 	"teamsData": [
-  {
-    "city": "Atlanta",
-    "cityKey": "ATL",
-    "name": "Hawks",
-    "logo": "nba-hawks",
-    "id": "c7b6f8a1-9b6c-4b4e-8f9d-1a2f7c9d0011",
-    "colors": {
-      "primary": "oklch(0.556 0.214 26.2)",
-      "secondary": "oklch(0.305 0.095 257.8)",
-      "tertiary": "oklch(0.846 0.014 233.8)"
-    }
-  },
-  {
-    "city": "Boston",
-    "cityKey": "BOS",
-    "name": "Celtics",
-    "logo": "nba-celtics",
-    "id": "5d3c41c1-7e23-4e2d-8d1f-0b1c2a4d8891",
-    "colors": {
-      "primary": "oklch(0.536 0.109 157.5)",
-      "secondary": "oklch(0.265 0.011 91.7)"
-    }
-  },
-  {
-    "city": "Brooklyn",
-    "cityKey": "BKN",
-    "name": "Nets",
-    "logo": "nba-nets",
-    "id": "a2c82a52-2f64-4a34-9c7a-2b4d3f91b122",
-    "colors": {
-      "primary": "oklch(0.000 0.000 0.0)",
-      "secondary": "oklch(0.846 0.014 233.8)"
-    }
-  },
-  {
-    "city": "Charlotte",
-    "cityKey": "CHA",
-    "name": "Hornets",
-    "logo": "nba-hornets",
-    "id": "ffbc7c23-81d3-4b17-b0a6-58c3b3b23c33",
-    "colors": {
-      "primary": "oklch(0.582 0.140 200.0)",
-      "secondary": "oklch(0.354 0.107 258.0)",
-      "tertiary": "oklch(0.846 0.014 233.8)"
-    }
-  },
-  {
-    "city": "Chicago",
-    "cityKey": "CHI",
-    "name": "Bulls",
-    "logo": "nba-bulls",
-    "id": "c19f6c23-21e9-4c74-9d32-8a63c7d2e444",
-    "colors": {
-      "primary": "oklch(0.556 0.214 26.2)",
-      "secondary": "oklch(0.000 0.000 0.0)"
-    }
-  },
-  {
-    "city": "Cleveland",
-    "cityKey": "CLE",
-    "name": "Cavaliers",
-    "logo": "nba-cavaliers",
-    "id": "c7f2f72a-64a3-4b2c-9a61-3c5f0d21e555",
-    "colors": {
-      "primary": "oklch(0.430 0.160 18.0)",
-      "secondary": "oklch(0.846 0.114 85.0)",
-      "tertiary": "oklch(0.305 0.095 257.8)"
-    }
-  },
-  {
-    "city": "Dallas",
-    "cityKey": "DAL",
-    "name": "Mavericks",
-    "logo": "nba-mavericks",
-    "id": "d54e1e11-4a9c-4c75-90f1-1c63c7b6a666",
-    "colors": {
-      "primary": "oklch(0.405 0.125 250.0)",
-      "secondary": "oklch(0.310 0.090 210.0)",
-      "tertiary": "oklch(0.846 0.014 233.8)"
-    }
-  },
-  {
-    "city": "Denver",
-    "cityKey": "DEN",
-    "name": "Nuggets",
-    "logo": "nba-nuggets",
-    "id": "e7c5d1a2-5a3b-4a23-98d7-3f3a2c7d7777",
-    "colors": {
-      "primary": "oklch(0.320 0.128 259.6)",
-      "secondary": "oklch(0.846 0.114 85.0)",
-      "tertiary": "oklch(0.555 0.216 16.2)"
-    }
-  },
-  {
-    "city": "Detroit",
-    "cityKey": "DET",
-    "name": "Pistons",
-    "logo": "nba-pistons",
-    "id": "e8a4c21b-9a7d-4f8f-a9e7-2a6d3f8c8888",
-    "colors": {
-      "primary": "oklch(0.530 0.180 25.0)",
-      "secondary": "oklch(0.355 0.145 263.0)"
-    }
-  },
-  {
-    "city": "Golden State",
-    "cityKey": "GSW",
-    "name": "Warriors",
-    "logo": "nba-warriors",
-    "id": "f7c2d3b4-8a5c-4d21-91c2-9a3b5d9a9999",
-    "colors": {
-      "primary": "oklch(0.415 0.140 250.0)",
-      "secondary": "oklch(0.853 0.164 85.3)"
-    }
-  },
-  {
-    "city": "Houston",
-    "cityKey": "HOU",
-    "name": "Rockets",
-    "logo": "nba-rockets",
-    "id": "a7e2f5b3-7a6c-4c12-b1d2-4a5f7b0caaaa",
-    "colors": {
-      "primary": "oklch(0.556 0.214 26.2)",
-      "secondary": "oklch(0.000 0.000 0.0)"
-    }
-  },
-  {
-    "city": "Indiana",
-    "cityKey": "IND",
-    "name": "Pacers",
-    "logo": "nba-pacers",
-    "id": "b6c4e5d6-6b7a-4e34-9f21-6b3c4d1ebbbb",
-    "colors": {
-      "primary": "oklch(0.360 0.120 255.0)",
-      "secondary": "oklch(0.853 0.164 85.3)"
-    }
-  },
-  {
-    "city": "Los Angeles",
-    "cityKey": "LAC",
-    "name": "Clippers",
-    "logo": "nba-clippers",
-    "id": "c5d6e7f8-5c6b-4f21-8e1a-5a2d3c7fcccc",
-    "colors": {
-      "primary": "oklch(0.530 0.180 25.0)",
-      "secondary": "oklch(0.355 0.145 263.0)"
-    }
-  },
-  {
-    "city": "Los Angeles",
-    "cityKey": "LAL",
-    "name": "Lakers",
-    "logo": "nba-lakers",
-    "id": "d4e5f6a7-4d5c-4e12-9a1b-4b3c2d7edddd",
-    "colors": {
-      "primary": "oklch(0.410 0.130 290.0)",
-      "secondary": "oklch(0.853 0.164 85.3)"
-    }
-  },
-  {
-    "city": "Memphis",
-    "cityKey": "MEM",
-    "name": "Grizzlies",
-    "logo": "nba-grizzlies",
-    "id": "e3f4a5b6-3e4d-4f21-8c1a-3d2b1c7feeee",
-    "colors": {
-      "primary": "oklch(0.305 0.095 257.8)",
-      "secondary": "oklch(0.430 0.073 194.8)"
-    }
-  },
-  {
-    "city": "Miami",
-    "cityKey": "MIA",
-    "name": "Heat",
-    "logo": "nba-heat",
-    "id": "f2a3b4c5-2f3e-4d21-9b1c-2e1d0c7fffff",
-    "colors": {
-      "primary": "oklch(0.556 0.214 26.2)",
-      "secondary": "oklch(0.000 0.000 0.0)",
-      "tertiary": "oklch(0.846 0.114 85.0)"
-    }
-  },
-  {
-    "city": "Milwaukee",
-    "cityKey": "MIL",
-    "name": "Bucks",
-    "logo": "nba-bucks",
-    "id": "a1b2c3d4-1a2b-4c21-9d1e-1f2e3d7f0001",
-    "colors": {
-      "primary": "oklch(0.350 0.080 160.0)",
-      "secondary": "oklch(0.846 0.014 233.8)"
-    }
-  },
-  {
-    "city": "Minnesota",
-    "cityKey": "MIN",
-    "name": "Timberwolves",
-    "logo": "nba-timberwolves",
-    "id": "b2c3d4e5-0b1c-4d21-8c1d-2e3f4a7f0002",
-    "colors": {
-      "primary": "oklch(0.280 0.090 250.0)",
-      "secondary": "oklch(0.536 0.109 157.5)"
-    }
-  },
-  {
-    "city": "New Orleans",
-    "cityKey": "NOP",
-    "name": "Pelicans",
-    "logo": "nba-pelicans",
-    "id": "c3d4e5f6-9c0d-4e21-9a1b-3c4d5e7f0003",
-    "colors": {
-      "primary": "oklch(0.305 0.095 257.8)",
-      "secondary": "oklch(0.556 0.214 26.2)",
-      "tertiary": "oklch(0.846 0.114 85.0)"
-    }
-  },
-  {
-    "city": "New York",
-    "cityKey": "NYK",
-    "name": "Knicks",
-    "logo": "nba-knicks",
-    "id": "d4e5f6a7-8d1e-4f21-8b1c-4d5e6f7f0004",
-    "colors": {
-      "primary": "oklch(0.360 0.120 255.0)",
-      "secondary": "oklch(0.681 0.213 38.9)"
-    }
-  },
-  {
-    "city": "Oklahoma City",
-    "cityKey": "OKC",
-    "name": "Thunder",
-    "logo": "nba-thunder",
-    "id": "e5f6a7b8-7e1f-4c21-9d1a-5e6f7a7f0005",
-    "colors": {
-      "primary": "oklch(0.360 0.120 255.0)",
-      "secondary": "oklch(0.681 0.213 38.9)",
-      "tertiary": "oklch(0.846 0.014 233.8)"
-    }
-  },
-  {
-    "city": "Orlando",
-    "cityKey": "ORL",
-    "name": "Magic",
-    "logo": "nba-magic",
-    "id": "f6a7b8c9-6f2a-4d21-8c1b-6f7a8b7f0006",
-    "colors": {
-      "primary": "oklch(0.355 0.145 263.0)",
-      "secondary": "oklch(0.000 0.000 0.0)"
-    }
-  },
-  {
-    "city": "Philadelphia",
-    "cityKey": "PHI",
-    "name": "76ers",
-    "logo": "nba-76ers",
-    "id": "a7b8c9d0-5a3b-4e21-9d1c-7a8b9c7f0007",
-    "colors": {
-      "primary": "oklch(0.355 0.145 263.0)",
-      "secondary": "oklch(0.530 0.180 25.0)",
-      "tertiary": "oklch(0.846 0.014 233.8)"
-    }
-  },
-  {
-    "city": "Phoenix",
-    "cityKey": "PHX",
-    "name": "Suns",
-    "logo": "nba-suns",
-    "id": "b8c9d0e1-4b5c-4f21-8c1d-8b9c0d7f0008",
-    "colors": {
-      "primary": "oklch(0.410 0.130 290.0)",
-      "secondary": "oklch(0.681 0.213 38.9)",
-      "tertiary": "oklch(0.000 0.000 0.0)"
-    }
-  },
-  {
-    "city": "Portland",
-    "cityKey": "POR",
-    "name": "Trail Blazers",
-    "logo": "nba-trailblazers",
-    "id": "c9d0e1f2-3c4d-4e21-9a1b-9c0d1e7f0009",
-    "colors": {
-      "primary": "oklch(0.556 0.214 26.2)",
-      "secondary": "oklch(0.000 0.000 0.0)"
-    }
-  },
-  {
-    "city": "Sacramento",
-    "cityKey": "SAC",
-    "name": "Kings",
-    "logo": "nba-kings",
-    "id": "d0e1f2a3-2d3e-4f21-8b1c-0d1e2f7f0010",
-    "colors": {
-      "primary": "oklch(0.410 0.130 290.0)",
-      "secondary": "oklch(0.846 0.014 233.8)"
-    }
-  },
-  {
-    "city": "San Antonio",
-    "cityKey": "SAS",
-    "name": "Spurs",
-    "logo": "nba-spurs",
-    "id": "e1f2a3b4-1e2f-4c21-9d1a-1e2f3a7f0011",
-    "colors": {
-      "primary": "oklch(0.265 0.011 91.7)",
-      "secondary": "oklch(0.846 0.014 233.8)"
-    }
-  },
-  {
-    "city": "Toronto",
-    "cityKey": "TOR",
-    "name": "Raptors",
-    "logo": "nba-raptors",
-    "id": "f2a3b4c5-0f1a-4d21-8c1b-2f3a4b7f0012",
-    "colors": {
-      "primary": "oklch(0.556 0.214 26.2)",
-      "secondary": "oklch(0.000 0.000 0.0)",
-      "tertiary": "oklch(0.846 0.014 233.8)"
-    }
-  },
-  {
-    "city": "Utah",
-    "cityKey": "UTA",
-    "name": "Jazz",
-    "logo": "nba-jazz",
-    "id": "a3b4c5d6-9a0b-4e21-9d1c-3a4b5c7f0013",
-    "colors": {
-      "primary": "oklch(0.350 0.080 160.0)",
-      "secondary": "oklch(0.681 0.213 38.9)",
-      "tertiary": "oklch(0.265 0.011 91.7)"
-    }
-  },
-  {
-    "city": "Washington",
-    "cityKey": "WAS",
-    "name": "Wizards",
-    "logo": "nba-wizards",
-    "id": "b4c5d6e7-8b9c-4f21-8c1d-4b5c6d7f0014",
-    "colors": {
-      "primary": "oklch(0.355 0.145 263.0)",
-      "secondary": "oklch(0.530 0.180 25.0)",
-      "tertiary": "oklch(0.846 0.014 233.8)"
-    }
-  }
-],
+		{
+			"city": "Atlanta",
+			"cityKey": "ATL",
+			"name": "Hawks",
+			"logo": "nba-hawks",
+			"id": "c7b6f8a1-9b6c-4b4e-8f9d-1a2f7c9d0011",
+			"colors": {
+				"primary": "oklch(0.556 0.214 26.2)",
+				"secondary": "oklch(0.305 0.095 257.8)",
+				"tertiary": "oklch(0.846 0.014 233.8)"
+			}
+		},
+		{
+			"city": "Boston",
+			"cityKey": "BOS",
+			"name": "Celtics",
+			"logo": "nba-celtics",
+			"id": "5d3c41c1-7e23-4e2d-8d1f-0b1c2a4d8891",
+			"colors": {
+				"primary": "oklch(0.536 0.109 157.5)",
+				"secondary": "oklch(0.265 0.011 91.7)"
+			}
+		},
+		{
+			"city": "Brooklyn",
+			"cityKey": "BKN",
+			"name": "Nets",
+			"logo": "nba-nets",
+			"id": "a2c82a52-2f64-4a34-9c7a-2b4d3f91b122",
+			"colors": {
+				"primary": "oklch(0.000 0.000 0.0)",
+				"secondary": "oklch(0.846 0.014 233.8)"
+			}
+		},
+		{
+			"city": "Charlotte",
+			"cityKey": "CHA",
+			"name": "Hornets",
+			"logo": "nba-hornets",
+			"id": "ffbc7c23-81d3-4b17-b0a6-58c3b3b23c33",
+			"colors": {
+				"primary": "oklch(0.582 0.140 200.0)",
+				"secondary": "oklch(0.354 0.107 258.0)",
+				"tertiary": "oklch(0.846 0.014 233.8)"
+			}
+		},
+		{
+			"city": "Chicago",
+			"cityKey": "CHI",
+			"name": "Bulls",
+			"logo": "nba-bulls",
+			"id": "c19f6c23-21e9-4c74-9d32-8a63c7d2e444",
+			"colors": {
+				"primary": "oklch(0.556 0.214 26.2)",
+				"secondary": "oklch(0.000 0.000 0.0)"
+			}
+		},
+		{
+			"city": "Cleveland",
+			"cityKey": "CLE",
+			"name": "Cavaliers",
+			"logo": "nba-cavaliers",
+			"id": "c7f2f72a-64a3-4b2c-9a61-3c5f0d21e555",
+			"colors": {
+				"primary": "oklch(0.430 0.160 18.0)",
+				"secondary": "oklch(0.846 0.114 85.0)",
+				"tertiary": "oklch(0.305 0.095 257.8)"
+			}
+		},
+		{
+			"city": "Dallas",
+			"cityKey": "DAL",
+			"name": "Mavericks",
+			"logo": "nba-mavericks",
+			"id": "d54e1e11-4a9c-4c75-90f1-1c63c7b6a666",
+			"colors": {
+				"primary": "oklch(0.405 0.125 250.0)",
+				"secondary": "oklch(0.310 0.090 210.0)",
+				"tertiary": "oklch(0.846 0.014 233.8)"
+			}
+		},
+		{
+			"city": "Denver",
+			"cityKey": "DEN",
+			"name": "Nuggets",
+			"logo": "nba-nuggets",
+			"id": "e7c5d1a2-5a3b-4a23-98d7-3f3a2c7d7777",
+			"colors": {
+				"primary": "oklch(0.320 0.128 259.6)",
+				"secondary": "oklch(0.846 0.114 85.0)",
+				"tertiary": "oklch(0.555 0.216 16.2)"
+			}
+		},
+		{
+			"city": "Detroit",
+			"cityKey": "DET",
+			"name": "Pistons",
+			"logo": "nba-pistons",
+			"id": "e8a4c21b-9a7d-4f8f-a9e7-2a6d3f8c8888",
+			"colors": {
+				"primary": "oklch(0.530 0.180 25.0)",
+				"secondary": "oklch(0.355 0.145 263.0)"
+			}
+		},
+		{
+			"city": "Golden State",
+			"cityKey": "GSW",
+			"name": "Warriors",
+			"logo": "nba-warriors",
+			"id": "f7c2d3b4-8a5c-4d21-91c2-9a3b5d9a9999",
+			"colors": {
+				"primary": "oklch(0.415 0.140 250.0)",
+				"secondary": "oklch(0.853 0.164 85.3)"
+			}
+		},
+		{
+			"city": "Houston",
+			"cityKey": "HOU",
+			"name": "Rockets",
+			"logo": "nba-rockets",
+			"id": "a7e2f5b3-7a6c-4c12-b1d2-4a5f7b0caaaa",
+			"colors": {
+				"primary": "oklch(0.556 0.214 26.2)",
+				"secondary": "oklch(0.000 0.000 0.0)"
+			}
+		},
+		{
+			"city": "Indiana",
+			"cityKey": "IND",
+			"name": "Pacers",
+			"logo": "nba-pacers",
+			"id": "b6c4e5d6-6b7a-4e34-9f21-6b3c4d1ebbbb",
+			"colors": {
+				"primary": "oklch(0.360 0.120 255.0)",
+				"secondary": "oklch(0.853 0.164 85.3)"
+			}
+		},
+		{
+			"city": "Los Angeles",
+			"cityKey": "LAC",
+			"name": "Clippers",
+			"logo": "nba-clippers",
+			"id": "c5d6e7f8-5c6b-4f21-8e1a-5a2d3c7fcccc",
+			"colors": {
+				"primary": "oklch(0.530 0.180 25.0)",
+				"secondary": "oklch(0.355 0.145 263.0)"
+			}
+		},
+		{
+			"city": "Los Angeles",
+			"cityKey": "LAL",
+			"name": "Lakers",
+			"logo": "nba-lakers",
+			"id": "d4e5f6a7-4d5c-4e12-9a1b-4b3c2d7edddd",
+			"colors": {
+				"primary": "oklch(0.410 0.130 290.0)",
+				"secondary": "oklch(0.853 0.164 85.3)"
+			}
+		},
+		{
+			"city": "Memphis",
+			"cityKey": "MEM",
+			"name": "Grizzlies",
+			"logo": "nba-grizzlies",
+			"id": "e3f4a5b6-3e4d-4f21-8c1a-3d2b1c7feeee",
+			"colors": {
+				"primary": "oklch(0.305 0.095 257.8)",
+				"secondary": "oklch(0.430 0.073 194.8)"
+			}
+		},
+		{
+			"city": "Miami",
+			"cityKey": "MIA",
+			"name": "Heat",
+			"logo": "nba-heat",
+			"id": "f2a3b4c5-2f3e-4d21-9b1c-2e1d0c7fffff",
+			"colors": {
+				"primary": "oklch(0.556 0.214 26.2)",
+				"secondary": "oklch(0.000 0.000 0.0)",
+				"tertiary": "oklch(0.846 0.114 85.0)"
+			}
+		},
+		{
+			"city": "Milwaukee",
+			"cityKey": "MIL",
+			"name": "Bucks",
+			"logo": "nba-bucks",
+			"id": "a1b2c3d4-1a2b-4c21-9d1e-1f2e3d7f0001",
+			"colors": {
+				"primary": "oklch(0.350 0.080 160.0)",
+				"secondary": "oklch(0.846 0.014 233.8)"
+			}
+		},
+		{
+			"city": "Minnesota",
+			"cityKey": "MIN",
+			"name": "Timberwolves",
+			"logo": "nba-timberwolves",
+			"id": "b2c3d4e5-0b1c-4d21-8c1d-2e3f4a7f0002",
+			"colors": {
+				"primary": "oklch(0.280 0.090 250.0)",
+				"secondary": "oklch(0.536 0.109 157.5)"
+			}
+		},
+		{
+			"city": "New Orleans",
+			"cityKey": "NOP",
+			"name": "Pelicans",
+			"logo": "nba-pelicans",
+			"id": "c3d4e5f6-9c0d-4e21-9a1b-3c4d5e7f0003",
+			"colors": {
+				"primary": "oklch(0.305 0.095 257.8)",
+				"secondary": "oklch(0.556 0.214 26.2)",
+				"tertiary": "oklch(0.846 0.114 85.0)"
+			}
+		},
+		{
+			"city": "New York",
+			"cityKey": "NYK",
+			"name": "Knicks",
+			"logo": "nba-knicks",
+			"id": "d4e5f6a7-8d1e-4f21-8b1c-4d5e6f7f0004",
+			"colors": {
+				"primary": "oklch(0.360 0.120 255.0)",
+				"secondary": "oklch(0.681 0.213 38.9)"
+			}
+		},
+		{
+			"city": "Oklahoma City",
+			"cityKey": "OKC",
+			"name": "Thunder",
+			"logo": "nba-thunder",
+			"id": "e5f6a7b8-7e1f-4c21-9d1a-5e6f7a7f0005",
+			"colors": {
+				"primary": "oklch(0.360 0.120 255.0)",
+				"secondary": "oklch(0.681 0.213 38.9)",
+				"tertiary": "oklch(0.846 0.014 233.8)"
+			}
+		},
+		{
+			"city": "Orlando",
+			"cityKey": "ORL",
+			"name": "Magic",
+			"logo": "nba-magic",
+			"id": "f6a7b8c9-6f2a-4d21-8c1b-6f7a8b7f0006",
+			"colors": {
+				"primary": "oklch(0.355 0.145 263.0)",
+				"secondary": "oklch(0.000 0.000 0.0)"
+			}
+		},
+		{
+			"city": "Philadelphia",
+			"cityKey": "PHI",
+			"name": "76ers",
+			"logo": "nba-76ers",
+			"id": "a7b8c9d0-5a3b-4e21-9d1c-7a8b9c7f0007",
+			"colors": {
+				"primary": "oklch(0.355 0.145 263.0)",
+				"secondary": "oklch(0.530 0.180 25.0)",
+				"tertiary": "oklch(0.846 0.014 233.8)"
+			}
+		},
+		{
+			"city": "Phoenix",
+			"cityKey": "PHX",
+			"name": "Suns",
+			"logo": "nba-suns",
+			"id": "b8c9d0e1-4b5c-4f21-8c1d-8b9c0d7f0008",
+			"colors": {
+				"primary": "oklch(0.410 0.130 290.0)",
+				"secondary": "oklch(0.681 0.213 38.9)",
+				"tertiary": "oklch(0.000 0.000 0.0)"
+			}
+		},
+		{
+			"city": "Portland",
+			"cityKey": "POR",
+			"name": "Trail Blazers",
+			"logo": "nba-trailblazers",
+			"id": "c9d0e1f2-3c4d-4e21-9a1b-9c0d1e7f0009",
+			"colors": {
+				"primary": "oklch(0.556 0.214 26.2)",
+				"secondary": "oklch(0.000 0.000 0.0)"
+			}
+		},
+		{
+			"city": "Sacramento",
+			"cityKey": "SAC",
+			"name": "Kings",
+			"logo": "nba-kings",
+			"id": "d0e1f2a3-2d3e-4f21-8b1c-0d1e2f7f0010",
+			"colors": {
+				"primary": "oklch(0.410 0.130 290.0)",
+				"secondary": "oklch(0.846 0.014 233.8)"
+			}
+		},
+		{
+			"city": "San Antonio",
+			"cityKey": "SAS",
+			"name": "Spurs",
+			"logo": "nba-spurs",
+			"id": "e1f2a3b4-1e2f-4c21-9d1a-1e2f3a7f0011",
+			"colors": {
+				"primary": "oklch(0.265 0.011 91.7)",
+				"secondary": "oklch(0.846 0.014 233.8)"
+			}
+		},
+		{
+			"city": "Toronto",
+			"cityKey": "TOR",
+			"name": "Raptors",
+			"logo": "nba-raptors",
+			"id": "f2a3b4c5-0f1a-4d21-8c1b-2f3a4b7f0012",
+			"colors": {
+				"primary": "oklch(0.556 0.214 26.2)",
+				"secondary": "oklch(0.000 0.000 0.0)",
+				"tertiary": "oklch(0.846 0.014 233.8)"
+			}
+		},
+		{
+			"city": "Utah",
+			"cityKey": "UTA",
+			"name": "Jazz",
+			"logo": "nba-jazz",
+			"id": "a3b4c5d6-9a0b-4e21-9d1c-3a4b5c7f0013",
+			"colors": {
+				"primary": "oklch(0.350 0.080 160.0)",
+				"secondary": "oklch(0.681 0.213 38.9)",
+				"tertiary": "oklch(0.265 0.011 91.7)"
+			}
+		},
+		{
+			"city": "Washington",
+			"cityKey": "WAS",
+			"name": "Wizards",
+			"logo": "nba-wizards",
+			"id": "b4c5d6e7-8b9c-4f21-8c1d-4b5c6d7f0014",
+			"colors": {
+				"primary": "oklch(0.355 0.145 263.0)",
+				"secondary": "oklch(0.530 0.180 25.0)",
+				"tertiary": "oklch(0.846 0.014 233.8)"
+			}
+		}
+	],
 	"diceData": [
 		{
 			"id": 11,

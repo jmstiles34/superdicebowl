@@ -1,38 +1,32 @@
-import type { Quarter } from '$lib/basketball/types';
-
 export const GAME_ACTION = {
-	TIP_OFF: 'Tip Off',
+	COIN_TOSS: 'Coin Toss',
 	OFFENSE: 'Offense',
 	FREE_THROW: 'Free Throw',
 	GAME_OVER: 'Game Over',
 	EXIT: 'Exit Game'
 };
 
-export const MAX_QUARTERS = 4;
-
-export const QUARTER_ORD = ['1ST', '2ND', '3RD', '4TH'] as const;
+export const MAX_TEAM_FOULS = 5;
+export const BONUS_FREE_THROWS = 2;
 
 export const DEFAULT_BASKETBALL_GAME = {
 	sport: 'basketball' as const,
-	action: GAME_ACTION.TIP_OFF,
+	action: GAME_ACTION.COIN_TOSS,
 	lastPlay: '',
 	modalContent: null as string | null,
 	paused: false,
 	playLog: [] as unknown[],
 	possession: 'Away',
 	restrictDice: false,
-	quarter: 1 as Quarter,
+	diceId: 0,
 	scores: {
-		away: [0, 0, 0, 0] as number[],
-		home: [0, 0, 0, 0] as number[]
+		away: 0,
+		home: 0
 	},
 	fouls: {
 		away: 0,
 		home: 0
 	},
-	turnovers: {
-		away: 0,
-		home: 0
-	},
-	shotClock: false
+	freeThrowsRemaining: 0,
+	freeThrowsScored: 0
 };

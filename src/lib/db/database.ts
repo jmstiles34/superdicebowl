@@ -1,5 +1,4 @@
 import Dexie, { type Table } from 'dexie';
-import type { Quarter } from '$lib/basketball/types';
 import type { Play } from '$lib/football/types';
 import type { Period } from '$lib/hockey/types';
 import type { SportType, Team } from '$lib/shared/types';
@@ -130,20 +129,17 @@ export interface BasketballGameStateSnapshot {
 	possession: string;
 	restrictDice: boolean;
 	playLog: unknown[];
-	quarter: Quarter;
+	diceId: number;
 	scores: {
-		away: number[];
-		home: number[];
+		away: number;
+		home: number;
 	};
 	fouls: {
 		away: number;
 		home: number;
 	};
-	turnovers: {
-		away: number;
-		home: number;
-	};
-	shotClock: boolean;
+	freeThrowsRemaining: number;
+	freeThrowsScored: number;
 }
 
 export interface BasketballGameSettingsSnapshot {
@@ -151,7 +147,7 @@ export interface BasketballGameSettingsSnapshot {
 	awayTeam: Team;
 	homeTeam: Team;
 	mode: string;
-	quarters: number;
+	winScore: number;
 }
 
 // ── Discriminated unions ─────────────────────────────────────

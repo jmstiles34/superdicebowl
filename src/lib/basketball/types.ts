@@ -1,20 +1,18 @@
-export type Quarter = 1 | 2 | 3 | 4;
-
 export interface BasketballDiceRoll {
 	id: number;
-	points?: number;
-	isTurnover?: boolean;
-	isFoul?: boolean;
-	isFreeThrow?: boolean;
-	isThreePointer?: boolean;
+	points: number;
+	isFoul: boolean;
+	isShot: boolean;
+	isTurnover: boolean;
+	freeThrows?: number;
 	description: string[];
 }
 
 export interface BasketballPlay {
 	team: string;
-	diceRoll: number;
-	action: string;
+	diceId: number;
 	description: string;
-	points: number;
-	quarter: Quarter;
+	pointsScored: number;
+	isFoul: boolean;
+	isTurnover: boolean;
 }
