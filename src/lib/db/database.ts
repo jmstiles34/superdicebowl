@@ -1,6 +1,5 @@
 import Dexie, { type Table } from 'dexie';
 import type { Play } from '$lib/football/types';
-import type { Period } from '$lib/hockey/types';
 import type { SportType, Team } from '$lib/shared/types';
 
 export interface UserRecord {
@@ -95,16 +94,12 @@ export interface HockeyGameStateSnapshot {
 	possession: string;
 	restrictDice: boolean;
 	playLog: unknown[];
-	period: Period;
+	diceId: number;
 	scores: {
-		away: number[];
-		home: number[];
-	};
-	shotsOnGoal: {
 		away: number;
 		home: number;
 	};
-	penaltyMinutes: {
+	shotsOnGoal: {
 		away: number;
 		home: number;
 	};
@@ -116,7 +111,7 @@ export interface HockeyGameSettingsSnapshot {
 	awayTeam: Team;
 	homeTeam: Team;
 	mode: string;
-	periods: number;
+	winScore: number;
 }
 
 // ── Basketball snapshot types ────────────────────────────────

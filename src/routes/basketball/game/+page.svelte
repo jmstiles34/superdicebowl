@@ -7,7 +7,6 @@
 	import type { BasketballGameSettingsSnapshot } from '$lib/db/database';
 	import { settings } from '$lib/state/settings.svelte';
 	import { sleep } from '$lib/utils/common';
-	import { primaryColor } from '$lib/football/utils/game';
 	import { fireworkShow, options } from '$lib/utils/fireworks';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { createGame, updateGameState, completeGame } from '$lib/db/repositories/gameRepository';
@@ -18,8 +17,11 @@
 	import ConfirmExit from '$lib/components/modal/ConfirmExit.svelte';
 	import Settings from '$lib/components/modal/Settings.svelte';
 	import Scoreboard from '$lib/basketball/components/Scoreboard.svelte';
+	import { primaryColor } from '$lib/football/utils/game';
+	import Court from '$lib/basketball/components/Court.svelte';
+	import ShotAnimation from '$lib/basketball/components/ShotAnimation.svelte';
 	import CoinToss from '$lib/basketball/components/CoinToss.svelte';
-	import FreeThrowModal from '$lib/basketball/components/FreeThrowModal.svelte';
+	import { lookupDiceResult, classifyOutcome } from '$lib/basketball/utils/game';
 
 	import exit from '$lib/images/exit.svg';
 	import gear from '$lib/images/gear.svg';
@@ -33,13 +35,9 @@
 	const isGameReady = awayTeam.id.length && homeTeam.id.length;
 	let showSettings = $state(false);
 	let fw = $state(fireworkShow);
+	let shotRef = $state<ShotAnimation>();
 
 	const isAutoPlay = $derived(
-		mode === GAME_MODE.SIMULATION ||
-			(mode === GAME_MODE.SOLO && game.possession !== settings.userTeam)
-	);
-
-	const isFreeThrowAutoPlay = $derived(
 		mode === GAME_MODE.SIMULATION ||
 			(mode === GAME_MODE.SOLO && game.possession !== settings.userTeam)
 	);
@@ -60,6 +58,13 @@
 		}
 	});
 
+	// ── Show ball at free throw line when entering FT mode ──
+	$effect(() => {
+		if (game.action === GAME_ACTION.FREE_THROW && shotRef) {
+			shotRef.showAtFreeThrowLine(game.possession);
+		}
+	});
+
 	// ── Game over detection ─────────────────────────────────
 	$effect(() => {
 		if (game.action === GAME_ACTION.GAME_OVER) {
@@ -75,8 +80,62 @@
 
 	function handleDiceRoll(diceId: number) {
 		game.restrictDice = true;
-		game.handleDiceRoll(game.action, diceId);
-		game.continueAfterAction();
+
+		const roll = lookupDiceResult(diceId);
+		if (!roll) {
+			game.handleDiceRoll(game.action, diceId);
+			game.continueAfterAction();
+			return;
+		}
+
+		const outcome = classifyOutcome(roll);
+		const isShot =
+			outcome === 'scoring' ||
+			outcome === 'scoring_and_one' ||
+			outcome === 'missed_shot' ||
+			outcome === 'shooting_foul';
+
+		if (isShot && shotRef) {
+			const shotType = roll.points >= 3 ? 'three' : 'two';
+			const shotResult = outcome === 'missed_shot' || outcome === 'shooting_foul' ? 'missed' : 'made';
+			const currentPossession = game.possession;
+
+			shotRef.shoot(shotType, shotResult, currentPossession, () => {
+				game.handleDiceRoll(game.action, diceId);
+				game.continueAfterAction();
+			});
+		} else {
+			game.handleDiceRoll(game.action, diceId);
+			game.continueAfterAction();
+		}
+	}
+
+	// ── Free throw roll handler ─────────────────────────────
+
+	function handleFreeThrowRoll(dieValue: number) {
+		game.restrictDice = true;
+		const shotResult = dieValue % 2 === 0 ? 'made' : 'missed';
+		const currentPossession = game.possession;
+
+		if (shotRef) {
+			shotRef.freeThrow(shotResult as 'made' | 'missed', currentPossession, () => {
+				game.handleFreeThrow(dieValue);
+				game.restrictDice = false;
+
+				if (game.freeThrowsRemaining > 0 && shotRef) {
+					shotRef.showAtFreeThrowLine(game.possession);
+				} else {
+					game.continueAfterAction();
+				}
+			});
+		} else {
+			game.handleFreeThrow(dieValue);
+			if (game.freeThrowsRemaining <= 0) {
+				game.continueAfterAction();
+			} else {
+				game.restrictDice = false;
+			}
+		}
 	}
 
 	// ── Save game ───────────────────────────────────────────
@@ -146,49 +205,61 @@
 {#if isGameReady}
 	<main>
 		<div class="game">
-			<Scoreboard>
-				{#snippet toolbar()}
-					<button
-						class="toolbar-button flip"
-						onclick={handleExitClick}
-						title="Quit Game"
-						aria-label="Quit Game"
-					>
-						<img src={exit} alt="Quit Game" />
-					</button>
-					<button
-						class="toolbar-button"
-						onclick={toggleSettings}
-						title="Settings"
-						aria-label="Settings"
-					>
-						<img src={gear} alt="Settings" />
-					</button>
-				{/snippet}
-			</Scoreboard>
+			<div class="toolbar">
+				<button
+					class="toolbar-button flip"
+					onclick={handleExitClick}
+					title="Quit Game"
+					aria-label="Quit Game"
+				>
+					<img src={exit} alt="Quit Game" />
+				</button>
+				<button
+					class="toolbar-button"
+					onclick={toggleSettings}
+					title="Settings"
+					aria-label="Settings"
+				>
+					<img src={gear} alt="Settings" />
+				</button>
+			</div>
 
-			<div class="play-area">
+			<div class="scoreboard-wrapper">
+				<Scoreboard>
+					{#snippet center()}
+						<div class="dice-container">
+							<div class="action">{game.action}</div>
+							<Dice
+								dieColor={primaryColor(settings, game.possession.toLowerCase()) ?? '#FFF'}
+								pipColor={(() => {
+									const team = game.possession.toLowerCase();
+									const teamTyped = `${team}Team` as 'homeTeam' | 'awayTeam';
+									return settings[teamTyped].colors.secondary ?? '#000';
+								})()}
+								singleDie={game.action === GAME_ACTION.FREE_THROW}
+								restricted={game.restrictDice || game.action === GAME_ACTION.COIN_TOSS || game.action === GAME_ACTION.GAME_OVER}
+								autoRoll={isAutoPlay && (game.action === GAME_ACTION.OFFENSE || game.action === GAME_ACTION.FREE_THROW)}
+								paused={game.paused}
+								onDiceRoll={game.action === GAME_ACTION.FREE_THROW ? handleFreeThrowRoll : handleDiceRoll}
+								onRollComplete={saveGame}
+							/>
+						</div>
+					{/snippet}
+				</Scoreboard>
+			</div>
+
+			<div class="court-area">
+				<Court homeLogo={`/logos/${homeTeam.logo}.webp`} homeColor={homeTeam.colors.primary} homeSecondaryColor={homeTeam.colors.secondary} possession={game.possession}>
+					{#snippet svgOverlay()}
+						<ShotAnimation bind:this={shotRef} />
+					{/snippet}
+				</Court>
+				<div class="court-overlay">
+					<p class="last-play">{game.lastPlay}</p>
+				</div>
 				{#if game.action === GAME_ACTION.GAME_OVER}
 					<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
 				{/if}
-				<p class="last-play">{game.lastPlay}</p>
-				<p class="action-label">{game.action}</p>
-			</div>
-
-			<div class="dice-container">
-				<Dice
-					dieColor={primaryColor(settings, game.possession.toLowerCase()) ?? '#FFF'}
-					pipColor={(() => {
-						const team = game.possession.toLowerCase();
-						const teamTyped = `${team}Team` as 'homeTeam' | 'awayTeam';
-						return settings[teamTyped].colors.secondary ?? '#000';
-					})()}
-					restricted={game.restrictDice || game.action === GAME_ACTION.FREE_THROW || game.action === GAME_ACTION.COIN_TOSS || game.action === GAME_ACTION.GAME_OVER}
-					autoRoll={isAutoPlay && game.action === GAME_ACTION.OFFENSE}
-					paused={game.paused}
-					onDiceRoll={handleDiceRoll}
-					onRollComplete={saveGame}
-				/>
 			</div>
 		</div>
 
@@ -203,16 +274,6 @@
 				game.saveCoinToss(winner);
 				saveGame();
 			}} />
-		</Modal>
-
-		<!-- Free Throw modal -->
-		<Modal
-			showModal={game.action === GAME_ACTION.FREE_THROW}
-			close={() => {}}
-			hasClose={false}
-			choiceRequired={true}
-		>
-			<FreeThrowModal autoRoll={isFreeThrowAutoPlay} />
 		</Modal>
 
 		<!-- Exit confirmation modal -->
@@ -248,49 +309,79 @@
 	}
 
 	.game {
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-		align-items: center;
-	}
-
-	.play-area {
-		flex: 1;
+		width: 90%;
+		margin: auto;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
-		gap: var(--space-4);
-		padding: var(--space-6);
 		position: relative;
+	}
+
+	.toolbar {
+		display: flex;
+		justify-content: flex-end;
+		gap: var(--space-2);
 		width: 100%;
+		padding: var(--space-1) var(--space-2);
 	}
 
-	.last-play {
-		font-family: var(--font-body);
-		font-size: var(--text-lg);
-		font-weight: var(--weight-bold);
-		color: var(--color-text-primary);
-		text-align: center;
-		margin: 0;
-		max-width: 30rem;
-	}
-
-	.action-label {
-		font-family: var(--font-body);
-		font-size: var(--text-sm);
-		font-weight: var(--weight-semibold);
-		letter-spacing: var(--tracking-wider);
-		text-transform: uppercase;
-		color: var(--color-text-tertiary);
-		margin: 0;
+	.scoreboard-wrapper {
+		position: relative;
+		z-index: 100;
+		width: 100%;
 	}
 
 	.dice-container {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding: var(--space-4);
+		justify-content: center;
+		min-width: 7.5rem;
+		background-color: var(--color-bg-surface);
+		border: 1px solid var(--color-on-accent);
+		border-radius: 1rem;
+		padding: 0.25rem 0.5rem;
+		z-index: 100;
+		filter: drop-shadow(3px 6px 8px oklch(0 0 0 / 0.5));
+	}
+
+	.action {
+		color: var(--color-text-gold);
+		font-family: inherit;
+		font-size: 0.9rem;
+		white-space: nowrap;
+		margin: 0 auto;
+	}
+
+	.court-area {
+		position: relative;
+		width: 100%;
+		margin-top: -2.5rem;
+	}
+
+	.court-overlay {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-2);
+		pointer-events: none;
+		max-width: 60%;
+	}
+
+	.last-play {
+		font-family: var(--font-body);
+		font-size: clamp(0.75rem, 2vw, 1.25rem);
+		font-weight: var(--weight-bold);
+		color: #fff;
+		text-align: center;
+		margin: 0;
+		text-shadow:
+			0 1px 3px rgba(0, 0, 0, 0.7),
+			0 0 8px rgba(0, 0, 0, 0.4);
 	}
 
 	.toolbar-button {

@@ -1,19 +1,19 @@
-export type Period = 1 | 2 | 3;
-
 export interface HockeyDiceRoll {
 	id: number;
-	isGoal?: boolean;
-	isShotOnGoal?: boolean;
 	isPenalty?: boolean;
-	isPowerPlayGoal?: boolean;
+	isTurnover?: boolean;
+	isShot?: boolean;
+	isPowerPlayShot?: boolean;
+	isGoal?: boolean;
 	description: string[];
 }
 
 export interface HockeyPlay {
 	team: string;
-	diceRoll: number;
-	action: string;
+	diceId: number;
 	description: string;
-	goals: number;
-	period: Period;
+	goalsScored: number;
+	isPenalty: boolean;
+	isTurnover: boolean;
+	isShot: boolean;
 }

@@ -5,9 +5,10 @@
 
 	type FreeThrowProps = {
 		autoRoll?: boolean;
+		onShoot?: (result: 'made' | 'missed', onComplete: () => void) => void;
 	};
 
-	let { autoRoll = false }: FreeThrowProps = $props();
+	let { autoRoll = false, onShoot }: FreeThrowProps = $props();
 
 	let dieValue: number = $state(0);
 	let rolling = $state(false);
@@ -26,10 +27,22 @@
 
 		dieValue = value;
 		rolling = false;
-		result = value % 2 === 0 ? 'made' : 'missed';
+		const shotResult = value % 2 === 0 ? 'made' : 'missed';
 
-		game.handleFreeThrow(value);
+		if (onShoot) {
+			onShoot(shotResult, () => {
+				result = shotResult;
+				game.handleFreeThrow(value);
+				finishFreeThrow();
+			});
+		} else {
+			result = shotResult;
+			game.handleFreeThrow(value);
+			finishFreeThrow();
+		}
+	};
 
+	const finishFreeThrow = async () => {
 		await sleep(1000 * settings.speed);
 		result = null;
 

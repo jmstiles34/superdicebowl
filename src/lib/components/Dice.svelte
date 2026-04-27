@@ -13,6 +13,7 @@
 		pipCount?: number;
 		restricted?: boolean;
 		rollDelay?: number;
+		singleDie?: boolean;
 		onDiceRoll?: (diceId: number) => void;
 		onRollComplete?: () => void;
 	};
@@ -25,6 +26,7 @@
 		pipCount = 6,
 		restricted = false,
 		rollDelay = 1000,
+		singleDie = false,
 		onDiceRoll,
 		onRollComplete
 	}: DiceProps = $props();
@@ -58,19 +60,32 @@
 
 		playSound(flickSfx, settings.volume);
 		canRoll = false;
-		let die1: number = nonZeroRandomNumber(pipCount);
-		let die2: number = nonZeroRandomNumber(pipCount);
-		let diceId = Math.min(die1 * 10 + die2, die2 * 10 + die1);
 
-		rolling = true;
-		await sleep(rollDelay);
-		die1Pips = die1;
-		die2Pips = die2;
-		rolling = false;
-		await sleep(rollDelay);
-		canRoll = true;
-		onDiceRoll?.(diceId);
-		onRollComplete?.();
+		if (singleDie) {
+			const die1: number = nonZeroRandomNumber(pipCount);
+			rolling = true;
+			await sleep(rollDelay);
+			die1Pips = die1;
+			rolling = false;
+			await sleep(rollDelay);
+			canRoll = true;
+			onDiceRoll?.(die1);
+			onRollComplete?.();
+		} else {
+			const die1: number = nonZeroRandomNumber(pipCount);
+			const die2: number = nonZeroRandomNumber(pipCount);
+			const diceId = Math.min(die1 * 10 + die2, die2 * 10 + die1);
+
+			rolling = true;
+			await sleep(rollDelay);
+			die1Pips = die1;
+			die2Pips = die2;
+			rolling = false;
+			await sleep(rollDelay);
+			canRoll = true;
+			onDiceRoll?.(diceId);
+			onRollComplete?.();
+		}
 	}
 
 	/* Resolve token fallbacks at the style attribute level so parent-supplied
@@ -97,11 +112,13 @@
 			<span class="pip"></span>
 		{/each}
 	</div>
-	<div class="face" class:rolling>
-		{#each Array(die2Pips) as _, i (i)}
-			<span class="pip"></span>
-		{/each}
-	</div>
+	{#if !singleDie}
+		<div class="face" class:rolling>
+			{#each Array(die2Pips) as _, i (i)}
+				<span class="pip"></span>
+			{/each}
+		</div>
+	{/if}
 </button>
 
 <style>

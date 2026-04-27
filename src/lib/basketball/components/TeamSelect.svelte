@@ -44,6 +44,7 @@
 
 	<div
 		class="logo-area"
+		class:has-team={!!team.id}
 		style:border-color={team.id ? team.colors?.primary ?? 'var(--color-border-default)' : 'var(--color-border-default)'}
 	>
 		{#if team.id && team.logo}
@@ -80,8 +81,7 @@
 			aria-label={`Random ${teamType} Team`}
 		>
 			<picture>
-				<source type="image/avif" srcset="/images/randomize.avif" />
-				<img alt={`Random ${teamType} Team`} src="/images/randomize.png" />
+				<img alt={`Random ${teamType} Team`} src="/images/backboard.png" />
 			</picture>
 		</button>
 	</div>
@@ -126,11 +126,18 @@
 		width: 8rem;
 		height: 8rem;
 		object-fit: contain;
-		filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
 	}
 
-	:global([data-theme='dark']) .logo-area {
+	.logo-area.has-team {
+		background-color: #f0f0f0;
+	}
+
+	:global([data-theme='dark']) .logo-area:not(.has-team) {
 		background-color: var(--color-bg-elevated);
+	}
+
+	:global([data-theme='dark']) .logo-area.has-team {
+		background-color: #f0f0f0;
 	}
 
 	.dice-placeholder {

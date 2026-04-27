@@ -198,12 +198,6 @@ class BasketballGameState {
 				return;
 			}
 
-			// If entering free throw mode, don't unrestrict dice (modal handles input)
-			if (this.action === GAME_ACTION.FREE_THROW) {
-				await this.save();
-				return;
-			}
-
 			this.restrictDice = false;
 			await this.save();
 		});
