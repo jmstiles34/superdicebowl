@@ -10,6 +10,16 @@
 	let ballScale = $state(1);
 	let ballOpacity = $state(1);
 
+	// Score popup state
+	let scoreVisible = $state(false);
+	let scoreText = $state('');
+	let scoreX = $state(0);
+	let scoreY = $state(0);
+	let scoreAnimY = $state(0);
+	let scoreOpacity = $state(1);
+	let scoreScale = $state(1);
+	let scorePoints = $state(0);
+
 	// Hoop targets
 	const LEFT_HOOP = { x: 110, y: 450 };
 	const RIGHT_HOOP = { x: 1490, y: 450 };
@@ -67,6 +77,7 @@
 		const start = pickStartPosition(shotType, possession);
 		const shootsRight = possession === 'Away';
 		const hoop = shootsRight ? RIGHT_HOOP : LEFT_HOOP;
+		const points = shotType === 'three' ? 3 : 2;
 
 		// Miss lands near but not in the hoop
 		const endX = result === 'made' ? hoop.x : hoop.x + (Math.random() - 0.5) * 80;
@@ -83,7 +94,7 @@
 			const midX = (start.x + endX) / 2;
 			const midY = Math.min(start.y, endY) - 120; // arc apex above both points
 
-			animateFlight(start, { x: midX, y: midY }, { x: endX, y: endY }, result, onComplete);
+			animateFlight(start, { x: midX, y: midY }, { x: endX, y: endY }, result, onComplete, points);
 		});
 	}
 
@@ -123,8 +134,41 @@
 			const midX = (start.x + endX) / 2;
 			const midY = Math.min(start.y, endY) - 80;
 
-			animateFlight(start, { x: midX, y: midY }, { x: endX, y: endY }, result, onComplete);
+			animateFlight(start, { x: midX, y: midY }, { x: endX, y: endY }, result, onComplete, 1);
 		});
+	}
+
+	async function showScorePopup(x: number, y: number, points: number) {
+		scoreText = `+${points}`;
+		scoreX = x;
+		scoreY = y;
+		scoreAnimY = 0;
+		scoreOpacity = 1;
+		scorePoints = points;
+		scoreScale = 0.3;
+		scoreVisible = true;
+
+		// Pop in
+		await sleep(16);
+		scoreScale = points === 3 ? 1.4 : points === 2 ? 1.1 : 0.9;
+
+		// Float upward and fade out
+		const floatFrames = 40;
+		const floatDuration = points === 3 ? 1400 : points === 2 ? 1100 : 900;
+		const frameTime = floatDuration / floatFrames;
+
+		for (let i = 1; i <= floatFrames; i++) {
+			const t = i / floatFrames;
+			scoreAnimY = -t * (points === 3 ? 180 : points === 2 ? 140 : 100);
+			scoreOpacity = 1 - t * t; // ease-out fade
+			if (points === 3) {
+				// Dramatic pulse that settles
+				scoreScale = 1.4 + Math.sin(t * Math.PI * 3) * 0.3 * (1 - t);
+			}
+			await sleep(frameTime);
+		}
+
+		scoreVisible = false;
 	}
 
 	async function animateFlight(
@@ -132,7 +176,8 @@
 		apex: { x: number; y: number },
 		end: { x: number; y: number },
 		result: ShotResult,
-		onComplete: () => void
+		onComplete: () => void,
+		points: number = 0
 	) {
 		const totalFrames = 40;
 		const duration = 800;
@@ -162,6 +207,8 @@
 			// Ball drops through
 			await sleep(150);
 			ballScale = 0.3;
+			// Fire the score popup (don't await — it runs in parallel)
+			showScorePopup(end.x, end.y, points);
 			await sleep(200);
 			ballOpacity = 0;
 		}
@@ -182,4 +229,23 @@
 		opacity={ballOpacity}
 		preserveAspectRatio="xMidYMid meet"
 	/>
+{/if}
+
+{#if scoreVisible}
+	<text
+		x={scoreX}
+		y={scoreY + scoreAnimY}
+		text-anchor="middle"
+		dominant-baseline="central"
+		font-family="var(--font-heading, sans-serif)"
+		font-weight="900"
+		font-size={scorePoints === 3 ? 120 : scorePoints === 2 ? 90 : 70}
+		fill={scorePoints === 3 ? '#FFD700' : scorePoints === 2 ? '#FFFFFF' : '#E0E0E0'}
+		stroke={scorePoints === 3 ? '#FF6B00' : '#000000'}
+		stroke-width={scorePoints === 3 ? 4 : 2}
+		opacity={scoreOpacity}
+		transform="scale({scoreScale}) translate({scoreX * (1 / scoreScale - 1)}, {(scoreY + scoreAnimY) * (1 / scoreScale - 1)})"
+	>
+		{scoreText}
+	</text>
 {/if}

@@ -20,7 +20,7 @@
 
 <div class={`basketball-court-svg ${className}`}>
 	<svg 
-		viewBox="0 0 1600 900" 
+		viewBox="40 40 1520 820" 
 		xmlns="http://www.w3.org/2000/svg"
 		role="img"
 		aria-label="Retro basketball court"

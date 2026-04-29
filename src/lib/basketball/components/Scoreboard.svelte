@@ -30,19 +30,18 @@
 				{#if game.possession === 'Away'}
 					<img class="possession-ball" src="/images/basketball.webp" alt="Possession" />
 				{/if}
-				<span class="team-name">
-					<span class="city">{settings.awayTeam.city}</span> {settings.awayTeam.name}
-				</span>
+				<div class="team-name-group">
+					<span class="team-name">
+						<span class="city">{settings.awayTeam.city}</span> {settings.awayTeam.name}
+					</span>
+					<div class="foul-dots">
+						{#each Array(MAX_TEAM_FOULS) as _, i (i)}
+							<span class="foul-dot" class:lit={i < game.fouls.away}></span>
+						{/each}
+					</div>
+				</div>
 			</div>
 			<span class="score">{String(game.scores.away).padStart(2, '0')}</span>
-		</div>
-		<div class="foul-row">
-			<span class="foul-label">Fouls</span>
-			<div class="foul-dots">
-				{#each Array(MAX_TEAM_FOULS) as _, i (i)}
-					<span class="foul-dot" class:lit={i < game.fouls.away}></span>
-				{/each}
-			</div>
 		</div>
 	</div>
 
@@ -64,19 +63,18 @@
 				{#if game.possession === 'Home'}
 					<img class="possession-ball" src="/images/basketball.webp" alt="Possession" />
 				{/if}
-				<span class="team-name">
-					<span class="city">{settings.homeTeam.city}</span> {settings.homeTeam.name}
-				</span>
+				<div class="team-name-group">
+					<span class="team-name">
+						<span class="city">{settings.homeTeam.city}</span> {settings.homeTeam.name}
+					</span>
+					<div class="foul-dots">
+						{#each Array(MAX_TEAM_FOULS) as _, i (i)}
+							<span class="foul-dot" class:lit={i < game.fouls.home}></span>
+						{/each}
+					</div>
+				</div>
 			</div>
 			<span class="score">{String(game.scores.home).padStart(2, '0')}</span>
-		</div>
-		<div class="foul-row">
-			<span class="foul-label">Fouls</span>
-			<div class="foul-dots">
-				{#each Array(MAX_TEAM_FOULS) as _, i (i)}
-					<span class="foul-dot" class:lit={i < game.fouls.home}></span>
-				{/each}
-			</div>
 		</div>
 	</div>
 </div>
@@ -99,26 +97,27 @@
 		display: flex;
 		align-items: center;
 		background-position: left;
-		background-position-x: -1.25rem;
-		background-size: 50%;
+		background-position-x: -1rem;
+		background-size: 30%;
 		background-repeat: no-repeat;
 		overflow: hidden;
 	}
 
 	.team-info {
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		justify-content: flex-end;
 		flex: 1;
 		gap: 0.3rem;
 		overflow: hidden;
-		padding-right: 0.5rem;
+		padding-right: 1rem;
 	}
 
 	.possession-ball {
 		width: 0.9rem;
 		height: 0.9rem;
 		flex-shrink: 0;
+		margin-top: 0.5rem;
 	}
 
 	.team-name {
@@ -134,37 +133,28 @@
 
 	.score {
 		font-family: var(--font-numeric);
-		font-size: var(--text-display-sm);
+		font-size: var(--text-display-md);
 		font-weight: var(--weight-black);
 		color: var(--color-text-primary);
 		min-width: 2rem;
 		text-align: right;
-		padding: 0.25rem 0.5rem;
+		padding: 0 0.75rem;
 		border-left: 1px solid var(--color-on-accent);
-		background-color: var(--color-bg-surface);
 	}
 
-	/* ── Foul indicator row ──────────────────────────────────── */
-	.foul-row {
+	/* ── Team name + fouls group ─────────────────────────────── */
+	.team-name-group {
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: var(--space-2);
-		padding-top: var(--space-1);
-	}
-
-	.foul-label {
-		font-family: var(--font-body);
-		font-size: 0.6rem;
-		font-weight: var(--weight-semibold);
-		letter-spacing: var(--tracking-wider);
-		text-transform: uppercase;
-		color: var(--color-text-tertiary);
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 0.15rem;
+		overflow: hidden;
 	}
 
 	.foul-dots {
 		display: flex;
 		gap: 0.25rem;
+		padding-bottom: 0.3rem;
 	}
 
 	.foul-dot {
@@ -183,8 +173,8 @@
 
 	@media (min-width: 52rem) {
 		.team-main {
-			background-position-x: -25px;
-			background-size: 40%;
+			background-position-x: -1rem;
+			background-size: 25%;
 		}
 	}
 

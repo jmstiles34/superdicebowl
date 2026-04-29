@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+	import { fade } from 'svelte/transition';
 	import { goto } from '$app/navigation';
 	import { Fireworks } from '@fireworks-js/svelte';
 	import { game } from '$lib/basketball/state/game.svelte';
@@ -205,30 +206,11 @@
 {#if isGameReady}
 	<main>
 		<div class="game">
-			<div class="toolbar">
-				<button
-					class="toolbar-button flip"
-					onclick={handleExitClick}
-					title="Quit Game"
-					aria-label="Quit Game"
-				>
-					<img src={exit} alt="Quit Game" />
-				</button>
-				<button
-					class="toolbar-button"
-					onclick={toggleSettings}
-					title="Settings"
-					aria-label="Settings"
-				>
-					<img src={gear} alt="Settings" />
-				</button>
-			</div>
-
 			<div class="scoreboard-wrapper">
 				<Scoreboard>
 					{#snippet center()}
 						<div class="dice-container">
-							<div class="action">{game.action}</div>
+							<!-- <div class="action">{game.action}</div> -->
 							<Dice
 								dieColor={primaryColor(settings, game.possession.toLowerCase()) ?? '#FFF'}
 								pipColor={(() => {
@@ -243,6 +225,32 @@
 								onDiceRoll={game.action === GAME_ACTION.FREE_THROW ? handleFreeThrowRoll : handleDiceRoll}
 								onRollComplete={saveGame}
 							/>
+							<div class="controls-row">
+								<svg class="possession-arrow" class:active={game.possession === 'Home'} viewBox="0 0 30 24" aria-label="Shooting left">
+									<path d="M21 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+									<path d="M13 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+								<button
+									class="toolbar-button flip"
+									onclick={handleExitClick}
+									title="Quit Game"
+									aria-label="Quit Game"
+								>
+									<img src={exit} alt="Quit Game" />
+								</button>
+								<button
+									class="toolbar-button"
+									onclick={toggleSettings}
+									title="Settings"
+									aria-label="Settings"
+								>
+									<img src={gear} alt="Settings" />
+								</button>
+								<svg class="possession-arrow" class:active={game.possession === 'Away'} viewBox="0 0 30 24" aria-label="Shooting right">
+									<path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+									<path d="M17 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</div>
 						</div>
 					{/snippet}
 				</Scoreboard>
@@ -255,7 +263,9 @@
 					{/snippet}
 				</Court>
 				<div class="court-overlay">
-					<p class="last-play">{game.lastPlay}</p>
+					{#key game.lastPlay}
+						<p class="last-play" in:fade={{ duration: 300 }}>{game.lastPlay}</p>
+					{/key}
 				</div>
 				{#if game.action === GAME_ACTION.GAME_OVER}
 					<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
@@ -306,29 +316,22 @@
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 	}
 
 	.game {
 		width: 90%;
-		margin: auto;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		position: relative;
 	}
 
-	.toolbar {
-		display: flex;
-		justify-content: flex-end;
-		gap: var(--space-2);
-		width: 100%;
-		padding: var(--space-1) var(--space-2);
-	}
-
 	.scoreboard-wrapper {
 		position: relative;
 		z-index: 100;
 		width: 100%;
+		padding-top: .25rem;
 	}
 
 	.dice-container {
@@ -345,23 +348,15 @@
 		filter: drop-shadow(3px 6px 8px oklch(0 0 0 / 0.5));
 	}
 
-	.action {
-		color: var(--color-text-gold);
-		font-family: inherit;
-		font-size: 0.9rem;
-		white-space: nowrap;
-		margin: 0 auto;
-	}
-
 	.court-area {
 		position: relative;
 		width: 100%;
-		margin-top: -2.5rem;
+		margin-top: -2.75rem;
 	}
 
 	.court-overlay {
 		position: absolute;
-		top: 50%;
+		top: 25%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 		display: flex;
@@ -379,9 +374,31 @@
 		color: #fff;
 		text-align: center;
 		margin: 0;
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		background-color: rgba(0, 0, 0, 0.5);
 		text-shadow:
-			0 1px 3px rgba(0, 0, 0, 0.7),
-			0 0 8px rgba(0, 0, 0, 0.4);
+			0 1px 4px rgba(0, 0, 0, 0.9),
+			0 0 12px rgba(0, 0, 0, 0.6);
+	}
+
+	.controls-row {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+	}
+
+	.possession-arrow {
+		width: 1.5rem;
+		height: 1.75rem;
+		color: var(--color-text-tertiary);
+		opacity: 0.3;
+		transition: opacity var(--dur-fast) var(--ease-snes), color var(--dur-fast) var(--ease-snes);
+	}
+
+	.possession-arrow.active {
+		color: var(--color-text-gold);
+		opacity: 1;
 	}
 
 	.toolbar-button {
