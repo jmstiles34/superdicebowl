@@ -4,8 +4,12 @@
 	import type { Team } from '$lib/shared/types';
 	import type { Snippet } from 'svelte';
 
-	let { awayTeam, homeTeam, toolbar }: { awayTeam: Team; homeTeam: Team; toolbar?: Snippet } =
-		$props();
+	let {
+		awayTeam,
+		homeTeam,
+		toolbar,
+		diceArea
+	}: { awayTeam: Team; homeTeam: Team; toolbar?: Snippet; diceArea?: Snippet } = $props();
 
 	function teamBgStyle(team: Team): string {
 		const primary = team.colors.primary;
@@ -42,6 +46,7 @@
 </script>
 
 <div class="sb">
+	<div class="sb-inner">
 	<div class="sb-grid">
 		<!-- Header row -->
 		<div class="cell corner">
@@ -62,7 +67,9 @@
 			class="cell team"
 			style="{teamBgStyle(awayTeam)} color: {awayTeam.colors.tertiary ?? awayTeam.colors.secondary};"
 		>
-			{awayTeam.city}
+			<span class="team-full">{awayTeam.city} {awayTeam.name}</span>
+			<span class="team-city">{awayTeam.city}</span>
+			<span class="team-code">{awayTeam.cityKey}</span>
 		</div>
 		{#each INNINGS as i (i)}
 			<div
@@ -83,7 +90,9 @@
 			class="cell team"
 			style="{teamBgStyle(homeTeam)} color: {homeTeam.colors.tertiary ?? homeTeam.colors.secondary};"
 		>
-			{homeTeam.city}
+			<span class="team-full">{homeTeam.city} {homeTeam.name}</span>
+			<span class="team-city">{homeTeam.city}</span>
+			<span class="team-code">{homeTeam.cityKey}</span>
 		</div>
 		{#each INNINGS as i (i)}
 			<div
@@ -99,13 +108,11 @@
 		<div class="cell tot">{game.totals.hom.h}</div>
 		<div class="cell tot">{game.totals.hom.e}</div>
 	</div>
-
-	<!-- Outs indicator -->
-	<div class="outs-indicator">
-		<span class="outs-label">Outs</span>
-		{#each [1, 2, 3] as n (n)}
-			<span class="out-dot" class:lit={n <= game.outs}></span>
-		{/each}
+	{#if diceArea}
+		<div class="dice-area">
+			{@render diceArea()}
+		</div>
+	{/if}
 	</div>
 </div>
 
@@ -115,14 +122,21 @@
 		border-radius: var(--radius-sm);
 		border: 2px solid var(--color-border-default);
 		box-shadow: 0 4px 12px oklch(0 0 0 / 0.4);
+		container-type: inline-size;
+	}
+
+	.sb-inner {
+		display: flex;
+		align-items: stretch;
 	}
 
 	.sb-grid {
+		flex: 1;
+		min-width: 0;
 		display: grid;
-		grid-template-columns: auto repeat(9, 2.5rem) 2px repeat(3, 2.5rem);
-		grid-template-rows: repeat(3, 2.25rem);
-		gap: 1px;
-		background-color: var(--color-border-subtle);
+		grid-template-columns: auto repeat(9, minmax(1.25rem, 3rem)) 2px repeat(3, minmax(1.25rem, 3rem));
+		grid-template-rows: repeat(3, clamp(1.5rem, 3vw, 2.5rem));
+		background-color: var(--color-bg-surface);
 		font-family: var(--font-body);
 	}
 
@@ -131,7 +145,9 @@
 		align-items: center;
 		justify-content: center;
 		background-color: var(--color-bg-surface);
-		font-size: var(--text-base);
+		font-size: clamp(0.75rem, 1.5vw, 1.125rem);
+		border-right: 1px solid var(--color-border-subtle);
+		border-bottom: 1px solid var(--color-border-subtle);
 	}
 
 	/* ── Header row ── */
@@ -139,7 +155,7 @@
 		font-weight: var(--weight-bold);
 		color: var(--color-text-tertiary);
 		background-color: var(--color-bg-elevated);
-		font-size: var(--text-sm);
+		font-size: clamp(0.625rem, 1.25vw, 1rem);
 	}
 
 	.hdr.active {
@@ -148,40 +164,72 @@
 
 	.hdr.rhe {
 		color: var(--color-text-secondary);
-		font-size: var(--text-sm);
+		font-size: clamp(0.625rem, 1.25vw, 1rem);
 	}
 
 	.corner {
 		background-color: var(--color-bg-elevated);
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		justify-content: start;
 		gap: 0.25rem;
 	}
 
 	/* ── Team name ── */
 	.team {
 		font-weight: var(--weight-black);
-		font-size: var(--text-sm);
+		font-size: clamp(0.625rem, 1.25vw, 1rem);
 		letter-spacing: 0.04em;
 		justify-content: flex-end;
 		padding-left: 2.25rem;
 		padding-right: 0.5rem;
 		white-space: nowrap;
 		text-shadow: 0 1px 2px oklch(0 0 0 / 0.4);
-		min-width: 8.5rem;
+		min-width: 10rem;
+	}
+
+	/* ── Responsive team name ── */
+	.team-full {
+		display: none;
+	}
+	.team-city {
+		display: inline;
+	}
+	.team-code {
+		display: none;
+	}
+
+	@container (min-width: 48rem) {
+		.team-full {
+			display: inline;
+		}
+		.team-city {
+			display: none;
+		}
+	}
+
+	@container (max-width: 34rem) {
+		.team-city {
+			display: none;
+		}
+		.team-code {
+			display: inline;
+		}
+		.team {
+			padding-left: 0.5rem;
+			padding-right: 0.25rem;
+			min-width: 4rem;
+		}
 	}
 
 	/* ── Inning cells ── */
 	.inn {
 		color: var(--color-text-tertiary);
-		font-size: var(--text-sm);
 	}
 
 	.inn.played {
 		color: var(--color-text-primary);
 		font-weight: var(--weight-bold);
-		font-size: var(--text-base);
 	}
 
 	.inn.cur {
@@ -199,46 +247,39 @@
 	.tot {
 		font-weight: var(--weight-bold);
 		color: var(--color-text-primary);
-		font-size: var(--text-base);
 	}
 
 	.tot.gold {
 		color: var(--color-text-gold);
 	}
 
-	/* ── Outs indicator ── */
-	.outs-indicator {
+	/* ── Dice area ── */
+	.dice-area {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: 0.5rem;
-		padding: 0.4rem 0;
-		background-color: var(--color-bg-elevated);
-		border-top: 2px solid var(--color-border-default);
+		padding: 0.25rem 0.5rem;
+		background-color: var(--color-bg-surface);
+		border-left: 2px solid var(--color-border-default);
+		overflow: hidden;
 	}
 
-	.outs-label {
-		font-family: var(--font-body);
-		font-size: var(--text-sm);
-		font-weight: var(--weight-bold);
-		color: var(--color-text-gold);
-		letter-spacing: 0.05em;
+	.dice-area > :global(*) {
+		zoom: var(--dice-zoom, 1);
 	}
 
-	.out-dot {
-		width: 0.9rem;
-		height: 0.9rem;
-		border-radius: 50%;
-		border: 2px solid var(--color-text-tertiary);
-		transition:
-			background-color 0.15s,
-			border-color 0.15s,
-			box-shadow 0.15s;
+	@media (max-width: 60rem) {
+		.dice-area {
+			--dice-zoom: 0.8;
+			padding: 0.1rem 0.25rem;
+		}
 	}
 
-	.out-dot.lit {
-		background-color: var(--bb-out-red);
-		border-color: var(--bb-out-red-border);
-		box-shadow: var(--bb-out-red-glow);
+	@media (max-width: 40rem) {
+		.dice-area {
+			--dice-zoom: 0.55;
+			padding: 0 0.15rem;
+		}
 	}
 </style>

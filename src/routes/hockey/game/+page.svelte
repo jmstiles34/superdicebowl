@@ -22,14 +22,9 @@
 	import CoinToss from '$lib/hockey/components/CoinToss.svelte';
 	import SaveAttemptModal from '$lib/hockey/components/SaveAttemptModal.svelte';
 
+	const lastPlayPos = rinkCoords(50, 12);
 	const centerIce = rinkCoords(50, 50);
-	const belowCenter = rinkCoords(50, 62);
 	const aboveCenter = rinkCoords(50, 38);
-
-	// Away is penalized when home has the power play (home is in possession + PP active)
-	const awayInBox = $derived(game.powerPlay && game.possession === 'Home');
-	// Home is penalized when away has the power play
-	const homeInBox = $derived(game.powerPlay && game.possession === 'Away');
 
 	import exit from '$lib/images/exit.svg';
 	import gear from '$lib/images/gear.svg';
@@ -154,84 +149,65 @@
 {#if isGameReady}
 	<main>
 		<div class="game">
-			<Scoreboard>
-				{#snippet toolbar()}
-					<button
-						class="toolbar-button flip"
-						onclick={handleExitClick}
-						title="Quit Game"
-						aria-label="Quit Game"
-					>
-						<img src={exit} alt="Quit Game" />
-					</button>
-					<button
-						class="toolbar-button"
-						onclick={toggleSettings}
-						title="Settings"
-						aria-label="Settings"
-					>
-						<img src={gear} alt="Settings" />
-					</button>
-				{/snippet}
-			</Scoreboard>
+			<div class="scoreboard-wrapper">
+				<Scoreboard>
+					{#snippet center()}
+						<div class="dice-container">
+							<Dice
+								dieColor={primaryColor(settings, game.possession.toLowerCase()) ?? '#FFF'}
+								pipColor={(() => {
+									const team = game.possession.toLowerCase();
+									const teamTyped = `${team}Team` as 'homeTeam' | 'awayTeam';
+									return settings[teamTyped].colors.secondary ?? '#000';
+								})()}
+								restricted={game.restrictDice || game.action === GAME_ACTION.SAVE_ATTEMPT || game.action === GAME_ACTION.COIN_TOSS || game.action === GAME_ACTION.GAME_OVER}
+								autoRoll={isOffenseAutoPlay && game.action === GAME_ACTION.OFFENSE}
+								paused={game.paused}
+								onDiceRoll={handleDiceRoll}
+								onRollComplete={saveGame}
+							/>
+							<div class="controls-row">
+								<span class="pp-indicator" class:active={game.powerPlay && game.possession === 'Away'}>PP</span>
+								<button
+									class="toolbar-button flip"
+									onclick={handleExitClick}
+									title="Quit Game"
+									aria-label="Quit Game"
+								>
+									<img src={exit} alt="Quit Game" />
+								</button>
+								<button
+									class="toolbar-button"
+									onclick={toggleSettings}
+									title="Settings"
+									aria-label="Settings"
+								>
+									<img src={gear} alt="Settings" />
+								</button>
+								<span class="pp-indicator" class:active={game.powerPlay && game.possession === 'Home'}>PP</span>
+							</div>
+						</div>
+					{/snippet}
+				</Scoreboard>
+			</div>
 
 			<div class="rink-area">
 				<Rink
-					awayTeam={`${awayTeam.city} ${awayTeam.name}`}
-					homeTeam={`${homeTeam.city} ${homeTeam.name}`}
-					awayColor={awayTeam.colors.primary}
-					homeColor={homeTeam.colors.primary}
 					homeLogo={`/logos/${homeTeam.logo}.webp`}
 				>
-					{#snippet awayBox()}
-						{#if awayInBox}
-							<svg viewBox="0 0 20 28" class="penalty-player" aria-label="Player in penalty box">
-								<circle cx="10" cy="5" r="4" fill="currentColor" />
-								<path d="M3 12 h14 l-2 16 h-10 z" fill="currentColor" />
-							</svg>
-						{/if}
-					{/snippet}
-					{#snippet homeBox()}
-						{#if homeInBox}
-							<svg viewBox="0 0 20 28" class="penalty-player" aria-label="Player in penalty box">
-								<circle cx="10" cy="5" r="4" fill="currentColor" />
-								<path d="M3 12 h14 l-2 16 h-10 z" fill="currentColor" />
-							</svg>
-						{/if}
-					{/snippet}
-
 					{#if game.powerPlay}
 						<p class="rink-overlay-text power-play-label" style:left={aboveCenter.left} style:top={aboveCenter.top}>
 							Power Play
 						</p>
 					{/if}
-					<p class="rink-overlay-text last-play" style:left={centerIce.left} style:top={centerIce.top}>
+					<p class="rink-overlay-text last-play" style:left={lastPlayPos.left} style:top={lastPlayPos.top}>
 						{game.lastPlay}
-					</p>
-					<p class="rink-overlay-text action-label" style:left={belowCenter.left} style:top={belowCenter.top}>
-						{game.action}
 					</p>
 				</Rink>
 
 				{#if game.action === GAME_ACTION.GAME_OVER}
 					<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
 				{/if}
-			</div>
-
-			<div class="dice-container">
-				<Dice
-					dieColor={primaryColor(settings, game.possession.toLowerCase()) ?? '#FFF'}
-					pipColor={(() => {
-						const team = game.possession.toLowerCase();
-						const teamTyped = `${team}Team` as 'homeTeam' | 'awayTeam';
-						return settings[teamTyped].colors.secondary ?? '#000';
-					})()}
-					restricted={game.restrictDice || game.action === GAME_ACTION.SAVE_ATTEMPT || game.action === GAME_ACTION.COIN_TOSS || game.action === GAME_ACTION.GAME_OVER}
-					autoRoll={isOffenseAutoPlay && game.action === GAME_ACTION.OFFENSE}
-					paused={game.paused}
-					onDiceRoll={handleDiceRoll}
-					onRollComplete={saveGame}
-				/>
 			</div>
 		</div>
 
@@ -285,23 +261,28 @@
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 	}
 
 	.game {
+		width: 90%;
 		display: flex;
 		flex-direction: column;
-		flex: 1;
 		align-items: center;
+		position: relative;
+	}
+
+	.scoreboard-wrapper {
+		position: relative;
+		z-index: 100;
+		width: 100%;
+		padding-top: 0.25rem;
 	}
 
 	.rink-area {
-		flex: 1;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
 		position: relative;
-		padding: var(--space-2) var(--space-4);
+		width: 100%;
+		margin-top: -2.25rem;
 	}
 
 	.rink-overlay-text {
@@ -317,10 +298,15 @@
 		font-family: var(--font-body);
 		font-size: clamp(0.75rem, 2vw, 1.25rem);
 		font-weight: var(--weight-bold);
-		color: var(--rink-boards, #1e293b);
+		color: #fff;
+		text-align: center;
+		margin: 0;
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.375rem;
+		background-color: rgba(0, 0, 0, 0.55);
 		text-shadow:
-			0 0 4px var(--rink-ice, #e8f0f5),
-			0 0 8px var(--rink-ice, #e8f0f5);
+			0 1px 4px rgba(0, 0, 0, 0.9),
+			0 0 12px rgba(0, 0, 0, 0.6);
 	}
 
 	.action-label {
@@ -344,18 +330,49 @@
 		text-shadow: 0 0 6px var(--rink-ice, #e8f0f5);
 	}
 
-	.penalty-player {
-		height: 100%;
-		width: auto;
-		color: var(--rink-boards, #1e293b);
-		opacity: 0.8;
-	}
 
 	.dice-container {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding: var(--space-4);
+		justify-content: center;
+		min-width: 7.5rem;
+		background-color: var(--color-bg-surface);
+		border: 1px solid var(--color-on-accent);
+		border-radius: 1rem;
+		padding: 0.25rem 0.5rem;
+		z-index: 100;
+		filter: drop-shadow(3px 6px 8px oklch(0 0 0 / 0.5));
+	}
+
+	.controls-row {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+	}
+
+	.pp-indicator {
+		font-family: var(--font-body);
+		font-size: var(--text-xs);
+		font-weight: var(--weight-black);
+		letter-spacing: var(--tracking-wider);
+		text-transform: uppercase;
+		color: transparent;
+		min-width: 1.5rem;
+		text-align: center;
+	}
+
+	.pp-indicator.active {
+		color: oklch(0.88 0.18 85);
+		text-shadow:
+			0 0 6px oklch(0.88 0.18 85 / 0.8),
+			0 0 12px oklch(0.88 0.18 85 / 0.5);
+		animation: pp-pulse 1s ease-in-out infinite;
+	}
+
+	@keyframes pp-pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.4; }
 	}
 
 	.toolbar-button {

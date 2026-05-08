@@ -80,8 +80,7 @@
 			aria-label={`Random ${teamType} Team`}
 		>
 			<picture>
-				<source type="image/avif" srcset="/images/randomize.avif" />
-				<img alt={`Random ${teamType} Team`} src="/images/randomize.png" />
+				<img alt={`Random ${teamType} Team`} src="/images/home-plate.png" />
 			</picture>
 		</button>
 	</div>

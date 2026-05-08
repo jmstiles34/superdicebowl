@@ -337,8 +337,8 @@
 		{
 			"city": "Utah",
 			"cityKey": "UTA",
-			"name": "Hockey Club",
-			"logo": "nhl-hockeyclub",
+			"name": "Mammoths",
+			"logo": "nhl-mammoths",
 			"id": "8c3e4b61-0028",
 			"colors": {
 				"primary": "oklch(0.00 0.00 0)",
@@ -404,9 +404,9 @@
 			"logo": "echl-thunder",
 			"id": "echl-0001",
 			"colors": {
-				"primary": "#002B5C",
-				"secondary": "#F05A28",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.29 0.10 255)",
+				"secondary": "oklch(0.66 0.19 38)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -416,9 +416,9 @@
 			"logo": "echl-americans",
 			"id": "echl-0002",
 			"colors": {
-				"primary": "#C8102E",
-				"secondary": "#0033A0",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.53 0.21 22)",
+				"secondary": "oklch(0.38 0.18 263)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -428,9 +428,9 @@
 			"logo": "echl-gladiators",
 			"id": "echl-0003",
 			"colors": {
-				"primary": "#111111",
-				"secondary": "#C8102E",
-				"tertiary": "#F2A900"
+				"primary": "oklch(0.18 0.00 90)",
+				"secondary": "oklch(0.53 0.21 22)",
+				"tertiary": "oklch(0.78 0.16 78)"
 			}
 		},
 		{
@@ -440,9 +440,9 @@
 			"logo": "echl-bison",
 			"id": "echl-0004",
 			"colors": {
-				"primary": "#5B2C83",
-				"secondary": "#F2A900",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.40 0.14 306)",
+				"secondary": "oklch(0.78 0.16 78)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -452,9 +452,9 @@
 			"logo": "echl-cyclones",
 			"id": "echl-0005",
 			"colors": {
-				"primary": "#E31837",
-				"secondary": "#000000",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.58 0.23 22)",
+				"secondary": "oklch(0.00 0.00 0)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -464,9 +464,9 @@
 			"logo": "echl-everblades",
 			"id": "echl-0006",
 			"colors": {
-				"primary": "#004B87",
-				"secondary": "#C5A028",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.41 0.12 251)",
+				"secondary": "oklch(0.72 0.14 90)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -476,21 +476,21 @@
 			"logo": "echl-komets",
 			"id": "echl-0007",
 			"colors": {
-				"primary": "#000000",
-				"secondary": "#F05A28",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.00 0.00 0)",
+				"secondary": "oklch(0.66 0.19 38)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
 			"city": "Greenville",
 			"cityKey": "GVL",
 			"name": "Swamp Rabbits",
-			"logo": "echl-swamp-rabbits",
+			"logo": "echl-swamprabbits",
 			"id": "echl-0008",
 			"colors": {
-				"primary": "#00573F",
-				"secondary": "#F2A900",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.41 0.08 167)",
+				"secondary": "oklch(0.78 0.16 78)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -500,9 +500,9 @@
 			"logo": "echl-steelheads",
 			"id": "echl-0009",
 			"colors": {
-				"primary": "#003A8F",
-				"secondary": "#F2A900",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.38 0.15 260)",
+				"secondary": "oklch(0.78 0.16 78)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -512,9 +512,9 @@
 			"logo": "echl-fuel",
 			"id": "echl-0010",
 			"colors": {
-				"primary": "#041E42",
-				"secondary": "#C8102E",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.24 0.08 257)",
+				"secondary": "oklch(0.53 0.21 22)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -524,9 +524,9 @@
 			"logo": "echl-heartlanders",
 			"id": "echl-0011",
 			"colors": {
-				"primary": "#1E4D2B",
-				"secondary": "#F2A900",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.38 0.08 150)",
+				"secondary": "oklch(0.78 0.16 78)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -536,9 +536,9 @@
 			"logo": "echl-icemen",
 			"id": "echl-0012",
 			"colors": {
-				"primary": "#041E42",
-				"secondary": "#00A3E0",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.24 0.08 257)",
+				"secondary": "oklch(0.67 0.14 234)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -548,9 +548,9 @@
 			"logo": "echl-mavericks",
 			"id": "echl-0013",
 			"colors": {
-				"primary": "#002F87",
-				"secondary": "#F2A900",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.34 0.15 262)",
+				"secondary": "oklch(0.78 0.16 78)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -560,9 +560,9 @@
 			"logo": "echl-wings",
 			"id": "echl-0014",
 			"colors": {
-				"primary": "#F05A28",
-				"secondary": "#000000",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.66 0.19 38)",
+				"secondary": "oklch(0.00 0.00 0)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -572,9 +572,9 @@
 			"logo": "echl-mariners",
 			"id": "echl-0015",
 			"colors": {
-				"primary": "#00205B",
-				"secondary": "#00A3E0",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.27 0.11 261)",
+				"secondary": "oklch(0.67 0.14 234)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -584,9 +584,9 @@
 			"logo": "echl-admirals",
 			"id": "echl-0016",
 			"colors": {
-				"primary": "#041E42",
-				"secondary": "#A2AAAD",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.24 0.08 257)",
+				"secondary": "oklch(0.73 0.01 222)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -596,9 +596,9 @@
 			"logo": "echl-solarbears",
 			"id": "echl-0017",
 			"colors": {
-				"primary": "#4B2E83",
-				"secondary": "#F2A900",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.38 0.14 295)",
+				"secondary": "oklch(0.78 0.16 78)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -608,9 +608,9 @@
 			"logo": "echl-rush",
 			"id": "echl-0018",
 			"colors": {
-				"primary": "#041E42",
-				"secondary": "#F2A900",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.24 0.08 257)",
+				"secondary": "oklch(0.78 0.16 78)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -620,9 +620,9 @@
 			"logo": "echl-royals",
 			"id": "echl-0019",
 			"colors": {
-				"primary": "#002F87",
-				"secondary": "#C5A028",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.34 0.15 262)",
+				"secondary": "oklch(0.72 0.14 90)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -632,9 +632,9 @@
 			"logo": "echl-ghostpirates",
 			"id": "echl-0020",
 			"colors": {
-				"primary": "#0C2340",
-				"secondary": "#00A3E0",
-				"tertiary": "#A7A8AA"
+				"primary": "oklch(0.26 0.06 256)",
+				"secondary": "oklch(0.67 0.14 234)",
+				"tertiary": "oklch(0.73 0.00 265)"
 			}
 		},
 		{
@@ -644,9 +644,9 @@
 			"logo": "echl-stingrays",
 			"id": "echl-0021",
 			"colors": {
-				"primary": "#041E42",
-				"secondary": "#F2A900",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.24 0.08 257)",
+				"secondary": "oklch(0.78 0.16 78)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -656,21 +656,21 @@
 			"logo": "echl-walleye",
 			"id": "echl-0022",
 			"colors": {
-				"primary": "#003A5D",
-				"secondary": "#F2A900",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.34 0.08 243)",
+				"secondary": "oklch(0.78 0.16 78)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
 			"city": "Tulsa",
 			"cityKey": "TUL",
-			"name": "Oil ers",
+			"name": "Oilers",
 			"logo": "echl-oilers",
 			"id": "echl-0023",
 			"colors": {
-				"primary": "#041E42",
-				"secondary": "#C8102E",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.24 0.08 257)",
+				"secondary": "oklch(0.53 0.21 22)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -680,9 +680,9 @@
 			"logo": "echl-grizzlies",
 			"id": "echl-0024",
 			"colors": {
-				"primary": "#041E42",
-				"secondary": "#00A3E0",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.24 0.08 257)",
+				"secondary": "oklch(0.67 0.14 234)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -692,9 +692,9 @@
 			"logo": "echl-nailers",
 			"id": "echl-0025",
 			"colors": {
-				"primary": "#FFB81C",
-				"secondary": "#000000",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.83 0.17 80)",
+				"secondary": "oklch(0.00 0.00 0)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -704,10 +704,10 @@
 			"logo": "echl-thunder2",
 			"id": "echl-0026",
 			"colors": {
-				"primary": "#003A8F",
-				"secondary": "#000000",
-				"tertiary": "#A2AAAD",
-				"quaternary": "#FFFFFF"
+				"primary": "oklch(0.38 0.15 260)",
+				"secondary": "oklch(0.00 0.00 0)",
+				"tertiary": "oklch(0.73 0.01 222)",
+				"quaternary": "oklch(1.00 0.00 90)"
 			}
 		},
 		{
@@ -717,9 +717,9 @@
 			"logo": "echl-railers",
 			"id": "echl-0027",
 			"colors": {
-				"primary": "#00205B",
-				"secondary": "#C8102E",
-				"tertiary": "#FFFFFF"
+				"primary": "oklch(0.27 0.11 261)",
+				"secondary": "oklch(0.53 0.21 22)",
+				"tertiary": "oklch(1.00 0.00 90)"
 			}
 		}
 	],

@@ -249,6 +249,24 @@
 							<img src={gear} alt="Settings" />
 						</button>
 					{/snippet}
+					{#snippet diceArea()}
+						<div class="outs-indicator">
+							{#each [1, 2, 3] as n (n)}
+								<span class="out-dot" class:lit={n <= game.outs}></span>
+							{/each}
+						</div>
+						<Dice
+							dieColor={primaryColor(settings, game.possession.toLowerCase()) ?? '#FFF'}
+							pipColor={(() => {
+								const team = game.possession.toLowerCase();
+								const teamTyped = `${team}Team` as 'homeTeam' | 'awayTeam';
+								return settings[teamTyped].colors.tertiary ?? settings[teamTyped].colors.secondary ?? '#000';
+							})()}
+							restricted={game.restrictDice}
+							onDiceRoll={handleDiceRoll}
+							onRollComplete={saveGame}
+						/>
+					{/snippet}
 				</Scoreboard>
 			</div>
 
@@ -259,7 +277,7 @@
 					preserveAspectRatio="xMidYMid meet"
 					xmlns="http://www.w3.org/2000/svg"
 				>
-					<FieldSVG />
+					<FieldSVG outfieldLogo={homeTeam.logo} />
 					<SvgBaseRunners bind:this={baseRunnersRef} />
 					<SvgBatter hand={batterHand} bind:this={batterRef} />
 					<SvgPitchBall bind:this={pitchBallRef} />
@@ -271,19 +289,6 @@
 				{/if}
 			</div>
 
-			<div class="dice-container">
-				<Dice
-					dieColor={primaryColor(settings, game.possession.toLowerCase()) ?? '#FFF'}
-					pipColor={(() => {
-						const team = game.possession.toLowerCase();
-						const teamTyped = `${team}Team` as 'homeTeam' | 'awayTeam';
-						return settings[teamTyped].colors.tertiary ?? settings[teamTyped].colors.secondary ?? '#000';
-					})()}
-					restricted={game.restrictDice}
-					onDiceRoll={handleDiceRoll}
-					onRollComplete={saveGame}
-				/>
-			</div>
 		</div>
 
 		<Modal
@@ -309,27 +314,29 @@
 <style>
 	main {
 		position: relative;
-		padding: 1rem;
 		height: 100vh;
 		height: 100dvh;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 	}
 
 	.game {
 		width: 90%;
-		max-width: 60rem;
-		margin: auto;
+		max-width: 75rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		position: relative;
+		flex: 1;
+		min-height: 0;
 	}
 
 	.scoreboard-wrapper {
 		position: relative;
 		z-index: 100;
+		width: 100%;
 		margin-bottom: -1.5rem;
 	}
 
@@ -354,30 +361,69 @@
 		transform: scaleX(-1);
 	}
 
-	.dice-container {
-		position: relative;
-		z-index: 100;
-		margin-top: -2rem;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		background-color: var(--color-bg-surface);
-		border: 1px solid var(--color-on-accent);
-		border-radius: 1rem;
-		padding: 0.25rem 0.5rem;
-		filter: drop-shadow(3px 6px 8px oklch(0 0 0 / 0.5));
-	}
-
 	.field-outer {
 		position: relative;
 		overflow: hidden;
 		width: 100%;
+		border: 2px solid var(--color-border-default);
+		border-radius: var(--radius-sm);
+		flex: 1;
+		min-height: 0;
 	}
 
 	.field-svg {
 		width: 100%;
-		height: auto;
+		height: 100%;
 		display: block;
+	}
+
+	.outs-indicator {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 0.35rem 0;
+	}
+
+	.out-dot {
+		width: 0.9rem;
+		height: 0.9rem;
+		border-radius: 50%;
+		border: 2px solid var(--color-text-tertiary);
+		transition:
+			background-color 0.15s,
+			border-color 0.15s,
+			box-shadow 0.15s;
+	}
+
+	.out-dot.lit {
+		background-color: var(--bb-out-red);
+		border-color: var(--bb-out-red-border);
+		box-shadow: var(--bb-out-red-glow);
+	}
+
+	/* ── Mobile landscape: fit in viewport ── */
+	@media (max-height: 500px) and (orientation: landscape) {
+		main {
+			padding: 0.25rem 0.5rem;
+		}
+		.game {
+			width: 100%;
+			max-width: 100%;
+		}
+		.scoreboard-wrapper {
+			margin-bottom: -1rem;
+		}
+	}
+
+	/* ── Narrow screens ── */
+	@media (max-width: 40rem) {
+		.game {
+			width: 95%;
+		}
+		.scoreboard-wrapper {
+			margin-bottom: -1rem;
+		}
 	}
 
 	:global(.fireworks) {

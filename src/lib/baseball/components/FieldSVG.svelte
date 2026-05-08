@@ -5,6 +5,11 @@
 
 	import fieldSvg from '$lib/images/field.svg';
 	import { settings } from '$lib/state/settings.svelte';
+	import { getLogoUrl } from '$lib/utils/logoPreloader';
+
+	let { outfieldLogo }: { outfieldLogo?: string } = $props();
+
+	const logoUrl = $derived(outfieldLogo ? getLogoUrl(outfieldLogo) : '');
 
 	const OUTFIELD_PATH = `
 M253.995728,292.997498
@@ -115,6 +120,18 @@ z`;
 	</pattern>
 
 	<!-- Clip paths for grass areas -->
+	<!-- Mowed-in logo filter: desaturate → brighten → green tint -->
+	<filter id="mow-logo" color-interpolation-filters="sRGB">
+		<!-- Desaturate to greyscale -->
+		<feColorMatrix type="saturate" values="0" />
+		<!-- Boost brightness so lighter areas show the mow effect -->
+		<feComponentTransfer>
+			<feFuncR type="linear" slope="1.3" intercept="0" />
+			<feFuncG type="linear" slope="1.3" intercept="0" />
+			<feFuncB type="linear" slope="1.3" intercept="0" />
+		</feComponentTransfer>
+	</filter>
+
 	<clipPath id="clip-outfield">
 		<path d={OUTFIELD_PATH} />
 	</clipPath>
@@ -163,6 +180,21 @@ z`;
 	<!-- Checkerboard on both areas -->
 	<rect x="0" y="0" width="1200" height="630" fill="url(#mow-checker)" clip-path="url(#clip-outfield)" />
 	<rect x="0" y="0" width="1200" height="630" fill="url(#mow-checker)" clip-path="url(#clip-infield)" />
+{/if}
+
+<!-- Outfield logo (mowed-in effect) -->
+{#if logoUrl}
+	<image
+		href={logoUrl}
+		x="532"
+		y="35"
+		width="150"
+		height="100"
+		preserveAspectRatio="xMidYMid meet"
+		clip-path="url(#clip-outfield)"
+		filter="url(#mow-logo)"
+		opacity="0.15"
+	/>
 {/if}
 
 <!-- Foul poles -->
