@@ -77,8 +77,8 @@
 			"id": "d54e1e11-4a9c-4c75-90f1-1c63c7b6a666",
 			"colors": {
 				"primary": "oklch(0.405 0.125 250.0)",
-				"secondary": "oklch(0.310 0.090 210.0)",
-				"tertiary": "oklch(0.846 0.014 233.8)"
+				"secondary": "oklch(0.846 0.014 233.8)",
+				"tertiary": "oklch(0.310 0.090 210.0)"
 			}
 		},
 		{
@@ -212,8 +212,8 @@
 			"id": "c3d4e5f6-9c0d-4e21-9a1b-3c4d5e7f0003",
 			"colors": {
 				"primary": "oklch(0.305 0.095 257.8)",
-				"secondary": "oklch(0.556 0.214 26.2)",
-				"tertiary": "oklch(0.846 0.114 85.0)"
+				"secondary": "oklch(0.846 0.114 85.0)",
+				"tertiary": "oklch(0.556 0.214 26.2)"
 			}
 		},
 		{
@@ -235,8 +235,8 @@
 			"id": "e5f6a7b8-7e1f-4c21-9d1a-5e6f7a7f0005",
 			"colors": {
 				"primary": "oklch(0.360 0.120 255.0)",
-				"secondary": "oklch(0.681 0.213 38.9)",
-				"tertiary": "oklch(0.846 0.014 233.8)"
+				"secondary": "oklch(0.846 0.014 233.8)",
+				"tertiary": "oklch(0.681 0.213 38.9)"
 			}
 		},
 		{
@@ -258,8 +258,8 @@
 			"id": "a7b8c9d0-5a3b-4e21-9d1c-7a8b9c7f0007",
 			"colors": {
 				"primary": "oklch(0.355 0.145 263.0)",
-				"secondary": "oklch(0.530 0.180 25.0)",
-				"tertiary": "oklch(0.846 0.014 233.8)"
+				"secondary": "oklch(0.846 0.014 233.8)",
+				"tertiary": "oklch(0.530 0.180 25.0)"
 			}
 		},
 		{
@@ -270,8 +270,8 @@
 			"id": "b8c9d0e1-4b5c-4f21-8c1d-8b9c0d7f0008",
 			"colors": {
 				"primary": "oklch(0.410 0.130 290.0)",
-				"secondary": "oklch(0.681 0.213 38.9)",
-				"tertiary": "oklch(0.000 0.000 0.0)"
+				"secondary": "oklch(0.000 0.000 0.0)",
+				"tertiary": "oklch(0.681 0.213 38.9)"
 			}
 		},
 		{
@@ -339,8 +339,8 @@
 			"id": "b4c5d6e7-8b9c-4f21-8c1d-4b5c6d7f0014",
 			"colors": {
 				"primary": "oklch(0.355 0.145 263.0)",
-				"secondary": "oklch(0.530 0.180 25.0)",
-				"tertiary": "oklch(0.846 0.014 233.8)"
+				"secondary": "oklch(0.846 0.014 233.8)",
+				"tertiary": "oklch(0.530 0.180 25.0)"
 			}
 		}
 	],
