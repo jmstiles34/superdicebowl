@@ -14,6 +14,7 @@
 	import { GAME_MODE, TEAM } from '$lib/shared/constants';
 
 	import Dice from '$lib/components/Dice.svelte';
+	import EventAnnouncement from '$lib/components/EventAnnouncement.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import ConfirmExit from '$lib/components/modal/ConfirmExit.svelte';
 	import Settings from '$lib/components/modal/Settings.svelte';
@@ -21,6 +22,9 @@
 	import Rink, { rinkCoords } from '$lib/hockey/components/Rink.svelte';
 	import CoinToss from '$lib/hockey/components/CoinToss.svelte';
 	import SaveAttemptModal from '$lib/hockey/components/SaveAttemptModal.svelte';
+	import PuckAnimation from '$lib/hockey/components/PuckAnimation.svelte';
+	import { lookupDiceResult, classifyOutcome } from '$lib/hockey/utils/game';
+	import { getLogoUrl } from '$lib/utils/logoPreloader';
 
 	const lastPlayPos = rinkCoords(50, 12);
 	const centerIce = rinkCoords(50, 50);
@@ -38,6 +42,18 @@
 	const isGameReady = awayTeam.id.length && homeTeam.id.length;
 	let showSettings = $state(false);
 	let fw = $state(fireworkShow);
+	let puckRef = $state<PuckAnimation | undefined>(undefined);
+	let puckInitialized = $state(false);
+
+	let announcementText = $state('');
+	let announcementType: 'goal' | 'save' | 'powerplay' = $state('goal');
+	let announcementKey = $state(0);
+
+	function triggerAnnouncement(text: string, type: 'goal' | 'save' | 'powerplay') {
+		announcementText = text;
+		announcementType = type;
+		announcementKey = Date.now();
+	}
 
 	// Offense auto-roll: simulation, or solo when opponent has puck
 	const isOffenseAutoPlay = $derived(
@@ -79,11 +95,39 @@
 		}
 	});
 
+	// ── Puck init — fires once when the first possession is set ─
+	$effect(() => {
+		if (!puckInitialized && game.action === GAME_ACTION.OFFENSE && puckRef) {
+			puckInitialized = true;
+			puckRef.init(game.possession);
+		}
+	});
+
 	// ── Dice roll handler ───────────────────────────────────
 
 	function handleDiceRoll(diceId: number) {
+		const roll = lookupDiceResult(diceId);
+		const outcome = roll ? classifyOutcome(roll, game.powerPlay) : null;
+		const attackingTeam = game.possession;
+
 		game.restrictDice = true;
 		game.handleDiceRoll(game.action, diceId);
+
+		// Animate puck — possession may have already switched inside handleDiceRoll
+		if (outcome === 'pass') {
+			puckRef?.pass(game.possession);
+		} else if (outcome === 'turnover') {
+			puckRef?.turnover(game.possession);
+		} else if (outcome === 'shot_on_goal') {
+			puckRef?.shotOnGoal(attackingTeam);
+		} else if (outcome === 'goal') {
+			puckRef?.goal(game.possession);
+			triggerAnnouncement('GOAL!', 'goal');
+		} else if (outcome === 'penalty') {
+			puckRef?.penalty(game.possession);
+			triggerAnnouncement('POWER PLAY!', 'powerplay');
+		}
+
 		game.continueAfterAction();
 	}
 
@@ -195,17 +239,28 @@
 				<Rink
 					homeLogo={`/logos/${homeTeam.logo}.webp`}
 				>
+				{#snippet svgOverlay()}
+					<PuckAnimation
+						bind:this={puckRef}
+						awayLogo={getLogoUrl(awayTeam.logo)}
+						homeLogo={getLogoUrl(homeTeam.logo)}
+					/>
+				{/snippet}
 					{#if game.powerPlay}
 						<p class="rink-overlay-text power-play-label" style:left={aboveCenter.left} style:top={aboveCenter.top}>
 							Power Play
 						</p>
 					{/if}
+					{#if game.lastPlay}
 					<p class="rink-overlay-text last-play" style:left={lastPlayPos.left} style:top={lastPlayPos.top}>
 						{game.lastPlay}
 					</p>
+				{/if}
 				</Rink>
 
-				{#if game.action === GAME_ACTION.GAME_OVER}
+				<EventAnnouncement text={announcementText} type={announcementType} key={announcementKey} />
+
+			{#if game.action === GAME_ACTION.GAME_OVER}
 					<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
 				{/if}
 			</div>
@@ -233,7 +288,14 @@
 			hasClose={false}
 			choiceRequired={true}
 		>
-			<SaveAttemptModal autoRoll={isSaveAutoPlay} />
+			<SaveAttemptModal
+				autoRoll={isSaveAutoPlay}
+				onResult={(result) => {
+					puckRef?.saveResult(result, game.possession);
+					if (result === 'goal') triggerAnnouncement('GOAL!', 'goal');
+					else triggerAnnouncement('SAVE!', 'save');
+				}}
+			/>
 		</Modal>
 
 		<!-- Exit confirmation modal -->
@@ -309,16 +371,6 @@
 			0 0 12px rgba(0, 0, 0, 0.6);
 	}
 
-	.action-label {
-		font-family: var(--font-body);
-		font-size: clamp(0.6rem, 1.2vw, 0.85rem);
-		font-weight: var(--weight-semibold);
-		letter-spacing: var(--tracking-wider);
-		text-transform: uppercase;
-		color: var(--rink-blue, #1e40af);
-		opacity: 0.7;
-	}
-
 	.power-play-label {
 		font-family: var(--font-display);
 		font-size: clamp(0.65rem, 1.4vw, 0.95rem);
@@ -352,27 +404,29 @@
 	}
 
 	.pp-indicator {
-		font-family: var(--font-body);
-		font-size: var(--text-xs);
+		font-family: var(--font-display);
+		font-size: var(--text-sm);
 		font-weight: var(--weight-black);
+		font-style: italic;
 		letter-spacing: var(--tracking-wider);
 		text-transform: uppercase;
 		color: transparent;
-		min-width: 1.5rem;
+		min-width: 1.75rem;
 		text-align: center;
 	}
 
 	.pp-indicator.active {
-		color: oklch(0.88 0.18 85);
+		color: oklch(0.92 0.20 85);
 		text-shadow:
-			0 0 6px oklch(0.88 0.18 85 / 0.8),
-			0 0 12px oklch(0.88 0.18 85 / 0.5);
-		animation: pp-pulse 1s ease-in-out infinite;
+			0 0 6px oklch(0.88 0.18 85 / 0.9),
+			0 0 14px oklch(0.88 0.18 85 / 0.6),
+			0 0 28px oklch(0.88 0.18 85 / 0.3);
+		animation: pp-pulse 2s ease-in-out infinite;
 	}
 
 	@keyframes pp-pulse {
-		0%, 100% { opacity: 1; }
-		50% { opacity: 0.4; }
+		0%, 100% { opacity: 1; transform: scale(1); }
+		50% { opacity: 0.5; transform: scale(0.92); }
 	}
 
 	.toolbar-button {

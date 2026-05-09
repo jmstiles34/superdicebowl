@@ -1,5 +1,5 @@
 <script lang="ts">
-	type AnnouncementType = 'touchdown' | 'turnover' | 'fieldgoal' | 'safety';
+	type AnnouncementType = 'touchdown' | 'turnover' | 'fieldgoal' | 'safety' | 'goal' | 'save' | 'powerplay';
 
 	type Props = {
 		text: string;
@@ -73,6 +73,30 @@
 
 	.safety {
 		color: #ff8c00;
+	}
+
+	.goal {
+		color: oklch(0.92 0.20 38);
+		text-shadow:
+			0 0 20px oklch(0.92 0.20 38),
+			0 0 40px oklch(0.75 0.22 25),
+			2px 2px 0 rgba(0, 0, 0, 0.6);
+	}
+
+	.save {
+		color: oklch(0.72 0.18 235);
+		text-shadow:
+			0 0 20px oklch(0.72 0.18 235),
+			0 0 40px oklch(0.55 0.20 255),
+			2px 2px 0 rgba(0, 0, 0, 0.6);
+	}
+
+	.powerplay {
+		color: oklch(0.92 0.20 85);
+		text-shadow:
+			0 0 20px oklch(0.92 0.20 85),
+			0 0 40px oklch(0.88 0.18 85),
+			2px 2px 0 rgba(0, 0, 0, 0.6);
 	}
 
 	@keyframes announce {

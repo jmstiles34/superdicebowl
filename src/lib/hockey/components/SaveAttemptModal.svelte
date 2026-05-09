@@ -6,9 +6,10 @@
 
 	type SaveAttemptProps = {
 		autoRoll?: boolean;
+		onResult?: (result: 'save' | 'goal') => void;
 	};
 
-	let { autoRoll = false }: SaveAttemptProps = $props();
+	let { autoRoll = false, onResult }: SaveAttemptProps = $props();
 
 	let dieValue: number = $state(0);
 	let rolling = $state(false);
@@ -30,6 +31,7 @@
 		result = isSaveSuccessful(value) ? 'save' : 'goal';
 
 		game.handleSaveRoll(value);
+		onResult?.(result);
 
 		await sleep(1200 * settings.speed);
 		result = null;

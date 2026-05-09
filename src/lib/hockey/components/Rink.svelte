@@ -19,11 +19,13 @@
   interface Props {
     homeLogo?: string;
     children?: Snippet;
+    svgOverlay?: Snippet;
   }
 
   let {
     homeLogo,
-    children
+    children,
+    svgOverlay
   }: Props = $props();
 
   const endZoneFaceoffs = [
@@ -129,6 +131,8 @@
       <polyline class="net" points="82,272 60,282 60,318 82,328" />
       <polyline class="net" points="978,272 1000,282 1000,318 978,328" />
     </g>
+
+    {#if svgOverlay}{@render svgOverlay()}{/if}
   </svg>
 
   <!-- Overlay for user-provided children -->
@@ -150,7 +154,6 @@
     container-type: inline-size;
     position: relative;
     width: 100%;
-    max-width: var(--rink-max-width, 1200px);
     aspect-ratio: 1060 / 620;
     margin: 0 auto;
     font-family: var(--font-retro, 'Courier New', ui-monospace, monospace);
