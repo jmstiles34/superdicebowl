@@ -146,15 +146,13 @@
 		font-size: var(--text-display-md);
 		font-weight: var(--weight-black);
 		color: var(--color-text-primary);
-		min-width: 2rem;
-		text-align: right;
-		padding: 0 0.75rem;
+		min-width: 3rem;
+		text-align: center;
 		border-left: 1px solid var(--color-on-accent);
 		flex-shrink: 0;
 	}
 
 	.home-score {
-		text-align: left;
 		border-left: none;
 		border-right: 1px solid var(--color-on-accent);
 	}
@@ -168,6 +166,7 @@
 		margin-top: 0.45rem;
 		opacity: 0.9;
 	}
+
 
 	@media (max-width: 780px) {
 		.city { display: none; }

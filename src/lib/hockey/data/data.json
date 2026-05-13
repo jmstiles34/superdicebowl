@@ -337,8 +337,8 @@
 		{
 			"city": "Utah",
 			"cityKey": "UTA",
-			"name": "Mammoths",
-			"logo": "nhl-mammoths",
+			"name": "Mammoth",
+			"logo": "nhl-mammoth",
 			"id": "8c3e4b61-0028",
 			"colors": {
 				"primary": "oklch(0.00 0.00 0)",

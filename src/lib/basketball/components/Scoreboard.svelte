@@ -53,17 +53,15 @@
 	<!-- Home team panel -->
 	<div class="team-panel">
 		<div
-			class="team-main"
+			class="team-main home"
 			style={`
 				background-color: ${settings.homeTeam.colors.primary};
-				background-image: linear-gradient(to right, ${homeOverlay} 0 100%), url(${getLogoUrl(settings.homeTeam.logo)});
+				background-image: linear-gradient(to left, ${homeOverlay} 0 100%), url(${getLogoUrl(settings.homeTeam.logo)});
 			`}
 		>
-			<div class="team-info">
-				{#if game.possession === 'Home'}
-					<img class="possession-ball" src="/images/basketball.webp" alt="Possession" />
-				{/if}
-				<div class="team-name-group">
+			<span class="score home-score">{String(game.scores.home).padStart(2, '0')}</span>
+			<div class="team-info home-info">
+				<div class="team-name-group home-group">
 					<span class="team-name">
 						<span class="city">{settings.homeTeam.city}</span> {settings.homeTeam.name}
 					</span>
@@ -73,8 +71,10 @@
 						{/each}
 					</div>
 				</div>
+				{#if game.possession === 'Home'}
+					<img class="possession-ball" src="/images/basketball.webp" alt="Possession" />
+				{/if}
 			</div>
-			<span class="score">{String(game.scores.home).padStart(2, '0')}</span>
 		</div>
 	</div>
 </div>
@@ -103,6 +103,11 @@
 		overflow: hidden;
 	}
 
+	.team-main.home {
+		background-position: right;
+		background-position-x: calc(100% + 1rem);
+	}
+
 	.team-info {
 		display: flex;
 		align-items: flex-start;
@@ -111,6 +116,12 @@
 		gap: 0.3rem;
 		overflow: hidden;
 		padding-right: 1rem;
+	}
+
+	.home-info {
+		justify-content: flex-start;
+		padding-right: 0;
+		padding-left: 1rem;
 	}
 
 	.possession-ball {
@@ -142,6 +153,11 @@
 		border-left: 1px solid var(--color-on-accent);
 	}
 
+	.home-score {
+		border-left: none;
+		border-right: 1px solid var(--color-on-accent);
+	}
+
 	/* ── Team name + fouls group ─────────────────────────────── */
 	.team-name-group {
 		display: flex;
@@ -149,6 +165,10 @@
 		align-items: flex-end;
 		gap: 0.15rem;
 		overflow: hidden;
+	}
+
+	.home-group {
+		align-items: flex-start;
 	}
 
 	.foul-dots {

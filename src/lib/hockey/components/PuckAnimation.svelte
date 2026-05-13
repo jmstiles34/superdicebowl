@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { sleep } from '$lib/utils/common';
+	import { game } from '$lib/hockey/state/game.svelte';
 
 	type Pos = { x: number; y: number };
 
@@ -140,6 +141,22 @@
 			<circle cx={puckX} cy={puckY} r="11" />
 		</clipPath>
 	</defs>
+	{#if game.powerPlay}
+		<radialGradient id="pp-glow" cx="50%" cy="50%" r="50%">
+			<stop offset="0%" stop-color="#facc15" stop-opacity="0.9" />
+			<stop offset="60%" stop-color="#facc15" stop-opacity="0.4" />
+			<stop offset="100%" stop-color="#facc15" stop-opacity="0" />
+		</radialGradient>
+		<circle
+			cx={puckX}
+			cy={puckY}
+			r="22"
+			fill="url(#pp-glow)"
+		>
+			<animate attributeName="r" values="22;40" dur="1.2s" repeatCount="indefinite" />
+			<animate attributeName="opacity" values="1;0.15" dur="1.2s" repeatCount="indefinite" />
+		</circle>
+	{/if}
 	<circle
 		cx={puckX}
 		cy={puckY}

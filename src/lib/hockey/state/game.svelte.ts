@@ -171,11 +171,12 @@ class HockeyGameState {
 
 	// ── Save roll (Phase 2: The Save) ───────────────────────
 
-	handleSaveRoll = (dieValue: number) => {
+	handleSaveRoll = (dieValue: number, outcome?: 'save' | 'goal') => {
 		const shootingTeam = this.offenseKey;
 		this.shotsOnGoal[shootingTeam]++;
 
-		if (isSaveSuccessful(dieValue)) {
+		const saved = outcome ? outcome === 'save' : isSaveSuccessful(dieValue);
+		if (saved) {
 			this.lastPlay = 'Save! Goalie makes the stop';
 			this.addPlay('Save', 0, false, false, true);
 		} else {

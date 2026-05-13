@@ -21,6 +21,7 @@
 	import { primaryColor } from '$lib/football/utils/game';
 	import Court from '$lib/basketball/components/Court.svelte';
 	import ShotAnimation from '$lib/basketball/components/ShotAnimation.svelte';
+	import BallAnimation from '$lib/basketball/components/BallAnimation.svelte';
 	import CoinToss from '$lib/basketball/components/CoinToss.svelte';
 	import { lookupDiceResult, classifyOutcome } from '$lib/basketball/utils/game';
 
@@ -37,6 +38,7 @@
 	let showSettings = $state(false);
 	let fw = $state(fireworkShow);
 	let shotRef = $state<ShotAnimation>();
+	let ballRef = $state<BallAnimation>();
 
 	const isAutoPlay = $derived(
 		mode === GAME_MODE.SIMULATION ||
@@ -56,6 +58,15 @@
 				game.saveCoinToss(winner);
 				saveGame();
 			});
+		}
+	});
+
+	// ── Show ball on court after coin toss ──────────────────
+	let ballInitialized = $state(false);
+	$effect(() => {
+		if (game.action === GAME_ACTION.OFFENSE && !ballInitialized && ballRef) {
+			ballInitialized = true;
+			ballRef.init(game.possession);
 		}
 	});
 
@@ -101,13 +112,29 @@
 			const shotResult = outcome === 'missed_shot' || outcome === 'shooting_foul' ? 'missed' : 'made';
 			const currentPossession = game.possession;
 
+			ballRef?.hide();
 			shotRef.shoot(shotType, shotResult, currentPossession, () => {
 				game.handleDiceRoll(game.action, diceId);
 				game.continueAfterAction();
+				// Show ball in the new possessing team's zone (unless entering free throws)
+				if (game.action !== GAME_ACTION.FREE_THROW && game.action !== GAME_ACTION.GAME_OVER) {
+					ballRef?.changePossession(game.possession);
+				}
 			});
 		} else {
+			const prevPossession = game.possession;
 			game.handleDiceRoll(game.action, diceId);
 			game.continueAfterAction();
+			// Move ball based on whether possession changed
+			if (game.action !== GAME_ACTION.FREE_THROW && game.action !== GAME_ACTION.GAME_OVER) {
+				if (game.possession !== prevPossession) {
+					ballRef?.changePossession(game.possession);
+				} else {
+					ballRef?.move(game.possession);
+				}
+			} else if (game.action === GAME_ACTION.FREE_THROW) {
+				ballRef?.hide();
+			}
 		}
 	}
 
@@ -127,6 +154,9 @@
 					shotRef.showAtFreeThrowLine(game.possession);
 				} else {
 					game.continueAfterAction();
+					if (game.action !== GAME_ACTION.GAME_OVER) {
+						ballRef?.changePossession(game.possession);
+					}
 				}
 			});
 		} else {
@@ -259,6 +289,7 @@
 			<div class="court-area">
 				<Court homeLogo={`/logos/${homeTeam.logo}.webp`} homeColor={homeTeam.colors.primary} homeSecondaryColor={homeTeam.colors.secondary} possession={game.possession}>
 					{#snippet svgOverlay()}
+						<BallAnimation bind:this={ballRef} />
 						<ShotAnimation bind:this={shotRef} />
 					{/snippet}
 				</Court>
