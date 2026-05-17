@@ -87,13 +87,41 @@
 		</a>
 
 		<div class="menu-wrapper">
-			<a class="link desktop-link" href="/baseball">Baseball</a>
-			<a class="link desktop-link" href="/hockey">Hockey</a>
-			<a class="link desktop-link" href="/basketball">Basketball</a>
+			<div class="nav-item desktop-link">
+				<a class="link nav-trigger" href="/">Football</a>
+				{#if auth.isLoggedIn}
+					<div class="submenu">
+						<a class="submenu-item" href="/season">Season</a>
+						<a class="submenu-item" href="/teams">My Teams</a>
+						<a class="submenu-item" href="/games?sport=football">My Games</a>
+					</div>
+				{/if}
+			</div>
+			<div class="nav-item desktop-link">
+				<a class="link nav-trigger" href="/baseball">Baseball</a>
+				{#if auth.isLoggedIn}
+					<div class="submenu">
+						<a class="submenu-item" href="/games?sport=baseball">My Games</a>
+					</div>
+				{/if}
+			</div>
+			<div class="nav-item desktop-link">
+				<a class="link nav-trigger" href="/hockey">Hockey</a>
+				{#if auth.isLoggedIn}
+					<div class="submenu">
+						<a class="submenu-item" href="/games?sport=hockey">My Games</a>
+					</div>
+				{/if}
+			</div>
+			<div class="nav-item desktop-link">
+				<a class="link nav-trigger" href="/basketball">Basketball</a>
+				{#if auth.isLoggedIn}
+					<div class="submenu">
+						<a class="submenu-item" href="/games?sport=basketball">My Games</a>
+					</div>
+				{/if}
+			</div>
 			{#if auth.isLoggedIn}
-				<a class="link desktop-link" href="/season">Season</a>
-				<a class="link desktop-link" href="/teams">My Teams</a>
-				<a class="link desktop-link" href="/games">My Games</a>
 				{#if onlineState.isOnline}
 					<a class="link desktop-link nav-account" href="/online">
 						Online
@@ -133,13 +161,25 @@
 
 			{#if showMobileMenu}
 				<div class="kebab-dropdown" bind:this={dropdown}>
+					<a class="kebab-item" href="/" onclick={() => showMobileMenu = false}>Football</a>
+					{#if auth.isLoggedIn}
+						<a class="kebab-item kebab-sub" href="/season" onclick={() => showMobileMenu = false}>Season</a>
+						<a class="kebab-item kebab-sub" href="/teams" onclick={() => showMobileMenu = false}>My Teams</a>
+						<a class="kebab-item kebab-sub" href="/games?sport=football" onclick={() => showMobileMenu = false}>My Games</a>
+					{/if}
 					<a class="kebab-item" href="/baseball" onclick={() => showMobileMenu = false}>Baseball</a>
+					{#if auth.isLoggedIn}
+						<a class="kebab-item kebab-sub" href="/games?sport=baseball" onclick={() => showMobileMenu = false}>My Games</a>
+					{/if}
 					<a class="kebab-item" href="/hockey" onclick={() => showMobileMenu = false}>Hockey</a>
+					{#if auth.isLoggedIn}
+						<a class="kebab-item kebab-sub" href="/games?sport=hockey" onclick={() => showMobileMenu = false}>My Games</a>
+					{/if}
 					<a class="kebab-item" href="/basketball" onclick={() => showMobileMenu = false}>Basketball</a>
 					{#if auth.isLoggedIn}
-						<a class="kebab-item" href="/season" onclick={() => showMobileMenu = false}>Season</a>
-						<a class="kebab-item" href="/teams" onclick={() => showMobileMenu = false}>My Teams</a>
-						<a class="kebab-item" href="/games" onclick={() => showMobileMenu = false}>My Games</a>
+						<a class="kebab-item kebab-sub" href="/games?sport=basketball" onclick={() => showMobileMenu = false}>My Games</a>
+					{/if}
+					{#if auth.isLoggedIn}
 						{#if onlineState.isOnline}
 							<a class="kebab-item kebab-account" href="/online" onclick={() => showMobileMenu = false}>
 								Online
@@ -253,6 +293,52 @@
 		color: var(--color-header-link-hover);
 		background-color: var(--nav-bg-active);
 		border-color: rgba(64, 96, 240, 0.25);
+	}
+
+	/* ── Submenus (desktop only) ──────────────────────────────── */
+	.nav-item {
+		position: relative;
+	}
+
+	.submenu {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		margin-top: var(--space-1);
+		min-width: 9rem;
+		background-color: var(--color-bg-elevated);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-md);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+		z-index: var(--z-dropdown);
+		display: none;
+		flex-direction: column;
+		padding: var(--space-1) 0;
+	}
+
+	.nav-item:hover .submenu,
+	.nav-item:focus-within .submenu {
+		display: flex;
+	}
+
+	.submenu-item {
+		display: block;
+		padding: var(--space-2) var(--space-4);
+		font-family: var(--font-body);
+		font-size: var(--text-sm);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-wide);
+		color: var(--color-text-secondary);
+		text-decoration: none;
+		white-space: nowrap;
+		transition:
+			color var(--dur-fast) var(--ease-snes),
+			background-color var(--dur-fast) var(--ease-snes);
+	}
+
+	.submenu-item:hover {
+		color: var(--color-header-text);
+		background-color: var(--nav-bg-active);
 	}
 
 	/* ── Settings button ──────────────────────────────────────── */
@@ -401,6 +487,12 @@
 	.kebab-item:focus-visible {
 		outline: none;
 		box-shadow: var(--focus-ring);
+	}
+
+	.kebab-sub {
+		padding-left: calc(var(--space-4) + var(--space-3));
+		font-size: var(--text-sm);
+		color: var(--color-text-tertiary);
 	}
 
 	/* ── Notification badge ──────────────────────────────────── */

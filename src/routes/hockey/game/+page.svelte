@@ -27,7 +27,6 @@
 	import { getLogoUrl } from '$lib/utils/logoPreloader';
 
 	const lastPlayPos = rinkCoords(50, 12);
-	const centerIce = rinkCoords(50, 50);
 	const aboveCenter = rinkCoords(50, 38);
 
 	import exit from '$lib/images/exit.svg';
