@@ -66,6 +66,7 @@
 	let announcementText = $state('');
 	let announcementType: 'touchdown' | 'turnover' | 'fieldgoal' | 'safety' = $state('touchdown');
 	let announcementKey = $state(0);
+	let prevLastPlay = '';
 
 	// Derived game state
 	let awayScore = $derived(getScoreByTeam(TEAM.AWAY, game.playLog));
@@ -365,11 +366,13 @@
 			announcementText = 'TURNOVER ON DOWNS!';
 			announcementType = 'turnover';
 			announcementKey = Date.now();
-		} else if (lastPlay.includes('Safety')) {
+		} else if (lastPlay.includes('Safety') && lastPlay !== prevLastPlay) {
 			announcementText = 'SAFETY!';
 			announcementType = 'safety';
 			announcementKey = Date.now();
 		}
+
+		prevLastPlay = lastPlay;
 	});
 
 	// ── UI handlers ────────────────────────────────────────────

@@ -65,6 +65,7 @@
 	let announcementText = $state('');
 	let announcementType: 'touchdown' | 'turnover' | 'fieldgoal' | 'safety' = $state('touchdown');
 	let announcementKey = $state(0);
+	let prevLastPlay = '';
 
 	$effect(() => {
 		const action = game.action;
@@ -90,11 +91,13 @@
 			announcementText = 'TURNOVER ON DOWNS!';
 			announcementType = 'turnover';
 			announcementKey = Date.now();
-		} else if (lastPlay.includes('Safety')) {
+		} else if (lastPlay.includes('Safety') && lastPlay !== prevLastPlay) {
 			announcementText = 'SAFETY!';
 			announcementType = 'safety';
 			announcementKey = Date.now();
 		}
+
+		prevLastPlay = lastPlay;
 	});
 
 	async function saveGame() {

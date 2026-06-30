@@ -381,6 +381,7 @@
 		grid-template-columns: 32px 1fr 48px 48px;
 		align-items: center;
 		background-color: var(--table-row-bg);
+		flex-shrink: 0;
 	}
 
 	.score-row:nth-child(even) {
