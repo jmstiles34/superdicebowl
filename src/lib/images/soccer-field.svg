@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="440"
+  height="300"
+  viewBox="-220 -150 440 300"
+  version="1.1"
+>
+  <defs>
+    <!-- Goal net mesh -->
+    <pattern id="goalNet" width="2.6" height="2.6" patternUnits="userSpaceOnUse">
+      <path d="M0,0 H2.6 M0,0 V2.6" stroke="#ffffff" stroke-width="0.3" stroke-opacity="0.7" fill="none" />
+    </pattern>
+  </defs>
+
+  <!-- Board margin (grass surround around the pitch) -->
+  <rect class="margin" x="-220" y="-150" width="440" height="300" />
+
+  <!-- Playing surface: 8 mown sections alternating between two greens -->
+  <g class="pitch">
+    <rect class="grass-a" x="-190"   y="-130" width="47.5" height="260" />
+    <rect class="grass-b" x="-142.5" y="-130" width="47.5" height="260" />
+    <rect class="grass-a" x="-95"    y="-130" width="47.5" height="260" />
+    <rect class="grass-b" x="-47.5"  y="-130" width="47.5" height="260" />
+    <rect class="grass-a" x="0"      y="-130" width="47.5" height="260" />
+    <rect class="grass-b" x="47.5"   y="-130" width="47.5" height="260" />
+    <rect class="grass-a" x="95"     y="-130" width="47.5" height="260" />
+    <rect class="grass-b" x="142.5"  y="-130" width="47.5" height="260" />
+  </g>
+
+  <g class="lines" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Top-left corner arc -->
+    <path d="M -190,-117.5 A 12.5,12.5 0 0,0 -177.5,-130" />
+
+    <!-- Top-right corner arc -->
+    <path d="M 190,-117.5 A 12.5,12.5 0 0,1 177.5,-130" />
+
+    <!-- Bottom-left corner arc -->
+    <path d="M -190,117.5 A 12.5,12.5 0 0,1 -177.5,130" />
+
+    <!-- Bottom-right corner arc -->
+    <path d="M 190,117.5 A 12.5,12.5 0 0,0 177.5,130" />
+  </g>
+
+  <!-- Goals: net-mesh pocket + white frame + posts, behind each goal line -->
+  <g class="goals">
+    <!-- Left goal (opens toward the pitch) -->
+    <rect class="net-bg" x="-205" y="-21.2676" width="15" height="42.5352" />
+    <rect class="net-mesh" x="-205" y="-21.2676" width="15" height="42.5352" />
+    <path class="goal-frame" d="M -190,-21.2676 L -205,-21.2676 L -205,21.2676 L -190,21.2676" />
+    <circle class="post" cx="-190" cy="-21.2676" r="1.5" />
+    <circle class="post" cx="-190" cy="21.2676" r="1.5" />
+
+    <!-- Right goal (mirror) -->
+    <rect class="net-bg" x="190" y="-21.2676" width="15" height="42.5352" />
+    <rect class="net-mesh" x="190" y="-21.2676" width="15" height="42.5352" />
+    <path class="goal-frame" d="M 190,-21.2676 L 205,-21.2676 L 205,21.2676 L 190,21.2676" />
+    <circle class="post" cx="190" cy="-21.2676" r="1.5" />
+    <circle class="post" cx="190" cy="21.2676" r="1.5" />
+  </g>
+
+  <!-- Pitch markings — 3-unit wide painted lines that fully fill the
+       3-unit gaps left in the grid for the official soccer features. -->
+  <g class="markings">
+    <!-- Field boundary -->
+    <rect x="-190" y="-130" width="380" height="260" />
+
+    <!-- Halfway line (gap centered on x=0) -->
+    <line x1="0" y1="-130" x2="0" y2="130" />
+
+    <!-- Center circle (gap centered on radius ~28) -->
+    <circle cx="0" cy="0" r="28" />
+
+    <!-- Left penalty box: right edge gap centered on x=-110,
+         top/bottom gaps centered on y=±90 -->
+    <rect x="-190" y="-90" width="80" height="180" />
+
+    <!-- Left goal box: right edge gap centered on x=-158.5,
+         top/bottom at y=±30 (no gap there — strokes overlap the cell edge) -->
+    <rect x="-190" y="-30" width="31.5" height="60" />
+
+    <!-- Right penalty box (mirror) -->
+    <rect x="110" y="-90" width="80" height="180" />
+
+    <!-- Right goal box (mirror) -->
+    <rect x="158.5" y="-30" width="31.5" height="60" />
+
+    <!-- Left penalty arc (D-shape outside the 18-yard box, opens left) -->
+    <path d="M -110,-18.78 C -97.17,-8.87 -97.17,8.87 -110,18.78" />
+
+    <!-- Right penalty arc -->
+    <path d="M 110,-18.78 C 97.17,-8.87 97.17,8.87 110,18.78" />
+  </g>
+
+  <!-- Spots — solid white fills for centre + penalty spots -->
+  <g class="spots">
+    <circle cx="0" cy="0" r="2.0" />
+    <circle cx="-137" cy="0" r="1.8" />
+    <circle cx="137" cy="0" r="1.8" />
+  </g>
+
+  <style>
+    .margin { fill: #14532d; }
+    .grass-a { fill: #2f8b42; }
+    .grass-b { fill: #2a7d3a; }
+    .net-bg { fill: none; }
+    .net-mesh { fill: url(#goalNet); }
+    .goal-frame {
+      fill: none;
+      stroke: #f8fafc;
+      stroke-width: 2.2;
+      stroke-linejoin: miter;
+      stroke-linecap: butt;
+    }
+    .post { fill: #f8fafc; }
+    .markings rect,
+    .markings line,
+    .markings circle,
+    .markings path {
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 2.5;
+      stroke-linecap: butt;
+      stroke-linejoin: miter;
+    }
+    .spots circle {
+      fill: #ffffff;
+      stroke: none;
+    }
+  </style>
+</svg>

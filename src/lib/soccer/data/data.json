@@ -1,0 +1,2860 @@
+{
+	"teamsData": [
+		{
+			"country": "Afghanistan",
+			"countryKey": "AFG",
+			"nickname": "Afghanistan",
+			"logo": "afg",
+			"id": "soccer-0017",
+			"colors": {
+				"primary": "oklch(0.13 0.00 0)",
+				"secondary": "oklch(0.50 0.13 151)",
+				"tertiary": "oklch(0.57 0.21 30)"
+			}
+		},
+		{
+			"country": "Albania",
+			"countryKey": "ALB",
+			"nickname": "Red and Blacks",
+			"logo": "alb",
+			"id": "soccer-0018",
+			"colors": {
+				"primary": "oklch(0.62 0.25 29)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.40 0.16 29)"
+			}
+		},
+		{
+			"country": "Algeria",
+			"countryKey": "DZA",
+			"nickname": "Les Fennecs",
+			"logo": "dza",
+			"id": "soccer-0019",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.46 0.11 154)",
+				"tertiary": "oklch(0.56 0.22 21)"
+			}
+		},
+		{
+			"country": "American Samoa",
+			"countryKey": "ASM",
+			"nickname": "American Samoa",
+			"logo": "asm",
+			"id": "soccer-0020",
+			"colors": {
+				"primary": "oklch(0.25 0.15 268)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.50 0.19 24)"
+			}
+		},
+		{
+			"country": "Andorra",
+			"countryKey": "AND",
+			"nickname": "Andorra",
+			"logo": "and",
+			"id": "soccer-0021",
+			"colors": {
+				"primary": "oklch(0.35 0.22 265)",
+				"secondary": "oklch(0.56 0.22 21)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Angola",
+			"countryKey": "AGO",
+			"nickname": "Palancas Negras",
+			"logo": "ago",
+			"id": "soccer-0022",
+			"colors": {
+				"primary": "oklch(0.53 0.21 23)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.85 0.17 91)"
+			}
+		},
+		{
+			"country": "Anguilla",
+			"countryKey": "AIA",
+			"nickname": "Anguilla",
+			"logo": "aia",
+			"id": "soccer-0023",
+			"colors": {
+				"primary": "oklch(0.30 0.12 262)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.53 0.20 25)"
+			}
+		},
+		{
+			"country": "Antigua and Barbuda",
+			"countryKey": "ATG",
+			"nickname": "The Benna Boys",
+			"logo": "atg",
+			"id": "soccer-0024",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.56 0.15 249)"
+			}
+		},
+		{
+			"country": "Argentina",
+			"countryKey": "ARG",
+			"nickname": "Albiceleste",
+			"logo": "arg",
+			"id": "soccer-0002",
+			"colors": {
+				"primary": "oklch(0.75 0.10 230)",
+				"secondary": "oklch(1.00 0.00 0)",
+				"tertiary": "oklch(0.80 0.15 90)"
+			}
+		},
+		{
+			"country": "Armenia",
+			"countryKey": "ARM",
+			"nickname": "Armenia",
+			"logo": "arm",
+			"id": "soccer-0025",
+			"colors": {
+				"primary": "oklch(0.56 0.22 27)",
+				"secondary": "oklch(0.79 0.17 75)",
+				"tertiary": "oklch(0.40 0.19 263)"
+			}
+		},
+		{
+			"country": "Aruba",
+			"countryKey": "ABW",
+			"nickname": "Aruba",
+			"logo": "abw",
+			"id": "soccer-0026",
+			"colors": {
+				"primary": "oklch(0.62 0.14 255)",
+				"secondary": "oklch(0.88 0.18 98)",
+				"tertiary": "oklch(0.41 0.08 255)"
+			}
+		},
+		{
+			"country": "Australia",
+			"countryKey": "AUS",
+			"nickname": "Socceroos",
+			"logo": "aus",
+			"id": "soccer-0015",
+			"colors": {
+				"primary": "oklch(0.80 0.15 90)",
+				"secondary": "oklch(0.45 0.15 150)",
+				"tertiary": "oklch(0.20 0.00 0)"
+			}
+		},
+		{
+			"country": "Austria",
+			"countryKey": "AUT",
+			"nickname": "Austria",
+			"logo": "aut",
+			"id": "soccer-0027",
+			"colors": {
+				"primary": "oklch(0.60 0.22 24)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.39 0.14 23)"
+			}
+		},
+		{
+			"country": "Azerbaijan",
+			"countryKey": "AZE",
+			"nickname": "Azerbaijan",
+			"logo": "aze",
+			"id": "soccer-0028",
+			"colors": {
+				"primary": "oklch(0.73 0.14 225)",
+				"secondary": "oklch(0.60 0.16 143)",
+				"tertiary": "oklch(0.60 0.22 24)"
+			}
+		},
+		{
+			"country": "Bahamas",
+			"countryKey": "BHS",
+			"nickname": "Bahamas",
+			"logo": "bhs",
+			"id": "soccer-0029",
+			"colors": {
+				"primary": "oklch(0.53 0.09 211)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.85 0.17 90)"
+			}
+		},
+		{
+			"country": "Bahrain",
+			"countryKey": "BHR",
+			"nickname": "Bahrain",
+			"logo": "bhr",
+			"id": "soccer-0030",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.35 0.13 23)"
+			}
+		},
+		{
+			"country": "Bangladesh",
+			"countryKey": "BGD",
+			"nickname": "Bengal Tigers",
+			"logo": "bgd",
+			"id": "soccer-0031",
+			"colors": {
+				"primary": "oklch(0.46 0.10 163)",
+				"secondary": "oklch(0.63 0.24 21)",
+				"tertiary": "oklch(0.31 0.06 166)"
+			}
+		},
+		{
+			"country": "Barbados",
+			"countryKey": "BRB",
+			"nickname": "The Tridents",
+			"logo": "brb",
+			"id": "soccer-0032",
+			"colors": {
+				"primary": "oklch(0.32 0.14 264)",
+				"secondary": "oklch(0.85 0.17 90)",
+				"tertiary": "oklch(0.13 0.00 0)"
+			}
+		},
+		{
+			"country": "Belarus",
+			"countryKey": "BLR",
+			"nickname": "Belarus",
+			"logo": "blr",
+			"id": "soccer-0033",
+			"colors": {
+				"primary": "oklch(0.57 0.21 23)",
+				"secondary": "oklch(0.59 0.17 147)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Belgium",
+			"countryKey": "BEL",
+			"nickname": "Red Devils",
+			"logo": "bel",
+			"id": "soccer-0010",
+			"colors": {
+				"primary": "oklch(0.50 0.20 25)",
+				"secondary": "oklch(0.20 0.00 0)",
+				"tertiary": "oklch(0.82 0.16 90)"
+			}
+		},
+		{
+			"country": "Belize",
+			"countryKey": "BLZ",
+			"nickname": "The Jaguars",
+			"logo": "blz",
+			"id": "soccer-0034",
+			"colors": {
+				"primary": "oklch(0.33 0.19 269)",
+				"secondary": "oklch(0.56 0.22 27)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Benin",
+			"countryKey": "BEN",
+			"nickname": "Les Écureuils",
+			"logo": "ben",
+			"id": "soccer-0035",
+			"colors": {
+				"primary": "oklch(0.55 0.12 160)",
+				"secondary": "oklch(0.88 0.18 98)",
+				"tertiary": "oklch(0.59 0.23 26)"
+			}
+		},
+		{
+			"country": "Bermuda",
+			"countryKey": "BMU",
+			"nickname": "Bermuda",
+			"logo": "bmu",
+			"id": "soccer-0036",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.30 0.12 262)"
+			}
+		},
+		{
+			"country": "Bhutan",
+			"countryKey": "BTN",
+			"nickname": "The Dragon Boys",
+			"logo": "btn",
+			"id": "soccer-0037",
+			"colors": {
+				"primary": "oklch(0.88 0.17 98)",
+				"secondary": "oklch(0.65 0.22 35)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Bolivia",
+			"countryKey": "BOL",
+			"nickname": "La Verde",
+			"logo": "bol",
+			"id": "soccer-0038",
+			"colors": {
+				"primary": "oklch(0.57 0.21 30)",
+				"secondary": "oklch(0.50 0.15 146)",
+				"tertiary": "oklch(0.92 0.18 104)"
+			}
+		},
+		{
+			"country": "Bosnia and Herzegovina",
+			"countryKey": "BIH",
+			"nickname": "Zmajevi",
+			"logo": "bih",
+			"id": "soccer-0039",
+			"colors": {
+				"primary": "oklch(0.35 0.18 265)",
+				"secondary": "oklch(0.85 0.17 91)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Botswana",
+			"countryKey": "BWA",
+			"nickname": "The Zebras",
+			"logo": "bwa",
+			"id": "soccer-0040",
+			"colors": {
+				"primary": "oklch(0.71 0.10 242)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Brazil",
+			"countryKey": "BRA",
+			"nickname": "Seleção",
+			"logo": "bra",
+			"id": "soccer-0001",
+			"colors": {
+				"primary": "oklch(0.85 0.18 95)",
+				"secondary": "oklch(0.52 0.15 150)",
+				"tertiary": "oklch(0.45 0.16 255)"
+			}
+		},
+		{
+			"country": "British Virgin Islands",
+			"countryKey": "VGB",
+			"nickname": "British Virgin Islands",
+			"logo": "vgb",
+			"id": "soccer-0041",
+			"colors": {
+				"primary": "oklch(0.30 0.12 262)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Brunei",
+			"countryKey": "BRN",
+			"nickname": "Brunei",
+			"logo": "brn",
+			"id": "soccer-0042",
+			"colors": {
+				"primary": "oklch(0.92 0.19 104)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.13 0.00 0)"
+			}
+		},
+		{
+			"country": "Bulgaria",
+			"countryKey": "BGR",
+			"nickname": "Bulgaria",
+			"logo": "bgr",
+			"id": "soccer-0043",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.60 0.13 162)",
+				"tertiary": "oklch(0.57 0.21 30)"
+			}
+		},
+		{
+			"country": "Burkina Faso",
+			"countryKey": "BFA",
+			"nickname": "Les Étalons",
+			"logo": "bfa",
+			"id": "soccer-0044",
+			"colors": {
+				"primary": "oklch(0.60 0.16 151)",
+				"secondary": "oklch(0.60 0.22 27)",
+				"tertiary": "oklch(0.39 0.10 152)"
+			}
+		},
+		{
+			"country": "Burundi",
+			"countryKey": "BDI",
+			"nickname": "Les Hirondelles",
+			"logo": "bdi",
+			"id": "soccer-0045",
+			"colors": {
+				"primary": "oklch(0.68 0.21 145)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.53 0.20 25)"
+			}
+		},
+		{
+			"country": "Cambodia",
+			"countryKey": "KHM",
+			"nickname": "Angkor Warriors",
+			"logo": "khm",
+			"id": "soccer-0046",
+			"colors": {
+				"primary": "oklch(0.37 0.20 265)",
+				"secondary": "oklch(0.59 0.24 25)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Cameroon",
+			"countryKey": "CMR",
+			"nickname": "Indomitable Lions",
+			"logo": "cmr",
+			"id": "soccer-0047",
+			"colors": {
+				"primary": "oklch(0.88 0.18 98)",
+				"secondary": "oklch(0.51 0.10 166)",
+				"tertiary": "oklch(0.53 0.20 25)"
+			}
+		},
+		{
+			"country": "Canada",
+			"countryKey": "CAN",
+			"nickname": "The Reds",
+			"logo": "can",
+			"id": "soccer-0048",
+			"colors": {
+				"primary": "oklch(0.57 0.21 30)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.37 0.13 30)"
+			}
+		},
+		{
+			"country": "Cape Verde",
+			"countryKey": "CPV",
+			"nickname": "Blue Sharks",
+			"logo": "cpv",
+			"id": "soccer-0049",
+			"colors": {
+				"primary": "oklch(0.38 0.16 262)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.54 0.20 27)"
+			}
+		},
+		{
+			"country": "Caribbean Netherlands",
+			"countryKey": "BES",
+			"nickname": "Caribbean Netherlands",
+			"logo": "bes",
+			"id": "soccer-0050",
+			"colors": {
+				"primary": "oklch(0.47 0.18 23)",
+				"secondary": "oklch(0.41 0.11 263)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Cayman Islands",
+			"countryKey": "CYM",
+			"nickname": "Cayman Islands",
+			"logo": "cym",
+			"id": "soccer-0051",
+			"colors": {
+				"primary": "oklch(0.30 0.12 262)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Central African Republic",
+			"countryKey": "CAF",
+			"nickname": "Les Fauves",
+			"logo": "caf",
+			"id": "soccer-0052",
+			"colors": {
+				"primary": "oklch(0.85 0.17 91)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.60 0.18 143)"
+			}
+		},
+		{
+			"country": "Chad",
+			"countryKey": "TCD",
+			"nickname": "Les SAO",
+			"logo": "tcd",
+			"id": "soccer-0053",
+			"colors": {
+				"primary": "oklch(0.29 0.09 259)",
+				"secondary": "oklch(0.85 0.17 91)",
+				"tertiary": "oklch(0.53 0.20 25)"
+			}
+		},
+		{
+			"country": "Chile",
+			"countryKey": "CHL",
+			"nickname": "La Roja",
+			"logo": "chl",
+			"id": "soccer-0054",
+			"colors": {
+				"primary": "oklch(0.57 0.21 30)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.40 0.19 263)"
+			}
+		},
+		{
+			"country": "China",
+			"countryKey": "CHN",
+			"nickname": "China",
+			"logo": "chn",
+			"id": "soccer-0055",
+			"colors": {
+				"primary": "oklch(0.59 0.23 26)",
+				"secondary": "oklch(0.95 0.21 110)",
+				"tertiary": "oklch(0.38 0.15 25)"
+			}
+		},
+		{
+			"country": "Colombia",
+			"countryKey": "COL",
+			"nickname": "Los Cafeteros",
+			"logo": "col",
+			"id": "soccer-0056",
+			"colors": {
+				"primary": "oklch(0.88 0.18 98)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.38 0.16 262)"
+			}
+		},
+		{
+			"country": "Comoros",
+			"countryKey": "COM",
+			"nickname": "Coelacanths",
+			"logo": "com",
+			"id": "soccer-0057",
+			"colors": {
+				"primary": "oklch(0.85 0.17 91)",
+				"secondary": "oklch(0.57 0.14 255)",
+				"tertiary": "oklch(0.56 0.14 143)"
+			}
+		},
+		{
+			"country": "Congo",
+			"countryKey": "COG",
+			"nickname": "Diables Rouges",
+			"logo": "cog",
+			"id": "soccer-0058",
+			"colors": {
+				"primary": "oklch(0.60 0.16 151)",
+				"secondary": "oklch(0.57 0.21 30)",
+				"tertiary": "oklch(0.88 0.16 96)"
+			}
+		},
+		{
+			"country": "Cook Islands",
+			"countryKey": "COK",
+			"nickname": "Cook Islands",
+			"logo": "cok",
+			"id": "soccer-0059",
+			"colors": {
+				"primary": "oklch(0.30 0.12 262)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.53 0.20 25)"
+			}
+		},
+		{
+			"country": "Costa Rica",
+			"countryKey": "CRI",
+			"nickname": "Los Ticos",
+			"logo": "cri",
+			"id": "soccer-0060",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.32 0.14 264)",
+				"tertiary": "oklch(0.53 0.20 25)"
+			}
+		},
+		{
+			"country": "Côte d'Ivoire",
+			"countryKey": "CIV",
+			"nickname": "Les Éléphants",
+			"logo": "civ",
+			"id": "soccer-0065",
+			"colors": {
+				"primary": "oklch(0.71 0.18 51)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.60 0.13 162)"
+			}
+		},
+		{
+			"country": "Croatia",
+			"countryKey": "CRO",
+			"nickname": "Vatreni",
+			"logo": "hrv",
+			"id": "soccer-0011",
+			"colors": {
+				"primary": "oklch(0.55 0.22 25)",
+				"secondary": "oklch(1.00 0.00 0)",
+				"tertiary": "oklch(0.30 0.10 255)"
+			}
+		},
+		{
+			"country": "Cuba",
+			"countryKey": "CUB",
+			"nickname": "Cuba",
+			"logo": "cub",
+			"id": "soccer-0061",
+			"colors": {
+				"primary": "oklch(0.33 0.16 264)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.53 0.20 25)"
+			}
+		},
+		{
+			"country": "Curaçao",
+			"countryKey": "CUW",
+			"nickname": "Curaçao",
+			"logo": "cuw",
+			"id": "soccer-0062",
+			"colors": {
+				"primary": "oklch(0.32 0.14 264)",
+				"secondary": "oklch(0.92 0.19 104)",
+				"tertiary": "oklch(0.22 0.09 263)"
+			}
+		},
+		{
+			"country": "Cyprus",
+			"countryKey": "CYP",
+			"nickname": "Cyprus",
+			"logo": "cyp",
+			"id": "soccer-0063",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.67 0.16 59)",
+				"tertiary": "oklch(0.63 0.00 0)"
+			}
+		},
+		{
+			"country": "Czech Republic",
+			"countryKey": "CZE",
+			"nickname": "Czech Republic",
+			"logo": "cze",
+			"id": "soccer-0064",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.56 0.22 28)",
+				"tertiary": "oklch(0.40 0.10 252)"
+			}
+		},
+		{
+			"country": "Denmark",
+			"countryKey": "DNK",
+			"nickname": "Danish Dynamite",
+			"logo": "dnk",
+			"id": "soccer-0066",
+			"colors": {
+				"primary": "oklch(0.53 0.21 19)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.34 0.13 17)"
+			}
+		},
+		{
+			"country": "Djibouti",
+			"countryKey": "DJI",
+			"nickname": "Djibouti",
+			"logo": "dji",
+			"id": "soccer-0067",
+			"colors": {
+				"primary": "oklch(0.75 0.10 237)",
+				"secondary": "oklch(0.64 0.20 144)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Dominica",
+			"countryKey": "DMA",
+			"nickname": "Nature Boyz",
+			"logo": "dma",
+			"id": "soccer-0068",
+			"colors": {
+				"primary": "oklch(0.46 0.11 154)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Dominican Republic",
+			"countryKey": "DOM",
+			"nickname": "Dominican Republic",
+			"logo": "dom",
+			"id": "soccer-0069",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.30 0.12 262)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "DR Congo",
+			"countryKey": "COD",
+			"nickname": "Leopards",
+			"logo": "cod",
+			"id": "soccer-0070",
+			"colors": {
+				"primary": "oklch(0.59 0.21 257)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Ecuador",
+			"countryKey": "ECU",
+			"nickname": "La Tri",
+			"logo": "ecu",
+			"id": "soccer-0071",
+			"colors": {
+				"primary": "oklch(0.88 0.18 98)",
+				"secondary": "oklch(0.59 0.23 26)",
+				"tertiary": "oklch(0.43 0.17 260)"
+			}
+		},
+		{
+			"country": "Egypt",
+			"countryKey": "EGY",
+			"nickname": "The Pharaohs",
+			"logo": "egy",
+			"id": "soccer-0072",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "El Salvador",
+			"countryKey": "SLV",
+			"nickname": "La Selecta",
+			"logo": "slv",
+			"id": "soccer-0073",
+			"colors": {
+				"primary": "oklch(0.43 0.17 260)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.29 0.10 259)"
+			}
+		},
+		{
+			"country": "England",
+			"countryKey": "ENG",
+			"nickname": "Three Lions",
+			"logo": "eng",
+			"id": "soccer-0006",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.45 0.20 25)",
+				"tertiary": "oklch(0.30 0.10 255)"
+			}
+		},
+		{
+			"country": "Equatorial Guinea",
+			"countryKey": "GNQ",
+			"nickname": "Nzalang Nacional",
+			"logo": "gnq",
+			"id": "soccer-0074",
+			"colors": {
+				"primary": "oklch(0.60 0.19 139)",
+				"secondary": "oklch(0.60 0.23 30)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Eritrea",
+			"countryKey": "ERI",
+			"nickname": "Red Sea Boys",
+			"logo": "eri",
+			"id": "soccer-0075",
+			"colors": {
+				"primary": "oklch(0.59 0.24 25)",
+				"secondary": "oklch(0.69 0.20 140)",
+				"tertiary": "oklch(0.62 0.14 255)"
+			}
+		},
+		{
+			"country": "Estonia",
+			"countryKey": "EST",
+			"nickname": "Estonia",
+			"logo": "est",
+			"id": "soccer-0076",
+			"colors": {
+				"primary": "oklch(0.56 0.15 249)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.13 0.00 0)"
+			}
+		},
+		{
+			"country": "Eswatini",
+			"countryKey": "SWZ",
+			"nickname": "Eswatini",
+			"logo": "swz",
+			"id": "soccer-0077",
+			"colors": {
+				"primary": "oklch(0.49 0.16 267)",
+				"secondary": "oklch(0.49 0.20 29)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Ethiopia",
+			"countryKey": "ETH",
+			"nickname": "Walia Antelopes",
+			"logo": "eth",
+			"id": "soccer-0078",
+			"colors": {
+				"primary": "oklch(0.55 0.15 148)",
+				"secondary": "oklch(0.56 0.22 28)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Falkland Islands (Malvinas)",
+			"countryKey": "FLK",
+			"nickname": "Falkland Islands (Malvinas)",
+			"logo": "flk",
+			"id": "soccer-0079",
+			"colors": {
+				"primary": "oklch(0.30 0.12 262)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Faroe Islands",
+			"countryKey": "FRO",
+			"nickname": "Faroe Islands",
+			"logo": "fro",
+			"id": "soccer-0080",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.60 0.22 24)",
+				"tertiary": "oklch(0.51 0.15 252)"
+			}
+		},
+		{
+			"country": "Fiji",
+			"countryKey": "FJI",
+			"nickname": "Fiji",
+			"logo": "fji",
+			"id": "soccer-0081",
+			"colors": {
+				"primary": "oklch(0.75 0.10 237)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Finland",
+			"countryKey": "FIN",
+			"nickname": "Huuhkajat",
+			"logo": "fin",
+			"id": "soccer-0082",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.37 0.14 261)",
+				"tertiary": "oklch(0.63 0.00 0)"
+			}
+		},
+		{
+			"country": "France",
+			"countryKey": "FRA",
+			"nickname": "Les Bleus",
+			"logo": "fra",
+			"id": "soccer-0003",
+			"colors": {
+				"primary": "oklch(0.40 0.16 260)",
+				"secondary": "oklch(1.00 0.00 0)",
+				"tertiary": "oklch(0.55 0.22 25)"
+			}
+		},
+		{
+			"country": "French Guiana",
+			"countryKey": "GUF",
+			"nickname": "French Guiana",
+			"logo": "guf",
+			"id": "soccer-0083",
+			"colors": {
+				"primary": "oklch(0.23 0.09 265)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.59 0.23 26)"
+			}
+		},
+		{
+			"country": "French Polynesia",
+			"countryKey": "PYF",
+			"nickname": "Toa Aito",
+			"logo": "pyf",
+			"id": "soccer-0084",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.35 0.13 23)"
+			}
+		},
+		{
+			"country": "Gabon",
+			"countryKey": "GAB",
+			"nickname": "Les Panthères",
+			"logo": "gab",
+			"id": "soccer-0085",
+			"colors": {
+				"primary": "oklch(0.60 0.13 162)",
+				"secondary": "oklch(0.88 0.18 98)",
+				"tertiary": "oklch(0.57 0.14 255)"
+			}
+		},
+		{
+			"country": "Gambia",
+			"countryKey": "GMB",
+			"nickname": "The Scorpions",
+			"logo": "gmb",
+			"id": "soccer-0086",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.51 0.13 140)",
+				"tertiary": "oklch(0.31 0.18 266)"
+			}
+		},
+		{
+			"country": "Georgia",
+			"countryKey": "GEO",
+			"nickname": "Crusaders",
+			"logo": "geo",
+			"id": "soccer-0087",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.62 0.25 29)",
+				"tertiary": "oklch(0.63 0.00 0)"
+			}
+		},
+		{
+			"country": "Germany",
+			"countryKey": "GER",
+			"nickname": "Die Mannschaft",
+			"logo": "deu",
+			"id": "soccer-0004",
+			"colors": {
+				"primary": "oklch(0.20 0.00 0)",
+				"secondary": "oklch(1.00 0.00 0)",
+				"tertiary": "oklch(0.80 0.15 90)"
+			}
+		},
+		{
+			"country": "Ghana",
+			"countryKey": "GHA",
+			"nickname": "Black Stars",
+			"logo": "gha",
+			"id": "soccer-0088",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.46 0.11 154)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Gibraltar",
+			"countryKey": "GIB",
+			"nickname": "Gibraltar",
+			"logo": "gib",
+			"id": "soccer-0089",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.56 0.23 29)",
+				"tertiary": "oklch(0.63 0.00 0)"
+			}
+		},
+		{
+			"country": "Greece",
+			"countryKey": "GRC",
+			"nickname": "Greece",
+			"logo": "grc",
+			"id": "soccer-0090",
+			"colors": {
+				"primary": "oklch(0.46 0.15 255)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.31 0.09 253)"
+			}
+		},
+		{
+			"country": "Greenland",
+			"countryKey": "GRL",
+			"nickname": "Greenland",
+			"logo": "grl",
+			"id": "soccer-0091",
+			"colors": {
+				"primary": "oklch(0.56 0.22 20)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.36 0.14 18)"
+			}
+		},
+		{
+			"country": "Grenada",
+			"countryKey": "GRD",
+			"nickname": "Spice Boyz",
+			"logo": "grd",
+			"id": "soccer-0092",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.88 0.18 98)",
+				"tertiary": "oklch(0.51 0.10 166)"
+			}
+		},
+		{
+			"country": "Guadeloupe",
+			"countryKey": "GLP",
+			"nickname": "Guadeloupe",
+			"logo": "glp",
+			"id": "soccer-0093",
+			"colors": {
+				"primary": "oklch(0.23 0.09 265)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.59 0.23 26)"
+			}
+		},
+		{
+			"country": "Guam",
+			"countryKey": "GUM",
+			"nickname": "The Matao",
+			"logo": "gum",
+			"id": "soccer-0094",
+			"colors": {
+				"primary": "oklch(0.32 0.14 264)",
+				"secondary": "oklch(0.54 0.19 22)",
+				"tertiary": "oklch(0.22 0.09 263)"
+			}
+		},
+		{
+			"country": "Guatemala",
+			"countryKey": "GTM",
+			"nickname": "Los Chapines",
+			"logo": "gtm",
+			"id": "soccer-0095",
+			"colors": {
+				"primary": "oklch(0.66 0.12 245)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.43 0.08 245)"
+			}
+		},
+		{
+			"country": "Guernsey",
+			"countryKey": "GGY",
+			"nickname": "Guernsey",
+			"logo": "ggy",
+			"id": "soccer-0096",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.59 0.23 26)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Guinea",
+			"countryKey": "GIN",
+			"nickname": "Syli Nationale",
+			"logo": "gin",
+			"id": "soccer-0097",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.88 0.18 98)",
+				"tertiary": "oklch(0.60 0.13 162)"
+			}
+		},
+		{
+			"country": "Guinea-Bissau",
+			"countryKey": "GNB",
+			"nickname": "Djurtus",
+			"logo": "gnb",
+			"id": "soccer-0098",
+			"colors": {
+				"primary": "oklch(0.88 0.18 98)",
+				"secondary": "oklch(0.60 0.16 151)",
+				"tertiary": "oklch(0.53 0.20 25)"
+			}
+		},
+		{
+			"country": "Guyana",
+			"countryKey": "GUY",
+			"nickname": "Golden Jaguars",
+			"logo": "guy",
+			"id": "soccer-0099",
+			"colors": {
+				"primary": "oklch(0.60 0.16 151)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Haiti",
+			"countryKey": "HTI",
+			"nickname": "Les Grenadiers",
+			"logo": "hti",
+			"id": "soccer-0100",
+			"colors": {
+				"primary": "oklch(0.35 0.18 265)",
+				"secondary": "oklch(0.56 0.22 21)",
+				"tertiary": "oklch(0.24 0.11 265)"
+			}
+		},
+		{
+			"country": "Honduras",
+			"countryKey": "HND",
+			"nickname": "Los Catrachos",
+			"logo": "hnd",
+			"id": "soccer-0101",
+			"colors": {
+				"primary": "oklch(0.38 0.16 262)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.84 0.04 285)"
+			}
+		},
+		{
+			"country": "Hong Kong",
+			"countryKey": "HKG",
+			"nickname": "Hong Kong",
+			"logo": "hkg",
+			"id": "soccer-0102",
+			"colors": {
+				"primary": "oklch(0.59 0.23 26)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.38 0.15 25)"
+			}
+		},
+		{
+			"country": "Hungary",
+			"countryKey": "HUN",
+			"nickname": "Mighty Magyars",
+			"logo": "hun",
+			"id": "soccer-0103",
+			"colors": {
+				"primary": "oklch(0.54 0.19 22)",
+				"secondary": "oklch(0.53 0.07 154)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Iceland",
+			"countryKey": "ISL",
+			"nickname": "Our Boys",
+			"logo": "isl",
+			"id": "soccer-0104",
+			"colors": {
+				"primary": "oklch(0.37 0.14 261)",
+				"secondary": "oklch(0.56 0.22 20)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "India",
+			"countryKey": "IND",
+			"nickname": "Blue Tigers",
+			"logo": "ind",
+			"id": "soccer-0105",
+			"colors": {
+				"primary": "oklch(0.76 0.16 61)",
+				"secondary": "oklch(0.55 0.18 142)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Indonesia",
+			"countryKey": "IDN",
+			"nickname": "Garuda",
+			"logo": "idn",
+			"id": "soccer-0106",
+			"colors": {
+				"primary": "oklch(0.62 0.25 29)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.40 0.16 29)"
+			}
+		},
+		{
+			"country": "Iran",
+			"countryKey": "IRN",
+			"nickname": "Team Melli",
+			"logo": "irn",
+			"id": "soccer-0107",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.56 0.23 29)",
+				"tertiary": "oklch(0.60 0.15 149)"
+			}
+		},
+		{
+			"country": "Iraq",
+			"countryKey": "IRQ",
+			"nickname": "Lions of Mesopotamia",
+			"logo": "irq",
+			"id": "soccer-0108",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Ireland",
+			"countryKey": "IRL",
+			"nickname": "Boys in Green",
+			"logo": "irl",
+			"id": "soccer-0109",
+			"colors": {
+				"primary": "oklch(0.60 0.16 151)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.74 0.17 58)"
+			}
+		},
+		{
+			"country": "Isle of Man",
+			"countryKey": "IMN",
+			"nickname": "Isle of Man",
+			"logo": "imn",
+			"id": "soccer-0110",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.35 0.13 23)"
+			}
+		},
+		{
+			"country": "Israel",
+			"countryKey": "ISR",
+			"nickname": "Israel",
+			"logo": "isr",
+			"id": "soccer-0111",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.41 0.21 264)",
+				"tertiary": "oklch(0.63 0.00 0)"
+			}
+		},
+		{
+			"country": "Italy",
+			"countryKey": "ITA",
+			"nickname": "Azzurri",
+			"logo": "ita",
+			"id": "soccer-0009",
+			"colors": {
+				"primary": "oklch(0.52 0.15 240)",
+				"secondary": "oklch(1.00 0.00 0)",
+				"tertiary": "oklch(0.80 0.15 90)"
+			}
+		},
+		{
+			"country": "Jamaica",
+			"countryKey": "JAM",
+			"nickname": "Reggae Boyz",
+			"logo": "jam",
+			"id": "soccer-0112",
+			"colors": {
+				"primary": "oklch(0.82 0.16 83)",
+				"secondary": "oklch(0.50 0.12 157)",
+				"tertiary": "oklch(0.28 0.00 0)"
+			}
+		},
+		{
+			"country": "Japan",
+			"countryKey": "JPN",
+			"nickname": "Samurai Blue",
+			"logo": "jpn",
+			"id": "soccer-0013",
+			"colors": {
+				"primary": "oklch(0.35 0.15 265)",
+				"secondary": "oklch(1.00 0.00 0)",
+				"tertiary": "oklch(0.55 0.22 25)"
+			}
+		},
+		{
+			"country": "Jersey",
+			"countryKey": "JEY",
+			"nickname": "Jersey",
+			"logo": "jey",
+			"id": "soccer-0113",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.56 0.22 25)",
+				"tertiary": "oklch(0.63 0.00 0)"
+			}
+		},
+		{
+			"country": "Jordan",
+			"countryKey": "JOR",
+			"nickname": "Al-Nashama",
+			"logo": "jor",
+			"id": "soccer-0114",
+			"colors": {
+				"primary": "oklch(0.13 0.00 0)",
+				"secondary": "oklch(0.50 0.13 151)",
+				"tertiary": "oklch(0.53 0.20 25)"
+			}
+		},
+		{
+			"country": "Kazakhstan",
+			"countryKey": "KAZ",
+			"nickname": "Kazakhstan",
+			"logo": "kaz",
+			"id": "soccer-0115",
+			"colors": {
+				"primary": "oklch(0.68 0.12 218)",
+				"secondary": "oklch(0.85 0.17 91)",
+				"tertiary": "oklch(0.44 0.08 217)"
+			}
+		},
+		{
+			"country": "Kenya",
+			"countryKey": "KEN",
+			"nickname": "Harambee Stars",
+			"logo": "ken",
+			"id": "soccer-0116",
+			"colors": {
+				"primary": "oklch(0.13 0.00 0)",
+				"secondary": "oklch(0.45 0.15 143)",
+				"tertiary": "oklch(0.49 0.20 29)"
+			}
+		},
+		{
+			"country": "Kiribati",
+			"countryKey": "KIR",
+			"nickname": "Kiribati",
+			"logo": "kir",
+			"id": "soccer-0117",
+			"colors": {
+				"primary": "oklch(0.53 0.21 28)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.36 0.12 262)"
+			}
+		},
+		{
+			"country": "Kosovo",
+			"countryKey": "KOS",
+			"nickname": "Dardanians",
+			"logo": "kos",
+			"id": "soccer-0118",
+			"colors": {
+				"primary": "oklch(0.44 0.16 266)",
+				"secondary": "oklch(0.76 0.11 78)",
+				"tertiary": "oklch(0.30 0.10 266)"
+			}
+		},
+		{
+			"country": "Kuwait",
+			"countryKey": "KWT",
+			"nickname": "Al-Azraq",
+			"logo": "kwt",
+			"id": "soccer-0119",
+			"colors": {
+				"primary": "oklch(0.50 0.13 151)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Kyrgyzstan",
+			"countryKey": "KGZ",
+			"nickname": "Kyrgyzstan",
+			"logo": "kgz",
+			"id": "soccer-0120",
+			"colors": {
+				"primary": "oklch(0.60 0.22 24)",
+				"secondary": "oklch(0.88 0.18 98)",
+				"tertiary": "oklch(0.39 0.14 23)"
+			}
+		},
+		{
+			"country": "Laos",
+			"countryKey": "LAO",
+			"nickname": "Laos",
+			"logo": "lao",
+			"id": "soccer-0121",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.30 0.12 262)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Latvia",
+			"countryKey": "LVA",
+			"nickname": "Latvia",
+			"logo": "lva",
+			"id": "soccer-0122",
+			"colors": {
+				"primary": "oklch(0.46 0.15 17)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.31 0.09 16)"
+			}
+		},
+		{
+			"country": "Lebanon",
+			"countryKey": "LBN",
+			"nickname": "Cedars",
+			"logo": "lbn",
+			"id": "soccer-0123",
+			"colors": {
+				"primary": "oklch(0.59 0.23 26)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.64 0.17 152)"
+			}
+		},
+		{
+			"country": "Lesotho",
+			"countryKey": "LSO",
+			"nickname": "Likuena",
+			"logo": "lso",
+			"id": "soccer-0124",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.35 0.18 265)",
+				"tertiary": "oklch(0.60 0.16 151)"
+			}
+		},
+		{
+			"country": "Liberia",
+			"countryKey": "LBR",
+			"nickname": "Lone Stars",
+			"logo": "lbr",
+			"id": "soccer-0125",
+			"colors": {
+				"primary": "oklch(0.50 0.20 17)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.30 0.12 262)"
+			}
+		},
+		{
+			"country": "Libya",
+			"countryKey": "LBY",
+			"nickname": "Libya",
+			"logo": "lby",
+			"id": "soccer-0126",
+			"colors": {
+				"primary": "oklch(0.13 0.00 0)",
+				"secondary": "oklch(0.59 0.24 28)",
+				"tertiary": "oklch(0.60 0.15 149)"
+			}
+		},
+		{
+			"country": "Liechtenstein",
+			"countryKey": "LIE",
+			"nickname": "Liechtenstein",
+			"logo": "lie",
+			"id": "soccer-0127",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.32 0.14 264)",
+				"tertiary": "oklch(0.35 0.13 23)"
+			}
+		},
+		{
+			"country": "Lithuania",
+			"countryKey": "LTU",
+			"nickname": "Lithuania",
+			"logo": "ltu",
+			"id": "soccer-0128",
+			"colors": {
+				"primary": "oklch(0.82 0.16 83)",
+				"secondary": "oklch(0.46 0.11 154)",
+				"tertiary": "oklch(0.53 0.16 25)"
+			}
+		},
+		{
+			"country": "Luxembourg",
+			"countryKey": "LUX",
+			"nickname": "Luxembourg",
+			"logo": "lux",
+			"id": "soccer-0129",
+			"colors": {
+				"primary": "oklch(0.62 0.21 22)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.69 0.15 235)"
+			}
+		},
+		{
+			"country": "Macao",
+			"countryKey": "MAC",
+			"nickname": "Macao",
+			"logo": "mac",
+			"id": "soccer-0130",
+			"colors": {
+				"primary": "oklch(0.51 0.10 166)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.34 0.07 167)"
+			}
+		},
+		{
+			"country": "Madagascar",
+			"countryKey": "MDG",
+			"nickname": "Barea",
+			"logo": "mdg",
+			"id": "soccer-0131",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.64 0.23 26)",
+				"tertiary": "oklch(0.50 0.13 151)"
+			}
+		},
+		{
+			"country": "Malawi",
+			"countryKey": "MWI",
+			"nickname": "The Flames",
+			"logo": "mwi",
+			"id": "soccer-0132",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.60 0.16 143)",
+				"tertiary": "oklch(0.13 0.00 0)"
+			}
+		},
+		{
+			"country": "Malaysia",
+			"countryKey": "MYS",
+			"nickname": "Harimau Malaya",
+			"logo": "mys",
+			"id": "soccer-0133",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.53 0.21 29)",
+				"tertiary": "oklch(0.25 0.15 268)"
+			}
+		},
+		{
+			"country": "Maldives",
+			"countryKey": "MDV",
+			"nickname": "Red Snappers",
+			"logo": "mdv",
+			"id": "soccer-0134",
+			"colors": {
+				"primary": "oklch(0.56 0.22 21)",
+				"secondary": "oklch(0.50 0.13 151)",
+				"tertiary": "oklch(0.37 0.14 20)"
+			}
+		},
+		{
+			"country": "Mali",
+			"countryKey": "MLI",
+			"nickname": "Les Aigles",
+			"logo": "mli",
+			"id": "soccer-0135",
+			"colors": {
+				"primary": "oklch(0.68 0.21 145)",
+				"secondary": "oklch(0.88 0.18 98)",
+				"tertiary": "oklch(0.53 0.20 25)"
+			}
+		},
+		{
+			"country": "Malta",
+			"countryKey": "MLT",
+			"nickname": "Malta",
+			"logo": "mlt",
+			"id": "soccer-0136",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.35 0.13 23)"
+			}
+		},
+		{
+			"country": "Marshall Islands",
+			"countryKey": "MHL",
+			"nickname": "Marshall Islands",
+			"logo": "mhl",
+			"id": "soccer-0137",
+			"colors": {
+				"primary": "oklch(0.37 0.14 261)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.69 0.17 54)"
+			}
+		},
+		{
+			"country": "Martinique",
+			"countryKey": "MTQ",
+			"nickname": "Martinique",
+			"logo": "mtq",
+			"id": "soccer-0138",
+			"colors": {
+				"primary": "oklch(0.23 0.09 265)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.59 0.23 26)"
+			}
+		},
+		{
+			"country": "Mauritania",
+			"countryKey": "MRT",
+			"nickname": "Al-Murabitoun",
+			"logo": "mrt",
+			"id": "soccer-0139",
+			"colors": {
+				"primary": "oklch(0.64 0.17 152)",
+				"secondary": "oklch(0.56 0.22 28)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Mauritius",
+			"countryKey": "MUS",
+			"nickname": "Mauritius",
+			"logo": "mus",
+			"id": "soccer-0140",
+			"colors": {
+				"primary": "oklch(0.60 0.22 24)",
+				"secondary": "oklch(0.64 0.17 152)",
+				"tertiary": "oklch(0.31 0.11 268)"
+			}
+		},
+		{
+			"country": "Mayotte",
+			"countryKey": "MYT",
+			"nickname": "Mayotte",
+			"logo": "myt",
+			"id": "soccer-0141",
+			"colors": {
+				"primary": "oklch(0.23 0.09 265)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.59 0.23 26)"
+			}
+		},
+		{
+			"country": "Mexico",
+			"countryKey": "MEX",
+			"nickname": "El Tri",
+			"logo": "mex",
+			"id": "soccer-0012",
+			"colors": {
+				"primary": "oklch(0.50 0.15 150)",
+				"secondary": "oklch(1.00 0.00 0)",
+				"tertiary": "oklch(0.55 0.22 25)"
+			}
+		},
+		{
+			"country": "Micronesia",
+			"countryKey": "FSM",
+			"nickname": "Micronesia",
+			"logo": "fsm",
+			"id": "soccer-0142",
+			"colors": {
+				"primary": "oklch(0.75 0.08 231)",
+				"secondary": "oklch(0.89 0.04 228)",
+				"tertiary": "oklch(0.49 0.05 232)"
+			}
+		},
+		{
+			"country": "Moldova",
+			"countryKey": "MDA",
+			"nickname": "Moldova",
+			"logo": "mda",
+			"id": "soccer-0143",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.40 0.19 263)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Monaco",
+			"countryKey": "MCO",
+			"nickname": "Monaco",
+			"logo": "mco",
+			"id": "soccer-0144",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.35 0.13 23)"
+			}
+		},
+		{
+			"country": "Mongolia",
+			"countryKey": "MNG",
+			"nickname": "The Blue Wolves",
+			"logo": "mng",
+			"id": "soccer-0145",
+			"colors": {
+				"primary": "oklch(0.57 0.21 23)",
+				"secondary": "oklch(0.51 0.15 252)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Montenegro",
+			"countryKey": "MNE",
+			"nickname": "Montenegro",
+			"logo": "mne",
+			"id": "soccer-0146",
+			"colors": {
+				"primary": "oklch(0.53 0.21 29)",
+				"secondary": "oklch(0.76 0.14 84)",
+				"tertiary": "oklch(0.34 0.14 29)"
+			}
+		},
+		{
+			"country": "Montserrat",
+			"countryKey": "MSR",
+			"nickname": "Montserrat",
+			"logo": "msr",
+			"id": "soccer-0147",
+			"colors": {
+				"primary": "oklch(0.30 0.12 262)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Morocco",
+			"countryKey": "MAR",
+			"nickname": "Atlas Lions",
+			"logo": "mar",
+			"id": "soccer-0148",
+			"colors": {
+				"primary": "oklch(0.53 0.17 30)",
+				"secondary": "oklch(0.46 0.10 163)",
+				"tertiary": "oklch(0.35 0.10 30)"
+			}
+		},
+		{
+			"country": "Mozambique",
+			"countryKey": "MOZ",
+			"nickname": "Os Mambas",
+			"logo": "moz",
+			"id": "soccer-0149",
+			"colors": {
+				"primary": "oklch(0.91 0.19 104)",
+				"secondary": "oklch(0.51 0.09 179)",
+				"tertiary": "oklch(0.13 0.00 0)"
+			}
+		},
+		{
+			"country": "Myanmar",
+			"countryKey": "MMR",
+			"nickname": "Myanmar",
+			"logo": "mmr",
+			"id": "soccer-0150",
+			"colors": {
+				"primary": "oklch(0.85 0.17 91)",
+				"secondary": "oklch(0.60 0.22 24)",
+				"tertiary": "oklch(0.69 0.20 143)"
+			}
+		},
+		{
+			"country": "Namibia",
+			"countryKey": "NAM",
+			"nickname": "Brave Warriors",
+			"logo": "nam",
+			"id": "soccer-0151",
+			"colors": {
+				"primary": "oklch(0.60 0.16 151)",
+				"secondary": "oklch(0.37 0.14 261)",
+				"tertiary": "oklch(0.56 0.22 21)"
+			}
+		},
+		{
+			"country": "Nauru",
+			"countryKey": "NRU",
+			"nickname": "Nauru",
+			"logo": "nru",
+			"id": "soccer-0152",
+			"colors": {
+				"primary": "oklch(0.32 0.14 264)",
+				"secondary": "oklch(0.85 0.17 91)",
+				"tertiary": "oklch(0.22 0.09 263)"
+			}
+		},
+		{
+			"country": "Nepal",
+			"countryKey": "NPL",
+			"nickname": "The Gorkhalis",
+			"logo": "npl",
+			"id": "soccer-0153",
+			"colors": {
+				"primary": "oklch(0.56 0.22 21)",
+				"secondary": "oklch(0.38 0.16 262)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Netherlands",
+			"countryKey": "NED",
+			"nickname": "Oranje",
+			"logo": "nld",
+			"id": "soccer-0007",
+			"colors": {
+				"primary": "oklch(0.68 0.20 45)",
+				"secondary": "oklch(1.00 0.00 0)",
+				"tertiary": "oklch(0.30 0.10 255)"
+			}
+		},
+		{
+			"country": "New Caledonia",
+			"countryKey": "NCL",
+			"nickname": "Les Cagous",
+			"logo": "ncl",
+			"id": "soccer-0154",
+			"colors": {
+				"primary": "oklch(0.23 0.09 265)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.59 0.23 26)"
+			}
+		},
+		{
+			"country": "New Zealand",
+			"countryKey": "NZL",
+			"nickname": "All Whites",
+			"logo": "nzl",
+			"id": "soccer-0155",
+			"colors": {
+				"primary": "oklch(0.30 0.12 262)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Nicaragua",
+			"countryKey": "NIC",
+			"nickname": "Nicaragua",
+			"logo": "nic",
+			"id": "soccer-0156",
+			"colors": {
+				"primary": "oklch(0.52 0.17 255)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.35 0.11 254)"
+			}
+		},
+		{
+			"country": "Niger",
+			"countryKey": "NER",
+			"nickname": "Le Ména",
+			"logo": "ner",
+			"id": "soccer-0157",
+			"colors": {
+				"primary": "oklch(0.64 0.19 42)",
+				"secondary": "oklch(0.68 0.22 144)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Nigeria",
+			"countryKey": "NGA",
+			"nickname": "Super Eagles",
+			"logo": "nga",
+			"id": "soccer-0158",
+			"colors": {
+				"primary": "oklch(0.55 0.12 160)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.37 0.08 161)"
+			}
+		},
+		{
+			"country": "Niue",
+			"countryKey": "NIU",
+			"nickname": "Niue",
+			"logo": "niu",
+			"id": "soccer-0159",
+			"colors": {
+				"primary": "oklch(0.88 0.18 98)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.30 0.12 262)"
+			}
+		},
+		{
+			"country": "North Korea",
+			"countryKey": "PRK",
+			"nickname": "Chollima",
+			"logo": "prk",
+			"id": "soccer-0160",
+			"colors": {
+				"primary": "oklch(0.59 0.23 26)",
+				"secondary": "oklch(0.43 0.17 260)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "North Macedonia",
+			"countryKey": "MKD",
+			"nickname": "North Macedonia",
+			"logo": "mkd",
+			"id": "soccer-0161",
+			"colors": {
+				"primary": "oklch(0.57 0.21 27)",
+				"secondary": "oklch(0.92 0.19 104)",
+				"tertiary": "oklch(0.37 0.13 26)"
+			}
+		},
+		{
+			"country": "Northern Ireland",
+			"countryKey": "NIR",
+			"nickname": "Northern Ireland",
+			"logo": "nir",
+			"id": "soccer-0162",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.30 0.12 262)"
+			}
+		},
+		{
+			"country": "Northern Mariana Islands",
+			"countryKey": "MNP",
+			"nickname": "Northern Mariana Islands",
+			"logo": "mnp",
+			"id": "soccer-0163",
+			"colors": {
+				"primary": "oklch(0.40 0.19 263)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.78 0.00 0)"
+			}
+		},
+		{
+			"country": "Norway",
+			"countryKey": "NOR",
+			"nickname": "Norway",
+			"logo": "nor",
+			"id": "soccer-0164",
+			"colors": {
+				"primary": "oklch(0.50 0.20 22)",
+				"secondary": "oklch(0.29 0.09 259)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Oman",
+			"countryKey": "OMN",
+			"nickname": "The Reds",
+			"logo": "omn",
+			"id": "soccer-0165",
+			"colors": {
+				"primary": "oklch(0.56 0.22 28)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.54 0.18 143)"
+			}
+		},
+		{
+			"country": "Pakistan",
+			"countryKey": "PAK",
+			"nickname": "Pakistan",
+			"logo": "pak",
+			"id": "soccer-0166",
+			"colors": {
+				"primary": "oklch(0.35 0.10 147)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.24 0.06 148)"
+			}
+		},
+		{
+			"country": "Palau",
+			"countryKey": "PLW",
+			"nickname": "Palau",
+			"logo": "plw",
+			"id": "soccer-0167",
+			"colors": {
+				"primary": "oklch(0.66 0.18 248)",
+				"secondary": "oklch(0.95 0.21 110)",
+				"tertiary": "oklch(0.43 0.11 246)"
+			}
+		},
+		{
+			"country": "Palestine",
+			"countryKey": "PSE",
+			"nickname": "Al-Fida'i",
+			"logo": "pse",
+			"id": "soccer-0168",
+			"colors": {
+				"primary": "oklch(0.13 0.00 0)",
+				"secondary": "oklch(0.50 0.13 151)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Panama",
+			"countryKey": "PAN",
+			"nickname": "Los Canaleros",
+			"logo": "pan",
+			"id": "soccer-0169",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.29 0.09 259)",
+				"tertiary": "oklch(0.47 0.18 23)"
+			}
+		},
+		{
+			"country": "Papua New Guinea",
+			"countryKey": "PNG",
+			"nickname": "Papua New Guinea",
+			"logo": "png",
+			"id": "soccer-0170",
+			"colors": {
+				"primary": "oklch(0.13 0.00 0)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Paraguay",
+			"countryKey": "PRY",
+			"nickname": "La Albirroja",
+			"logo": "pry",
+			"id": "soccer-0171",
+			"colors": {
+				"primary": "oklch(0.57 0.21 30)",
+				"secondary": "oklch(0.40 0.19 263)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Peru",
+			"countryKey": "PER",
+			"nickname": "La Blanquirroja",
+			"logo": "per",
+			"id": "soccer-0172",
+			"colors": {
+				"primary": "oklch(0.56 0.22 25)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.37 0.14 24)"
+			}
+		},
+		{
+			"country": "Philippines",
+			"countryKey": "PHL",
+			"nickname": "Azkals",
+			"logo": "phl",
+			"id": "soccer-0173",
+			"colors": {
+				"primary": "oklch(0.40 0.19 263)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Poland",
+			"countryKey": "POL",
+			"nickname": "Biało-czerwoni",
+			"logo": "pol",
+			"id": "soccer-0174",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.56 0.22 21)",
+				"tertiary": "oklch(0.63 0.00 0)"
+			}
+		},
+		{
+			"country": "Portugal",
+			"countryKey": "POR",
+			"nickname": "Seleção das Quinas",
+			"logo": "prt",
+			"id": "soccer-0008",
+			"colors": {
+				"primary": "oklch(0.48 0.18 25)",
+				"secondary": "oklch(0.52 0.15 150)",
+				"tertiary": "oklch(0.80 0.15 90)"
+			}
+		},
+		{
+			"country": "Puerto Rico",
+			"countryKey": "PRI",
+			"nickname": "Puerto Rico",
+			"logo": "pri",
+			"id": "soccer-0175",
+			"colors": {
+				"primary": "oklch(0.62 0.25 29)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.56 0.23 260)"
+			}
+		},
+		{
+			"country": "Qatar",
+			"countryKey": "QAT",
+			"nickname": "Al-Annabi",
+			"logo": "qat",
+			"id": "soccer-0176",
+			"colors": {
+				"primary": "oklch(0.41 0.15 11)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.28 0.09 9)"
+			}
+		},
+		{
+			"country": "Réunion",
+			"countryKey": "REU",
+			"nickname": "Réunion",
+			"logo": "reu",
+			"id": "soccer-0180",
+			"colors": {
+				"primary": "oklch(0.23 0.09 265)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.59 0.23 26)"
+			}
+		},
+		{
+			"country": "Romania",
+			"countryKey": "ROU",
+			"nickname": "Tricolorii",
+			"logo": "rou",
+			"id": "soccer-0177",
+			"colors": {
+				"primary": "oklch(0.32 0.14 264)",
+				"secondary": "oklch(0.88 0.18 98)",
+				"tertiary": "oklch(0.53 0.20 25)"
+			}
+		},
+		{
+			"country": "Russia",
+			"countryKey": "RUS",
+			"nickname": "Sbornaya",
+			"logo": "rus",
+			"id": "soccer-0178",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.57 0.21 30)",
+				"tertiary": "oklch(0.40 0.19 263)"
+			}
+		},
+		{
+			"country": "Rwanda",
+			"countryKey": "RWA",
+			"nickname": "Amavubi",
+			"logo": "rwa",
+			"id": "soccer-0179",
+			"colors": {
+				"primary": "oklch(0.68 0.13 227)",
+				"secondary": "oklch(0.46 0.10 149)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Saint Barthélemy",
+			"countryKey": "BLM",
+			"nickname": "Saint Barthélemy",
+			"logo": "blm",
+			"id": "soccer-0181",
+			"colors": {
+				"primary": "oklch(0.23 0.09 265)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.59 0.23 26)"
+			}
+		},
+		{
+			"country": "Saint Helena",
+			"countryKey": "SHN",
+			"nickname": "Saint Helena",
+			"logo": "shn",
+			"id": "soccer-0182",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.30 0.12 262)"
+			}
+		},
+		{
+			"country": "Saint Kitts and Nevis",
+			"countryKey": "KNA",
+			"nickname": "Sugar Boyz",
+			"logo": "kna",
+			"id": "soccer-0183",
+			"colors": {
+				"primary": "oklch(0.13 0.00 0)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.60 0.16 151)"
+			}
+		},
+		{
+			"country": "Saint Lucia",
+			"countryKey": "LCA",
+			"nickname": "Saint Lucia",
+			"logo": "lca",
+			"id": "soccer-0184",
+			"colors": {
+				"primary": "oklch(0.79 0.11 232)",
+				"secondary": "oklch(0.88 0.18 98)",
+				"tertiary": "oklch(0.13 0.00 0)"
+			}
+		},
+		{
+			"country": "Saint Martin",
+			"countryKey": "MAF",
+			"nickname": "Saint Martin",
+			"logo": "maf",
+			"id": "soccer-0185",
+			"colors": {
+				"primary": "oklch(0.23 0.09 265)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.59 0.23 26)"
+			}
+		},
+		{
+			"country": "Saint Pierre and Miquelon",
+			"countryKey": "SPM",
+			"nickname": "Saint Pierre and Miquelon",
+			"logo": "spm",
+			"id": "soccer-0186",
+			"colors": {
+				"primary": "oklch(0.23 0.09 265)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.59 0.23 26)"
+			}
+		},
+		{
+			"country": "Saint Vincent and the Grenadines",
+			"countryKey": "VCT",
+			"nickname": "Vincy Heat",
+			"logo": "vct",
+			"id": "soccer-0187",
+			"colors": {
+				"primary": "oklch(0.88 0.17 98)",
+				"secondary": "oklch(0.50 0.15 146)",
+				"tertiary": "oklch(0.32 0.14 264)"
+			}
+		},
+		{
+			"country": "Samoa",
+			"countryKey": "WSM",
+			"nickname": "Samoa",
+			"logo": "wsm",
+			"id": "soccer-0188",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.32 0.14 264)",
+				"tertiary": "oklch(0.35 0.13 23)"
+			}
+		},
+		{
+			"country": "San Marino",
+			"countryKey": "SMR",
+			"nickname": "San Marino",
+			"logo": "smr",
+			"id": "soccer-0189",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.75 0.10 237)",
+				"tertiary": "oklch(0.63 0.00 0)"
+			}
+		},
+		{
+			"country": "Sao Tome and Principe",
+			"countryKey": "STP",
+			"nickname": "Sao Tome and Principe",
+			"logo": "stp",
+			"id": "soccer-0190",
+			"colors": {
+				"primary": "oklch(0.64 0.20 144)",
+				"secondary": "oklch(0.85 0.17 91)",
+				"tertiary": "oklch(0.56 0.22 21)"
+			}
+		},
+		{
+			"country": "Saudi Arabia",
+			"countryKey": "SAU",
+			"nickname": "Green Falcons",
+			"logo": "sau",
+			"id": "soccer-0191",
+			"colors": {
+				"primary": "oklch(0.46 0.11 154)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.30 0.07 156)"
+			}
+		},
+		{
+			"country": "Scotland",
+			"countryKey": "SCT",
+			"nickname": "Scotland",
+			"logo": "sct",
+			"id": "soccer-0192",
+			"colors": {
+				"primary": "oklch(0.48 0.17 257)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.32 0.10 256)"
+			}
+		},
+		{
+			"country": "Senegal",
+			"countryKey": "SEN",
+			"nickname": "Lions of Teranga",
+			"logo": "sen",
+			"id": "soccer-0193",
+			"colors": {
+				"primary": "oklch(0.55 0.15 148)",
+				"secondary": "oklch(0.59 0.23 26)",
+				"tertiary": "oklch(0.92 0.17 104)"
+			}
+		},
+		{
+			"country": "Serbia",
+			"countryKey": "SRB",
+			"nickname": "Orlovi",
+			"logo": "srb",
+			"id": "soccer-0194",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.59 0.23 17)",
+				"tertiary": "oklch(0.30 0.12 262)"
+			}
+		},
+		{
+			"country": "Seychelles",
+			"countryKey": "SYC",
+			"nickname": "Pirates",
+			"logo": "syc",
+			"id": "soccer-0195",
+			"colors": {
+				"primary": "oklch(0.57 0.21 27)",
+				"secondary": "oklch(0.37 0.14 261)",
+				"tertiary": "oklch(0.50 0.13 151)"
+			}
+		},
+		{
+			"country": "Sierra Leone",
+			"countryKey": "SLE",
+			"nickname": "Leone Stars",
+			"logo": "sle",
+			"id": "soccer-0196",
+			"colors": {
+				"primary": "oklch(0.68 0.21 145)",
+				"secondary": "oklch(0.56 0.15 249)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Singapore",
+			"countryKey": "SGP",
+			"nickname": "The Lions",
+			"logo": "sgp",
+			"id": "soccer-0197",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.60 0.22 24)",
+				"tertiary": "oklch(0.63 0.00 0)"
+			}
+		},
+		{
+			"country": "Sint Maarten",
+			"countryKey": "SXM",
+			"nickname": "Sint Maarten",
+			"logo": "sxm",
+			"id": "soccer-0198",
+			"colors": {
+				"primary": "oklch(0.56 0.22 28)",
+				"secondary": "oklch(0.33 0.16 264)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Slovakia",
+			"countryKey": "SVK",
+			"nickname": "Slovakia",
+			"logo": "svk",
+			"id": "soccer-0199",
+			"colors": {
+				"primary": "oklch(0.59 0.23 26)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.43 0.17 260)"
+			}
+		},
+		{
+			"country": "Slovenia",
+			"countryKey": "SVN",
+			"nickname": "Slovenia",
+			"logo": "svn",
+			"id": "soccer-0200",
+			"colors": {
+				"primary": "oklch(0.62 0.25 29)",
+				"secondary": "oklch(0.52 0.23 262)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Solomon Islands",
+			"countryKey": "SLB",
+			"nickname": "Bonitos",
+			"logo": "slb",
+			"id": "soccer-0201",
+			"colors": {
+				"primary": "oklch(0.42 0.08 153)",
+				"secondary": "oklch(0.48 0.17 257)",
+				"tertiary": "oklch(0.88 0.18 98)"
+			}
+		},
+		{
+			"country": "Somalia",
+			"countryKey": "SOM",
+			"nickname": "Ocean Stars",
+			"logo": "som",
+			"id": "soccer-0202",
+			"colors": {
+				"primary": "oklch(0.62 0.14 255)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.41 0.08 255)"
+			}
+		},
+		{
+			"country": "South Africa",
+			"countryKey": "ZAF",
+			"nickname": "Bafana Bafana",
+			"logo": "zaf",
+			"id": "soccer-0203",
+			"colors": {
+				"primary": "oklch(0.50 0.12 157)",
+				"secondary": "oklch(0.61 0.21 26)",
+				"tertiary": "oklch(0.31 0.18 266)"
+			}
+		},
+		{
+			"country": "South Korea",
+			"countryKey": "KOR",
+			"nickname": "Taegeuk Warriors",
+			"logo": "kor",
+			"id": "soccer-0204",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.43 0.17 260)"
+			}
+		},
+		{
+			"country": "South Sudan",
+			"countryKey": "SSD",
+			"nickname": "Bright Stars",
+			"logo": "ssd",
+			"id": "soccer-0205",
+			"colors": {
+				"primary": "oklch(0.13 0.00 0)",
+				"secondary": "oklch(0.55 0.15 148)",
+				"tertiary": "oklch(0.43 0.17 260)"
+			}
+		},
+		{
+			"country": "Spain",
+			"countryKey": "ESP",
+			"nickname": "La Roja",
+			"logo": "esp",
+			"id": "soccer-0005",
+			"colors": {
+				"primary": "oklch(0.55 0.22 25)",
+				"secondary": "oklch(0.80 0.15 90)",
+				"tertiary": "oklch(0.30 0.10 25)"
+			}
+		},
+		{
+			"country": "Sri Lanka",
+			"countryKey": "LKA",
+			"nickname": "Sri Lanka",
+			"logo": "lka",
+			"id": "soccer-0206",
+			"colors": {
+				"primary": "oklch(0.82 0.16 82)",
+				"secondary": "oklch(0.41 0.15 11)",
+				"tertiary": "oklch(0.41 0.08 174)"
+			}
+		},
+		{
+			"country": "Sudan",
+			"countryKey": "SDN",
+			"nickname": "Falcons of Jediane",
+			"logo": "sdn",
+			"id": "soccer-0207",
+			"colors": {
+				"primary": "oklch(0.13 0.00 0)",
+				"secondary": "oklch(0.56 0.22 21)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Suriname",
+			"countryKey": "SUR",
+			"nickname": "Natio",
+			"logo": "sur",
+			"id": "soccer-0208",
+			"colors": {
+				"primary": "oklch(0.50 0.13 151)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Sweden",
+			"countryKey": "SWE",
+			"nickname": "Blågult",
+			"logo": "swe",
+			"id": "soccer-0209",
+			"colors": {
+				"primary": "oklch(0.50 0.13 247)",
+				"secondary": "oklch(0.85 0.17 91)",
+				"tertiary": "oklch(0.33 0.08 245)"
+			}
+		},
+		{
+			"country": "Switzerland",
+			"countryKey": "CHE",
+			"nickname": "Nati",
+			"logo": "che",
+			"id": "soccer-0210",
+			"colors": {
+				"primary": "oklch(0.57 0.21 30)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.37 0.13 30)"
+			}
+		},
+		{
+			"country": "Syria",
+			"countryKey": "SYR",
+			"nickname": "Qasioun Eagles",
+			"logo": "syr",
+			"id": "soccer-0211",
+			"colors": {
+				"primary": "oklch(0.50 0.13 151)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Taiwan",
+			"countryKey": "TWN",
+			"nickname": "Taiwan",
+			"logo": "twn",
+			"id": "soccer-0212",
+			"colors": {
+				"primary": "oklch(0.62 0.25 29)",
+				"secondary": "oklch(0.32 0.21 266)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Tajikistan",
+			"countryKey": "TJK",
+			"nickname": "Tajikistan",
+			"logo": "tjk",
+			"id": "soccer-0213",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.53 0.21 29)",
+				"tertiary": "oklch(0.45 0.15 143)"
+			}
+		},
+		{
+			"country": "Tanzania",
+			"countryKey": "TZA",
+			"nickname": "Taifa Stars",
+			"logo": "tza",
+			"id": "soccer-0214",
+			"colors": {
+				"primary": "oklch(0.13 0.00 0)",
+				"secondary": "oklch(0.68 0.13 227)",
+				"tertiary": "oklch(0.68 0.21 145)"
+			}
+		},
+		{
+			"country": "Thailand",
+			"countryKey": "THA",
+			"nickname": "War Elephants",
+			"logo": "tha",
+			"id": "soccer-0215",
+			"colors": {
+				"primary": "oklch(0.47 0.18 16)",
+				"secondary": "oklch(0.29 0.06 282)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Timor-Leste",
+			"countryKey": "TLS",
+			"nickname": "Timor-Leste",
+			"logo": "tls",
+			"id": "soccer-0216",
+			"colors": {
+				"primary": "oklch(0.57 0.21 30)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.85 0.17 90)"
+			}
+		},
+		{
+			"country": "Togo",
+			"countryKey": "TGO",
+			"nickname": "Les Éperviers",
+			"logo": "tgo",
+			"id": "soccer-0217",
+			"colors": {
+				"primary": "oklch(0.46 0.10 163)",
+				"secondary": "oklch(0.85 0.17 91)",
+				"tertiary": "oklch(0.56 0.22 21)"
+			}
+		},
+		{
+			"country": "Tonga",
+			"countryKey": "TON",
+			"nickname": "Tonga",
+			"logo": "ton",
+			"id": "soccer-0218",
+			"colors": {
+				"primary": "oklch(0.53 0.21 29)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.34 0.14 29)"
+			}
+		},
+		{
+			"country": "Trinidad and Tobago",
+			"countryKey": "TTO",
+			"nickname": "Soca Warriors",
+			"logo": "tto",
+			"id": "soccer-0219",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Tunisia",
+			"countryKey": "TUN",
+			"nickname": "Eagles of Carthage",
+			"logo": "tun",
+			"id": "soccer-0220",
+			"colors": {
+				"primary": "oklch(0.59 0.24 28)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.38 0.15 27)"
+			}
+		},
+		{
+			"country": "Turkey",
+			"countryKey": "TUR",
+			"nickname": "Ay-Yıldızlılar",
+			"logo": "tur",
+			"id": "soccer-0221",
+			"colors": {
+				"primary": "oklch(0.59 0.24 28)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.38 0.15 27)"
+			}
+		},
+		{
+			"country": "Turkmenistan",
+			"countryKey": "TKM",
+			"nickname": "Turkmenistan",
+			"logo": "tkm",
+			"id": "soccer-0222",
+			"colors": {
+				"primary": "oklch(0.55 0.15 148)",
+				"secondary": "oklch(0.57 0.21 23)",
+				"tertiary": "oklch(0.36 0.10 150)"
+			}
+		},
+		{
+			"country": "Turks and Caicos Islands",
+			"countryKey": "TCA",
+			"nickname": "Turks and Caicos Islands",
+			"logo": "tca",
+			"id": "soccer-0223",
+			"colors": {
+				"primary": "oklch(0.30 0.12 262)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Tuvalu",
+			"countryKey": "TUV",
+			"nickname": "Tuvalu",
+			"logo": "tuv",
+			"id": "soccer-0224",
+			"colors": {
+				"primary": "oklch(0.64 0.14 238)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "U.S. Virgin Islands",
+			"countryKey": "VIR",
+			"nickname": "U.S. Virgin Islands",
+			"logo": "vir",
+			"id": "soccer-0225",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.85 0.16 89)",
+				"tertiary": "oklch(0.31 0.11 268)"
+			}
+		},
+		{
+			"country": "Uganda",
+			"countryKey": "UGA",
+			"nickname": "The Cranes",
+			"logo": "uga",
+			"id": "soccer-0226",
+			"colors": {
+				"primary": "oklch(0.88 0.18 98)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.56 0.23 29)"
+			}
+		},
+		{
+			"country": "Ukraine",
+			"countryKey": "UKR",
+			"nickname": "Zbirna",
+			"logo": "ukr",
+			"id": "soccer-0227",
+			"colors": {
+				"primary": "oklch(0.48 0.17 257)",
+				"secondary": "oklch(0.88 0.18 98)",
+				"tertiary": "oklch(0.32 0.10 256)"
+			}
+		},
+		{
+			"country": "United Arab Emirates",
+			"countryKey": "ARE",
+			"nickname": "Al Abyad",
+			"logo": "are",
+			"id": "soccer-0228",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.55 0.15 148)",
+				"tertiary": "oklch(0.13 0.00 0)"
+			}
+		},
+		{
+			"country": "United Kingdom",
+			"countryKey": "GBR",
+			"nickname": "United Kingdom",
+			"logo": "gbr",
+			"id": "soccer-0229",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.30 0.12 262)"
+			}
+		},
+		{
+			"country": "United States",
+			"countryKey": "USA",
+			"nickname": "Stars & Stripes",
+			"logo": "usa",
+			"id": "soccer-0014",
+			"colors": {
+				"primary": "oklch(0.30 0.10 255)",
+				"secondary": "oklch(0.55 0.22 25)",
+				"tertiary": "oklch(1.00 0.00 0)"
+			}
+		},
+		{
+			"country": "Uruguay",
+			"countryKey": "URU",
+			"nickname": "La Celeste",
+			"logo": "ury",
+			"id": "soccer-0016",
+			"colors": {
+				"primary": "oklch(0.70 0.11 230)",
+				"secondary": "oklch(0.20 0.00 0)",
+				"tertiary": "oklch(1.00 0.00 0)"
+			}
+		},
+		{
+			"country": "Uzbekistan",
+			"countryKey": "UZB",
+			"nickname": "White Wolves",
+			"logo": "uzb",
+			"id": "soccer-0230",
+			"colors": {
+				"primary": "oklch(0.98 0.00 0)",
+				"secondary": "oklch(0.68 0.21 145)",
+				"tertiary": "oklch(0.63 0.11 220)"
+			}
+		},
+		{
+			"country": "Vanuatu",
+			"countryKey": "VUT",
+			"nickname": "Vanuatu",
+			"logo": "vut",
+			"id": "soccer-0231",
+			"colors": {
+				"primary": "oklch(0.60 0.16 151)",
+				"secondary": "oklch(0.56 0.22 21)",
+				"tertiary": "oklch(0.13 0.00 0)"
+			}
+		},
+		{
+			"country": "Venezuela",
+			"countryKey": "VEN",
+			"nickname": "La Vinotinto",
+			"logo": "ven",
+			"id": "soccer-0232",
+			"colors": {
+				"primary": "oklch(0.85 0.17 91)",
+				"secondary": "oklch(0.53 0.20 25)",
+				"tertiary": "oklch(0.32 0.14 264)"
+			}
+		},
+		{
+			"country": "Vietnam",
+			"countryKey": "VNM",
+			"nickname": "Golden Star Warriors",
+			"logo": "vnm",
+			"id": "soccer-0233",
+			"colors": {
+				"primary": "oklch(0.57 0.21 30)",
+				"secondary": "oklch(0.95 0.21 110)",
+				"tertiary": "oklch(0.37 0.13 30)"
+			}
+		},
+		{
+			"country": "Wales",
+			"countryKey": "WLS",
+			"nickname": "The Dragons",
+			"logo": "wls",
+			"id": "soccer-0234",
+			"colors": {
+				"primary": "oklch(0.64 0.19 146)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.56 0.22 21)"
+			}
+		},
+		{
+			"country": "Wallis and Futuna Islands",
+			"countryKey": "WLF",
+			"nickname": "Wallis and Futuna Islands",
+			"logo": "wlf",
+			"id": "soccer-0235",
+			"colors": {
+				"primary": "oklch(0.60 0.22 24)",
+				"secondary": "oklch(0.98 0.00 0)",
+				"tertiary": "oklch(0.35 0.18 265)"
+			}
+		},
+		{
+			"country": "Yemen",
+			"countryKey": "YEM",
+			"nickname": "Yemen",
+			"logo": "yem",
+			"id": "soccer-0236",
+			"colors": {
+				"primary": "oklch(0.53 0.20 25)",
+				"secondary": "oklch(0.13 0.00 0)",
+				"tertiary": "oklch(0.98 0.00 0)"
+			}
+		},
+		{
+			"country": "Zambia",
+			"countryKey": "ZMB",
+			"nickname": "Chipolopolo",
+			"logo": "zmb",
+			"id": "soccer-0237",
+			"colors": {
+				"primary": "oklch(0.55 0.18 142)",
+				"secondary": "oklch(0.69 0.17 54)",
+				"tertiary": "oklch(0.57 0.21 30)"
+			}
+		},
+		{
+			"country": "Zimbabwe",
+			"countryKey": "ZWE",
+			"nickname": "Warriors",
+			"logo": "zwe",
+			"id": "soccer-0238",
+			"colors": {
+				"primary": "oklch(0.45 0.15 143)",
+				"secondary": "oklch(0.88 0.18 98)",
+				"tertiary": "oklch(0.56 0.23 29)"
+			}
+		}
+	]
+}
