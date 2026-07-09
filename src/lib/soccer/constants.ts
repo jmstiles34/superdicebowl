@@ -79,6 +79,22 @@ export const FIELD_SECTION_WIDTH = FIELD_PLAY_WIDTH / SECTION_COUNT;
 export const FIELD_MIDLINE_PERCENT = 50;
 export const FIELD_VERTICAL_CENTER_PERCENT = 50;
 
+// ── Ball marker roll ─────────────────────────────────────────
+// The ball marker renders at this fraction of the pitch width (must match the
+// `.ball` width in Field.svelte). A rolling ball turns a full 360° for every
+// circumference (π · diameter) it travels, so spinning it this many degrees
+// per 1% of pitch width crossed gives a physically-grounded roll.
+export const BALL_WIDTH_PERCENT = 6;
+export const BALL_ROLL_DEGREES_PER_PERCENT = 360 / (Math.PI * BALL_WIDTH_PERCENT);
+
+// ── Ball skins ───────────────────────────────────────────────
+// Selectable on-field ball designs live in $lib/images/balls (enumerated by
+// lib/soccer/ballDesigns.ts). Clicking the ball cycles through them and the
+// choice persists as a user preference. Keyed by filename without extension.
+// Kept here (asset-free) so the preferences layer can reference the default
+// without pulling the image glob into every sport's bundle.
+export const DEFAULT_BALL_DESIGN = 'soccer-ball-02';
+
 // ── Actions ──────────────────────────────────────────────────
 
 export const GAME_ACTION = {

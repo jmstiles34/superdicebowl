@@ -3,20 +3,26 @@
 	import { goto } from '$app/navigation';
 	import { Fireworks } from '@fireworks-js/svelte';
 	import { game } from '$lib/soccer/state/game.svelte';
-	import { GAME_ACTION } from '$lib/soccer/constants';
+	import { GAME_ACTION, SOCCER_SYMBOL } from '$lib/soccer/constants';
 	import {
 		aiRerollIndices,
 		aiShouldReroll,
 		bestPlay,
+		compareCounts,
+		countSymbols,
 		effectiveDiceCount,
+		resolveShot,
 		teamKey
 	} from '$lib/soccer/utils/game';
+	import type { SoccerSymbol } from '$lib/soccer/types';
 	import type { SoccerGameSettingsSnapshot } from '$lib/db/database';
 	import { settings } from '$lib/state/settings.svelte';
-	import { sleep } from '$lib/utils/common';
+	import { readableTextColor, sleep } from '$lib/utils/common';
 	import { fireworkShow, options } from '$lib/utils/fireworks';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { createGame, updateGameState, completeGame } from '$lib/db/repositories/gameRepository';
+	import { savePreferences, saveGuestPreferences } from '$lib/db/repositories/preferencesRepository';
+	import { nextBallDesign } from '$lib/soccer/ballDesigns';
 	import { GAME_MODE, OPPOSITE_TEAM, TEAM } from '$lib/shared/constants';
 
 	import Field from '$lib/soccer/components/Field.svelte';
@@ -24,6 +30,7 @@
 	import CoinToss from '$lib/soccer/components/CoinToss.svelte';
 	import SoccerDice from '$lib/soccer/components/SoccerDice.svelte';
 	import PowerChipModal from '$lib/soccer/components/PowerChipModal.svelte';
+	import Instructions from '$lib/soccer/components/Instructions.svelte';
 	import EventAnnouncement from '$lib/components/EventAnnouncement.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import ConfirmExit from '$lib/components/modal/ConfirmExit.svelte';
@@ -31,6 +38,8 @@
 
 	import exit from '$lib/images/exit.svg';
 	import gear from '$lib/images/gear.svg';
+	import circleInfo from '$lib/images/circle-info.svg';
+	import ball from '$lib/images/balls/soccer-ball-01.avif';
 	import flick from '$lib/assets/sfx/flick.mp3';
 	import buttonSfx from '$lib/assets/sfx/button.mp3';
 	import type { Howl } from 'howler';
@@ -42,11 +51,9 @@
 
 	const { awayTeam, homeTeam, mode } = settings;
 	const isGameReady = awayTeam.id.length && homeTeam.id.length;
-	// Home defends the left goal, Away the right — order the dice panels to
-	// match each team's side (and the scoreboard).
-	const teamOrder = [TEAM.HOME, TEAM.AWAY];
 
 	let showSettings = $state(false);
+	let showInstructions = $state(false);
 	let fw = $state(fireworkShow);
 
 	// Local round UI state
@@ -68,11 +75,13 @@
 	// ── Control helpers ──────────────────────────────────────
 	const isAI = (team: string) => mode === GAME_MODE.SOLO && team !== settings.userTeam;
 
-	let isRollPhase = $derived(
-		game.action === GAME_ACTION.ROLL_OFF ||
-			game.action === GAME_ACTION.SHOT_ON_GOAL ||
-			game.action === GAME_ACTION.FREE_KICK
+	// During a shot/free kick only balls count toward the outcome (resolveShot),
+	// unlike a regular round where bestPlay compares the most-frequent symbol of
+	// any type. This flag lets the dice UI root for balls specifically.
+	let isShotPhase = $derived(
+		game.action === GAME_ACTION.SHOT_ON_GOAL || game.action === GAME_ACTION.FREE_KICK
 	);
+	let isRollPhase = $derived(game.action === GAME_ACTION.ROLL_OFF || isShotPhase);
 	let humanRoller = $derived(
 		isRollPhase && !game.bothRolled && game.nextRoller && !isAI(game.nextRoller)
 			? game.nextRoller
@@ -86,11 +95,50 @@
 	function teamColor(team: string): string {
 		return team === TEAM.AWAY ? settings.awayTeam.colors.primary : settings.homeTeam.colors.primary;
 	}
+	// Insert an alpha channel into an OKLCH color string, e.g. `oklch(l c h)` ->
+	// `oklch(l c h / 0.6)`. Mirrors the helper the CoinToss uses for its tint.
+	function withAlpha(color: string, alpha: number): string {
+		return color.replace(')', ` / ${alpha})`);
+	}
+	// Whichever team is currently winning the pending roll. Null on a tie or
+	// before both teams have rolled. Drives the resolve button's tint and the
+	// direction its play icon points (toward the winning team's side).
+	let resolveWinner = $derived.by(() => {
+		if (!game.bothRolled) return null;
+		const offRoll = rollFor(game.offenseTeamName);
+		const defRoll = rollFor(game.defenseTeamName);
+		if (!offRoll || !defRoll) return null;
+		if (isShotPhase) {
+			// Mirror resolveShotRoll: only balls decide a shot; goal = offense wins.
+			const result = resolveShot(countSymbols(offRoll).ball, countSymbols(defRoll).ball);
+			if (result === 'tie') return null;
+			return result === 'goal' ? game.offenseTeamName : game.defenseTeamName;
+		}
+		const winner = compareCounts(bestPlay(offRoll), bestPlay(defRoll));
+		if (winner === 'tie') return null;
+		return winner === 'offense' ? game.offenseTeamName : game.defenseTeamName;
+	});
+	// The resolve button is tinted in the winner's color over the soccer-ball
+	// face; null shows the ball untinted.
+	let resolveWinnerColor = $derived(resolveWinner ? teamColor(resolveWinner) : null);
+	let resolveStyle = $derived(
+		`--ball-img: url(${ball});` +
+			(resolveWinnerColor
+				? ` --resolve-solid: ${resolveWinnerColor}; --resolve-tint: ${withAlpha(resolveWinnerColor, 0.6)}; --resolve-fg: ${readableTextColor(resolveWinnerColor)};`
+				: '')
+	);
 	function teamCity(team: string): string {
 		return team === TEAM.AWAY ? settings.awayTeam.city : settings.homeTeam.city;
 	}
 	function rollFor(team: string) {
 		return team === TEAM.AWAY ? game.awayRoll : game.homeRoll;
+	}
+	// The symbol worth rooting for in a team's roll: during a shot only balls
+	// matter, so highlight balls; otherwise highlight the winning play.
+	function bestSymbolFor(team: string): SoccerSymbol | null {
+		const roll = rollFor(team);
+		if (!game.bothRolled || !roll) return null;
+		return isShotPhase ? SOCCER_SYMBOL.BALL : bestPlay(roll).symbol;
 	}
 	function expectedDice(team: string): number {
 		let count = effectiveDiceCount(game.diceReduction[teamKey(team)]);
@@ -169,9 +217,7 @@
 		}
 		const last = added[added.length - 1];
 		if (!last) return;
-		const shotOngoing =
-			game.action === GAME_ACTION.SHOT_ON_GOAL || game.action === GAME_ACTION.FREE_KICK;
-		if (last.isShot && last.goalsScored === 0 && !shotOngoing && last.description.startsWith('Save')) {
+		if (last.isShot && last.goalsScored === 0 && !isShotPhase && last.description.startsWith('Save')) {
 			triggerAnnouncement('SAVE!', 'save');
 			return;
 		}
@@ -276,6 +322,35 @@
 		}
 	}
 
+	function openInstructions() {
+		playSound(btnSfx, settings.volume);
+		showInstructions = true;
+		game.pause();
+	}
+
+	// Guarded so a stray close() (e.g. the shared Modal's window Escape handler)
+	// can't spuriously open the panel or resume when it isn't showing.
+	function closeInstructions() {
+		if (!showInstructions) return;
+		playSound(btnSfx, settings.volume);
+		showInstructions = false;
+		game.resume();
+	}
+
+	// Cycle the on-field ball to the next skin and persist the choice as a user
+	// preference (Dexie when logged in, localStorage for guests) so it carries
+	// across games — mirrors how the Settings panel saves other cosmetic prefs.
+	function cycleBallDesign() {
+		settings.ballDesign = nextBallDesign(settings.ballDesign);
+		playSound(btnSfx, settings.volume);
+		const prefs = { ballDesign: settings.ballDesign };
+		if (auth.isLoggedIn && auth.currentUser?.id) {
+			savePreferences(auth.currentUser.id, prefs);
+		} else {
+			saveGuestPreferences(prefs);
+		}
+	}
+
 	function handleExitClick() {
 		playSound(btnSfx, settings.volume);
 		if (game.action === GAME_ACTION.GAME_OVER) goto('/soccer');
@@ -291,18 +366,68 @@
 {#if isGameReady}
 	<main>
 		<div class="game">
+			{#snippet teamDice(team: string)}
+				{@const isRoller = humanRoller === team}
+				{@const canRerollTeam = canReroll && team === game.powerChipHolder}
+				<div class="team-dice" class:active={isRoller || canRerollTeam}>
+					<SoccerDice
+						roll={rollFor(team)}
+						diceCount={expectedDice(team)}
+						rolling={rollingTeam === team}
+						accentColor={teamColor(team)}
+						bestSymbol={bestSymbolFor(team)}
+						onlySymbol={isShotPhase ? SOCCER_SYMBOL.BALL : null}
+						selectable={canReroll && team === game.powerChipHolder}
+						selected={team === game.powerChipHolder ? selectedDice : []}
+						onToggle={toggleDie}
+					/>
+					<button
+						class="action-button roll"
+						onclick={canRerollTeam ? rerollClick : humanRollClick}
+						disabled={busy || (!isRoller && !(canRerollTeam && selectedDice.length > 0))}
+					>
+						{canRerollTeam ? `Re-roll${selectedDice.length ? ` (${selectedDice.length})` : ''}` : 'Roll'}
+					</button>
+				</div>
+			{/snippet}
+
 			<div class="scoreboard-wrapper">
 				<Scoreboard>
 					{#snippet center()}
-						<div class="toolbar">
-							<button class="toolbar-button flip" onclick={handleExitClick} title="Quit Game" aria-label="Quit Game">
-								<img src={exit} alt="Quit Game" />
-							</button>
-							<button class="toolbar-button" onclick={toggleSettings} title="Settings" aria-label="Settings">
-								<img src={gear} alt="Settings" />
+						<div class="center-col">
+							<div class="toolbar">
+								<button class="toolbar-button flip" onclick={handleExitClick} title="Quit Game" aria-label="Quit Game">
+									<img src={exit} alt="Quit Game" />
+								</button>
+								<button class="toolbar-button" onclick={openInstructions} title="How to Play" aria-label="How to Play">
+									<img src={circleInfo} alt="How to Play" />
+								</button>
+								<button class="toolbar-button" onclick={toggleSettings} title="Settings" aria-label="Settings">
+									<img src={gear} alt="Settings" />
+								</button>
+							</div>
+							<button
+								class="action-button resolve"
+								style={resolveStyle}
+								onclick={resolveClick}
+								disabled={busy || !awaitingHumanResolve}
+								aria-label="Resolve"
+							>
+								{#if resolveWinner}
+									<svg
+										class="play-icon"
+										class:point-left={resolveWinner === TEAM.HOME}
+										viewBox="0 0 100 100"
+										aria-hidden="true"
+									>
+										<polygon points="30,18 82,50 30,82" />
+									</svg>
+								{/if}
 							</button>
 						</div>
 					{/snippet}
+					{#snippet homeContent()}{@render teamDice(TEAM.HOME)}{/snippet}
+					{#snippet awayContent()}{@render teamDice(TEAM.AWAY)}{/snippet}
 				</Scoreboard>
 			</div>
 
@@ -314,6 +439,9 @@
 					homeTeam={settings.homeTeam}
 					goalScorer={game.goalScorer}
 					lastPlay={game.lastPlay}
+					coinToss={game.action === GAME_ACTION.COIN_TOSS}
+					ballDesign={settings.ballDesign}
+					onCycleBall={cycleBallDesign}
 				/>
 				<EventAnnouncement text={announcementText} type={announcementType} key={announcementKey} />
 				{#if game.action === GAME_ACTION.GAME_OVER}
@@ -321,40 +449,6 @@
 				{/if}
 			</div>
 
-			<div class="dice-panel">
-				{#each teamOrder as team (team)}
-					<div class="team-dice" class:active={humanRoller === team || (game.bothRolled && game.powerChipHolder === team && canReroll)}>
-						<span class="dice-label" style:color={teamColor(team)}>{teamCity(team)}</span>
-						<SoccerDice
-							roll={rollFor(team)}
-							diceCount={expectedDice(team)}
-							rolling={rollingTeam === team}
-							accentColor={teamColor(team)}
-							bestSymbol={game.bothRolled && rollFor(team) ? bestPlay(rollFor(team)!).symbol : null}
-							selectable={canReroll && team === game.powerChipHolder}
-							selected={team === game.powerChipHolder ? selectedDice : []}
-							onToggle={toggleDie}
-						/>
-						{#if humanRoller === team}
-							<button class="action-button roll" onclick={humanRollClick} disabled={busy}>Roll</button>
-						{/if}
-					</div>
-				{/each}
-			</div>
-
-			<div class="controls-bar">
-				{#if humanRoller}
-					<span class="prompt">{teamCity(humanRoller)} to roll</span>
-				{:else if awaitingHumanResolve}
-					{#if canReroll}
-						<button class="action-button" onclick={rerollClick} disabled={busy || selectedDice.length === 0}>
-							Re-roll{selectedDice.length ? ` (${selectedDice.length})` : ''}
-						</button>
-						<span class="prompt">Tap {teamCity(game.powerChipHolder)}'s dice to re-roll (uses chip)</span>
-					{/if}
-					<button class="action-button resolve" onclick={resolveClick} disabled={busy}>Resolve</button>
-				{/if}
-			</div>
 		</div>
 
 		<!-- Coin toss -->
@@ -403,6 +497,11 @@
 		<Modal showModal={showSettings} close={toggleSettings} hasClose={true} choiceRequired={false}>
 			<Settings />
 		</Modal>
+
+		<!-- Instructions -->
+		<Modal showModal={showInstructions} close={closeInstructions} hasClose={false} choiceRequired={false}>
+			<Instructions close={closeInstructions} />
+		</Modal>
 	</main>
 {/if}
 
@@ -418,8 +517,12 @@
 	}
 
 	.game {
-		width: 90%;
-		max-width: 60rem;
+		width: 95%;
+		/* Drive the width off the *available height*: the field is aspect-ratio
+		   locked (440/300 ≈ 1.467), so cap the width at whatever keeps the field
+		   plus scoreboard/dice (~13rem) inside the viewport. Wider on tall screens,
+		   automatically narrower on short ones — no vertical clipping. */
+		max-width: min(72rem, calc((100dvh - 13rem) * 1.467));
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -440,57 +543,26 @@
 	}
 
 
-	.dice-panel {
-		display: flex;
-		justify-content: center;
-		gap: var(--space-4);
-		width: 100%;
-		margin-top: 0.75rem;
-		flex-wrap: wrap;
-	}
-
 	.team-dice {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		align-items: center;
-		gap: 0.25rem;
+		justify-content: center;
+		gap: var(--space-2);
+		margin-top: 0.5rem;
 		padding: var(--space-2);
 		border-radius: var(--radius-md);
 		border: 2px solid transparent;
 		transition: border-color var(--dur-fast) var(--ease-snes);
-		min-width: 9rem;
+		/* Match the team banner above: stretch to the full panel width instead of
+		   hugging its content, so the active-turn border lines up with the banner. */
+		align-self: stretch;
+		box-sizing: border-box;
 	}
 
 	.team-dice.active {
 		border-color: var(--color-text-gold, gold);
 		box-shadow: 0 0 12px oklch(0.88 0.18 85 / 0.3);
-	}
-
-	.dice-label {
-		font-family: var(--font-body);
-		font-size: var(--text-sm);
-		font-weight: var(--weight-black);
-		letter-spacing: var(--tracking-wide);
-		text-transform: uppercase;
-	}
-
-	.controls-bar {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: var(--space-3);
-		flex-wrap: wrap;
-		min-height: 3rem;
-		margin-top: 0.25rem;
-	}
-
-	.prompt {
-		font-family: var(--font-body);
-		font-size: var(--text-sm);
-		font-weight: var(--weight-semibold);
-		letter-spacing: var(--tracking-wide);
-		text-transform: uppercase;
-		color: var(--color-text-secondary);
 	}
 
 	.action-button {
@@ -533,6 +605,80 @@
 		color: var(--btn-primary-text);
 		border-color: var(--btn-primary-border);
 		box-shadow: var(--btn-primary-shadow);
+	}
+
+	/* Reserve a stable footprint wide enough for "Re-roll (6)" so selecting dice —
+	   which grows the label — never squeezes the dice row into a second line. To
+	   keep the dice on a single line as the panel narrows, scale the button down
+	   with the board width (cqw resolves against the .scoreboard container): the
+	   horizontal padding, text, and reserved min-width all shrink in step so the
+	   button gives up room to the dice instead of pushing them to wrap. */
+	.action-button.roll {
+		flex-shrink: 0;
+		min-width: clamp(2.75rem, 10cqw, 7rem);
+		padding-left: clamp(var(--space-1), 1.8cqw, var(--space-5));
+		padding-right: clamp(var(--space-1), 1.8cqw, var(--space-5));
+		font-size: clamp(0.56rem, 1.9cqw, var(--text-base));
+		white-space: nowrap;
+		text-align: center;
+	}
+
+	.center-col {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-3);
+		/* Stretch to the full panel height so the Resolve button can drop to the
+		   bottom, aligning with the dice + Roll/Re-roll row. */
+		align-self: stretch;
+		padding-bottom: var(--space-2);
+	}
+
+	/* Push Resolve down to sit level with the dice-group buttons; the toolbar
+	   stays anchored at the top. Round, spherical-looking button. */
+	.center-col .resolve {
+		margin-top: auto;
+		display: grid;
+		place-items: center;
+		width: 4.25rem;
+		height: 4.25rem;
+		padding: 0;
+		border-radius: 50%;
+		/* Soccer-ball face tinted with the current winner's color, echoing the
+		   coin-toss coin. Falls back to the primary fill before a winner exists. */
+		background-color: var(--resolve-solid, var(--btn-primary-bg));
+		background-image: linear-gradient(var(--resolve-tint, transparent), var(--resolve-tint, transparent)),
+			var(--ball-img);
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		/* Inset highlight + shade over the fill give it a spherical feel. */
+		box-shadow:
+			inset 0 -5px 10px oklch(0 0 0 / 0.35),
+			inset 0 5px 10px oklch(1 0 0 / 0.35),
+			0 3px 6px oklch(0 0 0 / 0.45);
+		transition:
+			transform var(--dur-fast) var(--ease-snes),
+			box-shadow var(--dur-fast) var(--ease-snes);
+	}
+
+	.center-col .resolve:hover:not(:disabled) {
+		transform: scale(1.06);
+	}
+
+	/* Play triangle points right (toward the away team) by default; flipped to
+	   point left when the home team is winning the roll. */
+	.center-col .resolve .play-icon {
+		width: 2.9rem;
+		height: 2.9rem;
+		/* Contrast against the winner's tint — a pale tint (e.g. a white team)
+		   would otherwise swallow a white icon. */
+		fill: var(--resolve-fg, #fff);
+		filter: drop-shadow(0 1px 3px oklch(0 0 0 / 0.35));
+	}
+
+	.center-col .resolve .play-icon.point-left {
+		transform: scaleX(-1);
 	}
 
 	.toolbar {

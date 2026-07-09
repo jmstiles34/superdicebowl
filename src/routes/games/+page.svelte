@@ -25,7 +25,7 @@
 	import { getScoreByTeam } from '$lib/football/utils/game';
 	import Modal from '$lib/components/Modal.svelte';
 	import GameSummary from '$lib/football/components/modal/GameSummary.svelte';
-	import { SvelteSet } from 'svelte/reactivity';
+	import { SvelteSet, SvelteURLSearchParams } from 'svelte/reactivity';
 	import { onlineState } from '$lib/state/onlineState.svelte';
 	import { declineChallenge, getRemoteGames, resignGame, type RemoteGame } from '$lib/football/online/remoteGames';
 
@@ -138,7 +138,7 @@
 		currentSport = sport;
 		confirmDeleteId = null;
 		viewStatsRecord = null;
-		const params = new URLSearchParams($page.url.searchParams);
+		const params = new SvelteURLSearchParams($page.url.searchParams);
 		params.set('sport', sport);
 		goto(`?${params.toString()}`, { replaceState: true, keepFocus: true, noScroll: true });
 	}

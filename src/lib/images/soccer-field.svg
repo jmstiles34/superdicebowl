@@ -100,6 +100,26 @@
     <circle cx="137" cy="0" r="1.8" />
   </g>
 
+  <!-- Corner flags — pole + rectangular orange banner rippling outward in the
+       wind at each pitch corner -->
+  <g class="corner-flags">
+    <!-- Top-left -->
+    <line class="flag-pole" x1="-190" y1="-130" x2="-190" y2="-145" />
+    <path class="flag-cloth" d="M -190,-145 C -193.5,-145.8 -196,-144.2 -198,-145 C -199.4,-144.3 -199.4,-140.7 -198,-140 C -196,-140.8 -193.5,-139.2 -190,-140 Z" />
+
+    <!-- Top-right -->
+    <line class="flag-pole" x1="190" y1="-130" x2="190" y2="-145" />
+    <path class="flag-cloth" d="M 190,-145 C 193.5,-145.8 196,-144.2 198,-145 C 199.4,-144.3 199.4,-140.7 198,-140 C 196,-140.8 193.5,-139.2 190,-140 Z" />
+
+    <!-- Bottom-left -->
+    <line class="flag-pole" x1="-190" y1="130" x2="-190" y2="145" />
+    <path class="flag-cloth" d="M -190,145 C -193.5,145.8 -196,144.2 -198,145 C -199.4,144.3 -199.4,140.7 -198,140 C -196,140.8 -193.5,139.2 -190,140 Z" />
+
+    <!-- Bottom-right -->
+    <line class="flag-pole" x1="190" y1="130" x2="190" y2="145" />
+    <path class="flag-cloth" d="M 190,145 C 193.5,145.8 196,144.2 198,145 C 199.4,144.3 199.4,140.7 198,140 C 196,140.8 193.5,139.2 190,140 Z" />
+  </g>
+
   <style>
     .margin { fill: #14532d; }
     .grass-a { fill: #2f8b42; }
@@ -127,6 +147,17 @@
     .spots circle {
       fill: #ffffff;
       stroke: none;
+    }
+    .corner-flags .flag-pole {
+      stroke: #e5e7eb;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+    }
+    .corner-flags .flag-cloth {
+      fill: #f4661b;
+      stroke: #c2410c;
+      stroke-width: 0.5;
+      stroke-linejoin: round;
     }
   </style>
 </svg>

@@ -236,6 +236,9 @@ export interface UserPreferencesRecord {
 	theme: 'dark' | 'light';
 	defaultWinScore: number;
 	mowPattern?: MowPattern;
+	// Selected soccer-ball skin (filename without extension). See
+	// lib/soccer/ballDesigns.ts. Optional/non-indexed → no schema bump needed.
+	ballDesign?: string;
 }
 
 export interface SeasonMatchup {

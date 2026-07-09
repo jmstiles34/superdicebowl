@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { DEFAULT_TEAM, DICE_COLORS } from '$lib/shared/constants';
 	import { teamsData } from '$lib/soccer/data/data.json';
-	import ballAvif from '$lib/images/soccer-ball-02.avif';
-	import ballWebp from '$lib/images/soccer-ball-02.webp';
+	import ballAvif from '$lib/images/balls/soccer-ball-02.avif';
+	import ballWebp from '$lib/images/balls/soccer-ball-02.webp';
 	import type { SaveTeam, Team } from '$lib/shared/types';
 	import type { SoccerNation } from '$lib/soccer/types';
 	import { pickRandom } from '$lib/utils/common';

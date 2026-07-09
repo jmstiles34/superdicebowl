@@ -8,6 +8,9 @@
 		rolling?: boolean;
 		accentColor?: string;
 		bestSymbol?: SoccerSymbol | null;
+		// When set, only this symbol matters (a shot on goal): every other symbol
+		// is greyed out to emphasise which dice count.
+		onlySymbol?: SoccerSymbol | null;
 		selectable?: boolean;
 		selected?: number[];
 		onToggle?: (index: number) => void;
@@ -19,6 +22,7 @@
 		rolling = false,
 		accentColor = 'var(--color-border-default)',
 		bestSymbol = null,
+		onlySymbol = null,
 		selectable = false,
 		selected = [],
 		onToggle
@@ -37,6 +41,7 @@
 			class="die"
 			class:rolling
 			class:best={!rolling && symbol != null && symbol === bestSymbol}
+			class:dim={!rolling && symbol != null && onlySymbol != null && symbol !== onlySymbol}
 			class:selected={selectedSet.has(i)}
 			class:selectable
 			disabled={!selectable}
@@ -53,20 +58,24 @@
 </div>
 
 <style>
+	/* Never wrap: the row must stay on one line. The dice instead scale down with
+	   the board width (cqw resolves against the .scoreboard container) so six dice
+	   plus the Roll button keep fitting a single line as the panel narrows. */
 	.dice-row {
 		display: flex;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 		justify-content: center;
-		gap: var(--space-1);
-		padding: var(--space-1);
+		gap: clamp(0.12rem, 0.9cqw, var(--space-3));
+		padding: clamp(0.12rem, 0.8cqw, var(--space-2));
 		border-radius: var(--radius-md);
 	}
 
 	.die {
 		position: relative;
-		width: 2.4rem;
-		height: 2.4rem;
-		padding: 0.3rem;
+		flex-shrink: 0;
+		width: clamp(1.05rem, 4cqw, 2.4rem);
+		height: clamp(1.05rem, 4cqw, 2.4rem);
+		padding: clamp(0.12rem, 0.7cqw, 0.3rem);
 		margin: 0;
 		border-radius: var(--radius-md);
 		background-color: var(--dice-bg, #fff);
@@ -77,7 +86,15 @@
 		transition:
 			transform var(--dur-fast) var(--ease-snes),
 			box-shadow var(--dur-fast) var(--ease-snes),
-			opacity var(--dur-fast) var(--ease-snes);
+			opacity var(--dur-fast) var(--ease-snes),
+			filter var(--dur-fast) var(--ease-snes);
+	}
+
+	/* During a shot, dice that aren't the deciding symbol (balls) are greyed and
+	   faded so the eye is drawn to the ones that count. */
+	.die.dim {
+		filter: grayscale(1);
+		opacity: 0.35;
 	}
 
 	.die:disabled {
@@ -143,11 +160,4 @@
 		}
 	}
 
-	@media (max-width: 40rem) {
-		.die {
-			width: 1.85rem;
-			height: 1.85rem;
-			padding: 0.2rem;
-		}
-	}
 </style>

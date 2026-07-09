@@ -1,8 +1,11 @@
 <script lang="ts">
 	import fieldSvg from '$lib/images/soccer-field.svg';
-	import ballAvif from '$lib/images/soccer-ball-02.avif';
-	import ballWebp from '$lib/images/soccer-ball-02.webp';
-	import { FIELD_VERTICAL_CENTER_PERCENT } from '$lib/soccer/constants';
+	import {
+		BALL_ROLL_DEGREES_PER_PERCENT,
+		DEFAULT_BALL_DESIGN,
+		FIELD_VERTICAL_CENTER_PERCENT
+	} from '$lib/soccer/constants';
+	import { ballDesignFor } from '$lib/soccer/ballDesigns';
 	import { sectionCenterPercent } from '$lib/soccer/utils/game';
 	import { TEAM } from '$lib/shared/constants';
 	import type { Team } from '$lib/shared/types';
@@ -14,6 +17,9 @@
 		homeTeam: Team;
 		goalScorer?: string | null;
 		lastPlay?: string;
+		coinToss?: boolean;
+		ballDesign?: string;
+		onCycleBall?: () => void;
 	};
 
 	let {
@@ -22,10 +28,33 @@
 		awayTeam,
 		homeTeam,
 		goalScorer = null,
-		lastPlay = ''
+		lastPlay = '',
+		coinToss = false,
+		ballDesign = DEFAULT_BALL_DESIGN,
+		onCycleBall
 	}: Props = $props();
 
+	// Resolve the selected ball skin to its avif/webp URLs (falls back to the
+	// default when the stored key is unknown). Used for both the on-field ball
+	// and the goal-celebration ball so they always match.
+	let ballImg = $derived(ballDesignFor(ballDesign));
+
 	let ballLeft = $derived(sectionCenterPercent(ballSection));
+
+	// Roll the ball in its direction of travel: accumulate a rotation whose
+	// magnitude tracks the horizontal distance crossed (a physical roll), so a
+	// rightward move spins clockwise and a leftward move counter-clockwise. The
+	// transform transition (below) plays this in lockstep with the `left` slide.
+	let ballRotation = $state(0);
+	let prevLeft: number | null = null;
+	$effect(() => {
+		const left = ballLeft;
+		if (prevLeft !== null) {
+			ballRotation += (left - prevLeft) * BALL_ROLL_DEGREES_PER_PERCENT;
+		}
+		prevLeft = left;
+	});
+
 	let celebrating = $derived(goalScorer != null);
 	// Home attacks the right goal, Away the left. During a goal the ball rockets
 	// from the penalty-spot area into that net (% of the rendered pitch width).
@@ -42,7 +71,7 @@
 	<img class="pitch" src={fieldSvg} alt="Soccer pitch" />
 
 	<div class="overlay">
-		{#if offenseTeam.logo}
+		{#if offenseTeam.logo && !coinToss}
 			<div class="possession" class:hidden={celebrating}>
 				<img
 					class="poss-flag"
@@ -64,22 +93,30 @@
 			{/if}
 		{/key}
 
-		<picture
+		<button
+			type="button"
 			class="ball"
 			class:hidden={celebrating}
 			style:left="{ballLeft}%"
 			style:top="{FIELD_VERTICAL_CENTER_PERCENT}%"
+			style:transform="translate(-50%, -50%) rotate({ballRotation}deg)"
+			onclick={onCycleBall}
+			disabled={!onCycleBall || celebrating}
+			title="Change ball design"
+			aria-label="Change ball design"
 		>
-			<source srcset={ballAvif} type="image/avif" />
-			<img src={ballWebp} alt="Ball" />
-		</picture>
+			<picture>
+				<source srcset={ballImg.avif} type="image/avif" />
+				<img src={ballImg.webp} alt="Ball" />
+			</picture>
+		</button>
 
 		{#if celebrating}
 			<div class="goal-fx" style:--goal-x="{goalX}%" style:--approach-x="{approachX}%">
 				<span class="goal-ring"></span>
 				<picture class="goal-ball">
-					<source srcset={ballAvif} type="image/avif" />
-					<img src={ballWebp} alt="Goal" />
+					<source srcset={ballImg.avif} type="image/avif" />
+					<img src={ballImg.webp} alt="Goal" />
 				</picture>
 			</div>
 		{/if}
@@ -112,11 +149,50 @@
 	.ball {
 		position: absolute;
 		width: 6%;
+		/* Reset button chrome — the ball is a clickable target that cycles its
+		   skin. The overlay disables pointer events, so re-enable them here. */
+		padding: 0;
+		border: none;
+		background: none;
+		box-sizing: border-box;
+		cursor: pointer;
+		pointer-events: auto;
 		transform: translate(-50%, -50%);
 		transition:
 			left 0.6s var(--ease-snes, ease-in-out),
+			transform 0.6s var(--ease-snes, ease-in-out),
 			opacity 0.35s ease;
 		z-index: 3;
+	}
+
+	.ball:disabled {
+		cursor: default;
+		pointer-events: none;
+	}
+
+	.ball picture {
+		display: block;
+	}
+
+	/* Nudge on hover so the ball reads as interactive (kept subtle so it doesn't
+	   fight the roll/slide transition). */
+	.ball:not(:disabled):hover img {
+		filter: drop-shadow(2px 3px 4px oklch(0 0 0 / 0.55)) brightness(1.08);
+	}
+
+	.ball:focus-visible {
+		outline: none;
+	}
+
+	.ball:focus-visible img {
+		filter: drop-shadow(0 0 3px oklch(0.9 0.2 250)) drop-shadow(2px 3px 4px oklch(0 0 0 / 0.55));
+	}
+
+	/* Respect reduced-motion: snap between sections instead of sliding/rolling. */
+	@media (prefers-reduced-motion: reduce) {
+		.ball {
+			transition: opacity 0.35s ease;
+		}
 	}
 
 	/* Hidden under the goal celebration: snap out of sight (no lingering slide)

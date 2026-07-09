@@ -1,11 +1,13 @@
 import { db, type UserPreferencesRecord } from '$lib/db/database';
+import { DEFAULT_BALL_DESIGN } from '$lib/soccer/constants';
 
 const DEFAULTS: Omit<UserPreferencesRecord, 'id' | 'userId'> = {
 	volume: 75,
 	speed: 1,
 	theme: 'dark',
 	defaultWinScore: 30,
-	mowPattern: 'crosscut'
+	mowPattern: 'crosscut',
+	ballDesign: DEFAULT_BALL_DESIGN
 };
 
 export async function getPreferences(userId: number): Promise<UserPreferencesRecord> {
@@ -18,7 +20,10 @@ export async function getPreferences(userId: number): Promise<UserPreferencesRec
 export async function savePreferences(
 	userId: number,
 	prefs: Partial<
-		Pick<UserPreferencesRecord, 'volume' | 'speed' | 'theme' | 'defaultWinScore' | 'mowPattern'>
+		Pick<
+			UserPreferencesRecord,
+			'volume' | 'speed' | 'theme' | 'defaultWinScore' | 'mowPattern' | 'ballDesign'
+		>
 	>
 ): Promise<void> {
 	const existing = await db.userPreferences.where('userId').equals(userId).first();
@@ -47,7 +52,10 @@ export function getGuestPreferences(): Omit<UserPreferencesRecord, 'id' | 'userI
 
 export function saveGuestPreferences(
 	prefs: Partial<
-		Pick<UserPreferencesRecord, 'volume' | 'speed' | 'theme' | 'defaultWinScore' | 'mowPattern'>
+		Pick<
+			UserPreferencesRecord,
+			'volume' | 'speed' | 'theme' | 'defaultWinScore' | 'mowPattern' | 'ballDesign'
+		>
 	>
 ): void {
 	try {

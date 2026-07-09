@@ -1,6 +1,6 @@
 <script lang="ts">
-	import ballAvif from '$lib/images/soccer-ball-02.avif';
-	import ballWebp from '$lib/images/soccer-ball-02.webp';
+	import ballAvif from '$lib/images/balls/soccer-ball-02.avif';
+	import ballWebp from '$lib/images/balls/soccer-ball-02.webp';
 	import cleatAvif from '$lib/images/golden-boot.avif';
 	import cleatWebp from '$lib/images/golden-boot.webp';
 	import whistleIcon from '$lib/images/whistle.svg';

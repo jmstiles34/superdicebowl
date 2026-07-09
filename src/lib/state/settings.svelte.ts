@@ -2,6 +2,7 @@ import type { FootballGameSettingsSnapshot, MowPattern } from '$lib/db/database'
 import { DEFAULT_SETTINGS } from '$lib/football/constants';
 import { DEFAULT_TEAM, GAME_MODE, TEAM } from '$lib/shared/constants';
 import type { Team } from '$lib/shared/types';
+import { DEFAULT_BALL_DESIGN } from '$lib/soccer/constants';
 
 export type Theme = 'dark' | 'light';
 
@@ -25,6 +26,8 @@ class SettingsState {
 	speed = $state(1);
 	theme: Theme = $state('dark');
 	mowPattern: MowPattern = $state('crosscut');
+	// Selected soccer-ball skin (see lib/soccer/ballDesigns.ts).
+	ballDesign = $state(DEFAULT_BALL_DESIGN);
 
 	snapshotSettings = (): FootballGameSettingsSnapshot =>
 		$state.snapshot({
@@ -55,12 +58,14 @@ class SettingsState {
 		theme: Theme;
 		defaultWinScore: number;
 		mowPattern?: MowPattern;
+		ballDesign?: string;
 	}) => {
 		this.volume = prefs.volume;
 		this.speed = prefs.speed ?? 1;
 		this.theme = prefs.theme;
 		this.winScore = prefs.defaultWinScore;
 		this.mowPattern = prefs.mowPattern ?? 'crosscut';
+		this.ballDesign = prefs.ballDesign ?? DEFAULT_BALL_DESIGN;
 	};
 }
 
