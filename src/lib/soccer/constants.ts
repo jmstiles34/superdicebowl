@@ -68,11 +68,11 @@ export const MIDLINE_ENTRY: Record<string, number> = {
 };
 
 // ── soccer-field.svg geometry ────────────────────────────────
-// The asset uses viewBox="-220 -150 440 300"; the grass playing surface
+// The asset uses viewBox="-212 -145 424 290"; the grass playing surface
 // spans x = -190..190 (width 380). These let us place the ball marker as a
 // percentage of the rendered SVG, so the field stays a plain <img>.
-export const FIELD_VIEWBOX_MIN_X = -220;
-export const FIELD_VIEWBOX_WIDTH = 440;
+export const FIELD_VIEWBOX_MIN_X = -212;
+export const FIELD_VIEWBOX_WIDTH = 424;
 export const FIELD_PLAY_MIN_X = -190;
 export const FIELD_PLAY_WIDTH = 380;
 export const FIELD_SECTION_WIDTH = FIELD_PLAY_WIDTH / SECTION_COUNT;

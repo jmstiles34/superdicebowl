@@ -24,10 +24,6 @@
 	const homeFg = $derived(readableTextColor(settings.homeTeam.colors.primary));
 	const awayFg = $derived(readableTextColor(settings.awayTeam.colors.primary));
 
-	// A team carrying a red-card dice penalty rolls one fewer die until the next
-	// goal clears it. Surface that as a persistent badge on the penalized panel.
-	const homeRedCard = $derived(game.diceReduction.home > 0);
-	const awayRedCard = $derived(game.diceReduction.away > 0);
 </script>
 
 <div class="scoreboard">
@@ -44,7 +40,6 @@
 			<div class="team-info">
 				{@render powerChip(game.powerChipHolder === TEAM.HOME)}
 				<span class="team-name">{settings.homeTeam.city}</span>
-				{@render redCard(homeRedCard)}
 			</div>
 			<span class="score">{game.scores.home}</span>
 		</div>
@@ -70,7 +65,6 @@
 		>
 			<span class="score right-score">{game.scores.away}</span>
 			<div class="team-info right-info">
-				{@render redCard(awayRedCard)}
 				<span class="team-name">{settings.awayTeam.city}</span>
 				{@render powerChip(game.powerChipHolder === TEAM.AWAY)}
 			</div>
@@ -114,31 +108,17 @@
 	</span>
 {/snippet}
 
-<!-- Red-card penalty: shown on a team's panel while it rolls a die short. Like
-     the chip, the slot is always reserved so the name doesn't shift. -->
-{#snippet redCard(active: boolean)}
-	<span
-		class="red-card"
-		class:active
-		aria-hidden={!active}
-		title="Red card — one fewer die until the next goal"
-	>
-		<svg class="red-card-svg" viewBox="0 0 24 24" role="img" aria-label="Red card penalty">
-			<rect x="7" y="2.5" width="10" height="19" rx="1.6" fill="#d62828" stroke="#7a1010" stroke-width="1" />
-			<rect x="8.6" y="4.2" width="2" height="15.6" rx="1" fill="#e85a5a" opacity="0.6" />
-		</svg>
-	</span>
-{/snippet}
-
 <style>
 	.scoreboard {
 		display: grid;
-		/* minmax(0, 1fr) lets each team column shrink below its dice row's
-		   min-content width instead of expanding the board; the dice scale down to
-		   fit rather than forcing the panels wider. */
+		/* minmax(0, 1fr) lets each team banner shrink below its content's min-content
+		   width (the name ellipsizes) instead of expanding the board; the center
+		   column is auto-sized to the toolbar. */
 		grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
 		align-items: start;
-		column-gap: 0.25rem;
+		/* No gap: the green center panel sits flush between the two banners so the
+		   scoreboard reads as one continuous bar. */
+		column-gap: 0;
 		/* Size the team names + scores off the board's own width so they scale
 		   smoothly across screen sizes rather than snapping at one breakpoint. */
 		container-type: inline-size;
@@ -160,6 +140,12 @@
 		background-size: 30%;
 		background-repeat: no-repeat;
 		overflow: hidden;
+		/* Soft downward shadow so the banner reads as floating above the field
+		   tucked beneath it. Two layers give a tight contact edge plus a broader
+		   cast onto the pitch. */
+		box-shadow:
+			0 3px 6px oklch(0 0 0 / 0.35),
+			0 8px 18px oklch(0 0 0 / 0.4);
 	}
 
 	.team-main.right {
@@ -231,49 +217,6 @@
 
 	@media (prefers-reduced-motion: reduce) {
 		.power-chip.active .power-chip-svg {
-			animation: none;
-		}
-	}
-
-	/* Red-card badge — mirrors the chip's reserved slot so the name never shifts;
-	   only the penalized panel paints its card. */
-	.red-card {
-		flex-shrink: 0;
-		width: clamp(0.85rem, 3.6cqw, 1.25rem);
-		height: clamp(1.1rem, 4.5cqw, 1.6rem);
-		display: grid;
-		place-items: center;
-	}
-
-	.red-card[aria-hidden='true'] {
-		visibility: hidden;
-	}
-
-	.red-card-svg {
-		width: 100%;
-		height: 100%;
-		transform: rotate(-10deg);
-		filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.55));
-	}
-
-	.red-card.active .red-card-svg {
-		animation: card-pulse 1.8s var(--ease-snes, ease-in-out) infinite;
-	}
-
-	@keyframes card-pulse {
-		0%,
-		100% {
-			transform: rotate(-10deg) scale(1);
-			filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.55));
-		}
-		50% {
-			transform: rotate(-10deg) scale(1.12);
-			filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 7px oklch(0.6 0.22 25 / 0.85));
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.red-card.active .red-card-svg {
 			animation: none;
 		}
 	}

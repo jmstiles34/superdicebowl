@@ -128,7 +128,7 @@
 		container-type: inline-size;
 		position: relative;
 		width: 100%;
-		aspect-ratio: 440 / 300;
+		aspect-ratio: 424 / 290;
 		margin: 0 auto;
 	}
 
@@ -272,14 +272,14 @@
 	}
 
 	/* ── Possession indicator: offense flag + directional chevrons ──
-	   The flag is the centred anchor (sitting on the midline, over the top
-	   field border); the chevrons are positioned absolutely to its attacking
+	   The flag is the centred anchor (hanging just below the top field outline,
+	   inside the pitch); the chevrons are positioned absolutely to its attacking
 	   side so they never shift the flag off centre. */
 	.possession {
 		position: absolute;
-		top: 6.7%; /* the top boundary line of the pitch */
+		top: 6%; /* just below the pitch's top boundary line (~5.2%) */
 		left: 50%; /* the midline */
-		transform: translate(-50%, -50%);
+		transform: translate(-50%, 0);
 		transition: opacity 0.4s var(--ease-snes, ease-in-out);
 	}
 
@@ -290,7 +290,7 @@
 	/* Sits directly beneath the possession display, just inside the top border. */
 	.last-play {
 		position: absolute;
-		top: 13%;
+		top: 12.5%;
 		left: 50%;
 		transform: translateX(-50%);
 		font-family: var(--font-body);
@@ -335,7 +335,9 @@
 		display: block;
 		height: 4cqw;
 		width: auto;
-		border-radius: 0.15cqw;
+		/* Match the dice-group flag badges in the game page for a consistent
+		   corner radius across all flags. */
+		border-radius: 0.2rem;
 		box-shadow: 0 0.25cqw 0.6cqw oklch(0 0 0 / 0.55);
 	}
 

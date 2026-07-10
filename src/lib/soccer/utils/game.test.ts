@@ -176,8 +176,8 @@ describe('sectionCenterPercent', () => {
 	});
 
 	it('sections run left to right within the pitch', () => {
-		expect(sectionCenterPercent(0)).toBeCloseTo(12.216, 2);
-		expect(sectionCenterPercent(7)).toBeCloseTo(87.784, 2);
+		expect(sectionCenterPercent(0)).toBeCloseTo(10.79, 2);
+		expect(sectionCenterPercent(7)).toBeCloseTo(89.21, 2);
 	});
 
 	it('is monotonic increasing', () => {

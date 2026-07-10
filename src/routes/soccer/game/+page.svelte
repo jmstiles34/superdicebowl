@@ -96,6 +96,11 @@
 	function teamColor(team: string): string {
 		return team === TEAM.AWAY ? settings.awayTeam.colors.primary : settings.homeTeam.colors.primary;
 	}
+	// Country flag key for a team's dice badge. Same `/flags/{logo}.svg`
+	// convention as the possession flag (Field) and scoreboard banners.
+	function teamFlag(team: string): string {
+		return team === TEAM.AWAY ? settings.awayTeam.logo : settings.homeTeam.logo;
+	}
 	// Whichever team is currently winning the pending roll. Null on a tie or
 	// before both teams have rolled. Drives the resolve button's tint and the
 	// direction its play icon points (toward the winning team's side).
@@ -373,6 +378,12 @@
 				{@const isRoller = humanRoller === team}
 				{@const canRerollTeam = canReroll && team === game.powerChipHolder}
 				<div class="team-dice" class:active={isRoller || canRerollTeam}>
+					<img
+						class="dice-flag"
+						class:right={team === TEAM.AWAY}
+						src={`/flags/${teamFlag(team)}.svg`}
+						alt={`${teamCity(team)} flag`}
+					/>
 					<SoccerDice
 						roll={rollFor(team)}
 						diceCount={expectedDice(team)}
@@ -383,13 +394,14 @@
 						selectable={canReroll && team === game.powerChipHolder}
 						selected={team === game.powerChipHolder ? selectedDice : []}
 						onToggle={toggleDie}
+						redCards={game.diceReduction[teamKey(team)]}
 					/>
 					<button
 						class="action-button roll"
 						onclick={canRerollTeam ? rerollClick : humanRollClick}
 						disabled={busy || (!isRoller && !(canRerollTeam && selectedDice.length > 0))}
 					>
-						{canRerollTeam ? `Re-roll${selectedDice.length ? ` (${selectedDice.length})` : ''}` : 'Roll'}
+						{canRerollTeam ? 'Re-roll' : 'Roll'}
 					</button>
 				</div>
 			{/snippet}
@@ -397,46 +409,18 @@
 			<div class="scoreboard-wrapper">
 				<Scoreboard>
 					{#snippet center()}
-						<div class="center-col">
-							<div class="toolbar">
-								<button class="toolbar-button flip" onclick={handleExitClick} title="Quit Game" aria-label="Quit Game">
-									<img src={exit} alt="Quit Game" />
-								</button>
-								<button class="toolbar-button" onclick={openInstructions} title="How to Play" aria-label="How to Play">
-									<img src={circleInfo} alt="How to Play" />
-								</button>
-								<button class="toolbar-button" onclick={toggleSettings} title="Settings" aria-label="Settings">
-									<img src={gear} alt="Settings" />
-								</button>
-							</div>
-							<button
-								class="action-button resolve"
-								style={resolveStyle}
-								onclick={resolveClick}
-								disabled={busy || !awaitingHumanResolve}
-								aria-label="Resolve"
-							>
-								{#if resolveWinner}
-									<svg
-										class="play-icon"
-										class:point-left={resolveWinner === TEAM.HOME}
-										viewBox="0 0 100 100"
-										aria-hidden="true"
-									>
-										<polygon points="30,18 82,50 30,82" />
-									</svg>
-								{:else if resolveTie}
-									<!-- Back-to-back arrows: neither side won the roll. -->
-									<svg class="play-icon" viewBox="0 0 100 100" aria-hidden="true">
-										<polygon points="46,24 12,50 46,76" />
-										<polygon points="54,24 88,50 54,76" />
-									</svg>
-								{/if}
+						<div class="toolbar">
+							<button class="toolbar-button flip" onclick={handleExitClick} title="Quit Game" aria-label="Quit Game">
+								<img src={exit} alt="Quit Game" />
+							</button>
+							<button class="toolbar-button" onclick={openInstructions} title="How to Play" aria-label="How to Play">
+								<img src={circleInfo} alt="How to Play" />
+							</button>
+							<button class="toolbar-button" onclick={toggleSettings} title="Settings" aria-label="Settings">
+								<img src={gear} alt="Settings" />
 							</button>
 						</div>
 					{/snippet}
-					{#snippet homeContent()}{@render teamDice(TEAM.HOME)}{/snippet}
-					{#snippet awayContent()}{@render teamDice(TEAM.AWAY)}{/snippet}
 				</Scoreboard>
 			</div>
 
@@ -452,6 +436,39 @@
 					ballDesign={settings.ballDesign}
 					onCycleBall={cycleBallDesign}
 				/>
+
+				<!-- Dice deck: a translucent band across the field's bottom edge so the
+				     dice action reads as happening on the pitch. Rendered before the
+				     announcement overlay so GOAL!/SAVE! still stacks on top. -->
+				<div class="dice-deck">
+					{@render teamDice(TEAM.HOME)}
+					<button
+						class="action-button resolve"
+						style={resolveStyle}
+						onclick={resolveClick}
+						disabled={busy || !awaitingHumanResolve}
+						aria-label="Resolve"
+					>
+						{#if resolveWinner}
+							<svg
+								class="play-icon"
+								class:point-left={resolveWinner === TEAM.HOME}
+								viewBox="0 0 100 100"
+								aria-hidden="true"
+							>
+								<polygon points="30,18 82,50 30,82" />
+							</svg>
+						{:else if resolveTie}
+							<!-- Back-to-back arrows: neither side won the roll. -->
+							<svg class="play-icon" viewBox="0 0 100 100" aria-hidden="true">
+								<polygon points="46,24 12,50 46,76" />
+								<polygon points="54,24 88,50 54,76" />
+							</svg>
+						{/if}
+					</button>
+					{@render teamDice(TEAM.AWAY)}
+				</div>
+
 				<EventAnnouncement text={announcementText} type={announcementType} key={announcementKey} />
 				{#if game.action === GAME_ACTION.GAME_OVER}
 					<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
@@ -528,10 +545,12 @@
 	.game {
 		width: 95%;
 		/* Drive the width off the *available height*: the field is aspect-ratio
-		   locked (440/300 ≈ 1.467), so cap the width at whatever keeps the field
-		   plus scoreboard/dice (~13rem) inside the viewport. Wider on tall screens,
-		   automatically narrower on short ones — no vertical clipping. */
-		max-width: min(72rem, calc((100dvh - 13rem) * 1.467));
+		   locked (424/290 ≈ 1.462), so cap the width at whatever keeps the field
+		   plus the scoreboard inside the viewport. The dice deck now overlaps the
+		   field's bottom (no separate row below), so only the scoreboard banner
+		   (~6rem) sits outside the field. Wider on tall screens, narrower on short
+		   ones — no vertical clipping. */
+		max-width: min(72rem, calc((100dvh - 6rem) * 1.462));
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -548,9 +567,37 @@
 	.field-area {
 		position: relative;
 		width: 100%;
-		margin-top: 0.5rem;
+		/* Tuck the field up under the scoreboard so its top edge is slightly
+		   overlapped by the score banners (which carry z-index: 100). */
+		margin-top: -0.9rem;
 	}
 
+	/* Translucent band across the bottom of the field holding both dice groups
+	   and the central resolve button. The field stays faintly visible through the
+	   scrim so the action reads as happening on the pitch without distraction. */
+	.dice-deck {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 5;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-2);
+		/* align-items centres the content geometrically, but the dice and Roll
+		   buttons carry a downward hard drop shadow (4px 4px 0) that pulls their
+		   visual mass low and makes the solid faces read as sitting high. A little
+		   more top padding than bottom nudges the content down so it *looks*
+		   vertically centred in the bar. */
+		padding: var(--space-2) var(--space-2) var(--space-1);
+		background: oklch(0 0 0 / 0.42);
+		backdrop-filter: blur(2px);
+		/* Size the dice/buttons off the deck's own width, matching the old
+		   scoreboard container so the cqw-based dice/roll-button scaling holds. */
+		container-type: inline-size;
+	}
 
 	.team-dice {
 		display: flex;
@@ -558,15 +605,36 @@
 		align-items: center;
 		justify-content: center;
 		gap: var(--space-2);
-		margin-top: 0.5rem;
 		padding: var(--space-2);
 		border-radius: var(--radius-md);
 		border: 2px solid transparent;
 		transition: border-color var(--dur-fast) var(--ease-snes);
-		/* Match the team banner above: stretch to the full panel width instead of
-		   hugging its content, so the active-turn border lines up with the banner. */
-		align-self: stretch;
+		/* Fill the space either side of the central resolve button so the
+		   active-turn border frames the whole group. */
+		flex: 1;
 		box-sizing: border-box;
+	}
+
+	/* Country flag badge for each dice group, anchored to the deck (its parent
+	   .team-dice is unpositioned) so it can straddle the deck's top line: home to
+	   the left, away to the right, each nudged inward from the deck edge. The
+	   translateY centres it on the top edge of the translucent background so half
+	   sits on the pitch above. Mirrors the possession flag styling. */
+	.dice-flag {
+		position: absolute;
+		top: calc(-1 * var(--space-3));
+		left: var(--space-3);
+		transform: translateY(-50%);
+		height: 2.5rem;
+		width: auto;
+		border-radius: 0.2rem;
+		box-shadow: 0 1px 5px oklch(0 0 0 / 0.6);
+		pointer-events: none;
+	}
+
+	.dice-flag.right {
+		left: auto;
+		right: var(--space-3);
 	}
 
 	.team-dice.active {
@@ -619,7 +687,7 @@
 	/* Reserve a stable footprint wide enough for "Re-roll (6)" so selecting dice —
 	   which grows the label — never squeezes the dice row into a second line. To
 	   keep the dice on a single line as the panel narrows, scale the button down
-	   with the board width (cqw resolves against the .scoreboard container): the
+	   with the deck width (cqw resolves against the .dice-deck container): the
 	   horizontal padding, text, and reserved min-width all shrink in step so the
 	   button gives up room to the dice instead of pushing them to wrap. */
 	.action-button.roll {
@@ -632,21 +700,10 @@
 		text-align: center;
 	}
 
-	.center-col {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: var(--space-3);
-		/* Stretch to the full panel height so the Resolve button can drop to the
-		   bottom, aligning with the dice + Roll/Re-roll row. */
-		align-self: stretch;
-		padding-bottom: var(--space-2);
-	}
-
-	/* Push Resolve down to sit level with the dice-group buttons; the toolbar
-	   stays anchored at the top. Round, spherical-looking button. */
-	.center-col .resolve {
-		margin-top: auto;
+	/* Central resolve button in the dice deck, between the two dice groups.
+	   Round, spherical-looking button. */
+	.dice-deck .resolve {
+		flex-shrink: 0;
 		display: grid;
 		place-items: center;
 		width: 4.25rem;
@@ -666,13 +723,13 @@
 			box-shadow var(--dur-fast) var(--ease-snes);
 	}
 
-	.center-col .resolve:hover:not(:disabled) {
+	.dice-deck .resolve:hover:not(:disabled) {
 		transform: scale(1.06);
 	}
 
 	/* Play triangle points right (toward the away team) by default; flipped to
 	   point left when the home team is winning the roll. */
-	.center-col .resolve .play-icon {
+	.dice-deck .resolve .play-icon {
 		width: 2.9rem;
 		height: 2.9rem;
 		/* Contrast against the winner's tint — a pale tint (e.g. a white team)
@@ -681,7 +738,7 @@
 		filter: drop-shadow(0 1px 3px oklch(0 0 0 / 0.35));
 	}
 
-	.center-col .resolve .play-icon.point-left {
+	.dice-deck .resolve .play-icon.point-left {
 		transform: scaleX(-1);
 	}
 
@@ -691,23 +748,31 @@
 		justify-content: center;
 		gap: var(--space-2);
 		padding: 0 var(--space-2);
+		/* Fill the space between the team banners with the field's dark green. The
+		   light toolbar icons read clearly against it. */
+		align-self: stretch;
+		background: var(--color-field-border);
 	}
 
 	.toolbar-button {
+		display: grid;
+		place-items: center;
 		background: none;
 		border: none;
+		border-radius: var(--radius-sm);
 		cursor: pointer;
 		padding: var(--space-1);
+		transition: background-color var(--dur-fast) var(--ease-snes);
+	}
+
+	/* Subtle light wash on the green to signal interactivity. */
+	.toolbar-button:hover {
+		background: oklch(1 0 0 / 0.12);
 	}
 
 	.toolbar-button img {
 		height: 1.25rem;
 		width: 1.25rem;
-		transition: filter var(--dur-fast) var(--ease-snes);
-	}
-
-	.toolbar-button:hover img {
-		filter: brightness(0.7);
 	}
 
 	.flip {
