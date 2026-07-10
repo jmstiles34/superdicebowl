@@ -102,6 +102,7 @@ export const GAME_ACTION = {
 	ROLL_OFF: 'Roll Off',
 	POWER_CHIP_TIE: 'Power Chip',
 	SHOT_ON_GOAL: 'Shot on Goal',
+	PENALTY_SHOT: 'Penalty Shot',
 	FREE_KICK: 'Free Kick',
 	GOAL: 'Goal',
 	GAME_OVER: 'Game Over',
@@ -139,5 +140,5 @@ export const DEFAULT_SOCCER_GAME = {
 		away: 0,
 		home: 0
 	},
-	pendingShot: null as 'shot' | 'freeKick' | null
+	pendingShot: null as 'shot' | 'freeKick' | 'penalty' | null
 };

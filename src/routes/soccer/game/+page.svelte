@@ -39,7 +39,6 @@
 	import exit from '$lib/images/exit.svg';
 	import gear from '$lib/images/gear.svg';
 	import circleInfo from '$lib/images/circle-info.svg';
-	import ball from '$lib/images/balls/soccer-ball-01.avif';
 	import flick from '$lib/assets/sfx/flick.mp3';
 	import buttonSfx from '$lib/assets/sfx/button.mp3';
 	import type { Howl } from 'howler';
@@ -79,7 +78,9 @@
 	// unlike a regular round where bestPlay compares the most-frequent symbol of
 	// any type. This flag lets the dice UI root for balls specifically.
 	let isShotPhase = $derived(
-		game.action === GAME_ACTION.SHOT_ON_GOAL || game.action === GAME_ACTION.FREE_KICK
+		game.action === GAME_ACTION.SHOT_ON_GOAL ||
+			game.action === GAME_ACTION.FREE_KICK ||
+			game.action === GAME_ACTION.PENALTY_SHOT
 	);
 	let isRollPhase = $derived(game.action === GAME_ACTION.ROLL_OFF || isShotPhase);
 	let humanRoller = $derived(
@@ -94,11 +95,6 @@
 
 	function teamColor(team: string): string {
 		return team === TEAM.AWAY ? settings.awayTeam.colors.primary : settings.homeTeam.colors.primary;
-	}
-	// Insert an alpha channel into an OKLCH color string, e.g. `oklch(l c h)` ->
-	// `oklch(l c h / 0.6)`. Mirrors the helper the CoinToss uses for its tint.
-	function withAlpha(color: string, alpha: number): string {
-		return color.replace(')', ` / ${alpha})`);
 	}
 	// Whichever team is currently winning the pending roll. Null on a tie or
 	// before both teams have rolled. Drives the resolve button's tint and the
@@ -118,15 +114,16 @@
 		if (winner === 'tie') return null;
 		return winner === 'offense' ? game.offenseTeamName : game.defenseTeamName;
 	});
-	// The resolve button is tinted in the winner's color over the soccer-ball
-	// face; null shows the ball untinted.
+	// The resolve button fills with the winner's color; before a winner exists
+	// (or on a tie) it falls back to the primary button fill.
 	let resolveWinnerColor = $derived(resolveWinner ? teamColor(resolveWinner) : null);
 	let resolveStyle = $derived(
-		`--ball-img: url(${ball});` +
-			(resolveWinnerColor
-				? ` --resolve-solid: ${resolveWinnerColor}; --resolve-tint: ${withAlpha(resolveWinnerColor, 0.6)}; --resolve-fg: ${readableTextColor(resolveWinnerColor)};`
-				: '')
+		resolveWinnerColor
+			? `--resolve-solid: ${resolveWinnerColor}; --resolve-fg: ${readableTextColor(resolveWinnerColor)};`
+			: ''
 	);
+	// Both teams rolled but neither won: a tie, shown with back-to-back arrows.
+	let resolveTie = $derived(game.bothRolled && resolveWinner === null);
 	function teamCity(team: string): string {
 		return team === TEAM.AWAY ? settings.awayTeam.city : settings.homeTeam.city;
 	}
@@ -217,6 +214,12 @@
 		}
 		const last = added[added.length - 1];
 		if (!last) return;
+		// A red card in the box just opened a penalty shot (pendingShot flips to
+		// 'penalty' before any roll). Announce it before the balls-only roll.
+		if (game.pendingShot === 'penalty' && last.isShot && last.goalsScored === 0) {
+			triggerAnnouncement('PENALTY SHOT!', 'turnover');
+			return;
+		}
 		if (last.isShot && last.goalsScored === 0 && !isShotPhase && last.description.startsWith('Save')) {
 			triggerAnnouncement('SAVE!', 'save');
 			return;
@@ -421,6 +424,12 @@
 										aria-hidden="true"
 									>
 										<polygon points="30,18 82,50 30,82" />
+									</svg>
+								{:else if resolveTie}
+									<!-- Back-to-back arrows: neither side won the roll. -->
+									<svg class="play-icon" viewBox="0 0 100 100" aria-hidden="true">
+										<polygon points="46,24 12,50 46,76" />
+										<polygon points="54,24 88,50 54,76" />
 									</svg>
 								{/if}
 							</button>
@@ -644,14 +653,9 @@
 		height: 4.25rem;
 		padding: 0;
 		border-radius: 50%;
-		/* Soccer-ball face tinted with the current winner's color, echoing the
-		   coin-toss coin. Falls back to the primary fill before a winner exists. */
+		/* Filled with the current winner's color; falls back to the primary fill
+		   before a winner exists or on a tie. */
 		background-color: var(--resolve-solid, var(--btn-primary-bg));
-		background-image: linear-gradient(var(--resolve-tint, transparent), var(--resolve-tint, transparent)),
-			var(--ball-img);
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
 		/* Inset highlight + shade over the fill give it a spherical feel. */
 		box-shadow:
 			inset 0 -5px 10px oklch(0 0 0 / 0.35),

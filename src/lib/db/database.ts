@@ -165,7 +165,7 @@ export interface SoccerGameStateSnapshot {
 		away: number;
 		home: number;
 	};
-	pendingShot: 'shot' | 'freeKick' | null;
+	pendingShot: 'shot' | 'freeKick' | 'penalty' | null;
 }
 
 export interface SoccerGameSettingsSnapshot {

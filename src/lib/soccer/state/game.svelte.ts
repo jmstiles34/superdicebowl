@@ -54,7 +54,7 @@ class SoccerGameState {
 	scores = $state({ ...DEFAULT_SOCCER_GAME.scores });
 	powerChipHolder = $state(DEFAULT_SOCCER_GAME.powerChipHolder);
 	diceReduction = $state({ ...DEFAULT_SOCCER_GAME.diceReduction });
-	pendingShot: 'shot' | 'freeKick' | null = $state(DEFAULT_SOCCER_GAME.pendingShot);
+	pendingShot: 'shot' | 'freeKick' | 'penalty' | null = $state(DEFAULT_SOCCER_GAME.pendingShot);
 
 	// ── Transient round state (not persisted) ────────────────
 	awayRoll: SoccerRoll | null = $state(null);
@@ -328,7 +328,11 @@ class SoccerGameState {
 				this.diceReduction[teamKey(OPPOSITE_TEAM[team])] = RED_CARD_DICE_PENALTY;
 				if (isOffense) {
 					const result = redCardAdvance(this.ballSection, team);
-					if (result.goal) this.scoreGoal(team, play, usedChip, 'redCard');
+					// From the final section the advance would cross the goal line: treat
+					// it as a foul in the box and award a penalty shot instead of a goal.
+					// The red-card dice penalty (set above) leaves the defense a die short
+					// for the penalty, then clears when the shot resolves.
+					if (result.goal) this.startShot('penalty', team, play, usedChip);
 					else this.settleMove(team, play, usedChip, result.section, true);
 				} else {
 					this.defensiveClear(team, play, usedChip, 'clears after the red card', true);
@@ -368,14 +372,24 @@ class SoccerGameState {
 	// ── Shots (Shot on Goal / Free Kick) ─────────────────────
 
 	private startShot = (
-		type: 'shot' | 'freeKick',
+		type: 'shot' | 'freeKick' | 'penalty',
 		team: string,
 		play: TeamPlay,
 		usedChip: boolean
 	) => {
 		this.pendingShot = type;
-		this.action = type === 'shot' ? GAME_ACTION.SHOT_ON_GOAL : GAME_ACTION.FREE_KICK;
-		const label = type === 'shot' ? 'takes a shot on goal' : 'lines up a free kick';
+		this.action =
+			type === 'shot'
+				? GAME_ACTION.SHOT_ON_GOAL
+				: type === 'freeKick'
+					? GAME_ACTION.FREE_KICK
+					: GAME_ACTION.PENALTY_SHOT;
+		const label =
+			type === 'shot'
+				? 'takes a shot on goal'
+				: type === 'freeKick'
+					? 'lines up a free kick'
+					: 'is awarded a penalty shot after the red card';
 		this.lastPlay = `${this.displayName(team)} ${label}!`;
 		this.addPlay(team, this.lastPlay, play, 0, true, false, usedChip);
 		this.clearRolls();
