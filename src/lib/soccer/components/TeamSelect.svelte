@@ -104,7 +104,6 @@
 	:global([data-theme='dark']) .logo-area { background-color: var(--color-bg-elevated); }
 	.dice-placeholder { width: 6rem; height: 6rem; }
 	.team-name { font-family: var(--font-body); font-size: var(--text-base); font-weight: var(--weight-bold); color: var(--color-text-primary); text-align: center; min-height: 1.5rem; }
-	.nickname { color: var(--color-text-tertiary); font-weight: var(--weight-medium); }
 	.controls { display: flex; gap: var(--space-2); align-items: center; }
 	.team-dropdown { font-family: var(--font-body); font-size: var(--text-sm); font-weight: var(--weight-medium); background-color: var(--input-bg); border: 2px solid var(--input-border); border-radius: var(--radius-sm); box-shadow: var(--input-shadow); color: var(--color-text-primary); padding: var(--space-2) var(--space-3); cursor: pointer; min-width: 10rem; transition: border-color var(--dur-fast) var(--ease-snes), box-shadow var(--dur-fast) var(--ease-snes); }
 	.team-dropdown:hover { border-color: var(--input-border-hover); }

@@ -58,3 +58,11 @@ export function nextBallDesign(key: string): string {
 	const i = BALL_DESIGNS.findIndex((d) => d.key === key);
 	return BALL_DESIGNS[(i + 1) % BALL_DESIGNS.length].key;
 }
+
+// The previous design in the rotation, wrapping around to the end.
+export function prevBallDesign(key: string): string {
+	if (BALL_DESIGNS.length === 0) return key;
+	const i = BALL_DESIGNS.findIndex((d) => d.key === key);
+	const from = i === -1 ? 0 : i;
+	return BALL_DESIGNS[(from - 1 + BALL_DESIGNS.length) % BALL_DESIGNS.length].key;
+}

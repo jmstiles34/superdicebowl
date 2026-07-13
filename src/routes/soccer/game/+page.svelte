@@ -22,7 +22,6 @@
 	import { auth } from '$lib/auth/authState.svelte';
 	import { createGame, updateGameState, completeGame } from '$lib/db/repositories/gameRepository';
 	import { savePreferences, saveGuestPreferences } from '$lib/db/repositories/preferencesRepository';
-	import { nextBallDesign } from '$lib/soccer/ballDesigns';
 	import { GAME_MODE, OPPOSITE_TEAM, TEAM } from '$lib/shared/constants';
 
 	import Field from '$lib/soccer/components/Field.svelte';
@@ -345,18 +344,24 @@
 		game.resume();
 	}
 
-	// Cycle the on-field ball to the next skin and persist the choice as a user
+	// Commit a ball skin chosen in the on-field picker and persist it as a user
 	// preference (Dexie when logged in, localStorage for guests) so it carries
 	// across games — mirrors how the Settings panel saves other cosmetic prefs.
-	function cycleBallDesign() {
-		settings.ballDesign = nextBallDesign(settings.ballDesign);
+	function selectBallDesign(key: string) {
 		playSound(btnSfx, settings.volume);
+		if (key === settings.ballDesign) return;
+		settings.ballDesign = key;
 		const prefs = { ballDesign: settings.ballDesign };
 		if (auth.isLoggedIn && auth.currentUser?.id) {
 			savePreferences(auth.currentUser.id, prefs);
 		} else {
 			saveGuestPreferences(prefs);
 		}
+	}
+
+	// Light click feedback as the player browses skins in the picker.
+	function previewBallDesign() {
+		playSound(btnSfx, settings.volume);
 	}
 
 	function handleExitClick() {
@@ -434,7 +439,8 @@
 					lastPlay={game.lastPlay}
 					coinToss={game.action === GAME_ACTION.COIN_TOSS}
 					ballDesign={settings.ballDesign}
-					onCycleBall={cycleBallDesign}
+					onSelectBall={selectBallDesign}
+					onPreviewBall={previewBallDesign}
 				/>
 
 				<!-- Dice deck: a translucent band across the field's bottom edge so the

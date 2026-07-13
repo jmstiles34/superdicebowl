@@ -5,7 +5,7 @@
 		DEFAULT_BALL_DESIGN,
 		FIELD_VERTICAL_CENTER_PERCENT
 	} from '$lib/soccer/constants';
-	import { ballDesignFor } from '$lib/soccer/ballDesigns';
+	import { ballDesignFor, nextBallDesign, prevBallDesign } from '$lib/soccer/ballDesigns';
 	import { sectionCenterPercent } from '$lib/soccer/utils/game';
 	import { TEAM } from '$lib/shared/constants';
 	import type { Team } from '$lib/shared/types';
@@ -19,7 +19,10 @@
 		lastPlay?: string;
 		coinToss?: boolean;
 		ballDesign?: string;
-		onCycleBall?: () => void;
+		// Commit a chosen ball skin (fired when the picker's check is tapped).
+		onSelectBall?: (key: string) => void;
+		// Optional click feedback for the picker's arrow taps (sound, etc.).
+		onPreviewBall?: () => void;
 	};
 
 	let {
@@ -31,13 +34,70 @@
 		lastPlay = '',
 		coinToss = false,
 		ballDesign = DEFAULT_BALL_DESIGN,
-		onCycleBall
+		onSelectBall,
+		onPreviewBall
 	}: Props = $props();
 
-	// Resolve the selected ball skin to its avif/webp URLs (falls back to the
+	// Ball-skin picker: tapping the ball opens left/right arrows plus a check so
+	// the player can browse designs and confirm one, rather than blind-cycling.
+	// The preview is local — nothing persists until the check commits it.
+	let picking = $state(false);
+	let previewDesign = $state(DEFAULT_BALL_DESIGN);
+
+	// Double-tapping the ball opens a large, read-only look at the current skin.
+	let enlarged = $state(false);
+
+	// Show the committed skin normally; while picking, show the previewed one.
+	let displayDesign = $derived(picking ? previewDesign : ballDesign);
+
+	// Resolve the shown ball skin to its avif/webp URLs (falls back to the
 	// default when the stored key is unknown). Used for both the on-field ball
 	// and the goal-celebration ball so they always match.
-	let ballImg = $derived(ballDesignFor(ballDesign));
+	let ballImg = $derived(ballDesignFor(displayDesign));
+
+	function openPicker() {
+		if (!onSelectBall || celebrating) return;
+		previewDesign = ballDesign;
+		picking = true;
+	}
+
+	function previewNext() {
+		previewDesign = nextBallDesign(previewDesign);
+		onPreviewBall?.();
+	}
+
+	function previewPrev() {
+		previewDesign = prevBallDesign(previewDesign);
+		onPreviewBall?.();
+	}
+
+	function confirmBall() {
+		picking = false;
+		onSelectBall?.(previewDesign);
+	}
+
+	function cancelPicker() {
+		picking = false;
+	}
+
+	// Double-tap: drop out of the picker and show the enlarged, read-only preview.
+	function openEnlarged() {
+		if (celebrating) return;
+		picking = false;
+		enlarged = true;
+	}
+
+	function closeEnlarged() {
+		enlarged = false;
+	}
+
+	// Close transient overlays if the ball vanishes for a goal celebration.
+	$effect(() => {
+		if (celebrating) {
+			if (picking) picking = false;
+			if (enlarged) enlarged = false;
+		}
+	});
 
 	let ballLeft = $derived(sectionCenterPercent(ballSection));
 
@@ -93,16 +153,29 @@
 			{/if}
 		{/key}
 
+		<!-- Transparent dismiss layer: tapping off the ball closes the picker
+		     without committing the previewed skin. -->
+		{#if picking}
+			<button
+				type="button"
+				class="picker-backdrop"
+				onclick={cancelPicker}
+				aria-label="Close ball picker"
+			></button>
+		{/if}
+
 		<button
 			type="button"
 			class="ball"
 			class:hidden={celebrating}
+			class:picking
 			style:left="{ballLeft}%"
 			style:top="{FIELD_VERTICAL_CENTER_PERCENT}%"
 			style:transform="translate(-50%, -50%) rotate({ballRotation}deg)"
-			onclick={onCycleBall}
-			disabled={!onCycleBall || celebrating}
-			title="Change ball design"
+			onclick={picking ? confirmBall : openPicker}
+			ondblclick={openEnlarged}
+			disabled={!onSelectBall || celebrating}
+			title="Change ball design (double-tap to enlarge)"
 			aria-label="Change ball design"
 		>
 			<picture>
@@ -110,6 +183,51 @@
 				<img src={ballImg.webp} alt="Ball" />
 			</picture>
 		</button>
+
+		{#if picking}
+			<!-- Picker controls flanking the ball: browse left/right, then tap the
+			     ball itself to confirm. Anchored to the ball's position on the pitch. -->
+			<button
+				type="button"
+				class="picker-arrow left"
+				style:left="{ballLeft}%"
+				style:top="{FIELD_VERTICAL_CENTER_PERCENT}%"
+				onclick={previewPrev}
+				aria-label="Previous ball design"
+			>
+				<span class="chevron"></span>
+			</button>
+			<button
+				type="button"
+				class="picker-arrow right"
+				style:left="{ballLeft}%"
+				style:top="{FIELD_VERTICAL_CENTER_PERCENT}%"
+				onclick={previewNext}
+				aria-label="Next ball design"
+			>
+				<span class="chevron"></span>
+			</button>
+		{/if}
+
+		{#if enlarged}
+			<!-- Read-only enlarged look at the current ball skin. Tap the backdrop
+			     or the close button to dismiss. -->
+			<div class="enlarged" role="dialog" aria-modal="true" aria-label="Ball preview">
+				<button
+					type="button"
+					class="enlarged-backdrop"
+					onclick={closeEnlarged}
+					aria-label="Close ball preview"
+				></button>
+				<picture class="enlarged-ball">
+					<source srcset={ballImg.avif} type="image/avif" />
+					<img src={ballImg.webp} alt="Enlarged ball" />
+				</picture>
+				<button type="button" class="enlarged-close" onclick={closeEnlarged} aria-label="Close">
+					<span class="x"></span>
+				</button>
+			</div>
+		{/if}
 
 		{#if celebrating}
 			<div class="goal-fx" style:--goal-x="{goalX}%" style:--approach-x="{approachX}%">
@@ -206,6 +324,202 @@
 		width: 100%;
 		display: block;
 		filter: drop-shadow(2px 3px 4px oklch(0 0 0 / 0.55));
+	}
+
+	/* ── Ball-skin picker ── */
+
+	/* While picking, lift the ball above the dismiss backdrop and ring it so it
+	   reads as the live preview being chosen. */
+	.ball.picking {
+		z-index: 6;
+	}
+
+	.ball.picking img {
+		filter: drop-shadow(0 0 3px oklch(0.9 0.2 250)) drop-shadow(2px 3px 4px oklch(0 0 0 / 0.55));
+	}
+
+	/* Full-field transparent layer: a tap anywhere off the controls dismisses
+	   the picker without committing a choice. */
+	.picker-backdrop {
+		position: absolute;
+		inset: 0;
+		padding: 0;
+		border: none;
+		background: none;
+		cursor: default;
+		pointer-events: auto;
+		z-index: 5;
+	}
+
+	.picker-arrow {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 4cqw;
+		height: 4cqw;
+		padding: 0;
+		border: none;
+		border-radius: 50%;
+		background: oklch(0.25 0 0 / 0.4);
+		box-shadow: 0 0.2cqw 0.6cqw oklch(0 0 0 / 0.4);
+		cursor: pointer;
+		pointer-events: auto;
+		z-index: 6;
+		transition:
+			left 0.6s var(--ease-snes, ease-in-out),
+			background 0.15s ease,
+			transform 0.15s ease;
+	}
+
+	.picker-arrow:hover {
+		background: oklch(0.32 0 0 / 0.55);
+	}
+
+	.picker-arrow:focus-visible {
+		outline: 2px solid oklch(0.9 0.2 250);
+		outline-offset: 2px;
+	}
+
+	/* Arrows sit just outside the ball on either side. */
+	.picker-arrow.left {
+		transform: translate(-50%, -50%) translateX(-7cqw);
+	}
+
+	.picker-arrow.right {
+		transform: translate(-50%, -50%) translateX(7cqw);
+	}
+
+	/* CSS chevron for the browse arrows (points per its side). */
+	.chevron {
+		width: 1.5cqw;
+		height: 1.5cqw;
+		border: solid #fff;
+		border-width: 0 0.45cqw 0.45cqw 0;
+	}
+
+	.picker-arrow.left .chevron {
+		transform: translateX(0.3cqw) rotate(135deg);
+	}
+
+	.picker-arrow.right .chevron {
+		transform: translateX(-0.3cqw) rotate(-45deg);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.picker-arrow {
+			transition: background 0.15s ease;
+		}
+	}
+
+	/* ── Enlarged ball preview (double-tap) ── */
+	.enlarged {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 8;
+		pointer-events: auto;
+	}
+
+	.enlarged-backdrop {
+		position: absolute;
+		inset: 0;
+		padding: 0;
+		border: none;
+		background: oklch(0 0 0 / 0.62);
+		cursor: pointer;
+		animation: enlarged-fade 0.2s ease;
+	}
+
+	.enlarged-ball {
+		position: relative;
+		z-index: 1;
+		width: 40%;
+		max-width: 40cqw;
+		pointer-events: none;
+		animation: enlarged-pop 0.22s var(--ease-snes, ease-out);
+	}
+
+	.enlarged-ball img {
+		width: 100%;
+		display: block;
+		filter: drop-shadow(0 0.6cqw 1.2cqw oklch(0 0 0 / 0.65));
+	}
+
+	.enlarged-close {
+		position: absolute;
+		top: 4cqw;
+		right: 4cqw;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 6cqw;
+		height: 6cqw;
+		padding: 0;
+		border: none;
+		border-radius: 50%;
+		background: oklch(0.25 0 0 / 0.72);
+		box-shadow: 0 0.2cqw 0.6cqw oklch(0 0 0 / 0.55);
+		cursor: pointer;
+	}
+
+	.enlarged-close:hover {
+		background: oklch(0.32 0 0 / 0.85);
+	}
+
+	.enlarged-close:focus-visible {
+		outline: 2px solid oklch(0.9 0.2 250);
+		outline-offset: 2px;
+	}
+
+	/* CSS "×" glyph for the close button. */
+	.x {
+		position: relative;
+		width: 3cqw;
+		height: 3cqw;
+	}
+
+	.x::before,
+	.x::after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 0;
+		width: 100%;
+		height: 0.5cqw;
+		background: #fff;
+		border-radius: 0.25cqw;
+	}
+
+	.x::before {
+		transform: translateY(-50%) rotate(45deg);
+	}
+
+	.x::after {
+		transform: translateY(-50%) rotate(-45deg);
+	}
+
+	@keyframes enlarged-fade {
+		from {
+			opacity: 0;
+		}
+	}
+
+	@keyframes enlarged-pop {
+		from {
+			opacity: 0;
+			transform: scale(0.6);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.enlarged-backdrop,
+		.enlarged-ball {
+			animation: none;
+		}
 	}
 
 	/* ── Goal celebration: ball rockets into the net ── */
