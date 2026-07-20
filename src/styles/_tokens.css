@@ -9,6 +9,8 @@
 	--color-field-stripe-b: oklch(0.5577 0.11 147.18); /* Field stripe dark */
 	--color-field-marking: oklch(0.8272 0.1711 80.53); /* Endzone / yard marker gold */
 	--color-field-border: oklch(0.393 0.09 152.7); /* Pitch surround (#14532d) */
+	--color-pitch-stripe-a: oklch(0.5649 0.139 147.29); /* Soccer mown stripe light (#2f8b42) */
+	--color-pitch-stripe-b: oklch(0.5233 0.129 146.99); /* Soccer mown stripe dark (#2a7d3a) */
 
 	/* ── Typography ─────────────────────────────────────── */
 	--font-display: "Exo 2", sans-serif;

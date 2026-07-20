@@ -67,10 +67,11 @@ export const MIDLINE_ENTRY: Record<string, number> = {
 	[TEAM.AWAY]: 3
 };
 
-// ── soccer-field.svg geometry ────────────────────────────────
-// The asset uses viewBox="-212 -145 424 290"; the grass playing surface
-// spans x = -190..190 (width 380). These let us place the ball marker as a
-// percentage of the rendered SVG, so the field stays a plain <img>.
+// ── Pitch geometry ───────────────────────────────────────────
+// The pitch uses the coordinate system -212..212 × -145..145 (a 424×290 board);
+// the grass playing surface spans x = -190..190 (width 380). These let us place
+// the ball marker as a percentage of the rendered pitch. Pitch.svelte draws the
+// field from the same geometry, so the markings and the ball share one frame.
 export const FIELD_VIEWBOX_MIN_X = -212;
 export const FIELD_VIEWBOX_WIDTH = 424;
 export const FIELD_PLAY_MIN_X = -190;

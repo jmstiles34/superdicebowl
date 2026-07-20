@@ -97,7 +97,7 @@ export function justPastMidline(team: string): number {
 }
 
 // The horizontal centre of a section as a percentage of the rendered
-// soccer-field.svg, for positioning the ball marker over the pitch.
+// pitch, for positioning the ball marker over the field.
 export function sectionCenterPercent(section: number): number {
 	const x = FIELD_PLAY_MIN_X + FIELD_SECTION_WIDTH * (section + 0.5);
 	return ((x - FIELD_VIEWBOX_MIN_X) / FIELD_VIEWBOX_WIDTH) * 100;

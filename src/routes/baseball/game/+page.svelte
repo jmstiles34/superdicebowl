@@ -306,7 +306,7 @@
 			hasClose={true}
 			choiceRequired={false}
 		>
-			<Settings hideWinScore />
+			<Settings hideWinScore showMowPattern />
 		</Modal>
 	</main>
 {/if}

@@ -86,13 +86,13 @@
 		   cap sets how big it gets on a wide board, and the 1.2rem floor keeps it
 		   legible (and one-line) on a narrow one. Shared by dice and red-card
 		   markers so they occupy identical slots. */
-		--die-size: clamp(1.2rem, 5.2cqw, 3.2rem);
+		--die-size: clamp(0.78rem, 4cqw, 3.2rem);
 		display: flex;
 		flex-wrap: nowrap;
 		justify-content: center;
 		align-items: center;
-		gap: clamp(0.12rem, 0.9cqw, var(--space-3));
-		padding: clamp(0.12rem, 0.8cqw, var(--space-2));
+		gap: clamp(0.1rem, 0.7cqw, var(--space-3));
+		padding: clamp(0.1rem, 0.6cqw, var(--space-2));
 		border-radius: var(--radius-md);
 	}
 

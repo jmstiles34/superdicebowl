@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { Fireworks } from '@fireworks-js/svelte';
 	import confetti from 'canvas-confetti';
@@ -414,6 +414,28 @@
 		}
 	});
 
+	// Lock to landscape on mobile (best-effort; unsupported on iOS Safari, where
+	// the portrait-overlay below prompts the user to rotate instead). Mirrors the
+	// football game so both play in landscape.
+	onMount(() => {
+		const orientation = screen.orientation as ScreenOrientation & {
+			lock?(type: string): Promise<void>;
+			unlock?(): void;
+		};
+		try {
+			orientation.lock?.('landscape')?.catch(() => {});
+		} catch {
+			// orientation lock not supported on all platforms
+		}
+		return () => {
+			try {
+				orientation.unlock?.();
+			} catch {
+				// orientation unlock not supported on all platforms
+			}
+		};
+	});
+
 	onDestroy(() => {
 		crowdSfx.stop();
 		crowdSfx.unload();
@@ -494,7 +516,7 @@
 			{#snippet teamDice(team: string)}
 				{@const isRoller = humanRoller === team}
 				{@const canRerollTeam = canReroll && team === game.powerChipHolder}
-				<div class="team-dice" class:active={isRoller || canRerollTeam}>
+				<div class="team-dice" class:active={isRoller || canRerollTeam} class:mirror={team === TEAM.AWAY}>
 					<img
 						class="dice-flag"
 						class:right={team === TEAM.AWAY}
@@ -651,6 +673,15 @@
 			<Instructions close={closeInstructions} />
 		</Modal>
 	</main>
+
+	<!-- Mobile portrait: prompt to rotate to landscape (shown when the orientation
+	     lock isn't honoured, e.g. iOS Safari). -->
+	<div class="portrait-overlay">
+		<div class="portrait-message">
+			<span class="rotate-icon">📱</span>
+			<p>Rotate your device to landscape for the best experience</p>
+		</div>
+	</div>
 {/if}
 
 <style>
@@ -665,14 +696,13 @@
 	}
 
 	.game {
-		width: 95%;
-		/* Drive the width off the *available height*: the field is aspect-ratio
-		   locked (424/290 ≈ 1.462), so cap the width at whatever keeps the field
-		   plus the scoreboard inside the viewport. The dice deck now overlaps the
-		   field's bottom (no separate row below), so only the scoreboard banner
-		   (~6rem) sits outside the field. Wider on tall screens, narrower on short
-		   ones — no vertical clipping. */
-		max-width: min(72rem, calc((100dvh - 6rem) * 1.462));
+		/* Fill the whole viewport: the scoreboard and dice deck span the full
+		   width and the field stretches to take all remaining height. The field is
+		   no longer aspect-ratio locked (see Field.svelte), so it expands and
+		   shrinks with the screen like the football pitch instead of letterboxing. */
+		width: 100%;
+		flex: 1;
+		min-height: 0;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -689,6 +719,11 @@
 	.field-area {
 		position: relative;
 		width: 100%;
+		/* Take all the height left under the scoreboard so the pitch fills the
+		   screen. The Field stretches to this box (height: 100%) and the dice deck
+		   overlays its bottom edge. */
+		flex: 1;
+		min-height: 0;
 		/* Tuck the field up under the scoreboard so its top edge is slightly
 		   overlapped by the score banners (which carry z-index: 100). */
 		margin-top: -0.9rem;
@@ -707,13 +742,16 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-2);
+		/* Gap and horizontal padding scale with the deck width so the two dice
+		   groups plus the resolve button always fit a narrow phone without
+		   clipping; they open back up to --space-2 on wider screens. */
+		gap: clamp(0.15rem, 1cqw, var(--space-2));
 		/* align-items centres the content geometrically, but the dice and Roll
 		   buttons carry a downward hard drop shadow (4px 4px 0) that pulls their
 		   visual mass low and makes the solid faces read as sitting high. A little
 		   more top padding than bottom nudges the content down so it *looks*
 		   vertically centred in the bar. */
-		padding: var(--space-2) var(--space-2) var(--space-1);
+		padding: var(--space-2) clamp(0.15rem, 1cqw, var(--space-2)) var(--space-1);
 		background: oklch(0 0 0 / 0.42);
 		backdrop-filter: blur(2px);
 		/* Size the dice/buttons off the deck's own width, matching the old
@@ -726,8 +764,8 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-2);
-		padding: var(--space-2);
+		gap: clamp(0.15rem, 1cqw, var(--space-2));
+		padding: clamp(0.15rem, 1cqw, var(--space-2));
 		border-radius: var(--radius-md);
 		border: 2px solid transparent;
 		transition: border-color var(--dur-fast) var(--ease-snes);
@@ -735,6 +773,13 @@
 		   active-turn border frames the whole group. */
 		flex: 1;
 		box-sizing: border-box;
+	}
+
+	/* Away group mirrors the home group: reversing the row order puts the Roll
+	   button on the inside (next to the central resolve button) and the dice
+	   spanning outward, so the two sides read as a symmetric reflection. */
+	.team-dice.mirror {
+		flex-direction: row-reverse;
 	}
 
 	/* Country flag badge for each dice group, anchored to the deck (its parent
@@ -814,10 +859,10 @@
 	   button gives up room to the dice instead of pushing them to wrap. */
 	.action-button.roll {
 		flex-shrink: 0;
-		min-width: clamp(2.75rem, 10cqw, 7rem);
-		padding-left: clamp(var(--space-1), 1.8cqw, var(--space-5));
-		padding-right: clamp(var(--space-1), 1.8cqw, var(--space-5));
-		font-size: clamp(0.56rem, 1.9cqw, var(--text-base));
+		min-width: clamp(1.9rem, 8cqw, 7rem);
+		padding-left: clamp(var(--space-1), 1.6cqw, var(--space-5));
+		padding-right: clamp(var(--space-1), 1.6cqw, var(--space-5));
+		font-size: clamp(0.5rem, 1.8cqw, var(--text-base));
 		white-space: nowrap;
 		text-align: center;
 	}
@@ -828,8 +873,10 @@
 		flex-shrink: 0;
 		display: grid;
 		place-items: center;
-		width: 4.25rem;
-		height: 4.25rem;
+		/* Scale with the deck so it gives up room to the dice on a narrow phone
+		   (was a fixed 4.25rem, which forced the dice groups to overflow). */
+		width: clamp(2.6rem, 11cqw, 4.25rem);
+		height: clamp(2.6rem, 11cqw, 4.25rem);
 		padding: 0;
 		border-radius: 50%;
 		/* Filled with the current winner's color; falls back to the primary fill
@@ -852,8 +899,8 @@
 	/* Play triangle points right (toward the away team) by default; flipped to
 	   point left when the home team is winning the roll. */
 	.dice-deck .resolve .play-icon {
-		width: 2.9rem;
-		height: 2.9rem;
+		width: clamp(1.7rem, 7cqw, 2.9rem);
+		height: clamp(1.7rem, 7cqw, 2.9rem);
 		/* Contrast against the winner's tint — a pale tint (e.g. a white team)
 		   would otherwise swallow a white icon. */
 		fill: var(--resolve-fg, #fff);
@@ -920,5 +967,51 @@
 		position: absolute;
 		background: transparent;
 		z-index: 9999;
+	}
+
+	/* Hidden by default; only the mobile-portrait media query below reveals it. */
+	.portrait-overlay {
+		display: none;
+	}
+
+	/* ── Mobile portrait: force-landscape overlay ──────────── */
+	@media (max-width: 600px) and (orientation: portrait) {
+		.portrait-overlay {
+			display: flex;
+			position: fixed;
+			inset: 0;
+			z-index: 99999;
+			background-color: var(--color-bg-base, #111);
+			align-items: center;
+			justify-content: center;
+		}
+		.portrait-message {
+			text-align: center;
+			color: var(--color-text-primary, #fff);
+			font-family: var(--font-body, sans-serif);
+			padding: 2rem;
+		}
+		.rotate-icon {
+			font-size: 3rem;
+			display: inline-block;
+			animation: rock 1.5s ease-in-out infinite;
+		}
+		.portrait-message p {
+			margin-top: 1rem;
+			font-size: 1.25rem;
+			line-height: 1.4;
+		}
+		@keyframes rock {
+			0%,
+			100% {
+				transform: rotate(0deg);
+			}
+			25% {
+				transform: rotate(90deg);
+			}
+			75% {
+				transform: rotate(90deg);
+			}
+		}
 	}
 </style>

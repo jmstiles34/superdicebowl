@@ -7,7 +7,11 @@
 	import soundLow from '$lib/images/volume-low.svg';
 	import soundOff from '$lib/images/volume-off.svg';
 
-	let { extra, hideWinScore = false }: { extra?: Snippet; hideWinScore?: boolean } = $props();
+	let {
+		extra,
+		hideWinScore = false,
+		showMowPattern = false
+	}: { extra?: Snippet; hideWinScore?: boolean; showMowPattern?: boolean } = $props();
 
 	let volumeIcon = $derived(
 		settings.volume === 0 ? soundOff : settings.volume <= 40 ? soundLow : soundOn
@@ -132,23 +136,25 @@
 		</select>
 	</div>
 
-	<!-- Mow Pattern -->
-	<div class="setting-row">
-		<label class="label" for="mowPattern">Field Pattern</label>
-		<select
-			id="mowPattern"
-			class="setting-select"
-			value={settings.mowPattern}
-			onchange={handleMowPatternChange}
-		>
-			<option value="none">None</option>
-			<option value="crosscut">Cross-Cut</option>
-			<option value="stripes">Stripes</option>
-			<option value="diamonds">Diamonds</option>
-			<option value="arcs">Arcs</option>
-			<option value="checkerboard">Checkerboard</option>
-		</select>
-	</div>
+	<!-- Mow Pattern (baseball only) -->
+	{#if showMowPattern}
+		<div class="setting-row">
+			<label class="label" for="mowPattern">Field Pattern</label>
+			<select
+				id="mowPattern"
+				class="setting-select"
+				value={settings.mowPattern}
+				onchange={handleMowPatternChange}
+			>
+				<option value="none">None</option>
+				<option value="crosscut">Cross-Cut</option>
+				<option value="stripes">Stripes</option>
+				<option value="diamonds">Diamonds</option>
+				<option value="arcs">Arcs</option>
+				<option value="checkerboard">Checkerboard</option>
+			</select>
+		</div>
+	{/if}
 
 	{#if extra}
 		{@render extra()}
