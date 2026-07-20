@@ -2,8 +2,9 @@
 	import { onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { Fireworks } from '@fireworks-js/svelte';
+	import confetti from 'canvas-confetti';
 	import { game } from '$lib/soccer/state/game.svelte';
-	import { GAME_ACTION, SOCCER_SYMBOL } from '$lib/soccer/constants';
+	import { BALL_MOVE_ONE, BALL_MOVE_TWO, GAME_ACTION, SOCCER_SYMBOL } from '$lib/soccer/constants';
 	import {
 		aiRerollIndices,
 		aiShouldReroll,
@@ -17,7 +18,7 @@
 	import type { SoccerSymbol } from '$lib/soccer/types';
 	import type { SoccerGameSettingsSnapshot } from '$lib/db/database';
 	import { settings } from '$lib/state/settings.svelte';
-	import { readableTextColor, sleep } from '$lib/utils/common';
+	import { oklchToHex, readableTextColor, sleep } from '$lib/utils/common';
 	import { fireworkShow, options } from '$lib/utils/fireworks';
 	import { auth } from '$lib/auth/authState.svelte';
 	import { createGame, updateGameState, completeGame } from '$lib/db/repositories/gameRepository';
@@ -40,12 +41,58 @@
 	import circleInfo from '$lib/images/circle-info.svg';
 	import flick from '$lib/assets/sfx/flick.mp3';
 	import buttonSfx from '$lib/assets/sfx/button.mp3';
+	import fanChant1 from '$lib/assets/sfx/soccer/fan-chant-01.opus';
+	import fanChant2 from '$lib/assets/sfx/soccer/fan-chant-02.opus';
+	import fanChant3 from '$lib/assets/sfx/soccer/fan-chant-03.opus';
+	import fanChant4 from '$lib/assets/sfx/soccer/fan-chant-04.opus';
+	import fanChant5 from '$lib/assets/sfx/soccer/fan-chant-05.opus';
+	import fanChant6 from '$lib/assets/sfx/soccer/fan-chant-06.opus';
+	import fanChant7 from '$lib/assets/sfx/soccer/fan-chant-07.opus';
+	import fanChant8 from '$lib/assets/sfx/soccer/fan-chant-08.opus';
+	import fanChant9 from '$lib/assets/sfx/soccer/fan-chant-09.opus';
+	import fanChant10 from '$lib/assets/sfx/soccer/fan-chant-10.opus';
+	import fanChant11 from '$lib/assets/sfx/soccer/fan-chant-11.opus';
+	import goal1 from '$lib/assets/sfx/soccer/goal-01.opus';
+	import goal2 from '$lib/assets/sfx/soccer/goal-02.opus';
+	import goal3 from '$lib/assets/sfx/soccer/goal-03.opus';
+	import goal4 from '$lib/assets/sfx/soccer/goal-04.opus';
+	import whistleFoul from '$lib/assets/sfx/soccer/whistle-foul.opus';
+	import whistleEnd from '$lib/assets/sfx/soccer/whistle-end.opus';
+	import whistleKickoff from '$lib/assets/sfx/soccer/whistle-kickoff.opus';
+	import save1 from '$lib/assets/sfx/soccer/save-01.opus';
+	import save2 from '$lib/assets/sfx/soccer/save-02.opus';
+	import save3 from '$lib/assets/sfx/soccer/save-03.opus';
+	import redCard1 from '$lib/assets/sfx/soccer/red-card-01.opus';
+	import redCard2 from '$lib/assets/sfx/soccer/red-card-02.opus';
+	import pass1 from '$lib/assets/sfx/soccer/pass-01.opus';
+	import pass2 from '$lib/assets/sfx/soccer/pass-02.opus';
+	import pass3 from '$lib/assets/sfx/soccer/pass-03.opus';
 	import type { Howl } from 'howler';
-	import { createSound, playSound } from '$lib/utils/sound';
+	import { createLoopSound, createSound, playSound } from '$lib/utils/sound';
 
 	const ROLL_DELAY = 650;
 	const flickSfx: Howl = createSound(flick);
 	const btnSfx: Howl = createSound(buttonSfx);
+	// Goal celebration: alternate randomly between the two goal stings.
+	const goalSfx: Howl[] = [createSound(goal1), createSound(goal2), createSound(goal3), createSound(goal4)];
+	// Foul whistle: played when a roll is won on penalty (whistle) symbols.
+	const whistleFoulSfx: Howl = createSound(whistleFoul);
+	// Full-time whistle: played when the game ends.
+	const whistleEndSfx: Howl = createSound(whistleEnd);
+	// Kickoff whistle: played once the coin toss places the ball to start play.
+	const whistleKickoffSfx: Howl = createSound(whistleKickoff);
+	// Save: a random keeper save sting when a shot is stopped.
+	const saveSfx: Howl[] = [createSound(save1), createSound(save2), createSound(save3)];
+	// Red card: a random sting when a red card is issued on a roll.
+	const redCardSfx: Howl[] = [createSound(redCard1), createSound(redCard2)];
+	// Pass: a random kick sound when a ball move advances the ball 1-2 sections.
+	const passSfx: Howl[] = [createSound(pass1), createSound(pass2), createSound(pass3)];
+
+	// Background crowd ambience: pick a random chant on load and loop it. Kept
+	// well below the SFX volume so it sits under the dice/whistle sounds.
+	const CROWD_VOLUME_FACTOR = 0.35;
+	const fanChants = [fanChant1, fanChant2, fanChant3, fanChant4, fanChant5, fanChant6, fanChant7, fanChant8, fanChant9, fanChant10, fanChant11];
+	const crowdSfx: Howl = createLoopSound(fanChants[Math.floor(Math.random() * fanChants.length)]);
 
 	const { awayTeam, homeTeam, mode } = settings;
 	const isGameReady = awayTeam.id.length && homeTeam.id.length;
@@ -53,6 +100,30 @@
 	let showSettings = $state(false);
 	let showInstructions = $state(false);
 	let fw = $state(fireworkShow);
+
+	// Goal confetti: a center pop over the field, tinted with the scoring team's
+	// colors. Bound to its own canvas so particles draw only over the field-area,
+	// not document.body. Instance is created lazily once the canvas mounts.
+	let confettiCanvas = $state<HTMLCanvasElement>();
+	let fireConfetti = $derived.by<confetti.CreateTypes | null>(() =>
+		confettiCanvas ? confetti.create(confettiCanvas, { resize: true }) : null
+	);
+
+	// Fire a center burst tinted with the scoring team's primary/secondary colors.
+	// Skipped entirely when the user prefers reduced motion.
+	function celebrateGoalConfetti(team: string) {
+		if (!fireConfetti) return;
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		const t = team === TEAM.AWAY ? settings.awayTeam : settings.homeTeam;
+		const colors = [oklchToHex(t.colors.primary), oklchToHex(t.colors.secondary)];
+		fireConfetti({
+			particleCount: 120,
+			spread: 100,
+			startVelocity: 45,
+			origin: { x: 0.5, y: 0.55 },
+			colors
+		});
+	}
 
 	// Local round UI state
 	let busy = $state(false);
@@ -212,8 +283,34 @@
 
 	function announceNew(prevLen: number) {
 		const added = game.playLog.slice(prevLen);
+		// A roll won on whistles (penalty symbol) awards a free kick — offensively
+		// or as a defensive clear. Blow the foul whistle either way.
+		if (added.some((e) => e.symbol === SOCCER_SYMBOL.PENALTY)) {
+			playSound(whistleFoulSfx, settings.volume);
+		}
+		// A roll won on a red card issues one — as an advance, a defensive clear, or
+		// a foul in the box. Play the red-card sting on any of them.
+		if (added.some((e) => e.symbol === SOCCER_SYMBOL.RED_CARD)) {
+			playSound(redCardSfx[Math.floor(Math.random() * redCardSfx.length)], settings.volume);
+		}
+		// A ball move that advances the ball 1-2 sections (4 or 5 balls; 6 is a
+		// goal, handled above). Play a pass sound for the completed move.
+		if (
+			added.some(
+				(e) =>
+					e.symbol === SOCCER_SYMBOL.BALL &&
+					e.goalsScored === 0 &&
+					(e.count === BALL_MOVE_ONE || e.count === BALL_MOVE_TWO)
+			)
+		) {
+			playSound(passSfx[Math.floor(Math.random() * passSfx.length)], settings.volume);
+		}
 		if (added.some((e) => e.goalsScored > 0)) {
+			playSound(goalSfx[Math.floor(Math.random() * goalSfx.length)], settings.volume);
 			triggerAnnouncement('GOAL!', 'goal');
+			// game.goalScorer is the true scorer (set by celebrateGoal in
+			// resolveResult, which runs before this) — correct even on own goals.
+			if (game.goalScorer) celebrateGoalConfetti(game.goalScorer);
 			return;
 		}
 		const last = added[added.length - 1];
@@ -225,6 +322,7 @@
 			return;
 		}
 		if (last.isShot && last.goalsScored === 0 && !isShotPhase && last.description.startsWith('Save')) {
+			playSound(saveSfx[Math.floor(Math.random() * saveSfx.length)], settings.volume);
 			triggerAnnouncement('SAVE!', 'save');
 			return;
 		}
@@ -305,13 +403,27 @@
 
 	game.setSaveGame(saveGame);
 
+	// Drive the crowd loop off the volume setting: start it once audio is allowed,
+	// track volume changes, and go silent (paused) when the user mutes.
+	$effect(() => {
+		crowdSfx.volume((settings.volume / 100) * CROWD_VOLUME_FACTOR);
+		if (settings.volume > 0) {
+			if (!crowdSfx.playing()) crowdSfx.play();
+		} else if (crowdSfx.playing()) {
+			crowdSfx.pause();
+		}
+	});
+
 	onDestroy(() => {
+		crowdSfx.stop();
+		crowdSfx.unload();
 		game.resetGame();
 	});
 
 	// ── Game over ────────────────────────────────────────────
 	$effect(() => {
 		if (game.action === GAME_ACTION.GAME_OVER) {
+			playSound(whistleEndSfx, settings.volume);
 			markGameComplete();
 			sleep(100).then(() => fw.fireworksInstance().start());
 		}
@@ -476,6 +588,9 @@
 				</div>
 
 				<EventAnnouncement text={announcementText} type={announcementType} key={announcementKey} />
+				<!-- Goal confetti canvas: a fixed-size backing buffer that `resize: true`
+				     keeps matched to the field-area. Sits above the announcement. -->
+				<canvas bind:this={confettiCanvas} class="confetti-canvas"></canvas>
 				{#if game.action === GAME_ACTION.GAME_OVER}
 					<Fireworks bind:this={fw} autostart={false} {options} class="fireworks" />
 				{/if}
@@ -493,6 +608,7 @@
 			<CoinToss
 				saveCoinToss={(winner) => {
 					game.saveCoinToss(winner);
+					playSound(whistleKickoffSfx, settings.volume);
 					saveGame();
 				}}
 			/>
@@ -783,6 +899,17 @@
 
 	.flip {
 		transform: scaleX(-1);
+	}
+
+	/* Goal confetti overlay: fills the field-area, never intercepts pointer
+	   events, and stacks above the dice deck and GOAL! announcement. */
+	.confetti-canvas {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+		z-index: 200;
 	}
 
 	:global(.fireworks) {

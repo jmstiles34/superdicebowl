@@ -7,7 +7,7 @@
 	import { sleep } from '$lib/utils/common';
 	import tap from '$lib/assets/sfx/tap.mp3';
 	import gust from '$lib/assets/sfx/gust.mp3';
-	import tackle from '$lib/assets/sfx/tackle.mp3';
+	import suii from '$lib/assets/sfx/soccer/suii.opus';
 	import type { Howl } from 'howler';
 	import { createSound, playSound } from '$lib/utils/sound';
 	import { settings } from '$lib/state/settings.svelte';
@@ -17,7 +17,7 @@
 	const DEFAULT_WIN_SCORE = 3;
 
 	const gustSfx: Howl = createSound(gust);
-	const tackleSfx: Howl = createSound(tackle);
+	const suiiSfx: Howl = createSound(suii);
 	const tapSfx: Howl = createSound(tap);
 
 	let mode = $state(GAME_MODE.HEAD_TO_HEAD);
@@ -46,7 +46,7 @@
 		settings.mode = mode;
 		settings.winScore = winScore;
 		settings.userTeam = TEAM.HOME;
-		playSound(tackleSfx, settings.volume);
+		playSound(suiiSfx, settings.volume);
 		sleep(1000).then(() => goto('/soccer/game'));
 	};
 </script>
