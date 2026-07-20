@@ -99,6 +99,7 @@
 					</div>
 				{/if}
 			</div>
+			<!--
 			<div class="nav-item desktop-link">
 				<a class="link nav-trigger" href="/baseball">Baseball</a>
 				{#if auth.isLoggedIn}
@@ -123,6 +124,7 @@
 					</div>
 				{/if}
 			</div>
+			-->
 			<div class="nav-item desktop-link">
 				<a class="link nav-trigger" href="/soccer">Soccer</a>
 				{#if auth.isLoggedIn}

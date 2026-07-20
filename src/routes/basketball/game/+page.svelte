@@ -324,7 +324,7 @@
 			hasClose={false}
 			choiceRequired={true}
 		>
-			<ConfirmExit cancel={cancelExit} />
+			<ConfirmExit cancel={cancelExit} home="/basketball" />
 		</Modal>
 
 		<!-- Settings modal -->

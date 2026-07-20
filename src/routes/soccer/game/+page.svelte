@@ -660,7 +660,7 @@
 			hasClose={false}
 			choiceRequired={true}
 		>
-			<ConfirmExit cancel={cancelExit} />
+			<ConfirmExit cancel={cancelExit} home="/soccer" />
 		</Modal>
 
 		<!-- Settings -->

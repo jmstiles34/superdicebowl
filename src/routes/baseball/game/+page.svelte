@@ -297,7 +297,7 @@
 			hasClose={false}
 			choiceRequired={true}
 		>
-			<ConfirmExit cancel={cancelExit} />
+			<ConfirmExit cancel={cancelExit} home="/baseball" />
 		</Modal>
 
 		<Modal
