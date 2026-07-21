@@ -31,9 +31,9 @@
 
 	const SPORTS: { id: SportType; label: string }[] = [
 		{ id: 'football', label: 'Football' },
-		{ id: 'baseball', label: 'Baseball' },
-		{ id: 'hockey', label: 'Hockey' },
-		{ id: 'basketball', label: 'Basketball' },
+		// { id: 'baseball', label: 'Baseball' },
+		// { id: 'hockey', label: 'Hockey' },
+		// { id: 'basketball', label: 'Basketball' },
 		{ id: 'soccer', label: 'Soccer' }
 	];
 

@@ -381,13 +381,16 @@
 			if (game.activeGameId) {
 				await updateGameState(game.activeGameId, snapshot);
 			} else {
-				const gameSettings: SoccerGameSettingsSnapshot = {
-					sport: 'soccer',
+				// $state.snapshot deep-clones the live team proxies to plain objects;
+				// passing the raw settings proxies straight to Dexie throws
+				// DataCloneError (structured clone can't serialize them).
+				const gameSettings: SoccerGameSettingsSnapshot = $state.snapshot({
+					sport: 'soccer' as const,
 					awayTeam: settings.awayTeam,
 					homeTeam: settings.homeTeam,
 					mode: settings.mode,
 					winScore: settings.winScore
-				};
+				});
 				const record = await createGame(auth.currentUser.id, snapshot, gameSettings, 'soccer');
 				game.activeGameId = record.id as number;
 			}

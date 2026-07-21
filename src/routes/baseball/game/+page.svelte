@@ -3,7 +3,8 @@
 	import { goto } from '$app/navigation';
 	import { Fireworks } from '@fireworks-js/svelte';
 	import { game } from '$lib/baseball/state/game.svelte';
-	import { GAME_ACTION } from '$lib/baseball/constants';
+	import { GAME_ACTION, MAX_INNINGS } from '$lib/baseball/constants';
+	import type { BaseballGameSettingsSnapshot } from '$lib/db/database';
 	import { lookupDiceResult } from '$lib/baseball/utils/game';
 	import { pickZone } from '$lib/baseball/utils/hitZones';
 	import { settings } from '$lib/state/settings.svelte';
@@ -178,12 +179,19 @@
 			if (game.activeGameId) {
 				await updateGameState(game.activeGameId, snapshot);
 			} else {
-				const record = await createGame(
-					auth.currentUser.id,
-					snapshot,
-					settings.snapshotSettings(),
-					'baseball'
-				);
+				// $state.snapshot deep-clones the live team proxies to plain objects;
+				// passing the raw settings proxies straight to Dexie throws
+				// DataCloneError (structured clone can't serialize them). Built
+				// inline (not via settings.snapshotSettings, which is football-shaped)
+				// so gameSettings.sport is correctly 'baseball'.
+				const gameSettings: BaseballGameSettingsSnapshot = $state.snapshot({
+					sport: 'baseball' as const,
+					awayTeam: settings.awayTeam,
+					homeTeam: settings.homeTeam,
+					mode: settings.mode,
+					innings: MAX_INNINGS
+				});
+				const record = await createGame(auth.currentUser.id, snapshot, gameSettings, 'baseball');
 				game.activeGameId = record.id!;
 			}
 		} catch (e) {
