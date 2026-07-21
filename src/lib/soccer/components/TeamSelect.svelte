@@ -78,6 +78,17 @@
 	</div>
 
 	<div class="controls">
+		<div
+			class="mini-logo"
+			style:border-color={team.id ? (team.colors?.primary ?? 'var(--color-border-default)') : 'var(--color-border-default)'}
+		>
+			{#if team.id && team.logo}
+				<img alt={`${team.city} ${team.name}`} src={`/flags/${team.logo}.svg`} />
+			{:else if diceColor}
+				<img class="mini-dice" alt={`${teamType} Team Placeholder`} src={`/images/dice-${diceColor}.svg`} />
+			{/if}
+		</div>
+
 		<select class="team-dropdown" value={selected} onchange={handleTeamSelect}>
 			<option value="">-- Select --</option>
 			{#each nations as n (n.id)}
@@ -113,4 +124,21 @@
 	.random-button:hover { background-color: var(--btn-secondary-bg-hover); box-shadow: var(--btn-secondary-shadow-hover); }
 	.random-button:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 	.random-button img { height: 1.5rem; width: 1.5rem; display: block; }
+
+	/* ── Mini flag (mobile only) ──────────────────────────────── */
+	.mini-logo { display: none; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; flex-shrink: 0; border-radius: var(--radius-sm); border: 2px solid var(--color-border-default); overflow: hidden; background-color: var(--color-bg-surface); }
+	.mini-logo img { width: 2rem; height: 2rem; object-fit: contain; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35)); }
+	.mini-logo .mini-dice { width: 1.5rem; height: 1.5rem; }
+	:global([data-theme='dark']) .mini-logo { background-color: var(--color-bg-elevated); }
+
+	/* ── Small screens (portrait) ─────────────────────────────── */
+	@media (max-width: 780px) {
+		.team-select-card { min-width: 0; width: 100%; gap: var(--space-2); }
+		.team-type { font-size: var(--text-sm); }
+		.logo-area { display: none; }
+		.team-name { display: none; }
+		.controls { width: 100%; }
+		.mini-logo { display: flex; }
+		.team-dropdown { flex: 1; min-width: 0; }
+	}
 </style>
