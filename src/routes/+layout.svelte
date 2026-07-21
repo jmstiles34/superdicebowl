@@ -179,6 +179,7 @@
 						<a class="kebab-item kebab-sub" href="/teams" onclick={() => showMobileMenu = false}>My Teams</a>
 						<a class="kebab-item kebab-sub" href="/games?sport=football" onclick={() => showMobileMenu = false}>My Games</a>
 					{/if}
+					<!--
 					<a class="kebab-item" href="/baseball" onclick={() => showMobileMenu = false}>Baseball</a>
 					{#if auth.isLoggedIn}
 						<a class="kebab-item kebab-sub" href="/games?sport=baseball" onclick={() => showMobileMenu = false}>My Games</a>
@@ -191,6 +192,7 @@
 					{#if auth.isLoggedIn}
 						<a class="kebab-item kebab-sub" href="/games?sport=basketball" onclick={() => showMobileMenu = false}>My Games</a>
 					{/if}
+					-->
 					<a class="kebab-item" href="/soccer" onclick={() => showMobileMenu = false}>Soccer</a>
 					{#if auth.isLoggedIn}
 						<a class="kebab-item kebab-sub" href="/games?sport=soccer" onclick={() => showMobileMenu = false}>My Games</a>
