@@ -393,9 +393,7 @@
 			"id": 14,
 			"batterAdvancement": 1,
 			"runnerAdvancement": 1,
-			"description": [
-				"Walk"
-			]
+			"description": ["Walk"]
 		},
 		{
 			"id": 15,
@@ -426,9 +424,7 @@
 			"id": 22,
 			"isOut": true,
 			"outCount": 2,
-			"description": [
-				"Double play"
-			]
+			"description": ["Double play"]
 		},
 		{
 			"id": 23,
@@ -445,10 +441,7 @@
 		{
 			"id": 24,
 			"isOut": true,
-			"description": [
-				"Strike out swinging",
-				"Strike out looking"
-			]
+			"description": ["Strike out swinging", "Strike out looking"]
 		},
 		{
 			"id": 25,
@@ -470,18 +463,13 @@
 		{
 			"id": 26,
 			"isOut": true,
-			"description": [
-				"Strike out swinging",
-				"Strike out looking"
-			]
+			"description": ["Strike out swinging", "Strike out looking"]
 		},
 		{
 			"id": 33,
 			"batterAdvancement": 1,
 			"runnerAdvancement": 1,
-			"description": [
-				"Walk"
-			]
+			"description": ["Walk"]
 		},
 		{
 			"id": 34,
@@ -526,9 +514,7 @@
 			"id": 44,
 			"batterAdvancement": 1,
 			"runnerAdvancement": 1,
-			"description": [
-				"Walk"
-			]
+			"description": ["Walk"]
 		},
 		{
 			"id": 45,
@@ -547,10 +533,7 @@
 			"id": 46,
 			"isOut": true,
 			"outCount": 1,
-			"description": [
-				"Strike out swinging",
-				"Strike out looking"
-			]
+			"description": ["Strike out swinging", "Strike out looking"]
 		},
 		{
 			"id": 55,

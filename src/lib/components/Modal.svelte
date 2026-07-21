@@ -28,6 +28,10 @@
 	}: ModalProps = $props();
 
 	let keydown = (e: KeyboardEvent) => {
+		// The window listener stays mounted even while this modal is closed, so
+		// ignore keys unless it's actually open — otherwise a stray Escape/Enter
+		// fires close() (which for toggle-style modals would open them).
+		if (!showModal) return;
 		e.stopPropagation();
 		if (e.key === 'Enter' || e.key === 'Escape') {
 			close();

@@ -22,7 +22,9 @@
 		$page.url.pathname === '/hockey/game' ||
 		$page.url.pathname.startsWith('/hockey/online/game/') ||
 		$page.url.pathname === '/basketball/game' ||
-		$page.url.pathname.startsWith('/basketball/online/game/')
+		$page.url.pathname.startsWith('/basketball/online/game/') ||
+		$page.url.pathname === '/soccer/game' ||
+		$page.url.pathname.startsWith('/soccer/online/game/')
 	);
 	let showSettings = $state(false);
 	let showMobileMenu = $state(false);
@@ -97,6 +99,7 @@
 					</div>
 				{/if}
 			</div>
+			<!--
 			<div class="nav-item desktop-link">
 				<a class="link nav-trigger" href="/baseball">Baseball</a>
 				{#if auth.isLoggedIn}
@@ -118,6 +121,15 @@
 				{#if auth.isLoggedIn}
 					<div class="submenu">
 						<a class="submenu-item" href="/games?sport=basketball">My Games</a>
+					</div>
+				{/if}
+			</div>
+			-->
+			<div class="nav-item desktop-link">
+				<a class="link nav-trigger" href="/soccer">Soccer</a>
+				{#if auth.isLoggedIn}
+					<div class="submenu">
+						<a class="submenu-item" href="/games?sport=soccer">My Games</a>
 					</div>
 				{/if}
 			</div>
@@ -178,6 +190,10 @@
 					<a class="kebab-item" href="/basketball" onclick={() => showMobileMenu = false}>Basketball</a>
 					{#if auth.isLoggedIn}
 						<a class="kebab-item kebab-sub" href="/games?sport=basketball" onclick={() => showMobileMenu = false}>My Games</a>
+					{/if}
+					<a class="kebab-item" href="/soccer" onclick={() => showMobileMenu = false}>Soccer</a>
+					{#if auth.isLoggedIn}
+						<a class="kebab-item kebab-sub" href="/games?sport=soccer" onclick={() => showMobileMenu = false}>My Games</a>
 					{/if}
 					{#if auth.isLoggedIn}
 						{#if onlineState.isOnline}

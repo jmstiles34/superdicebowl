@@ -1,4 +1,4 @@
-export type SportType = 'football' | 'baseball' | 'hockey' | 'basketball';
+export type SportType = 'football' | 'baseball' | 'hockey' | 'basketball' | 'soccer';
 
 interface Colors {
 	primary: string;

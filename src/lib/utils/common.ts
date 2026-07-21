@@ -67,6 +67,21 @@ export function lightenColor(color: string, num = 0.05) {
 	return `oklch(${L} ${C} ${H})`;
 }
 
+// True when a color is light enough that white/near-white text on top of it
+// would be hard to read (e.g. a team whose primary color is white/pale). Uses
+// the OKLCH lightness channel, which maps closely to perceived brightness.
+export function isLightColor(color: string): boolean {
+	const parsed = parse(color);
+	if (!parsed) return false;
+	return (toOklch(parsed).l ?? 0) >= 0.72;
+}
+
+// Pick a foreground color (near-black or near-white) that stays legible on top
+// of the given background color.
+export function readableTextColor(background: string): string {
+	return isLightColor(background) ? 'oklch(0.22 0 0)' : 'oklch(0.98 0 0)';
+}
+
 export function lt(a: number, b: number) {
 	return a < b;
 }

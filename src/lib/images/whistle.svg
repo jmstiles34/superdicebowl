@@ -1,0 +1,12 @@
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Penalty">
+	<path
+		d="M8.5 8 L21 8 C21.6 8 22 8.4 22 9 L22 10.6 C22 11.2 21.6 11.6 21 11.6 L14.6 11.6"
+		fill="#c9ccd6"
+		stroke="#5a5d68"
+		stroke-width="0.9"
+		stroke-linejoin="round"
+	/>
+	<circle cx="9" cy="14" r="6.2" fill="#c9ccd6" stroke="#5a5d68" stroke-width="1" />
+	<circle cx="9" cy="14" r="2.2" fill="#5a5d68" />
+	<rect x="8" y="6.6" width="6" height="2" rx="1" fill="#e2e4ea" stroke="#5a5d68" stroke-width="0.7" />
+</svg>

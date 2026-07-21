@@ -145,6 +145,37 @@ export interface BasketballGameSettingsSnapshot {
 	winScore: number;
 }
 
+// ── Soccer snapshot types ────────────────────────────────────
+
+export interface SoccerGameStateSnapshot {
+	sport: 'soccer';
+	action: string;
+	lastPlay: string;
+	modalContent: string | null;
+	possession: string;
+	restrictDice: boolean;
+	playLog: unknown[];
+	ballSection: number;
+	scores: {
+		away: number;
+		home: number;
+	};
+	powerChipHolder: string;
+	diceReduction: {
+		away: number;
+		home: number;
+	};
+	pendingShot: 'shot' | 'freeKick' | 'penalty' | null;
+}
+
+export interface SoccerGameSettingsSnapshot {
+	sport: 'soccer';
+	awayTeam: Team;
+	homeTeam: Team;
+	mode: string;
+	winScore: number;
+}
+
 // ── Discriminated unions ─────────────────────────────────────
 
 /**
@@ -156,12 +187,14 @@ export type GameStateSnapshot =
 	| FootballGameStateSnapshot
 	| BaseballGameStateSnapshot
 	| HockeyGameStateSnapshot
-	| BasketballGameStateSnapshot;
+	| BasketballGameStateSnapshot
+	| SoccerGameStateSnapshot;
 export type GameSettingsSnapshot =
 	| FootballGameSettingsSnapshot
 	| BaseballGameSettingsSnapshot
 	| HockeyGameSettingsSnapshot
-	| BasketballGameSettingsSnapshot;
+	| BasketballGameSettingsSnapshot
+	| SoccerGameSettingsSnapshot;
 
 /**
  * Legacy type alias: most existing code was written against the football
@@ -203,6 +236,9 @@ export interface UserPreferencesRecord {
 	theme: 'dark' | 'light';
 	defaultWinScore: number;
 	mowPattern?: MowPattern;
+	// Selected soccer-ball skin (filename without extension). See
+	// lib/soccer/ballDesigns.ts. Optional/non-indexed → no schema bump needed.
+	ballDesign?: string;
 }
 
 export interface SeasonMatchup {
@@ -347,6 +383,17 @@ class AppDatabase extends Dexie {
 		// v10: hockey + basketball sport types added to SportType union.
 		// No index changes — sport column already supports arbitrary strings.
 		this.version(10).stores({
+			users: '++id, &usernameLower',
+			sessions: '++id, userId, &token',
+			games: '++id, userId, sport',
+			customTeams: '++id, userId',
+			userPreferences: '++id, &userId',
+			seasons: '++id, userId, sport'
+		});
+
+		// v11: soccer sport type added to SportType union.
+		// No index changes — sport column already supports arbitrary strings.
+		this.version(11).stores({
 			users: '++id, &usernameLower',
 			sessions: '++id, userId, &token',
 			games: '++id, userId, sport',

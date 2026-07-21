@@ -1,0 +1,87 @@
+<script lang="ts">
+	import { randomNumber, sleep } from '$lib/utils/common';
+	import { TEAM } from '$lib/shared/constants';
+	import coinSpin from '$lib/assets/sfx/coin-spin.mp3';
+	import { settings } from '$lib/state/settings.svelte';
+	import type { Team } from '$lib/shared/types';
+	import ball from '$lib/images/balls/soccer-ball-01.avif';
+	import type { Howl } from 'howler';
+	import { createSound, playSound } from '$lib/utils/sound';
+
+	let { saveCoinToss }: { saveCoinToss: (a: string) => void } = $props();
+
+	const { awayTeam, homeTeam, volume } = settings;
+	const coinSpinSfx: Howl = createSound(coinSpin);
+	let winStyle: string | undefined = $state();
+
+	// Insert an alpha channel into an OKLCH color string, e.g. `oklch(l c h)` ->
+	// `oklch(l c h / 0.7)`. Mirrors the helper used by the Scoreboard.
+	function withAlpha(color: string, alpha: number): string {
+		return color.replace(')', ` / ${alpha})`);
+	}
+
+	// The coin face is the soccer ball, tinted with the team's primary color so
+	// the two sides stay distinguishable. The translucent tint also mutes the
+	// ball's black seams so they don't fight the flag for attention.
+	function faceStyle(team: Team): string {
+		const tint = withAlpha(team.colors.primary, 0.62);
+		return `background-color: ${team.colors.primary}; background-image: linear-gradient(${tint}, ${tint}), url(${ball}); border: 1px solid ${team.colors.secondary};`;
+	}
+
+	const handleCoinToss = async () => {
+		if (winStyle) return;
+		winStyle = randomNumber() === 0 ? TEAM.HOME : TEAM.AWAY;
+		playSound(coinSpinSfx, volume);
+		await sleep(4000);
+		saveCoinToss(winStyle);
+	};
+
+	const handleCoinKeydown = (e: KeyboardEvent) => {
+		if (e.repeat || (e.key !== 'Enter' && e.key !== ' ')) return;
+		handleCoinToss();
+	};
+</script>
+
+<h3>Kickoff Toss</h3>
+<p class="subtitle" class:hidden={!!winStyle}>Tap to flip — winner starts on offense</p>
+
+<div class="game-mode">
+	<div
+		id="coin"
+		class={winStyle}
+		onclick={handleCoinToss}
+		onkeydown={handleCoinKeydown}
+		role="button"
+		tabindex="0"
+	>
+		<div class="side-home" style={faceStyle(homeTeam)}>
+			<img alt={`${homeTeam.city} ${homeTeam.name} Logo`} class="team-logo" src={`/flags/${homeTeam.logo}.svg`} />
+		</div>
+		<div class="side-away" style={faceStyle(awayTeam)}>
+			<img alt={`${awayTeam.city} ${awayTeam.name} Logo`} class="team-logo" src={`/flags/${awayTeam.logo}.svg`} />
+		</div>
+	</div>
+</div>
+
+<style>
+	h3 { font-family: var(--font-display); font-weight: var(--weight-extrabold); font-style: italic; font-size: var(--text-display-sm); letter-spacing: var(--tracking-display); text-shadow: var(--text-shadow-display); color: var(--modal-header-text); text-align: center; margin: 0 0 var(--space-1) 0; }
+	.subtitle { font-family: var(--font-body); font-size: var(--text-sm); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--color-text-tertiary); text-align: center; margin: 0 0 var(--space-5) 0; transition: opacity var(--dur-base) var(--ease-snes); }
+	.subtitle.hidden { opacity: 0; }
+	#coin { position: relative; margin: 0 auto; width: 7rem; height: 7rem; cursor: pointer; filter: drop-shadow(4px 4px 0 oklch(0.1829 0.1063 264.01)); }
+	#coin:not(.Home):not(.Away):hover { filter: drop-shadow(4px 4px 0 oklch(0.3077 0.1962 264.21)) drop-shadow(0 0 12px rgba(64, 96, 240, 0.5)); }
+	#coin div { display: flex; justify-content: center; align-items: center; position: absolute; width: 100%; height: 100%; border-radius: 50%; background-size: cover; background-position: center; background-repeat: no-repeat; box-shadow: inset 0 0 32px rgba(255, 255, 255, 0.25), inset 0 -6px 12px rgba(0, 0, 0, 0.3), 0 8px 16px -6px rgba(0, 0, 0, 0.5); }
+	.side-away { display: none; }
+	/* Auto height keeps each flag's own aspect ratio so the outline frames it
+	   tightly; the white border + shadow lift it off the busy ball background. */
+	.team-logo { width: 4.75rem; height: auto; border: 2px solid #fff; border-radius: 2px; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6); }
+	@keyframes coinFlip { 0% { transform: scaleX(1); } 5.5% { transform: scaleX(0); } 11% { transform: scaleX(1); } 16.5% { transform: scaleX(0); } 22% { transform: scaleX(1); } 27.5% { transform: scaleX(0); } 33% { transform: scaleX(1); } 38.5% { transform: scaleX(0); } 44% { transform: scaleX(1); } 49.5% { transform: scaleX(0); } 55% { transform: scaleX(1); } 61% { transform: scaleX(0); } 68% { transform: scaleX(1); } 75% { transform: scaleX(0); } 83% { transform: scaleX(1); } 91% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+	#coin.Home, #coin.Away { animation: coinFlip 3.3s ease-out forwards; }
+	@keyframes showHome { 0% { visibility: visible; } 5.5% { visibility: hidden; } 16.5% { visibility: visible; } 27.5% { visibility: hidden; } 38.5% { visibility: visible; } 49.5% { visibility: hidden; } 61% { visibility: visible; } 75% { visibility: hidden; } 91% { visibility: visible; } 100% { visibility: visible; } }
+	@keyframes hideHome { 0% { visibility: visible; } 5.5% { visibility: hidden; } 16.5% { visibility: visible; } 27.5% { visibility: hidden; } 38.5% { visibility: visible; } 49.5% { visibility: hidden; } 61% { visibility: visible; } 75% { visibility: hidden; } 91% { visibility: visible; } 91.01% { visibility: hidden; } 100% { visibility: hidden; } }
+	@keyframes showAway { 0% { visibility: hidden; } 5.5% { visibility: visible; } 16.5% { visibility: hidden; } 27.5% { visibility: visible; } 38.5% { visibility: hidden; } 49.5% { visibility: visible; } 61% { visibility: hidden; } 75% { visibility: visible; } 91% { visibility: hidden; } 100% { visibility: hidden; } }
+	@keyframes revealAway { 0% { visibility: hidden; } 5.5% { visibility: visible; } 16.5% { visibility: hidden; } 27.5% { visibility: visible; } 38.5% { visibility: hidden; } 49.5% { visibility: visible; } 61% { visibility: hidden; } 75% { visibility: visible; } 91% { visibility: hidden; } 91.01% { visibility: visible; } 100% { visibility: visible; } }
+	#coin.Home .side-home { animation: showHome 3.3s step-end forwards; }
+	#coin.Home .side-away { display: flex; animation: showAway 3.3s step-end forwards; }
+	#coin.Away .side-home { animation: hideHome 3.3s step-end forwards; }
+	#coin.Away .side-away { display: flex; animation: revealAway 3.3s step-end forwards; }
+</style>

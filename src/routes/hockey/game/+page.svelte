@@ -139,13 +139,16 @@
 			if (game.activeGameId) {
 				await updateGameState(game.activeGameId, snapshot);
 			} else {
-				const gameSettings: HockeyGameSettingsSnapshot = {
-					sport: 'hockey',
+				// $state.snapshot deep-clones the live team proxies to plain objects;
+				// passing the raw settings proxies straight to Dexie throws
+				// DataCloneError (structured clone can't serialize them).
+				const gameSettings: HockeyGameSettingsSnapshot = $state.snapshot({
+					sport: 'hockey' as const,
 					awayTeam: settings.awayTeam,
 					homeTeam: settings.homeTeam,
 					mode: settings.mode,
 					winScore: settings.winScore
-				};
+				});
 				const record = await createGame(auth.currentUser.id, snapshot, gameSettings, 'hockey');
 				game.activeGameId = record.id as number;
 			}
@@ -304,7 +307,7 @@
 			hasClose={false}
 			choiceRequired={true}
 		>
-			<ConfirmExit cancel={cancelExit} />
+			<ConfirmExit cancel={cancelExit} home="/hockey" />
 		</Modal>
 
 		<!-- Settings modal -->

@@ -7,6 +7,7 @@
 	import { game as baseballGame } from '$lib/baseball/state/game.svelte';
 	import { game as hockeyGame } from '$lib/hockey/state/game.svelte';
 	import { game as basketballGame } from '$lib/basketball/state/game.svelte';
+	import { game as soccerGame } from '$lib/soccer/state/game.svelte';
 	import { settings } from '$lib/state/settings.svelte';
 	import { TEAM } from '$lib/shared/constants';
 	import type {
@@ -15,7 +16,8 @@
 		FootballGameSettingsSnapshot,
 		FootballGameStateSnapshot,
 		GameRecord,
-		HockeyGameStateSnapshot
+		HockeyGameStateSnapshot,
+		SoccerGameStateSnapshot
 	} from '$lib/db/database';
 	import type { SportType } from '$lib/shared/types';
 	import { deleteGame, getGamesByUser } from '$lib/db/repositories/gameRepository';
@@ -23,19 +25,26 @@
 	import { getScoreByTeam } from '$lib/football/utils/game';
 	import Modal from '$lib/components/Modal.svelte';
 	import GameSummary from '$lib/football/components/modal/GameSummary.svelte';
-	import { SvelteSet } from 'svelte/reactivity';
+	import { SvelteSet, SvelteURLSearchParams } from 'svelte/reactivity';
 	import { onlineState } from '$lib/state/onlineState.svelte';
 	import { declineChallenge, getRemoteGames, resignGame, type RemoteGame } from '$lib/football/online/remoteGames';
 
 	const SPORTS: { id: SportType; label: string }[] = [
 		{ id: 'football', label: 'Football' },
-		{ id: 'baseball', label: 'Baseball' },
-		{ id: 'hockey', label: 'Hockey' },
-		{ id: 'basketball', label: 'Basketball' }
+		// { id: 'baseball', label: 'Baseball' },
+		// { id: 'hockey', label: 'Hockey' },
+		// { id: 'basketball', label: 'Basketball' },
+		{ id: 'soccer', label: 'Soccer' }
 	];
 
 	function parseSport(value: string | null): SportType {
-		if (value === 'baseball' || value === 'hockey' || value === 'basketball') return value;
+		if (
+			value === 'baseball' ||
+			value === 'hockey' ||
+			value === 'basketball' ||
+			value === 'soccer'
+		)
+			return value;
 		return 'football';
 	}
 
@@ -129,7 +138,7 @@
 		currentSport = sport;
 		confirmDeleteId = null;
 		viewStatsRecord = null;
-		const params = new URLSearchParams($page.url.searchParams);
+		const params = new SvelteURLSearchParams($page.url.searchParams);
 		params.set('sport', sport);
 		goto(`?${params.toString()}`, { replaceState: true, keepFocus: true, noScroll: true });
 	}
@@ -216,6 +225,14 @@
 			settings.mode = record.gameSettings.mode;
 			if ('winScore' in record.gameSettings) settings.winScore = record.gameSettings.winScore;
 			goto('/basketball/game');
+		} else if (sport === 'soccer') {
+			soccerGame.loadSnapshot(record.gameState);
+			soccerGame.activeGameId = record.id!;
+			settings.homeTeam = record.gameSettings.homeTeam;
+			settings.awayTeam = record.gameSettings.awayTeam;
+			settings.mode = record.gameSettings.mode;
+			if ('winScore' in record.gameSettings) settings.winScore = record.gameSettings.winScore;
+			goto('/soccer/game');
 		}
 	}
 
@@ -352,6 +369,13 @@
 		<div class="meta">
 			{s.lastPlay || (record.status === 'completed' ? 'Final' : 'Tip-off pending')}
 			<span class="sub-meta">Fouls {s.fouls.home}–{s.fouls.away}</span>
+			<span class="date">{formatDate(record.updatedAt)}</span>
+		</div>
+	{:else if record.gameState.sport === 'soccer'}
+		{@const s = record.gameState as SoccerGameStateSnapshot}
+		{@render hockeyOrBasketballScore(record, s.scores.home, s.scores.away)}
+		<div class="meta">
+			{s.lastPlay || (record.status === 'completed' ? 'Final' : 'Coin toss pending')}
 			<span class="date">{formatDate(record.updatedAt)}</span>
 		</div>
 	{/if}

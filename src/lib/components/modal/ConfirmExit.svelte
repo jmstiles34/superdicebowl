@@ -5,12 +5,14 @@
 
 	type ConfirmExitProps = {
 		cancel: () => void;
+		// Sport home to return to on exit; defaults to football's root.
+		home?: string;
 	};
 
-	let { cancel }: ConfirmExitProps = $props();
+	let { cancel, home = '/' }: ConfirmExitProps = $props();
 
 	function exitGame() {
-		const dest = season.isSeasonGame ? '/season/play' : '/';
+		const dest = season.isSeasonGame ? '/season/play' : home;
 		season.isSeasonGame = false;
 		season.activeWeek = null;
 		season.activeMatchupIndex = null;
