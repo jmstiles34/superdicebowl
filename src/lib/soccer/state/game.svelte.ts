@@ -300,6 +300,22 @@ class SoccerGameState {
 		this.applyPlay(winnerTeam, winnerIsOffense, play, useChip);
 	};
 
+	// Back out of the tie prompt without deciding, restoring the roll phase the
+	// tie surfaced from so the holder can review the dice (or re-roll) before
+	// committing. `pendingShot` discriminates a shot tie from a round tie —
+	// mirrors the action mapping in `startShot`.
+	cancelTie = () => {
+		if (this.action !== GAME_ACTION.POWER_CHIP_TIE) return;
+		this.action =
+			this.pendingShot === 'shot'
+				? GAME_ACTION.SHOT_ON_GOAL
+				: this.pendingShot === 'freeKick'
+					? GAME_ACTION.FREE_KICK
+					: this.pendingShot === 'penalty'
+						? GAME_ACTION.PENALTY_SHOT
+						: GAME_ACTION.ROLL_OFF;
+	};
+
 	private transferChip() {
 		this.powerChipHolder = OPPOSITE_TEAM[this.powerChipHolder];
 	}

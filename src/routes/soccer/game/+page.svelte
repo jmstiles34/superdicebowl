@@ -373,6 +373,14 @@
 		});
 	}
 
+	// The human chip holder backed out of the tie prompt — return to the roll
+	// phase so they can review the dice (or re-roll) before deciding again.
+	// Ignored while an AI holds the chip so a stray Escape can't derail its turn.
+	function cancelTie() {
+		if (isAI(game.powerChipHolder)) return;
+		game.cancelTie();
+	}
+
 	// ── Persistence ──────────────────────────────────────────
 	async function saveGame() {
 		if (!auth.isLoggedIn || !auth.currentUser?.id) return;
@@ -642,9 +650,9 @@
 		<!-- Power chip tie -->
 		<Modal
 			showModal={game.action === GAME_ACTION.POWER_CHIP_TIE}
-			close={() => {}}
+			close={cancelTie}
 			hasClose={false}
-			choiceRequired={true}
+			choiceRequired={isAI(game.powerChipHolder)}
 		>
 			<PowerChipModal
 				holderName={teamCity(game.powerChipHolder)}
@@ -653,6 +661,7 @@
 				isShot={game.pendingShot != null}
 				autoResolve={isAI(game.powerChipHolder)}
 				onDecision={onTieDecision}
+				onCancel={cancelTie}
 			/>
 		</Modal>
 

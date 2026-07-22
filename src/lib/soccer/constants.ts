@@ -111,8 +111,10 @@ export const GAME_ACTION = {
 };
 
 // How long the ball-into-the-net celebration animation holds before the ball
-// is reset to the kickoff position and the next round opens.
-export const GOAL_CELEBRATION_MS = 1300;
+// is reset to the kickoff position and the next round opens. The ball rockets
+// into the net in ~0.85s, then rests there while the confetti falls before
+// snapping back to the kickoff spot.
+export const GOAL_CELEBRATION_MS = 2600;
 
 // The starting defender's ball section (first section past midline on the
 // defender's own half). Derived from MIDLINE_ENTRY of the opponent.

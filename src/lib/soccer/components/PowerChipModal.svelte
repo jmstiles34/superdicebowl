@@ -10,6 +10,7 @@
 		isShot: boolean;
 		autoResolve?: boolean;
 		onDecision: (useChip: boolean) => void;
+		onCancel?: () => void;
 	};
 
 	let {
@@ -18,7 +19,8 @@
 		holderIsOffense,
 		isShot,
 		autoResolve = false,
-		onDecision
+		onDecision,
+		onCancel
 	}: Props = $props();
 
 	let decided = $state(false);
@@ -62,6 +64,9 @@
 				<span class="hint">({opponentName} wins the roll)</span>
 			</button>
 		</div>
+		{#if onCancel}
+			<button class="cancel-btn" onclick={() => onCancel?.()}>Back — review the roll</button>
+		{/if}
 	{/if}
 </div>
 
@@ -173,5 +178,28 @@
 		font-weight: var(--weight-medium);
 		text-transform: none;
 		opacity: 0.85;
+	}
+
+	.cancel-btn {
+		background: none;
+		border: none;
+		padding: var(--space-1) var(--space-2);
+		font-family: var(--font-body);
+		font-size: var(--text-sm);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-wide);
+		color: var(--color-text-tertiary);
+		cursor: pointer;
+		border-radius: var(--radius-sm);
+		transition: color var(--dur-fast) var(--ease-snes);
+	}
+
+	.cancel-btn:hover {
+		color: var(--color-text-primary);
+	}
+
+	.cancel-btn:focus-visible {
+		outline: none;
+		box-shadow: var(--focus-ring);
 	}
 </style>
